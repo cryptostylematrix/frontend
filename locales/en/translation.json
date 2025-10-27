@@ -1,0 +1,113 @@
+{
+  "wallet": {
+    "connect": "Connect Wallet",
+    "copyAddress": "Copy address",
+    "disconnect": "Disconnect"
+  },
+  "profile": {
+    "checking": "Checking profiles...",
+    "add": "+ Add a Profile",
+    "select": "Select Profile",
+    "title": "Profile",
+    "update_link": "Update",
+    "add_link": "Add",
+    "create_link": "Create",
+    "add_login_label": "Login",
+    "add_login_placeholder": "Enter login",
+    "add_btn": "Add",
+    "cancel_btn": "Cancel",
+    "create_btn": "Create",
+    "create_login_label": "Login",
+    "create_login_placeholder": "Unique login",
+    "create_firstname_label": "First Name",
+    "create_firstname_placeholder": "John",
+    "create_lastname_label": "Last Name",
+    "create_lastname_placeholder": "Doe",
+    "create_avatar_label": "Avatar URL",
+    "create_avatar_placeholder": "https://example.com/avatar.png",
+    "create_telegram_label": "Telegram Username",
+    "create_telegram_placeholder": "@username",
+    "save_btn": "Save",
+    "logout_btn": "Log out",
+    "update_success": "Profile saved successfully.",
+    "removed": "Profile removed.",
+    "confirm_logout": "Are you sure you want to log out?",
+    "update_avatar_label": "Avatar URL",
+    "update_avatar_placeholder": "https://...",
+    "update_firstname_label": "First Name",
+    "update_firstname_placeholder": "John",
+    "update_lastname_label": "Last Name",
+    "update_lastname_placeholder": "Doe",
+    "update_telegram_label": "Telegram Username",
+    "update_telegram_placeholder": "@username",
+    "errors": {
+      "wallet_not_connected": "Wallet not connected",
+      "unexpected": "An unexpected error occurred",
+      "no_active": "No active profile or wallet.",
+      "update_failed": "Unexpected error while updating profile."
+    },
+    "status": {
+      "wallet_title": "Your wallet is not connected!",
+      "wallet_description": "To use the site, you need to connect your wallet.",
+      "profile_title": "No profile is added.",
+      "profile_description": "To use the site, you need to add a profile."
+    }
+  },
+  "footer": {
+    "channel": "Channel",
+    "privacy": "Privacy Policy",
+    "agreement": "User Agreement",
+    "copyright": "© {{year}} Crypto Style. All rights reserved."
+  },
+  "nav": {
+    "home_page": "Home",
+    "profile_page": "Profile",
+    "finance_page": "Finance",
+    "multi_page": "Multi"
+  },
+  "home": {
+    "loading": "Loading...",
+    "balance_error": "Error loading balance",
+    "balance_unit": "TON",
+    "avatar_alt": "Profile",
+    "no_avatar_alt": "No avatar"
+  },
+  "finance": {
+    "title": "Finance"
+  },
+  "multi": {
+    "title": "Multi",
+    "inviter_link": "Inviter",
+    "structure_link": "Structure",
+    "matrixes_link": "Matrixes",
+    "marketing_link": "Marketing",
+    "stat_link": "Stat"
+  },
+  "common": {
+    "warning": {
+      "title": "Site is under development",
+      "description": "Some features may not be available yet."
+    }
+  },
+  "errors": {
+    "err_wallet_not_connected": "Wallet not connected.",
+    "err_profile_exists": "Profile already exists.",
+    "err_profile_not_found": "Profile not found.",
+    "err_invalid_login": "Invalid login.",
+    "err_network": "Network error.",
+    "err_unexpected": "An unexpected error occurred.",
+    "err_is_not_deployed": "Contract is not deployed.",
+    "err_contract_doesnot_belong_to_the_wallet": "This contract does not belong to your wallet.",
+    "err_invalid_wallet_address": "Invalid wallet address.",
+    "err_network_timeout": "Network timeout.",
+    "err_rpc_unreachable": "RPC server unreachable.",
+    "err_balance_fetch_failed": "Failed to fetch wallet balance.",
+
+    "err_local_storage_read_failed": "Failed to read data from local storage.",
+    "err_local_storage_write_failed": "Failed to write data to local storage.",
+    "err_local_storage_clear_failed": "Failed to clear local storage.",
+
+    "err_user_rejected_transaction": "Transaction was rejected by the user.",
+    "err_transaction_failed": "Transaction failed."
+  }
+}

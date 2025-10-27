@@ -1,0 +1,113 @@
+{
+  "wallet": {
+    "connect": "Әмиянды қосу",
+    "copyAddress": "Мекенжайды көшіру",
+    "disconnect": "Ажырату"
+  },
+  "profile": {
+    "checking": "Профильдер тексерілуде...",
+    "add": "+ Профиль қосу",
+    "select": "Профильді таңдау",
+    "title": "Профиль",
+    "update_link": "Жаңарту",
+    "add_link": "Қосу",
+    "create_link": "Жасау",
+    "add_login_label": "Логин",
+    "add_login_placeholder": "Логин енгізіңіз",
+    "add_btn": "Қосу",
+    "cancel_btn": "Болдырмау",
+    "create_btn": "Жасау",
+    "create_login_label": "Логин",
+    "create_login_placeholder": "Бірегей логин",
+    "create_firstname_label": "Аты",
+    "create_firstname_placeholder": "Аян",
+    "create_lastname_label": "Тегі",
+    "create_lastname_placeholder": "Құрманов",
+    "create_avatar_label": "Аватар URL",
+    "create_avatar_placeholder": "https://example.com/avatar.png",
+    "create_telegram_label": "Telegram пайдаланушы аты",
+    "create_telegram_placeholder": "@username",
+    "save_btn": "Сақтау",
+    "logout_btn": "Шығу",
+    "update_success": "Профиль сәтті сақталды.",
+    "removed": "Профиль жойылды.",
+    "confirm_logout": "Шығуды қалайсыз ба?",
+    "update_avatar_label": "Аватар URL",
+    "update_avatar_placeholder": "https://...",
+    "update_firstname_label": "Аты",
+    "update_firstname_placeholder": "Аян",
+    "update_lastname_label": "Тегі",
+    "update_lastname_placeholder": "Құрманов",
+    "update_telegram_label": "Telegram пайдаланушы аты",
+    "update_telegram_placeholder": "@username",
+    "errors": {
+      "wallet_not_connected": "Әмиян қосылмаған",
+      "unexpected": "Күтпеген қате орын алды",
+      "no_active": "Белсенді профиль немесе әмиян жоқ.",
+      "update_failed": "Профильді жаңарту кезінде қате орын алды."
+    },
+    "status": {
+      "wallet_title": "Сіздің әмияныңыз қосылмаған!",
+      "wallet_description": "Сайтты пайдалану үшін әмиянды қосыңыз.",
+      "profile_title": "Профиль қосылмаған.",
+      "profile_description": "Сайтты пайдалану үшін профиль қосыңыз."
+    }
+  },
+  "footer": {
+    "channel": "Канал",
+    "privacy": "Құпиялылық саясаты",
+    "agreement": "Пайдаланушы келісімі",
+    "copyright": "© {{year}} Crypto Style. Барлық құқықтар қорғалған."
+  },
+  "nav": {
+    "home_page": "Басты бет",
+    "profile_page": "Профиль",
+    "finance_page": "Қаржы",
+    "multi_page": "Мульти"
+  },
+  "home": {
+    "loading": "Жүктелуде...",
+    "balance_error": "Баланс жүктеу қатесі",
+    "balance_unit": "TON",
+    "avatar_alt": "Профиль",
+    "no_avatar_alt": "Аватар жоқ"
+  },
+  "finance": {
+    "title": "Қаржы"
+  },
+  "multi": {
+    "title": "Мульти",
+    "inviter_link": "Шақырушы",
+    "structure_link": "Құрылым",
+    "matrixes_link": "Матрицалар",
+    "marketing_link": "Маркетинг",
+    "stat_link": "Статистика"
+  },
+  "common": {
+    "warning": {
+      "title": "Сайт әзірлену үстінде",
+      "description": "Кейбір мүмкіндіктер қолжетімсіз болуы мүмкін."
+    }
+  },
+  "errors": {
+    "err_wallet_not_connected": "Әмиян қосылмаған.",
+    "err_profile_exists": "Профиль бұрыннан бар.",
+    "err_profile_not_found": "Профиль табылмады.",
+    "err_invalid_login": "Жарамсыз логин.",
+    "err_network": "Желі қатесі.",
+    "err_unexpected": "Күтпеген қате пайда болды.",
+    "err_is_not_deployed": "Келісімшарт орналастырылмаған.",
+    "err_contract_doesnot_belong_to_the_wallet": "Бұл келісімшарт сіздің әмияныңызға тиесілі емес.",
+    "err_invalid_wallet_address": "Жарамсыз әмиян мекенжайы.",
+    "err_network_timeout": "Желі күту уақыты аяқталды.",
+    "err_rpc_unreachable": "RPC серверіне қосылу мүмкін емес.",
+    "err_balance_fetch_failed": "Әмиян балансы алынбады.",
+
+    "err_local_storage_read_failed": "Жергілікті сақтау орнынан деректерді оқу мүмкін болмады.",
+    "err_local_storage_write_failed": "Жергілікті сақтау орнына деректерді жазу мүмкін болмады.",
+    "err_local_storage_clear_failed": "Жергілікті сақтау орнын тазалау мүмкін болмады.",
+
+    "err_user_rejected_transaction": "Пайдаланушы транзакцияны қабылдамады.",
+    "err_transaction_failed": "Транзакция сәтсіз аяқталды."
+  }
+}

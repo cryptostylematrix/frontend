@@ -1,0 +1,113 @@
+{
+  "wallet": {
+    "connect": "Połącz portfel",
+    "copyAddress": "Kopiuj adres",
+    "disconnect": "Odłącz"
+  },
+  "profile": {
+    "checking": "Sprawdzanie profili...",
+    "add": "+ Dodaj profil",
+    "select": "Wybierz profil",
+    "title": "Profil",
+    "update_link": "Aktualizuj",
+    "add_link": "Dodaj",
+    "create_link": "Utwórz",
+    "add_login_label": "Login",
+    "add_login_placeholder": "Wpisz login",
+    "add_btn": "Dodaj",
+    "cancel_btn": "Anuluj",
+    "create_btn": "Utwórz",
+    "create_login_label": "Login",
+    "create_login_placeholder": "Unikalny login",
+    "create_firstname_label": "Imię",
+    "create_firstname_placeholder": "Jan",
+    "create_lastname_label": "Nazwisko",
+    "create_lastname_placeholder": "Kowalski",
+    "create_avatar_label": "URL awatara",
+    "create_avatar_placeholder": "https://example.com/avatar.png",
+    "create_telegram_label": "Nazwa użytkownika Telegram",
+    "create_telegram_placeholder": "@username",
+    "save_btn": "Zapisz",
+    "logout_btn": "Wyloguj się",
+    "update_success": "Profil zapisany pomyślnie.",
+    "removed": "Profil usunięty.",
+    "confirm_logout": "Czy na pewno chcesz się wylogować?",
+    "update_avatar_label": "URL awatara",
+    "update_avatar_placeholder": "https://...",
+    "update_firstname_label": "Imię",
+    "update_firstname_placeholder": "Jan",
+    "update_lastname_label": "Nazwisko",
+    "update_lastname_placeholder": "Kowalski",
+    "update_telegram_label": "Nazwa użytkownika Telegram",
+    "update_telegram_placeholder": "@username",
+    "errors": {
+      "wallet_not_connected": "Portfel nie jest połączony",
+      "unexpected": "Wystąpił nieoczekiwany błąd",
+      "no_active": "Brak aktywnego profilu lub portfela.",
+      "update_failed": "Błąd podczas aktualizacji profilu."
+    },
+    "status": {
+      "wallet_title": "Twój portfel nie jest połączony!",
+      "wallet_description": "Aby korzystać ze strony, połącz swój portfel.",
+      "profile_title": "Nie dodano profilu.",
+      "profile_description": "Aby korzystać ze strony, dodaj profil."
+    }
+  },
+  "footer": {
+    "channel": "Kanał",
+    "privacy": "Polityka prywatności",
+    "agreement": "Regulamin użytkownika",
+    "copyright": "© {{year}} Crypto Style. Wszelkie prawa zastrzeżone."
+  },
+  "nav": {
+    "home_page": "Strona główna",
+    "profile_page": "Profil",
+    "finance_page": "Finanse",
+    "multi_page": "Multi"
+  },
+  "home": {
+    "loading": "Ładowanie...",
+    "balance_error": "Błąd ładowania salda",
+    "balance_unit": "TON",
+    "avatar_alt": "Profil",
+    "no_avatar_alt": "Brak awatara"
+  },
+  "finance": {
+    "title": "Finanse"
+  },
+  "multi": {
+    "title": "Multi",
+    "inviter_link": "Zaprośnik",
+    "structure_link": "Struktura",
+    "matrixes_link": "Macierze",
+    "marketing_link": "Marketing",
+    "stat_link": "Statystyka"
+  },
+  "common": {
+    "warning": {
+      "title": "Strona jest w budowie",
+      "description": "Niektóre funkcje mogą być jeszcze niedostępne."
+    }
+  },
+  "errors": {
+    "err_wallet_not_connected": "Portfel nie jest połączony.",
+    "err_profile_exists": "Profil już istnieje.",
+    "err_profile_not_found": "Profil nie został znaleziony.",
+    "err_invalid_login": "Nieprawidłowy login.",
+    "err_network": "Błąd sieci.",
+    "err_unexpected": "Wystąpił nieoczekiwany błąd.",
+    "err_is_not_deployed": "Kontrakt nie został wdrożony.",
+    "err_contract_doesnot_belong_to_the_wallet": "Ten kontrakt nie należy do twojego portfela.",
+    "err_invalid_wallet_address": "Nieprawidłowy adres portfela.",
+    "err_network_timeout": "Przekroczono limit czasu sieci.",
+    "err_rpc_unreachable": "Serwer RPC jest niedostępny.",
+    "err_balance_fetch_failed": "Nie udało się pobrać salda portfela.",
+
+    "err_local_storage_read_failed": "Nie udało się odczytać danych z pamięci lokalnej.",
+    "err_local_storage_write_failed": "Nie udało się zapisać danych do pamięci lokalnej.",
+    "err_local_storage_clear_failed": "Nie udało się wyczyścić pamięci lokalnej.",
+
+    "err_user_rejected_transaction": "Transakcja została odrzucona przez użytkownika.",
+    "err_transaction_failed": "Transakcja nie powiodła się."
+  }
+}

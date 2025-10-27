@@ -1,0 +1,113 @@
+{
+  "wallet": {
+    "connect": "Collega portafoglio",
+    "copyAddress": "Copia indirizzo",
+    "disconnect": "Disconnetti"
+  },
+  "profile": {
+    "checking": "Verifica dei profili...",
+    "add": "+ Aggiungi profilo",
+    "select": "Seleziona profilo",
+    "title": "Profilo",
+    "update_link": "Aggiorna",
+    "add_link": "Aggiungi",
+    "create_link": "Crea",
+    "add_login_label": "Login",
+    "add_login_placeholder": "Inserisci login",
+    "add_btn": "Aggiungi",
+    "cancel_btn": "Annulla",
+    "create_btn": "Crea",
+    "create_login_label": "Login",
+    "create_login_placeholder": "Login univoco",
+    "create_firstname_label": "Nome",
+    "create_firstname_placeholder": "Mario",
+    "create_lastname_label": "Cognome",
+    "create_lastname_placeholder": "Rossi",
+    "create_avatar_label": "URL avatar",
+    "create_avatar_placeholder": "https://example.com/avatar.png",
+    "create_telegram_label": "Nome utente Telegram",
+    "create_telegram_placeholder": "@username",
+    "save_btn": "Salva",
+    "logout_btn": "Disconnetti",
+    "update_success": "Profilo salvato con successo.",
+    "removed": "Profilo rimosso.",
+    "confirm_logout": "Sei sicuro di voler uscire?",
+    "update_avatar_label": "URL avatar",
+    "update_avatar_placeholder": "https://...",
+    "update_firstname_label": "Nome",
+    "update_firstname_placeholder": "Mario",
+    "update_lastname_label": "Cognome",
+    "update_lastname_placeholder": "Rossi",
+    "update_telegram_label": "Nome utente Telegram",
+    "update_telegram_placeholder": "@username",
+    "errors": {
+      "wallet_not_connected": "Portafoglio non connesso",
+      "unexpected": "Si è verificato un errore imprevisto",
+      "no_active": "Nessun profilo o portafoglio attivo.",
+      "update_failed": "Errore durante l'aggiornamento del profilo."
+    },
+    "status": {
+      "wallet_title": "Il tuo portafoglio non è connesso!",
+      "wallet_description": "Per utilizzare il sito, collega il tuo portafoglio.",
+      "profile_title": "Nessun profilo aggiunto.",
+      "profile_description": "Per utilizzare il sito, aggiungi un profilo."
+    }
+  },
+  "footer": {
+    "channel": "Canale",
+    "privacy": "Informativa sulla privacy",
+    "agreement": "Accordo utente",
+    "copyright": "© {{year}} Crypto Style. Tutti i diritti riservati."
+  },
+  "nav": {
+    "home_page": "Home",
+    "profile_page": "Profilo",
+    "finance_page": "Finanza",
+    "multi_page": "Multi"
+  },
+  "home": {
+    "loading": "Caricamento...",
+    "balance_error": "Errore durante il caricamento del saldo",
+    "balance_unit": "TON",
+    "avatar_alt": "Profilo",
+    "no_avatar_alt": "Nessun avatar"
+  },
+  "finance": {
+    "title": "Finanza"
+  },
+  "multi": {
+    "title": "Multi",
+    "inviter_link": "Invitatore",
+    "structure_link": "Struttura",
+    "matrixes_link": "Matrici",
+    "marketing_link": "Marketing",
+    "stat_link": "Statistiche"
+  },
+  "common": {
+    "warning": {
+      "title": "Sito in fase di sviluppo",
+      "description": "Alcune funzionalità potrebbero non essere ancora disponibili."
+    }
+  },
+  "errors": {
+    "err_wallet_not_connected": "Portafoglio non connesso.",
+    "err_profile_exists": "Profilo già esistente.",
+    "err_profile_not_found": "Profilo non trovato.",
+    "err_invalid_login": "Accesso non valido.",
+    "err_network": "Errore di rete.",
+    "err_unexpected": "Si è verificato un errore imprevisto.",
+    "err_is_not_deployed": "Contratto non distribuito.",
+    "err_contract_doesnot_belong_to_the_wallet": "Questo contratto non appartiene al tuo portafoglio.",
+    "err_invalid_wallet_address": "Indirizzo del portafoglio non valido.",
+    "err_network_timeout": "Timeout di rete.",
+    "err_rpc_unreachable": "Server RPC non raggiungibile.",
+    "err_balance_fetch_failed": "Impossibile recuperare il saldo del portafoglio.",
+
+    "err_local_storage_read_failed": "Impossibile leggere i dati dall'archiviazione locale.",
+    "err_local_storage_write_failed": "Impossibile scrivere i dati nell'archiviazione locale.",
+    "err_local_storage_clear_failed": "Impossibile cancellare l'archiviazione locale.",
+
+    "err_user_rejected_transaction": "Transazione rifiutata dall'utente.",
+    "err_transaction_failed": "Transazione non riuscita."
+  }
+}
