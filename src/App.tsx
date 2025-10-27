@@ -34,7 +34,7 @@ function App() {
   return (
     <WalletContext.Provider value={{ wallet, setWallet }}>
       <ProfileProvider wallet={wallet} tonConnectUI={tonConnectUI}>
-        <BrowserRouter>
+        <BrowserRouter basename="/frontend">
           <Header />
           <Navigation />
 
