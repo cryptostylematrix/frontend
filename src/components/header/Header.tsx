@@ -11,7 +11,7 @@ const Header: React.FC = () => {
       <div className="header-container">
         <div className="header-left">
           {/* Use "/" instead of "index.html" for SPA routing */}
-          <a href="/" className="logo-link">
+          <a href="/frontend" className="logo-link">
             <img src={logo} alt="Crypto Style Logo" className="logo-img" />
           </a>
         </div>
