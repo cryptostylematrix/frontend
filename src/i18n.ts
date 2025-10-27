@@ -23,7 +23,7 @@ i18n
 
      backend: {
       // path to your translation files
-      loadPath: "/locales/{{lng}}/translation.json",
+      loadPath: "/frontend/locales/{{lng}}/translation.json",
     },
   });
 
