@@ -10,7 +10,7 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <TonConnectUIProvider manifestUrl="https://lfstyler.com/tonconnect-manifest.json">
+    <TonConnectUIProvider manifestUrl="https://cryptostylematrix.github.io/frontend/tonconnect-manifest.json">
       <App />
     </TonConnectUIProvider>
   </StrictMode>
