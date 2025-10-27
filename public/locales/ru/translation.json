@@ -1,0 +1,113 @@
+{
+  "wallet": {
+    "connect": "Подключить кошелек",
+    "copyAddress": "Скопировать адрес",
+    "disconnect": "Отключить"
+  },
+  "profile": {
+    "checking": "Проверка профилей...",
+    "add": "+ Добавить профиль",
+    "select": "Выбрать профиль",
+    "title": "Профиль",
+    "update_link": "Обновить",
+    "add_link": "Добавить",
+    "create_link": "Создать",
+    "add_login_label": "Логин",
+    "add_login_placeholder": "Введите логин",
+    "add_btn": "Добавить",
+    "cancel_btn": "Отмена",
+    "create_btn": "Создать",
+    "create_login_label": "Логин",
+    "create_login_placeholder": "Уникальный логин",
+    "create_firstname_label": "Имя",
+    "create_firstname_placeholder": "Иван",
+    "create_lastname_label": "Фамилия",
+    "create_lastname_placeholder": "Иванов",
+    "create_avatar_label": "URL аватара",
+    "create_avatar_placeholder": "https://example.com/avatar.png",
+    "create_telegram_label": "Имя пользователя Telegram",
+    "create_telegram_placeholder": "@username",
+    "save_btn": "Сохранить",
+    "logout_btn": "Выйти",
+    "update_success": "Профиль успешно сохранен.",
+    "removed": "Профиль удален.",
+    "confirm_logout": "Вы уверены, что хотите выйти?",
+    "update_avatar_label": "URL аватара",
+    "update_avatar_placeholder": "https://...",
+    "update_firstname_label": "Имя",
+    "update_firstname_placeholder": "Иван",
+    "update_lastname_label": "Фамилия",
+    "update_lastname_placeholder": "Иванов",
+    "update_telegram_label": "Имя пользователя Telegram",
+    "update_telegram_placeholder": "@username",
+    "errors": {
+      "wallet_not_connected": "Кошелек не подключен",
+      "unexpected": "Произошла непредвиденная ошибка",
+      "no_active": "Нет активного профиля или кошелька.",
+      "update_failed": "Ошибка при обновлении профиля."
+    },
+    "status": {
+      "wallet_title": "Ваш кошелек не подключен!",
+      "wallet_description": "Чтобы использовать сайт, подключите свой кошелек.",
+      "profile_title": "Профиль не добавлен.",
+      "profile_description": "Чтобы использовать сайт, добавьте профиль."
+    }
+  },
+  "footer": {
+    "channel": "Канал",
+    "privacy": "Политика конфиденциальности",
+    "agreement": "Пользовательское соглашение",
+    "copyright": "© {{year}} Crypto Style. Все права защищены."
+  },
+  "nav": {
+    "home_page": "Главная",
+    "profile_page": "Профиль",
+    "finance_page": "Финансы",
+    "multi_page": "Мульти"
+  },
+  "home": {
+    "loading": "Загрузка...",
+    "balance_error": "Ошибка загрузки баланса",
+    "balance_unit": "TON",
+    "avatar_alt": "Профиль",
+    "no_avatar_alt": "Без аватара"
+  },
+  "finance": {
+    "title": "Финансы"
+  },
+  "multi": {
+    "title": "Мульти",
+    "inviter_link": "Куратор",
+    "structure_link": "Структура",
+    "matrixes_link": "Матрицы",
+    "marketing_link": "Маркетинг",
+    "stat_link": "Статистика"
+  },
+  "common": {
+    "warning": {
+      "title": "Сайт находится в разработке",
+      "description": "Некоторые функции могут быть недоступны."
+    }
+  },
+  "errors": {
+    "err_wallet_not_connected": "Кошелёк не подключен.",
+    "err_profile_exists": "Профиль уже существует.",
+    "err_profile_not_found": "Профиль не найден.",
+    "err_invalid_login": "Неверный логин.",
+    "err_network": "Ошибка сети.",
+    "err_unexpected": "Произошла непредвиденная ошибка.",
+    "err_is_not_deployed": "Контракт не развернут.",
+    "err_contract_doesnot_belong_to_the_wallet": "Этот контракт не принадлежит вашему кошельку.",
+    "err_invalid_wallet_address": "Неверный адрес кошелька.",
+    "err_network_timeout": "Превышено время ожидания сети.",
+    "err_rpc_unreachable": "RPC сервер недоступен.",
+    "err_balance_fetch_failed": "Не удалось получить баланс кошелька.",
+
+    "err_local_storage_read_failed": "Не удалось прочитать данные из локального хранилища.",
+    "err_local_storage_write_failed": "Не удалось записать данные в локальное хранилище.",
+    "err_local_storage_clear_failed": "Не удалось очистить локальное хранилище.",
+
+    "err_user_rejected_transaction": "Транзакция отклонена пользователем.",
+    "err_transaction_failed": "Транзакция не выполнена."
+  }
+}

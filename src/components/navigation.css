@@ -1,0 +1,187 @@
+/* ===========================
+   Navigation Bar (Light Luxe)
+   =========================== */
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, #fffefa 0%, #fff9f0 100%);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.15);
+  padding: 1rem 2rem;
+  border-radius: 20px;
+  margin: 1rem auto;
+  width: 85%;
+  max-width: 900px;
+  backdrop-filter: blur(10px);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  /* z-index: 50; */
+}
+
+.navbar:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.18);
+}
+
+/* ===========================
+   Links
+   =========================== */
+
+.nav-links {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  gap: 2rem;
+}
+
+/* Remove ALL default underlines globally */
+.nav-links a,
+.nav-links a:visited,
+.nav-links a:focus,
+.nav-links a:hover,
+.nav-links a:active {
+  text-decoration: none !important;
+  outline: none;
+}
+
+/* Base link style */
+.nav-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #3a2e0e;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-links a:hover {
+  color: #b4881d;
+}
+
+.link-text {
+  font-size: 0.95rem;
+}
+
+/* Custom gold underline (desktop / wide only) */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #d4af37, #f5d57a);
+  border-radius: 2px;
+  opacity: 0;
+  transition: width 0.4s ease, opacity 0.3s ease;
+}
+
+/* Smooth gold hover underline */
+.nav-links a:hover::after,
+.nav-links a:focus::after {
+  width: 100%;
+  opacity: 1;
+}
+
+/* ===========================
+   Active link
+   =========================== */
+
+.nav-links a.active {
+  color: #b4881d;
+}
+
+.nav-links a.active svg {
+  stroke: #b4881d;
+}
+
+.nav-links a.active::after {
+  width: 100%;
+  opacity: 1;
+}
+
+/* ===========================
+   Icon styling
+   =========================== */
+
+.navbar svg {
+  height: 22px;
+  width: 22px;
+  stroke: #3a2e0e;
+  transition: stroke 0.3s ease;
+}
+
+.nav-links a:hover svg {
+  stroke: #b4881d;
+}
+
+/* ===========================
+   Compact (mobile / narrow)
+   =========================== */
+
+@media (max-width: 700px) {
+  .navbar {
+    /* ✅ Full width, dark background */
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    padding: 0.8rem 0;
+    background: #14100b;
+    box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  .nav-links {
+    justify-content: space-between; /* ✅ even spacing across full width */
+    align-items: center;
+    width: 100%;
+    gap: 0;
+    padding: 0 1.5rem; /* ✅ equal left/right padding for symmetry */
+  }
+
+  .nav-links a {
+    font-size: 0;
+    position: relative;
+    flex: 1; /* ✅ ensures equal space per icon */
+    display: flex;
+    justify-content: center;
+  }
+
+  .link-text {
+    display: none;
+  }
+
+  /* Remove underline for icons */
+  .nav-links a::after {
+    display: none;
+  }
+
+  .navbar svg {
+    height: 28px;
+    width: 28px;
+    stroke: #d4af37;
+    transition: transform 0.3s ease, stroke 0.3s ease;
+  }
+
+  .nav-links a:hover svg {
+    transform: scale(1.15);
+    stroke: #ffd700;
+  }
+
+  /* Active icon color (mobile) */
+  .nav-links a.active svg {
+    stroke: #ffd700;
+  }
+}
+
+/* Hide burger entirely */
+.menu-toggle {
+  display: none !important;
+}

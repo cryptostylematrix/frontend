@@ -1,0 +1,24 @@
+/* ===== index.css ===== */
+
+/* Reset & defaults */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background-color: #f5f5f5;
+}
+
+/* Root layout structure */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}

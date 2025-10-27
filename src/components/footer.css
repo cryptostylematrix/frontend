@@ -1,0 +1,82 @@
+/* ===== footer.css ===== */
+.footer {
+  background-color: #14100b; /* ✅ matches header */
+  color: #ccc;
+  padding: 12px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid rgba(212, 175, 55, 0.2); /* subtle gold tint */
+  width: 100%;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Footer content */
+.footer-content {
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+/* Footer links */
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-link {
+  color: #d4af37; /* gold accent like header */
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #ffd700; /* brighter gold on hover */
+  text-decoration: underline;
+}
+
+/* Copyright text */
+.footer-copy {
+  font-size: 13px;
+  color: #888;
+}
+
+/* ===== Desktop & Tablet (Fixed Footer) ===== */
+@media (min-width: 601px) {
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  /* Prevent overlap with page content */
+  body {
+    padding-bottom: 60px; /* adjust to footer height */
+  }
+}
+
+/* ===== Mobile (Normal Scrolling Footer) ===== */
+@media (max-width: 600px) {
+  .footer {
+    position: relative;
+    box-shadow: none;
+  }
+
+  body {
+    padding-bottom: 0;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 6px;
+  }
+}

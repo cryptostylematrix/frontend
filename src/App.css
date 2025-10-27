@@ -1,0 +1,168 @@
+/* ===== app.css ===== */
+
+/* ===== Navbar section ===== */
+.navbar {
+  background-color: #005fa3;
+  flex-shrink: 0;
+  width: 100%;                /* ✅ full width */
+  border-radius: 0;           /* ✅ no rounded corners */
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem 0;
+  margin: 0;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+.navbar a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  text-decoration: none;
+}
+
+/* ===== Responsive navbar ===== */
+@media (max-width: 768px) {
+  .navbar {
+    width: 100%;
+    border-radius: 0;              /* ✅ remove any corner rounding */
+  }
+
+  .navbar ul {
+    flex-direction: column;        /* stack links */
+    align-items: stretch;          /* stretch full width */
+    padding: 0;                    /* remove inner padding */
+  }
+
+  .navbar li {
+    width: 100%;
+  }
+
+  .navbar a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    border-radius: 0;              /* ✅ flat edges */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 1rem 0.5rem;
+  }
+
+  .navbar a:last-child {
+    border-bottom: none;
+  }
+
+  .navbar a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* ===== Main content ===== */
+main {
+  flex: 1;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Footer space for desktop/tablet */
+@media (min-width: 601px) {
+  main {
+    padding-bottom: 80px;
+  }
+}
+
+/* ===========================
+   Content Container (Light Luxe)
+   =========================== */
+
+.content-container {
+  background: linear-gradient(180deg, #fffefa 0%, #fff9f0 100%);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.15);
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  width: 85%;
+  max-width: 900px;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.content-container:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.18);
+}
+
+.content-container h2,
+.content-container h3,
+.content-container p {
+  color: #3a2e0e;
+  font-family: 'Poppins', sans-serif;
+}
+
+.content-container p {
+  line-height: 1.6;
+  color: #4c3b15;
+}
+
+/* ===========================
+   Headings (Light Luxe Style)
+   =========================== */
+
+.content-container h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 2.2rem;
+  color: #3a2e0e;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  letter-spacing: 0.5px;
+}
+
+.content-container h1::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #d4af37, #f5d57a);
+  border-radius: 2px;
+}
+
+/* ===========================
+   Mobile Content Width Fix
+   =========================== */
+@media (max-width: 600px) {
+  .content-container {
+    width: 100%;
+    max-width: none;
+    border-radius: 0;       /* edge-to-edge for consistency with navbar */
+    border-left: none;
+    border-right: none;
+    padding: 1.5rem;
+  }
+
+  .content-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .content-container p {
+    font-size: 0.95rem;
+  }
+}

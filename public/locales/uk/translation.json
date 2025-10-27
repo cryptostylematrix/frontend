@@ -1,0 +1,113 @@
+{
+  "wallet": {
+    "connect": "Підключити гаманець",
+    "copyAddress": "Скопіювати адресу",
+    "disconnect": "Відключити"
+  },
+  "profile": {
+    "checking": "Перевірка профілів...",
+    "add": "+ Додати профіль",
+    "select": "Вибрати профіль",
+    "title": "Профіль",
+    "update_link": "Оновити",
+    "add_link": "Додати",
+    "create_link": "Створити",
+    "add_login_label": "Логін",
+    "add_login_placeholder": "Введіть логін",
+    "add_btn": "Додати",
+    "cancel_btn": "Скасувати",
+    "create_btn": "Створити",
+    "create_login_label": "Логін",
+    "create_login_placeholder": "Унікальний логін",
+    "create_firstname_label": "Ім’я",
+    "create_firstname_placeholder": "Іван",
+    "create_lastname_label": "Прізвище",
+    "create_lastname_placeholder": "Іванов",
+    "create_avatar_label": "URL аватарки",
+    "create_avatar_placeholder": "https://example.com/avatar.png",
+    "create_telegram_label": "Ім’я користувача Telegram",
+    "create_telegram_placeholder": "@username",
+    "save_btn": "Зберегти",
+    "logout_btn": "Вийти",
+    "update_success": "Профіль успішно збережено.",
+    "removed": "Профіль видалено.",
+    "confirm_logout": "Ви впевнені, що хочете вийти?",
+    "update_avatar_label": "URL аватарки",
+    "update_avatar_placeholder": "https://...",
+    "update_firstname_label": "Ім’я",
+    "update_firstname_placeholder": "Іван",
+    "update_lastname_label": "Прізвище",
+    "update_lastname_placeholder": "Іванов",
+    "update_telegram_label": "Ім’я користувача Telegram",
+    "update_telegram_placeholder": "@username",
+    "errors": {
+      "wallet_not_connected": "Гаманець не підключено",
+      "unexpected": "Сталася непередбачена помилка",
+      "no_active": "Немає активного профілю або гаманця.",
+      "update_failed": "Помилка при оновленні профілю."
+    },
+    "status": {
+      "wallet_title": "Ваш гаманець не підключено!",
+      "wallet_description": "Щоб користуватися сайтом, підключіть гаманець.",
+      "profile_title": "Профіль не додано.",
+      "profile_description": "Щоб користуватися сайтом, додайте профіль."
+    }
+  },
+  "footer": {
+    "channel": "Канал",
+    "privacy": "Політика конфіденційності",
+    "agreement": "Угода користувача",
+    "copyright": "© {{year}} Crypto Style. Усі права захищено."
+  },
+  "nav": {
+    "home_page": "Головна",
+    "profile_page": "Профіль",
+    "finance_page": "Фінанси",
+    "multi_page": "Мульти"
+  },
+  "home": {
+    "loading": "Завантаження...",
+    "balance_error": "Помилка завантаження балансу",
+    "balance_unit": "TON",
+    "avatar_alt": "Профіль",
+    "no_avatar_alt": "Без аватарки"
+  },
+  "finance": {
+    "title": "Фінанси"
+  },
+  "multi": {
+    "title": "Мульти",
+    "inviter_link": "Запрошувач",
+    "structure_link": "Структура",
+    "matrixes_link": "Матриці",
+    "marketing_link": "Маркетинг",
+    "stat_link": "Статистика"
+  },
+  "common": {
+    "warning": {
+      "title": "Сайт у розробці",
+      "description": "Деякі функції можуть бути недоступні."
+    }
+  },
+  "errors": {
+    "err_wallet_not_connected": "Гаманець не підключено.",
+    "err_profile_exists": "Профіль уже існує.",
+    "err_profile_not_found": "Профіль не знайдено.",
+    "err_invalid_login": "Невірний логін.",
+    "err_network": "Помилка мережі.",
+    "err_unexpected": "Сталася непередбачена помилка.",
+    "err_is_not_deployed": "Контракт не розгорнуто.",
+    "err_contract_doesnot_belong_to_the_wallet": "Цей контракт не належить вашому гаманцю.",
+    "err_invalid_wallet_address": "Невірна адреса гаманця.",
+    "err_network_timeout": "Час очікування мережі вичерпано.",
+    "err_rpc_unreachable": "RPC-сервер недоступний.",
+    "err_balance_fetch_failed": "Не вдалося отримати баланс гаманця.",
+
+    "err_local_storage_read_failed": "Не вдалося зчитати дані з локального сховища.",
+    "err_local_storage_write_failed": "Не вдалося записати дані до локального сховища.",
+    "err_local_storage_clear_failed": "Не вдалося очистити локальне сховище.",
+
+    "err_user_rejected_transaction": "Транзакцію відхилено користувачем.",
+    "err_transaction_failed": "Транзакція не виконана."
+  }
+}

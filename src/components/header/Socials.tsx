@@ -1,0 +1,29 @@
+import React from "react";
+import "./socials.css";
+
+const Socials: React.FC = () => {
+  const telegramLink = "https://t.me/ton";
+
+  return (
+    <div className="social-block">
+      <a
+        href={telegramLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Telegram"
+        title="Telegram"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="telegram-icon"
+        >
+          <path d="M9.999 15.2 9.91 15.29l-.006-.002-.187.184a.8.8 0 0 1-.502.211h-.007a.74.74 0 0 1-.252-.047c-.145-.053-.26-.161-.317-.297l-.002-.002L7.6 12.61l-2.447-.774a.5.5 0 0 1 .058-.967l13.8-4.5a.5.5 0 0 1 .643.594l-2.4 9.6a.5.5 0 0 1-.787.279L13.28 14.2l-2.4 1a.5.5 0 0 1-.639-.226l-.001-.002-.24-.472Z" />
+        </svg>
+      </a>
+    </div>
+  );
+};
+
+export default Socials;

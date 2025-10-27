@@ -1,0 +1,134 @@
+/* ===== lang.css ===== */
+/* Language dropdown component */
+
+.lang-block {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 200px; /* ✅ fixed for desktop & tablet */
+}
+
+/* Internal wrapper */
+.lang-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* === Button === */
+.lang-btn {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #d4af37;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0.4rem 0.8rem;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  /* 🟢 center text horizontally like other blocks */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* --- Arrow (perfect match to wallet & profile) --- */
+.lang-btn::after {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 6px;
+  border-right: 1.6px solid #d4af37;
+  border-bottom: 1.6px solid #d4af37;
+  transform: rotate(45deg) translateY(-1px); /* 👈 small offset to center vertically */
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+
+/* Rotate arrow when expanded */
+.lang-btn[aria-expanded="true"]::after {
+  transform: rotate(-135deg) translateY(2px);
+}
+
+/* Rotate arrow when expanded */
+.lang-btn[aria-expanded="true"]::after {
+  transform: rotate(-135deg);
+}
+
+/* Hover & focus */
+.lang-btn:hover,
+.lang-btn:focus {
+  background-color: rgba(212, 175, 55, 0.25);
+  border-color: rgba(212, 175, 55, 0.6);
+  outline: none;
+}
+
+/* === Dropdown === */
+.lang-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background-color: #1c1813;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 6px;
+  list-style: none;
+  padding: 0.25rem 0;
+  margin: 0;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.lang-select.open .lang-list {
+  display: block;
+}
+
+.lang-list button {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #d4af37;
+  text-align: center;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.lang-list button:hover,
+.lang-list button:focus {
+  background-color: rgba(212, 175, 55, 0.15);
+  outline: none;
+}
+
+/* === Responsive === */
+@media (max-width: 480px) {
+  .lang-block {
+    width: 90%;
+    height: 45px;
+  }
+
+  .lang-btn {
+    width: 100%;
+    height: 100%;
+    font-size: 0.9rem;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .lang-list {
+    width: 100%;
+    left: 0;
+  }
+}

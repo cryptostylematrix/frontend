@@ -1,0 +1,155 @@
+/* ===========================
+   Profile Status Block (Isolated)
+   =========================== */
+
+.profile-status-block {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(180deg, #fffefa 0%, #fff9f0 100%);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-left: 6px solid #d4af37;
+  border-radius: 14px;
+  padding: 1.25rem 1.75rem;
+  margin: 1.5rem auto;
+
+  /* 🔸 Make width consistent with profile-info */
+  width: 100%;
+  max-width: 900px;
+
+  /* 🔸 No shadows, no hover transition */
+  box-shadow: none;
+  transition: none;
+
+  font-family: 'Poppins', sans-serif;
+  color: #3a2e0e;
+}
+
+/* ---------- Icon ---------- */
+.profile-status-block .status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(212, 175, 55, 0.15);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.profile-status-block .status-icon svg {
+  width: 22px;
+  height: 22px;
+  color: #b4881d;
+}
+
+/* ---------- Text ---------- */
+.profile-status-block .status-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.profile-status-block .status-text strong {
+  font-size: 1.05rem;
+  color: #3a2e0e;
+}
+
+.profile-status-block .status-text p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #5a4a1a;
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 1024px) {
+  .profile-status-block {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.6rem 1.5rem;
+    width: 90%;
+    gap: 1.2rem;
+  }
+
+  .profile-status-block .status-icon {
+    width: 52px;
+    height: 52px;
+    background: rgba(212, 175, 55, 0.18);
+  }
+
+  .profile-status-block .status-icon svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .profile-status-block .status-text strong {
+    font-size: 1.15rem;
+  }
+
+  .profile-status-block .status-text p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 700px) {
+  .profile-status-block {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.8rem 1.4rem;
+    width: 92%;
+  }
+
+  .profile-status-block .status-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(212, 175, 55, 0.2);
+  }
+
+  .profile-status-block .status-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .profile-status-block .status-text strong {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .profile-status-block .status-text p {
+    font-size: 1.05rem;
+    line-height: 1.55;
+  }
+}
+
+/* ---------- Small Phones ---------- */
+@media (max-width: 400px) {
+  .profile-status-block {
+    padding: 1.5rem 1rem;
+    width: 94%;
+  }
+
+  .profile-status-block .status-icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .profile-status-block .status-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .profile-status-block .status-text strong {
+    font-size: 1.15rem;
+  }
+
+  .profile-status-block .status-text p {
+    font-size: 1rem;
+  }
+}

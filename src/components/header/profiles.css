@@ -1,0 +1,249 @@
+/* ===== profiles.css ===== */
+/* Profiles dropdown and modal — Crypto Style theme (flicker-free) */
+
+/* --- Container (visually styled) --- */
+.profile-block {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 200px; /* ✅ fixed width for desktop & tablet */
+  height: 40px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+
+  background-color: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 6px;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.profile-block:hover {
+  background-color: rgba(212, 175, 55, 0.25);
+  border-color: rgba(212, 175, 55, 0.6);
+  transform: scale(1.03);
+}
+
+/* --- Active state while dropdown open --- */
+.profile-block.active {
+  background-color: rgba(212, 175, 55, 0.25);
+  border-color: rgba(212, 175, 55, 0.6);
+  transform: scale(1.03);
+}
+
+/* --- Transparent inner buttons --- */
+.profile-btn,
+.profile-add-btn {
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+  color: #d4af37;
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+
+.profile-btn:hover,
+.profile-add-btn:hover {
+  color: #ffd700;
+}
+
+.profile-arrow {
+  font-size: 0.7rem;
+  margin-left: 4px;
+}
+
+/* --- Loader --- */
+.profile-loader {
+  color: #d4af37;
+  font-size: 0.9rem;
+}
+
+/* --- Dropdown --- */
+.profile-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: #14100b;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem 0;
+  min-width: 200px; /* ✅ match main width */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  z-index: 30;
+  animation: fadeIn 0.2s ease both;
+}
+
+.profile-dropdown li {
+  width: 100%;
+}
+
+.profile-dropdown li button {
+  background: none;
+  border: none;
+  color: #d4af37;
+  width: 100%;
+  text-align: left;
+  padding: 0.4rem 0.8rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.profile-dropdown li button:hover {
+  background-color: rgba(212, 175, 55, 0.15);
+  color: #ffd700;
+}
+
+.profile-dropdown .divider {
+  border-top: 1px solid rgba(212, 175, 55, 0.3);
+  margin: 0.3rem 0;
+}
+
+/* --- Modal --- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  animation: fadeIn 0.25s ease both;
+}
+
+.modal {
+  background: #1a1610;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  width: 300px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+  color: #d4af37;
+  animation: fadeIn 0.3s ease both;
+}
+
+.modal h3 {
+  margin-top: 0;
+  color: #ffd700;
+  text-align: center;
+}
+
+.modal input {
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  background: #14100b;
+  color: #ffd700;
+}
+
+.modal input:focus {
+  outline: none;
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 0 0 6px rgba(212, 175, 55, 0.3);
+}
+
+/* --- Modal actions --- */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.modal-actions button {
+  background-color: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #d4af37;
+  border-radius: 4px;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.modal-actions button:hover {
+  background-color: rgba(212, 175, 55, 0.3);
+  border-color: rgba(212, 175, 55, 0.6);
+}
+
+/* --- Fade animation --- */
+@keyframes fadeIn {
+  from {
+    opacity: 0.01;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Mobile (≤480px) --- */
+@media (max-width: 480px) {
+  .profile-block {
+    width: 90%;
+    height: 45px;
+  }
+
+  .profile-btn,
+  .profile-add-btn {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .profile-dropdown {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .modal {
+    width: 90%;
+    padding: 1rem;
+  }
+}
+
+/* --- Prevent scroll flicker when modal is open --- */
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal-error {
+  color: #ff6666;
+  font-size: 0.85rem;
+  margin: 0.3rem 0;
+  text-align: center;
+}
+
+/* --- Inactive / invalid profile buttons --- */
+.invalid-profile {
+  opacity: 0.5;
+  color: #999;
+  cursor: not-allowed;
+  background: none;
+}
+
+.invalid-profile:hover {
+  background: none;
+  color: #999;
+}
+
+/* --- Active selected profile --- */
+.active-profile {
+  background-color: rgba(212, 175, 55, 0.25);
+  color: #ffd700;
+  font-weight: 600;
+}

@@ -1,0 +1,113 @@
+{
+  "wallet": {
+    "connect": "Pénztárca csatlakoztatása",
+    "copyAddress": "Cím másolása",
+    "disconnect": "Leválasztás"
+  },
+  "profile": {
+    "checking": "Profilok ellenőrzése...",
+    "add": "+ Profil hozzáadása",
+    "select": "Profil kiválasztása",
+    "title": "Profil",
+    "update_link": "Frissítés",
+    "add_link": "Hozzáadás",
+    "create_link": "Létrehozás",
+    "add_login_label": "Bejelentkezés",
+    "add_login_placeholder": "Adja meg a bejelentkezést",
+    "add_btn": "Hozzáadás",
+    "cancel_btn": "Mégse",
+    "create_btn": "Létrehozás",
+    "create_login_label": "Bejelentkezés",
+    "create_login_placeholder": "Egyedi bejelentkezés",
+    "create_firstname_label": "Keresztnév",
+    "create_firstname_placeholder": "János",
+    "create_lastname_label": "Vezetéknév",
+    "create_lastname_placeholder": "Kovács",
+    "create_avatar_label": "Avatar URL",
+    "create_avatar_placeholder": "https://example.com/avatar.png",
+    "create_telegram_label": "Telegram felhasználónév",
+    "create_telegram_placeholder": "@username",
+    "save_btn": "Mentés",
+    "logout_btn": "Kijelentkezés",
+    "update_success": "Profil sikeresen mentve.",
+    "removed": "Profil eltávolítva.",
+    "confirm_logout": "Biztosan ki szeretne jelentkezni?",
+    "update_avatar_label": "Avatar URL",
+    "update_avatar_placeholder": "https://...",
+    "update_firstname_label": "Keresztnév",
+    "update_firstname_placeholder": "János",
+    "update_lastname_label": "Vezetéknév",
+    "update_lastname_placeholder": "Kovács",
+    "update_telegram_label": "Telegram felhasználónév",
+    "update_telegram_placeholder": "@username",
+    "errors": {
+      "wallet_not_connected": "A pénztárca nincs csatlakoztatva",
+      "unexpected": "Váratlan hiba történt",
+      "no_active": "Nincs aktív profil vagy pénztárca.",
+      "update_failed": "Hiba a profil frissítésekor."
+    },
+    "status": {
+      "wallet_title": "A pénztárca nincs csatlakoztatva!",
+      "wallet_description": "A webhely használatához csatlakoztassa a pénztárcáját.",
+      "profile_title": "Nincs hozzáadott profil.",
+      "profile_description": "A webhely használatához adjon hozzá egy profilt."
+    }
+  },
+  "footer": {
+    "channel": "Csatorna",
+    "privacy": "Adatvédelmi irányelvek",
+    "agreement": "Felhasználói megállapodás",
+    "copyright": "© {{year}} Crypto Style. Minden jog fenntartva."
+  },
+  "nav": {
+    "home_page": "Kezdőlap",
+    "profile_page": "Profil",
+    "finance_page": "Pénzügy",
+    "multi_page": "Multi"
+  },
+  "home": {
+    "loading": "Betöltés...",
+    "balance_error": "Hiba az egyenleg betöltésekor",
+    "balance_unit": "TON",
+    "avatar_alt": "Profil",
+    "no_avatar_alt": "Nincs avatar"
+  },
+  "finance": {
+    "title": "Pénzügy"
+  },
+  "multi": {
+    "title": "Multi",
+    "inviter_link": "Meghívó",
+    "structure_link": "Struktúra",
+    "matrixes_link": "Mátrixok",
+    "marketing_link": "Marketing",
+    "stat_link": "Statisztika"
+  },
+  "common": {
+    "warning": {
+      "title": "Az oldal fejlesztés alatt áll",
+      "description": "Egyes funkciók még nem elérhetők."
+    }
+  },
+  "errors": {
+    "err_wallet_not_connected": "A pénztárca nincs csatlakoztatva.",
+    "err_profile_exists": "A profil már létezik.",
+    "err_profile_not_found": "A profil nem található.",
+    "err_invalid_login": "Érvénytelen bejelentkezés.",
+    "err_network": "Hálózati hiba.",
+    "err_unexpected": "Váratlan hiba történt.",
+    "err_is_not_deployed": "A szerződés nincs telepítve.",
+    "err_contract_doesnot_belong_to_the_wallet": "Ez a szerződés nem a pénztárcához tartozik.",
+    "err_invalid_wallet_address": "Érvénytelen pénztárca-cím.",
+    "err_network_timeout": "Hálózati időtúllépés.",
+    "err_rpc_unreachable": "Az RPC szerver nem elérhető.",
+    "err_balance_fetch_failed": "A pénztárca egyenlegének lekérése nem sikerült.",
+
+    "err_local_storage_read_failed": "Nem sikerült beolvasni az adatokat a helyi tárolóból.",
+    "err_local_storage_write_failed": "Nem sikerült adatokat írni a helyi tárolóba.",
+    "err_local_storage_clear_failed": "Nem sikerült törölni a helyi tárolót.",
+
+    "err_user_rejected_transaction": "A felhasználó elutasította a tranzakciót.",
+    "err_transaction_failed": "A tranzakció sikertelen volt."
+  }
+}

@@ -1,0 +1,113 @@
+/* ===========================
+   Multi Page Submenu
+   =========================== */
+
+
+/* Profile Page Layout */
+.profile-page {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.profile-submenu {
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(180deg, #fffefa 0%, #fff9f0 100%);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 14px;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  max-width: 900px;
+  margin: 1.5rem auto;
+  font-family: 'Poppins', sans-serif;
+}
+
+.profile-submenu ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-submenu a {
+  text-decoration: none;
+  color: #3a2e0e;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.25rem 0;
+  position: relative;
+}
+
+.profile-submenu a::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 0;
+  background-color: #d4af37;
+  transition: width 0.2s ease;
+  margin-top: 4px;
+}
+
+.profile-submenu a:hover::after {
+  width: 100%;
+}
+
+/* ===========================
+   Active Link Styling
+   =========================== */
+
+.profile-submenu a.active {
+  color: #d4af37; /* Gold accent */
+  font-weight: 600;
+}
+
+.profile-submenu a.active::after {
+  width: 100%; /* Keep underline visible */
+  background-color: #d4af37;
+}
+
+/* ===========================
+   Responsive
+   =========================== */
+
+@media (max-width: 1024px) {
+  .profile-submenu {
+    padding: 1rem 1rem;
+  }
+
+  .profile-submenu ul {
+    gap: 1.5rem;
+  }
+
+  .profile-submenu a {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .profile-submenu {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.2rem 1rem;
+  }
+
+  .profile-submenu ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .profile-submenu a {
+    font-size: 1.15rem;
+  }
+
+  .profile-submenu a::after {
+    margin: 2px auto 0;
+  }
+}
