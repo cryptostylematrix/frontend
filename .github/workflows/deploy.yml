@@ -25,6 +25,11 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: List built files
+        run: |
+          echo "=== Contents of host/frontend after build ==="
+          ls -R host/frontend || true
+
       - name: Create SPA fallback
         run: cp ./host/frontend/dist/index.html ./host/frontend/dist/404.html
 
