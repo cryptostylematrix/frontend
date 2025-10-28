@@ -25,16 +25,11 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: List built files
-        run: |
-          echo "=== Contents of host/frontend after build ==="
-          ls -R host/frontend || true
-
       - name: Create SPA fallback
-        run: cp ./host/frontend/dist/index.html ./host/frontend/dist/404.html
+        run: cp ./dist/index.html ./dist/404.html
 
       - name: Add .nojekyll
-        run: touch host/frontend/dist/.nojekyll
+        run: touch ./dist/.nojekyll
 
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v4
