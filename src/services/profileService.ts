@@ -116,7 +116,7 @@ function packProfile(
     const formattedImageUrl =
         toLower(imageUrl) && toLower(imageUrl) !== ''
             ? toLower(imageUrl)
-            : 'https://cs.lfstyler.com/cs-big.png';
+            : 'https://cryptostylematrix.github.io/frontend/cs-big.png';
     const formattedFirstName = capitalize(firstName);
     const formattedLastName = capitalize(lastName);
     const formattedTgUsername = toLower(tgUsername);
@@ -182,7 +182,7 @@ export async function createProfile(
   const normalizedImageUrl =
     toLower(imageUrl) && toLower(imageUrl) !== ''
       ? toLower(imageUrl)
-      : 'https://cs.lfstyler.com/cs-big.png';
+      : 'https://cryptostylematrix.github.io/frontend/cs-big.png';
   const normalizedFirstName = capitalize(firstName);
   const normalizedLastName = capitalize(lastName);
   const normalizedTgUsername = toLower(tgUsername);
@@ -257,7 +257,7 @@ export async function updateProfile(
   const normalizedImageUrl =
     toLower(imageUrl) && toLower(imageUrl) !== ''
       ? toLower(imageUrl)
-      : 'https://cs.lfstyler.com/cs-big.png';
+      : 'https://cryptostylematrix.github.io/frontend/cs-big.png';
   const normalizedFirstName = capitalize(firstName);
   const normalizedLastName = capitalize(lastName);
   const normalizedTgUsername = toLower(tgUsername);
@@ -419,7 +419,7 @@ export async function getProfile(
     const normalizedImageUrl =
       toLower(result['image']) && toLower(result['image']) !== ''
         ? toLower(result['image'])
-        : 'https://cs.lfstyler.com/cs-big.png';
+        : 'https://cryptostylematrix.github.io/frontend/cs-big.png';
     const normalizedFirstName = capitalize(firstName);
     const normalizedLastName = capitalize(lastName);
     const normalizedTgUsername = toLower(tgUsername);
