@@ -25,6 +25,12 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Create SPA fallback
+        run: cp host/frontend/dist/index.html host/frontend/dist/404.html
+
+      - name: Add .nojekyll
+        run: touch host/frontend/dist/.nojekyll
+
       - name: Upload production-ready build files
         uses: actions/upload-artifact@v4
         with:

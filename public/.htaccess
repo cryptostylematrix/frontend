@@ -1,13 +1,12 @@
-<IfModule mod_rewrite.c>
+<!-- <IfModule mod_rewrite.c>
+
   RewriteEngine On
-  RewriteBase /host/frontend/
-
-  # Don't rewrite the index.html file
+  RewriteBase /frontend
   RewriteRule ^index\.html$ - [L]
-
-  # Redirect everything else to index.html
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-l
-  RewriteRule . /host/frontend/index.html [L]
-</IfModule>
+  RewriteRule . /index.html [L]
+
+</IfModule> -->
+
