@@ -26,7 +26,7 @@ jobs:
         run: npm run build
 
       - name: Create SPA fallback
-        run: cp host/frontend/dist/index.html host/frontend/dist/404.html
+        run: cp ./host/frontend/dist/index.html ./host/frontend/dist/404.html
 
       - name: Add .nojekyll
         run: touch host/frontend/dist/.nojekyll
