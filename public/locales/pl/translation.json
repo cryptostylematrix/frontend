@@ -83,6 +83,28 @@
     "marketing_link": "Marketing",
     "stat_link": "Statystyka"
   },
+  "multiMatrix": {
+    "filters": {
+      "title": "Filtry",
+      "show": "Pokaż",
+      "hide": "Ukryj",
+      "matrixes": "Macierze",
+      "places": "Miejsca",
+      "noPlaces": "Brak miejsc",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Szukaj",
+      "searchPlaceholder": "login",
+      "locks": "Blokowania",
+      "noLocks": "Brak blokowań",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Kup nowe miejsce ({{price}} TON)",
+      "confirmBuy": "Jesteś pewien?",
+      "buySuccess": "Nowe miejsce wkrótce pojawi się na liście.",
+      "buyFail": "Niepowodzenie",
+      "loadMore": "Załaduj więcej",
+      "nextPos": "Następna pozycja"
+    }
+  },
   "common": {
     "warning": {
       "title": "Strona jest w budowie",
@@ -102,6 +124,12 @@
     "err_network_timeout": "Przekroczono limit czasu sieci.",
     "err_rpc_unreachable": "Serwer RPC jest niedostępny.",
     "err_balance_fetch_failed": "Nie udało się pobrać salda portfela.",
+    "err_invalid_payload": "Nieprawidłowe dane.",
+    "err_unauthorized": "Brak autoryzacji.",
+    "err_insufficient_funds": "Niewystarczające środki.",
+    "err_forbidden": "Dostęp zabroniony.",
+    "err_not_found": "Nie znaleziono.",
+    "err_invalid_workchain": "Nieprawidłowy workchain.",
 
     "err_local_storage_read_failed": "Nie udało się odczytać danych z pamięci lokalnej.",
     "err_local_storage_write_failed": "Nie udało się zapisać danych do pamięci lokalnej.",

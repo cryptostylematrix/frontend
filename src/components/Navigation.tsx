@@ -35,10 +35,9 @@ export default function Navigation() {
               key={to}
               to={to}
               className={isActive ? "active" : ""}
-              aria-current={isActive ? "page" : undefined}
-            >
-              {icon}
-              {!compact && <span className="link-text">{label}</span>}
+              aria-current={isActive ? "page" : undefined}>
+                {icon}
+                {!compact && <span className="link-text">{label}</span>}
             </Link>
           );
         })}

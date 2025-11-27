@@ -19,7 +19,14 @@ export const ErrorCode = {
     LOCAL_STORAGE_CLEAR_FAILED: "err_local_storage_clear_failed",
 
     USER_REJECTED_TRANSACTION: "err_user_rejected_transaction",
-    TRANSACTION_FAILED: "err_transaction_failed"
+    TRANSACTION_FAILED: "err_transaction_failed",
+
+    INVALID_PAYLOAD: "err_invalid_payload",
+    UNAUTHORIZED: "err_unauthorized",
+    INSUFFICIENT_FUNDS: "err_insufficient_funds",
+    FORBIDDEN: "err_forbidden",
+    NOT_FOUND: "err_not_found",
+    INVALID_WORKCHAIN: "err_invalid_workchain"
 
 } as const;
 

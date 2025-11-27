@@ -16,6 +16,11 @@ import Navigation from "./components/Navigation";
 
 import { ProfileProvider } from "./context/ProfileContext";
 import { useTonConnectUI } from "@tonconnect/ui-react";
+import MultiInviter from "./pages/multi/MultiInviter";
+import MultiStructure from "./pages/multi/MultiStructure";
+import MultiMatrixes from "./pages/multi/MultiMatrixes";
+import MultiMarketing from "./pages/multi/MultiMarketing";
+import MultiStat from "./pages/multi/MultiStat";
 
 /**
  * Wallet context shared globally
@@ -52,7 +57,15 @@ function App() {
                 </Route>
 
                 <Route path="/finance" element={<Finance />} />
-                <Route path="/multi" element={<Multi />} />
+                
+                <Route path="/multi" element={<Multi />}>
+                  <Route index element={<Navigate to="inviter" replace />} />
+                  <Route path="inviter" element={<MultiInviter />} />
+                  <Route path="structure" element={< MultiStructure />} />
+                  <Route path="matrixes" element={<MultiMatrixes />} />
+                  <Route path="marketing" element={<MultiMarketing />} />
+                  <Route path="stat" element={<MultiStat />} />
+                </Route>
               </Routes>
             </div>
           </main>

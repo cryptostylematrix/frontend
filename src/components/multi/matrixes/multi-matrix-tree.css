@@ -1,0 +1,55 @@
+.matrix-row--layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.tree-panel,
+.details-panel {
+  background: linear-gradient(180deg, #fffefa 0%, #fff9f0 100%);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.panel-label {
+  margin: 0 0 0.75rem;
+  font-weight: 600;
+  color: #3a2e0e;
+}
+
+.tree-level {
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.tree-level.level-1 {
+  grid-template-columns: repeat(1, minmax(120px, 1fr));
+}
+
+.tree-level.level-2 {
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+}
+
+.tree-level.level-3 {
+  grid-template-columns: repeat(4, minmax(110px, 1fr));
+}
+
+.tree-node {
+  width: 100%;
+  text-align: center;
+  padding: 0.65rem 0.5rem;
+  background: #fff;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 10px;
+  box-shadow: 0 6px 14px rgba(212, 175, 55, 0.1);
+}
+
+@media (max-width: 1024px) {
+  .matrix-row--layout {
+    grid-template-columns: 1fr;
+  }
+}

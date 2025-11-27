@@ -83,6 +83,28 @@
     "marketing_link": "Маркетинг",
     "stat_link": "Статистика"
   },
+  "multiMatrix": {
+    "filters": {
+      "title": "Сүзгілер",
+      "show": "Көрсету",
+      "hide": "Жасыру",
+      "matrixes": "Матрицалар",
+      "places": "Орындар",
+      "noPlaces": "Орындар жоқ",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Іздеу",
+      "searchPlaceholder": "логин",
+      "locks": "Блоктаулар",
+      "noLocks": "Блоктаулар жоқ",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Жаңа орынды сатып алу ({{price}} TON)",
+      "confirmBuy": "Сіз сенімдісіз бе?",
+      "buySuccess": "Жаңа орын жақында тізімде пайда болады.",
+      "buyFail": "Сәтсіз",
+      "loadMore": "Көбірек жүктеу",
+      "nextPos": "Келесі позиция"
+    }
+  },
   "common": {
     "warning": {
       "title": "Сайт әзірлену үстінде",
@@ -102,6 +124,12 @@
     "err_network_timeout": "Желі күту уақыты аяқталды.",
     "err_rpc_unreachable": "RPC серверіне қосылу мүмкін емес.",
     "err_balance_fetch_failed": "Әмиян балансы алынбады.",
+    "err_invalid_payload": "Жарамсыз деректер.",
+    "err_unauthorized": "Рұқсат жоқ.",
+    "err_insufficient_funds": "Қаражат жеткіліксіз.",
+    "err_forbidden": "Қол жеткізуге тыйым салынған.",
+    "err_not_found": "Табылмады.",
+    "err_invalid_workchain": "Жарамсыз workchain.",
 
     "err_local_storage_read_failed": "Жергілікті сақтау орнынан деректерді оқу мүмкін болмады.",
     "err_local_storage_write_failed": "Жергілікті сақтау орнына деректерді жазу мүмкін болмады.",

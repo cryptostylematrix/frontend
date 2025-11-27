@@ -83,6 +83,28 @@
     "marketing_link": "Marketing",
     "stat_link": "Statistiche"
   },
+  "multiMatrix": {
+    "filters": {
+      "title": "Filtri",
+      "show": "Mostra",
+      "hide": "Nascondi",
+      "matrixes": "Matrici",
+      "places": "Posti",
+      "noPlaces": "Nessun posto",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Cerca",
+      "searchPlaceholder": "login",
+      "locks": "Bloccaggi",
+      "noLocks": "Nessun bloccaggio",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Compra un nuovo posto ({{price}} TON)",
+      "confirmBuy": "Sei sicuro?",
+      "buySuccess": "Il nuovo posto apparirà presto nell'elenco.",
+      "buyFail": "Errore",
+      "loadMore": "Carica altro",
+      "nextPos": "Prossima pos"
+    }
+  },
   "common": {
     "warning": {
       "title": "Sito in fase di sviluppo",
@@ -102,6 +124,12 @@
     "err_network_timeout": "Timeout di rete.",
     "err_rpc_unreachable": "Server RPC non raggiungibile.",
     "err_balance_fetch_failed": "Impossibile recuperare il saldo del portafoglio.",
+    "err_invalid_payload": "Payload non valido.",
+    "err_unauthorized": "Non autorizzato.",
+    "err_insufficient_funds": "Fondi insufficienti.",
+    "err_forbidden": "Accesso negato.",
+    "err_not_found": "Non trovato.",
+    "err_invalid_workchain": "Workchain non valido.",
 
     "err_local_storage_read_failed": "Impossibile leggere i dati dall'archiviazione locale.",
     "err_local_storage_write_failed": "Impossibile scrivere i dati nell'archiviazione locale.",

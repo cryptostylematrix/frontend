@@ -83,6 +83,28 @@
     "marketing_link": "Marketing",
     "stat_link": "Statisztika"
   },
+  "multiMatrix": {
+    "filters": {
+      "title": "Szűrők",
+      "show": "Mutat",
+      "hide": "Elrejt",
+      "matrixes": "Mátrixok",
+      "places": "Helyek",
+      "noPlaces": "Nincsenek helyek",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Keresés",
+      "searchPlaceholder": "login",
+      "locks": "Blokkolások",
+      "noLocks": "Nincsenek blokkolások",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Új hely vásárlása ({{price}} TON)",
+      "confirmBuy": "Biztos benne?",
+      "buySuccess": "Az új hely hamarosan megjelenik a listában.",
+      "buyFail": "Sikertelen",
+      "loadMore": "Továbbiak betöltése",
+      "nextPos": "Következő pozíció"
+    }
+  },
   "common": {
     "warning": {
       "title": "Az oldal fejlesztés alatt áll",
@@ -102,6 +124,12 @@
     "err_network_timeout": "Hálózati időtúllépés.",
     "err_rpc_unreachable": "Az RPC szerver nem elérhető.",
     "err_balance_fetch_failed": "A pénztárca egyenlegének lekérése nem sikerült.",
+    "err_invalid_payload": "Érvénytelen adatok.",
+    "err_unauthorized": "Nincs jogosultság.",
+    "err_insufficient_funds": "Nincs elég fedezet.",
+    "err_forbidden": "Hozzáférés megtagadva.",
+    "err_not_found": "Nem található.",
+    "err_invalid_workchain": "Érvénytelen workchain.",
 
     "err_local_storage_read_failed": "Nem sikerült beolvasni az adatokat a helyi tárolóból.",
     "err_local_storage_write_failed": "Nem sikerült adatokat írni a helyi tárolóba.",

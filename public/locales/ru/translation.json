@@ -83,6 +83,28 @@
     "marketing_link": "Маркетинг",
     "stat_link": "Статистика"
   },
+  "multiMatrix": {
+    "filters": {
+      "title": "Фильтры",
+      "show": "Показать",
+      "hide": "Скрыть",
+      "matrixes": "Матрицы",
+      "places": "Места",
+      "noPlaces": "Нет мест",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Поиск",
+      "searchPlaceholder": "логин",
+      "locks": "Блокировки",
+      "noLocks": "Нет блокировок",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Купить новое место ({{price}} TON)",
+      "confirmBuy": "Вы уверены?",
+      "buySuccess": "Новое место скоро появится в списке.",
+      "buyFail": "Ошибка",
+      "loadMore": "Загрузить ещё",
+      "nextPos": "Следующая позиция"
+    }
+  },
   "common": {
     "warning": {
       "title": "Сайт находится в разработке",
@@ -102,6 +124,12 @@
     "err_network_timeout": "Превышено время ожидания сети.",
     "err_rpc_unreachable": "RPC сервер недоступен.",
     "err_balance_fetch_failed": "Не удалось получить баланс кошелька.",
+    "err_invalid_payload": "Некорректные данные.",
+    "err_unauthorized": "Не авторизовано.",
+    "err_insufficient_funds": "Недостаточно средств.",
+    "err_forbidden": "Доступ запрещен.",
+    "err_not_found": "Не найдено.",
+    "err_invalid_workchain": "Неверный воркчейн.",
 
     "err_local_storage_read_failed": "Не удалось прочитать данные из локального хранилища.",
     "err_local_storage_write_failed": "Не удалось записать данные в локальное хранилище.",

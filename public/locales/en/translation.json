@@ -83,6 +83,28 @@
     "marketing_link": "Marketing",
     "stat_link": "Stat"
   },
+  "multiMatrix": {
+    "filters": {
+      "title": "Filters",
+      "show": "Show",
+      "hide": "Hide",
+      "matrixes": "Matrixes",
+      "places": "Places",
+      "noPlaces": "No places",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Search",
+      "searchPlaceholder": "login",
+      "locks": "Blocks",
+      "noLocks": "No blocks",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Buy new place ({{price}} TON)",
+      "confirmBuy": "Are you sure?",
+      "buySuccess": "New place will appear on places list soon.",
+      "buyFail": "Fail",
+      "loadMore": "Load more",
+      "nextPos": "Next pos"
+    }
+  },
   "common": {
     "warning": {
       "title": "Site is under development",
@@ -102,6 +124,12 @@
     "err_network_timeout": "Network timeout.",
     "err_rpc_unreachable": "RPC server unreachable.",
     "err_balance_fetch_failed": "Failed to fetch wallet balance.",
+    "err_invalid_payload": "Invalid payload.",
+    "err_unauthorized": "Unauthorized.",
+    "err_insufficient_funds": "Insufficient funds.",
+    "err_forbidden": "Forbidden.",
+    "err_not_found": "Not found.",
+    "err_invalid_workchain": "Invalid workchain.",
 
     "err_local_storage_read_failed": "Failed to read data from local storage.",
     "err_local_storage_write_failed": "Failed to write data to local storage.",

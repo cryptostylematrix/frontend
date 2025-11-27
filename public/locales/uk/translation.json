@@ -83,6 +83,28 @@
     "marketing_link": "Маркетинг",
     "stat_link": "Статистика"
   },
+  "multiMatrix": {
+    "filters": {
+      "title": "Фільтри",
+      "show": "Показати",
+      "hide": "Сховати",
+      "matrixes": "Матриці",
+      "places": "Місця",
+      "noPlaces": "Немає місць",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Пошук",
+      "searchPlaceholder": "логін",
+      "locks": "Блокування",
+      "noLocks": "Немає блокувань",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Купити нове місце ({{price}} TON)",
+      "confirmBuy": "Ви впевнені?",
+      "buySuccess": "Нове місце скоро з'явиться у списку.",
+      "buyFail": "Помилка",
+      "loadMore": "Завантажити ще",
+      "nextPos": "Наступна позиція"
+    }
+  },
   "common": {
     "warning": {
       "title": "Сайт у розробці",
@@ -102,6 +124,12 @@
     "err_network_timeout": "Час очікування мережі вичерпано.",
     "err_rpc_unreachable": "RPC-сервер недоступний.",
     "err_balance_fetch_failed": "Не вдалося отримати баланс гаманця.",
+    "err_invalid_payload": "Некоректні дані.",
+    "err_unauthorized": "Немає авторизації.",
+    "err_insufficient_funds": "Недостатньо коштів.",
+    "err_forbidden": "Доступ заборонено.",
+    "err_not_found": "Не знайдено.",
+    "err_invalid_workchain": "Невірний workchain.",
 
     "err_local_storage_read_failed": "Не вдалося зчитати дані з локального сховища.",
     "err_local_storage_write_failed": "Не вдалося записати дані до локального сховища.",
