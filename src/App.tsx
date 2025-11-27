@@ -8,7 +8,7 @@ import AddProfile from "./pages/profile/AddProfile";
 import CreateProfile from "./pages/profile/CreateProfile";
 import UpdateProfile from "./pages/profile/UpdateProfile";
 import Finance from "./pages/Finance";
-import Multi from "./pages/Multi";
+import Multi from "./pages/multi/Multi";
 
 import Header from "./components/header/Header";
 import Footer from "./components/Footer";
