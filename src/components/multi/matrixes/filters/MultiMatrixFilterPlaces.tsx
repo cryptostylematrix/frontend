@@ -9,14 +9,10 @@ import { useMatrixContext } from "../../../../context/MatrixContext";
 
 const pad2 = (n: number) => n.toString().padStart(2, "0");
 
-interface Props {
-  matrixId: number;
-}
-
-export default function MultiMatrixFilterPlaces({ matrixId: selected_m }: Props) {
+export default function MultiMatrixFilterPlaces() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
-  const { selectedPlaceId, setSelection } = useMatrixContext();
+  const { selectedPlaceAddress, setSelectedPlace, selectedMatrix } = useMatrixContext();
 
   
   const PAGE_SIZE = 8;
@@ -41,25 +37,18 @@ export default function MultiMatrixFilterPlaces({ matrixId: selected_m }: Props)
     }
 
     setLoading(true);
-    fetchPlaces(selected_m, currentProfile, 1, PAGE_SIZE)
+    fetchPlaces(selectedMatrix, currentProfile.login, 1, PAGE_SIZE)
       .then((data) => {
         if (cancelled) return;
         setPlaces(data.items);
-        const found = selectedPlaceId
-          ? data.items.find((p) => p.place_number === selectedPlaceId)
-          : undefined;
-        if (found) {
-          setSelection(found.place_number, found.address);
-        } else if (!selectedPlaceId) {
-          if (data.items[0]) {
-            setSelection(data.items[0].place_number, data.items[0].address);
+        if (data.items[0]) {
+            setSelectedPlace(data.items[0].address);
           } else {
-            setSelection(undefined, undefined);
+            setSelectedPlace(undefined);
           }
-        }
-        setPage(data.page);
-        setTotalPages(data.totalPages);
-      })
+          setPage(data.page);
+          setTotalPages(data.totalPages);
+        })
       .finally(() => {
         if (cancelled) return;
         setLoading(false);
@@ -68,7 +57,7 @@ export default function MultiMatrixFilterPlaces({ matrixId: selected_m }: Props)
     return () => {
       cancelled = true;
     };
-  }, [selected_m, currentProfile]);
+  }, [selectedMatrix, currentProfile]);
 
   const groupedPlaces = useMemo(() => {
     const groups: Record<string, MatrixPlace[]> = {};
@@ -92,19 +81,19 @@ export default function MultiMatrixFilterPlaces({ matrixId: selected_m }: Props)
   }, [places]);
 
   const formatPlaceLabel = (place: MatrixPlace) => {
-    const label = `[${place.place_number}] ${place.index}`;
+    const label = `[${place.place_number}] ${place.login} (${place.fill_count}/6) ${place.clone ? t("multiMatrix.filters.clone", "clone") : ""}`;
     return { label, isFull: place.fill_count >= 6 };
   };
 
   const selectedPlaceLabel = useMemo(() => {
     if (loading) return t("home.loading");
-    const found = places.find((p) => p.place_number === selectedPlaceId);
+    const found = places.find((p) => p.address === selectedPlaceAddress);
     if (!found) {
       return places.length > 0 ? "..." : t("multiMatrix.filters.noPlaces", "No places");
     }
     const { label } = formatPlaceLabel(found);
     return label;
-  }, [loading, places, selectedPlaceId, t]);
+  }, [loading, places, selectedPlaceAddress, t]);
 
   return (
     <label className="filter-field">
@@ -141,7 +130,7 @@ export default function MultiMatrixFilterPlaces({ matrixId: selected_m }: Props)
                   <div className="custom-select__group">{date}</div>
               {items.map((place) => {
                 const { label, isFull } = formatPlaceLabel(place);
-                const isSelected = place.place_number === selectedPlaceId;
+                const isSelected = place.address === selectedPlaceAddress;
                 return (
                   <div
                         key={place.place_number}
@@ -152,7 +141,7 @@ export default function MultiMatrixFilterPlaces({ matrixId: selected_m }: Props)
                         } ${isSelected ? "is-selected" : ""}`}
                         onMouseDown={(e) => {
                           e.preventDefault();
-                          setSelection(place.place_number, place.address);
+                          setSelectedPlace(place.address);
                           setIsPlacesOpen(false);
                         }}
                       >
@@ -175,7 +164,7 @@ export default function MultiMatrixFilterPlaces({ matrixId: selected_m }: Props)
                 onClick={() => {
                   if (loadingMore) return;
                   setLoadingMore(true);
-                  fetchPlaces(selected_m, currentProfile!, page + 1, PAGE_SIZE)
+                  fetchPlaces(selectedMatrix, currentProfile!.login, page + 1, PAGE_SIZE)
                     .then((data) => {
                       setPlaces((prev) => [...prev, ...data.items]);
                       setPage(data.page);

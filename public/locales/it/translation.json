@@ -102,7 +102,22 @@
       "buySuccess": "Il nuovo posto apparirà presto nell'elenco.",
       "buyFail": "Errore",
       "loadMore": "Carica altro",
-      "nextPos": "Prossima pos"
+      "nextPos": "Prossima pos",
+      "clone": "clone"
+    },
+    "tree": {
+      "up": "Su ▲",
+      "placesBelow_one": "{{formattedCount}} posto sotto",
+      "placesBelow_other": "{{formattedCount}} posti sotto",
+      "unlock": "Sblocca",
+      "lock": "Blocca",
+      "unlockSuccess": "Posizione sbloccata.",
+      "lockSuccess": "Posizione bloccata.",
+      "select": "Seleziona ▼",
+      "buy": "Compra ({{price}} TON)",
+      "loadingPath": "Caricamento percorso...",
+      "breadcrumbEmpty": "I breadcrumb appariranno dopo aver selezionato un posto.",
+      "breadcrumbs": "Breadcrumb"
     }
   },
   "common": {
@@ -130,11 +145,9 @@
     "err_forbidden": "Accesso negato.",
     "err_not_found": "Non trovato.",
     "err_invalid_workchain": "Workchain non valido.",
-
     "err_local_storage_read_failed": "Impossibile leggere i dati dall'archiviazione locale.",
     "err_local_storage_write_failed": "Impossibile scrivere i dati nell'archiviazione locale.",
     "err_local_storage_clear_failed": "Impossibile cancellare l'archiviazione locale.",
-
     "err_user_rejected_transaction": "Transazione rifiutata dall'utente.",
     "err_transaction_failed": "Transazione non riuscita."
   }

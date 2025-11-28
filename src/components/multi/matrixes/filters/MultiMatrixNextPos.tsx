@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./multi-matrix-nextpos.css";
-import type { Profile } from "../../../../utils/profileStorage";
 import { getNextPos } from "../../../../services/matrixService";
-import type { Address } from "@ton/core";
+import { useMatrixContext } from "../../../../context/MatrixContext";
+import { useProfileContext } from "../../../../context/ProfileContext";
 
-interface Props {
-  matrixId: number;
-  currentProfile?: Profile | null;
-  onSelect?: (id: number, addr: Address) => void;
-}
 
-export default function NextPosButton({ matrixId, currentProfile, onSelect }: Props) {
+export default function NextPosButton() {
+  const { currentProfile } = useProfileContext();
   const { t } = useTranslation();
-  const [nextPos, setNextPos] = useState<{ id: number; address: Address } | null>(null);
+  const { setSelection, selectedMatrix } = useMatrixContext();
+  const [nextPos, setNextPos] = useState<{ address: string } | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -22,20 +19,20 @@ export default function NextPosButton({ matrixId, currentProfile, onSelect }: Pr
       return;
     }
     setLoading(true);
-    getNextPos(matrixId, currentProfile)
+    getNextPos(selectedMatrix, currentProfile.address)
       .then((next) => {
-        setNextPos(next ? { id: next.place_number, address: next.address } : null);
+        setNextPos(next ? { address: next.address } : null);
       })
       .finally(() => setLoading(false));
-  }, [matrixId, currentProfile]);
+  }, [selectedMatrix, currentProfile]);
 
   return (
     <button
       type="button"
       className="next-pos-button"
       onClick={() => {
-        if (!nextPos || !onSelect) return;
-        onSelect(nextPos.id, nextPos.address);
+        if (!nextPos) return;
+        setSelection(nextPos.address);
       }}
       disabled={!nextPos || loading}
     >

@@ -1,16 +1,18 @@
+
 import { Address } from "@ton/core";
 import { ErrorCode } from "../errors/ErrorCodes";
-import type { Profile } from "../utils/profileStorage";
+
+const fallbackImage = "https://cryptostylematrix.github.io/frontend/cs-big.png";
 
 export type MatrixPlace = {
-  id: number;
+  address: string;
+  parent_address: string | null;
   place_number: number;
   created_at: number;
   fill_count: number;
   clone: number; // 1 means clone
   login: string;
   index: string;
-  address: Address;
 };
 
 export type PaginatedPlaces = {
@@ -18,6 +20,27 @@ export type PaginatedPlaces = {
   page: number;
   totalPages: number;
 };
+
+export type TreeFilledNode = {
+  kind: "filled";
+  locked: boolean;
+  address: string;
+  parent_address: string;
+  descendants: number;
+  place_number: number;
+  clone: number;
+  created_at: number;
+  login: string;
+  image_url: string;
+  children?: [TreeNode | undefined, TreeNode | undefined];
+};
+
+export type TreeEmptyNode = {
+  kind: "empty";
+  is_next_pos: boolean;
+};
+
+export type TreeNode = TreeFilledNode | TreeEmptyNode;
 
 export type BuyPlaceResult =
   | { success: true }
@@ -57,61 +80,64 @@ const delay = async (min = 300, max = 900) => {
   return new Promise((resolve) => setTimeout(resolve, duration));
 };
 
-const generatePlaces = (matrixId: number): MatrixPlace[] => {
+const generatePlaces = (m: number): MatrixPlace[] => {
   const hasPlaces = Math.random() >= 0.5;
   if (!hasPlaces) return [];
 
-  const baseCount = 5 + (matrixId % 4);
+  const baseCount = 5 + (m % 4);
   const count = baseCount + Math.floor(Math.random() * 10); // 5-14+ depending on matrix
 
   return Array.from({ length: count }, (_, idx) => {
     const id = idx + 1;
     const login = loginPool[Math.floor(Math.random() * loginPool.length)];
     const now = new Date();
-    now.setDate(now.getDate() - Math.floor((id + matrixId) / 6));
-    now.setHours(9 + ((id + matrixId) % 8), (id * 7) % 60, (id * 13) % 60, 0);
+    now.setDate(now.getDate() - Math.floor((id + m) / 6));
+    now.setHours(9 + ((id + m) % 8), (id * 7) % 60, (id * 13) % 60, 0);
     return {
-      id,
+      address: Address.parse(`0:${id.toString(16).padStart(64, "0")}`).toString(),
+      parent_address: id > 1 ? Address.parse(`0:${Math.floor(id / 2).toString(16).padStart(64, "0")}`).toString() : null,
       place_number: id,
       created_at: now.getTime(),
-      fill_count: (id + matrixId) % 7,
-      clone: (id + matrixId) % 3 === 0 ? 1 : 0,
+      fill_count: (id + m) % 7,
+      clone: (id + m) % 3 === 0 ? 1 : 0,
       login,
       index: `${login}${id}`,
-      address: Address.parse(`0:${id.toString(16).padStart(64, "0")}`),
+
     };
   });
 };
 
-const resolveAddress = (profile?: Profile | null): Address | null => {
-  if (!profile?.wallet) return null;
-  try {
-    return Address.parse(profile.wallet);
-  } catch (err) {
-    console.warn("Invalid profile wallet address", err);
-    return null;
-  }
-};
-
-export async function getRootPlace(m: number, profile: Profile): Promise<MatrixPlace | null> {
+export async function getRootPlace(m: number, profile_addr: string): Promise<MatrixPlace | null> {
   await delay();
+  if (!profile_addr) return null;
+
   const places = generatePlaces(m);
   return places[0] ?? null;
 }
 
-export async function getNextPos(m: number, profile: Profile): Promise<MatrixPlace | null> {
+export async function getNextPos(m: number, profile_addr: string): Promise<MatrixPlace | null> {
   await delay();
+  if (!profile_addr) return null;
+
   const places = generatePlaces(m);
   return places[1] ?? null;
 }
 
-export async function fetchPlaces(
-  m: number,
-  profile: Profile,
-  page = 1,
-  pageSize = 50
-): Promise<PaginatedPlaces> {
+export async function getPath(root_addr: string, place_addr: string): Promise<MatrixPlace[] | null> {
   await delay();
+
+  if (!root_addr) return null;
+  if (!place_addr) return null;
+
+  const randomM = Math.floor(Math.random() * 6) + 1; // 1..6
+  const all = generatePlaces(randomM);
+  return all.length ? all : null;
+}
+
+export async function fetchPlaces(m: number, profile_addr: string, page = 1, pageSize = 50): Promise<PaginatedPlaces> {
+  await delay();
+  if (!profile_addr) return { items: [], page: 1, totalPages: 1 };
+
   const all = generatePlaces(m);
   const start = Math.max(0, (page - 1) * pageSize);
   const end = start + pageSize;
@@ -120,24 +146,90 @@ export async function fetchPlaces(
   return { items, page, totalPages };
 }
 
-export async function fetchLocks(
-  m: number,
-  profile: Profile,
-  page = 1,
-  pageSize = 50
-): Promise<PaginatedPlaces> {
-  return fetchPlaces(m, profile, page, pageSize);
+export async function getMatrix(place_addr: string, profile_addr: string): Promise<TreeNode> {
+  await delay();
+  if (!place_addr?.trim() || !profile_addr?.trim()) return { kind: "empty", is_next_pos: true };
+
+  const now = Math.floor(Date.now() / 1000);
+
+  const leftGrandChildA: TreeFilledNode = {
+    kind: "filled",
+    locked: false,
+    address: `${place_addr}-L1`,
+    parent_address: `${place_addr}-L`,
+    descendants: 0,
+    place_number: 4,
+    clone: 0,
+    created_at: now - 7200,
+    login: "gardenia",
+    image_url: fallbackImage,
+  };
+
+  const rightGrandChildA: TreeFilledNode = {
+    kind: "filled",
+    locked: true,
+    address: `${place_addr}-R1`,
+    parent_address: `${place_addr}-R`,
+    descendants: 0,
+    place_number: 5,
+    clone: 1,
+    created_at: now - 1800,
+    login: "solstice",
+    image_url: "https://cryptostylematrix.github.io/frontend/cs.png",
+  };
+
+  const leftChild: TreeFilledNode = {
+    kind: "filled",
+    locked: false,
+    address: `${place_addr}-L`,
+    parent_address: place_addr,
+    descendants: 2,
+    place_number: 2,
+    clone: 0,
+    created_at: now - 5400,
+    login: "aurora",
+    image_url: fallbackImage,
+    children: [leftGrandChildA, { kind: "empty", is_next_pos: true }],
+  };
+
+  const rightChild: TreeFilledNode = {
+    kind: "filled",
+    locked: false,
+    address: `${place_addr}-R`,
+    parent_address: place_addr,
+    descendants: 1,
+    place_number: 3,
+    clone: 0,
+    created_at: now - 3600,
+    login: "nebula",
+    image_url: fallbackImage,
+    children: [rightGrandChildA, { kind: "empty", is_next_pos: false }],
+  };
+
+  return {
+    kind: "filled",
+    locked: false,
+    address: place_addr,
+    parent_address: "",
+    descendants: 5,
+    place_number: 1,
+    clone: 0,
+    created_at: now - 86400,
+    login: "root_user",
+    image_url: fallbackImage,
+    children: [leftChild, rightChild],
+  };
 }
 
-export async function searchPlaces(
-  m: number,
-  profile: Profile,
-  loginQuery: string,
-  page = 1,
-  pageSize = 50
-): Promise<PaginatedPlaces> {
-  const query = loginQuery.trim().toLowerCase();
+export async function fetchLocks(m: number, profile_addr: string, page = 1, pageSize = 50): Promise<PaginatedPlaces> {
+  return fetchPlaces(m, profile_addr, page, pageSize);
+}
+
+export async function searchPlaces(m: number, profile_addr: string, query: string, page = 1, pageSize = 50): Promise<PaginatedPlaces> {
+  query = query.trim().toLowerCase();
   await delay();
+  if (!profile_addr) return { items: [], page: 1, totalPages: 1 };
+
   const all = generatePlaces(m).filter((place) =>
     query ? place.login.toLowerCase().includes(query) : true
   );
@@ -146,34 +238,4 @@ export async function searchPlaces(
   const items = all.slice(start, end);
   const totalPages = Math.max(1, Math.ceil(all.length / pageSize));
   return { items, page, totalPages };
-}
-
-export async function buyPlace(
-  m: number,
-  profile: Profile
-): Promise<BuyPlaceResult> {
-  const address = resolveAddress(profile);
-  if (!address) {
-    return { success: false, errors: [ErrorCode.UNAUTHORIZED] };
-  }
-
-  await delay(2500, 3500);
-
-  const outcomes: ErrorCode[] = [
-    ErrorCode.INVALID_PAYLOAD,
-    ErrorCode.UNAUTHORIZED,
-    ErrorCode.INSUFFICIENT_FUNDS,
-    ErrorCode.FORBIDDEN,
-    ErrorCode.NOT_FOUND,
-    ErrorCode.INVALID_WORKCHAIN,
-  ];
-
-  // 70% success chance
-  const roll = Math.random();
-  if (roll < 0.7) {
-    return { success: true };
-  }
-
-  const error = outcomes[Math.floor(Math.random() * outcomes.length)];
-  return { success: false, errors: [error] };
 }

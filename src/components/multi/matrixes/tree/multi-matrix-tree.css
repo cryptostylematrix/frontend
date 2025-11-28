@@ -1,0 +1,12 @@
+.matrix-row--layout {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+@media (max-width: 900px) {
+  .matrix-row--layout {
+    grid-template-columns: 1fr;
+  }
+}

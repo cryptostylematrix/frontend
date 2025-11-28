@@ -2,7 +2,7 @@
 import { useContext } from "react";
 import MultiMatrixFilters from "../../components/multi/matrixes/filters/MultiMatrixFilters";
 import MultiMatrixBreadCrumbs from "../../components/multi/matrixes/MultiMatrixBreadCrumbs";
-import MultiMatrixTree from "../../components/multi/matrixes/MultiMatrixTree";
+import MultiMatrixTree from "../../components/multi/matrixes/tree/MultiMatrixTree";
 import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { WalletContext } from "../../App";
 import { useProfileContext } from "../../context/ProfileContext";

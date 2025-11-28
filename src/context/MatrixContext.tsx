@@ -1,52 +1,60 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
-import type { Address } from "@ton/core";
 
 type MatrixContextType = {
-  selectedPlaceId: number | undefined;
-  selectedPlaceAddress: Address | undefined;
-  rootPlaceId: number | undefined;
-  rootPlaceAddress: Address | undefined;
-  setSelection: (placeId: number | undefined, addr: Address | undefined) => void;
-  setRoot: (placeId: number | undefined, addr: Address | undefined) => void;
-  clearAll: () => void;
+  selectedMatrix: number;
+  setSelectedMatrix: (m: number) => void;
+  matrixPrice: number;
+  selectedPlaceAddress: string | undefined;
+  rootPlaceAddress: string | undefined;
+  setSelectedPlace: (addr: string | undefined) => void;
+  setRootPlace: (addr: string | undefined) => void;
+  resetRooPlacetAndSelectedPlace: () => void;
+  resetAll: () => void;
 };
 
 const MatrixContext = createContext<MatrixContextType | undefined>(undefined);
 
 export function MatrixProvider({ children }: { children: ReactNode }) {
-  const [selectedPlaceId, setSelectedPlaceId] = useState<number | undefined>(undefined);
-  const [selectedPlaceAddress, setSelectedPlaceAddress] = useState<Address | undefined>(undefined);
-  const [rootPlaceId, setRootPlaceId] = useState<number | undefined>(undefined);
-  const [rootPlaceAddress, setRootPlaceAddress] = useState<Address | undefined>(undefined);
+  const [selectedMatrix, setSelectedMatrix] = useState<number>(1);
+  const [selectedPlaceAddress, setSelectedPlaceAddress] = useState<string | undefined>(undefined);
+  const [rootPlaceAddress, setRootPlaceAddress] = useState<string | undefined>(undefined);
+  const matrixPrices: Record<number, number> = {
+    1: 15,
+    2: 45,
+    3: 100,
+    4: 240,
+    5: 500,
+    6: 1200,
+  };
 
-  const setSelection = (placeId: number | undefined, addr: Address | undefined) => {
-    setSelectedPlaceId(placeId);
+  const setSelectedPlace = (addr: string | undefined) => {
     setSelectedPlaceAddress(addr);
   };
-
-  const setRoot = (placeId: number | undefined, addr: Address | undefined) => {
-    setRootPlaceId(placeId);
+  const setRootPlace = (addr: string | undefined) => {
     setRootPlaceAddress(addr);
   };
-
-  const clearAll = () => {
-    setSelectedPlaceId(undefined);
+  const resetRooPlacetAndSelectedPlace = () => {
     setSelectedPlaceAddress(undefined);
-    setRootPlaceId(undefined);
     setRootPlaceAddress(undefined);
+  };
+  const resetAll = () => {
+    resetRooPlacetAndSelectedPlace();
+    setSelectedMatrix(1);
   };
 
   return (
     <MatrixContext.Provider
       value={{
-        selectedPlaceId,
+        selectedMatrix,
+        setSelectedMatrix,
+        matrixPrice: matrixPrices[selectedMatrix],
         selectedPlaceAddress,
-        rootPlaceId,
         rootPlaceAddress,
-        setSelection,
-        setRoot,
-        clearAll,
+        setSelectedPlace,
+        setRootPlace,
+        resetRooPlacetAndSelectedPlace,
+        resetAll,
       }}>
       {children}
     </MatrixContext.Provider>

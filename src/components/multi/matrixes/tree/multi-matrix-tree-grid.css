@@ -1,0 +1,126 @@
+.tree-panel {
+  background: linear-gradient(180deg, #fffefa 0%, #fff9f0 100%);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.tree-canvas {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem 1rem 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tree-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.tree-level {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+}
+
+.tree-level:nth-child(1) {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.tree-level:nth-child(2) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tree-level:nth-child(3) {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.tree-node-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.tree-node {
+  background: #fff;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 10px;
+  box-shadow: 0 6px 14px rgba(212, 175, 55, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  width: 100%;
+  height: 56px;
+  padding: 0.3rem 0.4rem;
+  text-align: center;
+  font-weight: 600;
+  color: #3a2e0e;
+  position: relative;
+  overflow: hidden;
+}
+
+.tree-node:hover {
+  border-color: rgba(212, 175, 55, 0.7);
+  box-shadow: 0 8px 16px rgba(212, 175, 55, 0.2);
+  transform: translateY(-1px);
+  transition: all 0.15s ease-in-out;
+}
+
+.tree-node.is-selected {
+  border-color: #b8860b;
+  box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.35);
+}
+
+.tree-node.node-locked {
+  background: linear-gradient(180deg, #fff7f7, #ffeaea);
+  border-color: #fca5a5;
+}
+
+.tree-node.node-locked.is-selected {
+  border-color: #b8860b;
+}
+
+.tree-node.node-filled {
+  background: linear-gradient(180deg, #fffef9, #fff6e6);
+}
+
+.tree-node.node-filled.node-locked {
+  background: #fff5f5;
+  border-color: #fca5a5;
+}
+
+.tree-node.node-filled.node-locked.is-selected {
+  border-color: #b8860b;
+}
+
+.tree-node.node-next {
+  background: linear-gradient(180deg, #fbfffc, #f1fff5);
+  border-color: #ccf7d6;
+}
+
+.tree-node.node-next.is-selected {
+  border-color: #b8860b;
+}
+
+.tree-node__login {
+  font-weight: 700;
+  font-size: 1rem;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-align: center;
+}

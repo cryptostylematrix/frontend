@@ -102,7 +102,22 @@
       "buySuccess": "Жаңа орын жақында тізімде пайда болады.",
       "buyFail": "Сәтсіз",
       "loadMore": "Көбірек жүктеу",
-      "nextPos": "Келесі позиция"
+      "nextPos": "Келесі позиция",
+      "clone": "клон"
+    },
+    "tree": {
+      "up": "Жоғары ▲",
+      "placesBelow_one": "{{formattedCount}} орын төменде",
+      "placesBelow_other": "{{formattedCount}} орын төменде",
+      "unlock": "Бұғаттан шығару",
+      "lock": "Бұғаттау",
+      "unlockSuccess": "Позиция бұғаттан шығарылды.",
+      "lockSuccess": "Позиция бұғатталды.",
+      "select": "Таңдау ▼",
+      "buy": "Сатып алу ({{price}} TON)",
+      "loadingPath": "Маршрут жүктелуде...",
+      "breadcrumbEmpty": "Навигациялық жол орын таңдалғанда пайда болады.",
+      "breadcrumbs": "Навигациялық жол"
     }
   },
   "common": {
@@ -130,11 +145,9 @@
     "err_forbidden": "Қол жеткізуге тыйым салынған.",
     "err_not_found": "Табылмады.",
     "err_invalid_workchain": "Жарамсыз workchain.",
-
     "err_local_storage_read_failed": "Жергілікті сақтау орнынан деректерді оқу мүмкін болмады.",
     "err_local_storage_write_failed": "Жергілікті сақтау орнына деректерді жазу мүмкін болмады.",
     "err_local_storage_clear_failed": "Жергілікті сақтау орнын тазалау мүмкін болмады.",
-
     "err_user_rejected_transaction": "Пайдаланушы транзакцияны қабылдамады.",
     "err_transaction_failed": "Транзакция сәтсіз аяқталды."
   }

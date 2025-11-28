@@ -8,14 +8,10 @@ import type { MatrixPlace } from "../../../../services/matrixService";
 import { useProfileContext } from "../../../../context/ProfileContext";
 import { useMatrixContext } from "../../../../context/MatrixContext";
 
-interface Props {
-  matrixId: number;
-}
-
-export default function MultiMatrixFilterLocks({ matrixId: selected_m }: Props) {
+export default function MultiMatrixFilterLocks() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
-  const { selectedPlaceId, setSelection } = useMatrixContext();
+  const { selectedPlaceAddress, setSelectedPlace, selectedMatrix } = useMatrixContext();
   const [locks, setLocks] = useState<MatrixPlace[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -37,22 +33,11 @@ export default function MultiMatrixFilterLocks({ matrixId: selected_m }: Props) 
     }
 
     setLoading(true);
-    fetchLocks(selected_m, currentProfile!, 1, PAGE_SIZE)
+    fetchLocks(selectedMatrix, currentProfile!.address, 1, PAGE_SIZE)
       .then((data) => {
         if (cancelled) return;
         setLocks(data.items);
-        const found = selectedPlaceId
-          ? data.items.find((p) => p.place_number === selectedPlaceId)
-          : undefined;
-        if (found) {
-          setSelection(found.place_number, found.address);
-        } else if (!selectedPlaceId) {
-          if (data.items[0]) {
-            setSelection(data.items[0].place_number, data.items[0].address);
-          } else {
-            setSelection(undefined, undefined);
-          }
-        }
+    
         setPage(data.page);
         setTotalPages(data.totalPages);
       })
@@ -64,7 +49,7 @@ export default function MultiMatrixFilterLocks({ matrixId: selected_m }: Props) 
     return () => {
       cancelled = true;
     };
-  }, [selected_m]);
+  }, [selectedMatrix, currentProfile]);
 
   return (
     <label className="filter-field">
@@ -82,9 +67,9 @@ export default function MultiMatrixFilterLocks({ matrixId: selected_m }: Props) 
         >
           {loading
             ? t("home.loading")
-            : selectedPlaceId
+            : selectedPlaceAddress
               ? (() => {
-                  const selected = locks.find((l) => l.place_number === selectedPlaceId);
+                  const selected = locks.find((l) => l.address === selectedPlaceAddress);
                   if (!selected) {
                     return locks.length > 0 ? "..." : t("multiMatrix.filters.noLocks", "No locks");
                   }
@@ -108,7 +93,7 @@ export default function MultiMatrixFilterLocks({ matrixId: selected_m }: Props) 
               <>
                 {locks.map((lock) => {
                   const label = `[${lock.place_number}] ${lock.login}`;
-                  const isSelected = lock.place_number === selectedPlaceId;
+                  const isSelected = lock.address === selectedPlaceAddress;
                   return (
                     <div
                       key={lock.place_number}
@@ -117,7 +102,7 @@ export default function MultiMatrixFilterLocks({ matrixId: selected_m }: Props) 
                       className={`custom-select__option ${isSelected ? "is-selected" : ""}`}
                       onMouseDown={(e) => {
                         e.preventDefault();
-                        setSelection(lock.place_number, lock.address);
+                        setSelectedPlace(lock.address);
                         setIsOpen(false);
                       }}
                     >
@@ -134,7 +119,7 @@ export default function MultiMatrixFilterLocks({ matrixId: selected_m }: Props) 
                     onClick={() => {
                       if (loadingMore) return;
                       setLoadingMore(true);
-                  fetchLocks(selected_m, currentProfile!, page + 1, PAGE_SIZE)
+                  fetchLocks(selectedMatrix, currentProfile!.address, page + 1, PAGE_SIZE)
                     .then((data) => {
                       setLocks((prev) => [...prev, ...data.items]);
                       setPage(data.page);

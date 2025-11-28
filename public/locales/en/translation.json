@@ -102,7 +102,22 @@
       "buySuccess": "New place will appear on places list soon.",
       "buyFail": "Fail",
       "loadMore": "Load more",
-      "nextPos": "Next pos"
+      "nextPos": "Next pos",
+      "clone": "clone"
+    },
+    "tree": {
+      "up": "Up ▲",
+      "placesBelow_one": "{{formattedCount}} place below",
+      "placesBelow_other": "{{formattedCount}} places below",
+      "unlock": "Unlock",
+      "lock": "Lock",
+      "unlockSuccess": "Position unlocked.",
+      "lockSuccess": "Position locked.",
+      "select": "Select ▼",
+      "buy": "Buy ({{price}} TON)",
+      "loadingPath": "Loading path...",
+      "breadcrumbEmpty": "Breadcrumbs will appear here once a place is selected.",
+      "breadcrumbs": "Breadcrumb"
     }
   },
   "common": {
@@ -130,11 +145,9 @@
     "err_forbidden": "Forbidden.",
     "err_not_found": "Not found.",
     "err_invalid_workchain": "Invalid workchain.",
-
     "err_local_storage_read_failed": "Failed to read data from local storage.",
     "err_local_storage_write_failed": "Failed to write data to local storage.",
     "err_local_storage_clear_failed": "Failed to clear local storage.",
-
     "err_user_rejected_transaction": "Transaction was rejected by the user.",
     "err_transaction_failed": "Transaction failed."
   }

@@ -6,18 +6,14 @@ import type { MatrixPlace } from "../../../../services/matrixService";
 import { useProfileContext } from "../../../../context/ProfileContext";
 import { useMatrixContext } from "../../../../context/MatrixContext";
 
-interface Props {
-  matrixId: number;
-}
-
-export default function MultiMatrixFilterSearch({ matrixId }: Props) {
+export default function MultiMatrixFilterSearch() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
-  const { setSelection } = useMatrixContext();
+  const { setSelectedPlace, selectedMatrix } = useMatrixContext();
   const [searchLogin, setSearchLogin] = useState("");
   const [results, setResults] = useState<MatrixPlace[]>([]);
 
-  const formatLabel = (place: MatrixPlace) => `[${place.id}] ${place.index}`;
+  const formatLabel = (place: MatrixPlace) => `[${place.place_number}] ${place.index}`;
 
   useEffect(() => {
     let cancelled = false;
@@ -28,7 +24,7 @@ export default function MultiMatrixFilterSearch({ matrixId }: Props) {
       };
     }
 
-    searchPlaces(matrixId, currentProfile!, query, 1, 10).then((data) => {
+    searchPlaces(selectedMatrix, currentProfile!.address, query, 1, 10).then((data) => {
       if (cancelled) return;
       setResults(data.items);
     });
@@ -36,11 +32,11 @@ export default function MultiMatrixFilterSearch({ matrixId }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [matrixId, searchLogin, currentProfile]);
+  }, [searchLogin]);
 
 
   const selectLogin = (place: MatrixPlace) => {
-    setSelection(place.place_number, place.address);
+    setSelectedPlace(place.address);
     setSearchLogin("");
     setResults([]);
   };
@@ -70,7 +66,7 @@ export default function MultiMatrixFilterSearch({ matrixId }: Props) {
           <ul className="combobox-list" role="listbox">
             {results.map((place) => (
               <li
-                key={place.id}
+                key={place.place_number}
                 className="combobox-item"
                 role="option"
                 onMouseDown={(e) => {

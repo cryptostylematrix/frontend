@@ -102,7 +102,22 @@
       "buySuccess": "Нове місце скоро з'явиться у списку.",
       "buyFail": "Помилка",
       "loadMore": "Завантажити ще",
-      "nextPos": "Наступна позиція"
+      "nextPos": "Наступна позиція",
+      "clone": "клон"
+    },
+    "tree": {
+      "up": "Вгору ▲",
+      "placesBelow_one": "{{formattedCount}} місце нижче",
+      "placesBelow_other": "{{formattedCount}} місць нижче",
+      "unlock": "Розблокувати",
+      "lock": "Заблокувати",
+      "unlockSuccess": "Позицію розблоковано.",
+      "lockSuccess": "Позицію заблоковано.",
+      "select": "Вибрати ▼",
+      "buy": "Купити ({{price}} TON)",
+      "loadingPath": "Завантаження шляху...",
+      "breadcrumbEmpty": "Хлібні крихти з'являться після вибору місця.",
+      "breadcrumbs": "Хлібні крихти"
     }
   },
   "common": {
@@ -130,11 +145,9 @@
     "err_forbidden": "Доступ заборонено.",
     "err_not_found": "Не знайдено.",
     "err_invalid_workchain": "Невірний workchain.",
-
     "err_local_storage_read_failed": "Не вдалося зчитати дані з локального сховища.",
     "err_local_storage_write_failed": "Не вдалося записати дані до локального сховища.",
     "err_local_storage_clear_failed": "Не вдалося очистити локальне сховище.",
-
     "err_user_rejected_transaction": "Транзакцію відхилено користувачем.",
     "err_transaction_failed": "Транзакція не виконана."
   }

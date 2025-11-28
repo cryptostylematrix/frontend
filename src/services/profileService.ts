@@ -22,6 +22,7 @@ const tonClient = new TonClient({
  * Profile structure used by service operations.
  */
 export interface ProfileData {
+  address: string,
   wallet: string;
   login: string;
   imageUrl?: string;
@@ -39,6 +40,10 @@ export type ProfileResult =
 
 export type BalanceResult =
   | { success: true; balance: bigint }
+  | { success: false; errors: ErrorCode[] };
+
+export type ProfilePreviewResult =
+  | { success: true; data: { login: string; imageUrl: string } }
   | { success: false; errors: ErrorCode[] };
 
 // /**
@@ -189,6 +194,7 @@ export async function createProfile(
 
   // ---- Prepare NFT content ----
   const collection = ProfileCollectionV1.createFromAddress(nftCollectionAddress);
+  let provider = tonClient.provider(collection.address);
 
   const nftContent = profileToNftContent(
     normalizedLogin,
@@ -217,10 +223,16 @@ export async function createProfile(
   if (!tx.success)
     return { success: false, errors: tx.errors ?? [] };
 
+
+
+  // ---- Derive NFT address from login ----
+  const itemAddress = await collection.getNftAddressByIndex(provider, sha256n(normalizedLogin));
+
   // ---- Return normalized data ----
   return {
     success: true,
     data: {
+      address: itemAddress.toString({urlSafe: true, bounceable: true, testOnly: false}),
       wallet: wallet.trim(),
       login: normalizedLogin,
       imageUrl: normalizedImageUrl,
@@ -311,6 +323,7 @@ export async function updateProfile(
     return {
       success: true,
       data: {
+        address: itemAddress.toString({urlSafe: true, bounceable: true, testOnly: false}),
         wallet: wallet.trim(),
         login: normalizedLogin,
         imageUrl: normalizedImageUrl,
@@ -426,6 +439,7 @@ export async function getProfile(
 
     // ---- Construct final profile ----
     const profile: ProfileData = {
+      address: itemAddress.toString({urlSafe: true, bounceable: true, testOnly: false}),
       wallet: wallet.trim(),
       login: normalizedLogin,
       imageUrl: normalizedImageUrl,
@@ -438,6 +452,45 @@ export async function getProfile(
     return { success: true, data: profile };
   } catch (err) {
     console.error('getProfile error:', err);
+    return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
+  }
+}
+
+export async function getProfileDataByAddress(profileAddress: string): Promise<ProfilePreviewResult> {
+  if (!profileAddress?.trim()) {
+    return { success: false, errors: [ErrorCode.INVALID_WALLET_ADDRESS] };
+  }
+
+  try {
+    const address = Address.parse(profileAddress.trim());
+    const item = ProfileItemV1.createFromAddress(address);
+    const provider = tonClient.provider(address);
+    const dataCell = await item.getNftData(provider);
+
+    const contentSlice = dataCell.content?.asSlice();
+    if (!contentSlice) {
+      return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
+    }
+
+    const start = contentSlice.loadUint(8);
+    if (start !== 0) {
+      return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
+    }
+
+    const dict = contentSlice.loadDict(Dictionary.Keys.Buffer(32), NFTDictValueSerializer);
+
+    const image = dict.get(sha256_sync("image"))?.content.toString("utf-8");
+    const name = dict.get(sha256_sync("name"))?.content.toString("utf-8");
+
+    return {
+      success: true,
+      data: {
+        login: name || "unknown",
+        imageUrl: image || "https://cryptostylematrix.github.io/frontend/cs-big.png",
+      },
+    };
+  } catch (err) {
+    console.error("getProfileDataByAddress error:", err);
     return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
   }
 }

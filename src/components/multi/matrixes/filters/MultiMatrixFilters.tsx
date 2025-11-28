@@ -6,48 +6,48 @@ import MultiMatrixFilterLocks from "./MultiMatrixFilterLocks";
 import MultiMatrixFilterSearch from "./MultiMatrixFilterSearch";
 import NextPosButton from "./MultiMatrixNextPos";
 import { useProfileContext } from "../../../../context/ProfileContext";
-import { buyPlace, getRootPlace } from "../../../../services/matrixService";
+import { buyPlace } from "../../../../services/multiService";
 import { translateError } from "../../../../errors/errorUtils";
 import "../../../../pages/profile/update-profile.css";
 import { useMatrixContext } from "../../../../context/MatrixContext";
-
-
-const matrixPrices: Record<number, number> = {
-  1: 15,
-  2: 45,
-  3: 100,
-  4: 240,
-  5: 500,
-  6: 1200,
-};
+import { getRootPlace } from "../../../../services/matrixService";
 
 export default function MultiMatrixFilters() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
-  const { clearAll, setRoot, setSelection } = useMatrixContext();
+  const {
+    resetRooPlacetAndSelectedPlace,
+    resetAll,
+    setRootPlace,
+    selectedMatrix,
+    setSelectedMatrix,
+    matrixPrice,
+  } = useMatrixContext();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [selected_m, setSelectedMatrix] = useState<number>(1);
   const [buyStatus, setBuyStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
   const [buyLoading, setBuyLoading] = useState(false);
 
   useEffect(() => {
-    setSelectedMatrix(1);
-    clearAll();
+    resetAll();
   }, [currentProfile]);
 
   useEffect(() => {
-    clearAll();
+    resetRooPlacetAndSelectedPlace();
     if (!currentProfile) return;
 
-    getRootPlace(selected_m, currentProfile).then((root) => {
-      setRoot(root?.place_number, root?.address);
-    });
+    const run = async () => {
+      getRootPlace(selectedMatrix, currentProfile.address).then((root) => {
+        setRootPlace(root?.address);
+      });
+    };
 
-  }, [selected_m, currentProfile]);
+    run();
+
+  }, [selectedMatrix, currentProfile]);
 
   const buyPlaceLabel = t("multiMatrix.filters.buyPlace", {
-    price: matrixPrices[selected_m],
-    defaultValue: `Buy new place (${matrixPrices[selected_m]} TON)`,
+    price: matrixPrice,
+    defaultValue: `Buy new place (${matrixPrice} TON)`,
   });
 
   const handleBuy = async () => {
@@ -57,14 +57,14 @@ export default function MultiMatrixFilters() {
     setBuyLoading(true);
     setBuyStatus(null);
 
-    const result = await buyPlace(selected_m, currentProfile!);
+    const result = await buyPlace(Date.now(), selectedMatrix, currentProfile.address, undefined);
     if (result.success) {
       setBuyStatus({
         type: "success",
         message: t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."),
       });
     } else {
-      const code = result.errors?.[0];
+      const code = result.error_code;
       setBuyStatus({
         type: "error",
         message: code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"),
@@ -105,7 +105,7 @@ export default function MultiMatrixFilters() {
           <select
             className="filter-select"
             name="matrixes"
-            value={selected_m}
+            value={selectedMatrix}
             onChange={(e) => {
               setSelectedMatrix(Number(e.target.value));
               e.currentTarget.blur();
@@ -119,11 +119,11 @@ export default function MultiMatrixFilters() {
           </select>
         </label>
 
-        <MultiMatrixFilterPlaces matrixId={selected_m} />
+        <MultiMatrixFilterPlaces />
 
-        <MultiMatrixFilterSearch matrixId={selected_m} />
+        <MultiMatrixFilterSearch />
 
-        <MultiMatrixFilterLocks matrixId={selected_m} />
+        <MultiMatrixFilterLocks />
         </div>
 
         <div className="filter-actions">
@@ -135,11 +135,7 @@ export default function MultiMatrixFilters() {
           >
             {buyLoading ? t("home.loading") : buyPlaceLabel}
           </button>
-          <NextPosButton
-            matrixId={selected_m}
-            currentProfile={currentProfile}
-            onSelect={(id, addr) => setSelection(id, addr)}
-          />
+          <NextPosButton />
           {buyStatus && (
             <div className="buy-status-row">
               <div className={`op-message ${buyStatus.type}`} role="status">

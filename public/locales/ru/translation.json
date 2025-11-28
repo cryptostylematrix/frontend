@@ -102,7 +102,24 @@
       "buySuccess": "Новое место скоро появится в списке.",
       "buyFail": "Ошибка",
       "loadMore": "Загрузить ещё",
-      "nextPos": "Следующая позиция"
+      "nextPos": "Следующая позиция",
+      "clone": "клон"
+    },
+    "tree": {
+      "up": "Вверх ▲",
+      "placesBelow_one": "{{formattedCount}} место ниже",
+      "placesBelow_few": "{{formattedCount}} места ниже",
+      "placesBelow_many": "{{formattedCount}} мест ниже",
+      "placesBelow_other": "{{formattedCount}} мест ниже",
+      "unlock": "Разблокировать",
+      "lock": "Заблокировать",
+      "unlockSuccess": "Позиция разблокирована.",
+      "lockSuccess": "Позиция заблокирована.",
+      "select": "Выбрать ▼",
+      "buy": "Купить ({{price}} TON)",
+      "loadingPath": "Загрузка пути...",
+      "breadcrumbEmpty": "Путь появится после выбора места.",
+      "breadcrumbs": "Хлебные крошки"
     }
   },
   "common": {
@@ -130,11 +147,9 @@
     "err_forbidden": "Доступ запрещен.",
     "err_not_found": "Не найдено.",
     "err_invalid_workchain": "Неверный воркчейн.",
-
     "err_local_storage_read_failed": "Не удалось прочитать данные из локального хранилища.",
     "err_local_storage_write_failed": "Не удалось записать данные в локальное хранилище.",
     "err_local_storage_clear_failed": "Не удалось очистить локальное хранилище.",
-
     "err_user_rejected_transaction": "Транзакция отклонена пользователем.",
     "err_transaction_failed": "Транзакция не выполнена."
   }

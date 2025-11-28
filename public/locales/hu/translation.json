@@ -102,7 +102,22 @@
       "buySuccess": "Az új hely hamarosan megjelenik a listában.",
       "buyFail": "Sikertelen",
       "loadMore": "Továbbiak betöltése",
-      "nextPos": "Következő pozíció"
+      "nextPos": "Következő pozíció",
+      "clone": "klón"
+    },
+    "tree": {
+      "up": "Fel ▲",
+      "placesBelow_one": "{{formattedCount}} hely lejjebb",
+      "placesBelow_other": "{{formattedCount}} hely lejjebb",
+      "unlock": "Feloldás",
+      "lock": "Zárolás",
+      "unlockSuccess": "Pozíció feloldva.",
+      "lockSuccess": "Pozíció zárolva.",
+      "select": "Kiválasztás ▼",
+      "buy": "Vásárlás ({{price}} TON)",
+      "loadingPath": "Útvonal betöltése...",
+      "breadcrumbEmpty": "A morzsák a hely kiválasztása után jelennek meg.",
+      "breadcrumbs": "Morzsák"
     }
   },
   "common": {
@@ -130,11 +145,9 @@
     "err_forbidden": "Hozzáférés megtagadva.",
     "err_not_found": "Nem található.",
     "err_invalid_workchain": "Érvénytelen workchain.",
-
     "err_local_storage_read_failed": "Nem sikerült beolvasni az adatokat a helyi tárolóból.",
     "err_local_storage_write_failed": "Nem sikerült adatokat írni a helyi tárolóba.",
     "err_local_storage_clear_failed": "Nem sikerült törölni a helyi tárolót.",
-
     "err_user_rejected_transaction": "A felhasználó elutasította a tranzakciót.",
     "err_transaction_failed": "A tranzakció sikertelen volt."
   }
