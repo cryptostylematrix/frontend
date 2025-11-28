@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import "./multi-matrix-filters.css";
 import "./multi-matrix-filter-locks.css";
 import "./multi-matrix-filter-places.css";
-import { fetchLocks } from "../../../../services/matrixService";
+import { fetchLocks } from "../../../../services/fakeMatrixService";
 import type { MatrixPlace } from "../../../../services/matrixService";
 import { useProfileContext } from "../../../../context/ProfileContext";
 import { useMatrixContext } from "../../../../context/MatrixContext";

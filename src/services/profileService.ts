@@ -5,10 +5,11 @@ import {  Address, Cell, toNano, Dictionary } from '@ton/core';
 import { TonClient } from "@ton/ton";
 import { ProfileCollectionV1 } from "../contracts/ProfileCollectionV1";
 import { sha256n } from "../utils/cryptoHelper";
-import { ProfileItemV1 } from "../contracts/ProfileItemV1";
+import { ProfileItemV1, ProgramDataCodec, type ProgramData } from "../contracts/ProfileItemV1";
 import { type NftContentOnchain } from "../contracts/ProfileContent";
 import { NFTDictValueSerializer } from "../contracts/dict";
 import { sha256_sync } from "@ton/crypto";
+import { Programs } from "../contracts/MultiConstants";
 
 const tonClient = new TonClient({
     endpoint: "https://toncenter.com/api/v2/jsonRPC",
@@ -46,6 +47,10 @@ export type ProfilePreviewResult =
   | { success: true; data: { login: string; imageUrl: string } }
   | { success: false; errors: ErrorCode[] };
 
+export type ProfileProgramsResult =
+  | { success: true; data: ProgramData | null }
+  | { success: false; errors: ErrorCode[] };
+
 // /**
 //  * Helper: simulate async task delay.
 //  */
@@ -63,6 +68,35 @@ function capitalize(str?: string): string | undefined {
 
 function toLower(str?: string): string | undefined {
   return str?.trim() ? str.trim().toLowerCase() : undefined;
+}
+
+/**
+ * Fetch program data for a specific program a profile participates in by profile address.
+ */
+export async function getProfileProgramData(profile_addr: string, program: number): Promise<ProfileProgramsResult> {
+  if (!profile_addr?.trim()) {
+    return { success: false, errors: [ErrorCode.INVALID_WALLET_ADDRESS] };
+  }
+
+  try {
+    const itemAddress = Address.parse(profile_addr.trim());
+    const item = ProfileItemV1.createFromAddress(itemAddress);
+    const provider = tonClient.provider(itemAddress);
+
+    const profile_data = await item.getPrograms(provider);
+    if (!profile_data.programs) return { success: true, data: null };
+
+    const programs = Dictionary.loadDirect(
+      Dictionary.Keys.Uint(32),
+      ProgramDataCodec,
+      profile_data.programs
+    );
+
+    return { success: true, data: programs.get(program) ?? null };
+  } catch (err) {
+    console.error("getProfileProgramData error:", err);
+    return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
+  }
 }
 
 

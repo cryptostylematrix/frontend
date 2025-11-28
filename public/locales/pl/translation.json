@@ -103,7 +103,10 @@
       "buyFail": "Niepowodzenie",
       "loadMore": "Załaduj więcej",
       "nextPos": "Następna pozycja",
-      "clone": "klon"
+      "clone": "klon",
+      "prevMatrixRequired": "Najpierw potrzebujesz miejsca w poprzedniej macierzy, aby kupić tutaj.",
+      "noPlacesInMatrix": "Musisz mieć miejsce w tej macierzy, aby wykonać tę akcję.",
+      "programNotConfirmed": "Najpierw wybierz opiekuna."
     },
     "tree": {
       "up": "W górę ▲",

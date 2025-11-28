@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./multi-matrix-filter-search.css";
-import { searchPlaces } from "../../../../services/matrixService";
+import { searchPlaces } from "../../../../services/fakeMatrixService";
 import type { MatrixPlace } from "../../../../services/matrixService";
 import { useProfileContext } from "../../../../context/ProfileContext";
 import { useMatrixContext } from "../../../../context/MatrixContext";

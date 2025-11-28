@@ -103,7 +103,10 @@
       "buyFail": "Errore",
       "loadMore": "Carica altro",
       "nextPos": "Prossima pos",
-      "clone": "clone"
+      "clone": "clone",
+      "prevMatrixRequired": "Serve prima un posto nella matrice precedente per comprare qui.",
+      "noPlacesInMatrix": "Serve un posto in questa matrice per eseguire questa azione.",
+      "programNotConfirmed": "Scegli prima un referente."
     },
     "tree": {
       "up": "Su ▲",

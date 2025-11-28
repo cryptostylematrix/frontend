@@ -103,7 +103,10 @@
       "buyFail": "Fail",
       "loadMore": "Load more",
       "nextPos": "Next pos",
-      "clone": "clone"
+      "clone": "clone",
+      "prevMatrixRequired": "You need a place in the previous matrix before buying here.",
+      "noPlacesInMatrix": "You need a place in this matrix to perform this action.",
+      "programNotConfirmed": "You need to choose an inviter first."
     },
     "tree": {
       "up": "Up ▲",

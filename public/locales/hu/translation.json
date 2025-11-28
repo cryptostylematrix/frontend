@@ -103,7 +103,10 @@
       "buyFail": "Sikertelen",
       "loadMore": "Továbbiak betöltése",
       "nextPos": "Következő pozíció",
-      "clone": "klón"
+      "clone": "klón",
+      "prevMatrixRequired": "Először szükség van helyre az előző mátrixban, hogy itt vásárolhass.",
+      "noPlacesInMatrix": "Szükség van helyre ebben a mátrixban a művelethez.",
+      "programNotConfirmed": "Először válassz meghívót."
     },
     "tree": {
       "up": "Fel ▲",

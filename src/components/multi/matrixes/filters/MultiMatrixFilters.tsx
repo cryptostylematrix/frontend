@@ -10,7 +10,9 @@ import { buyPlace } from "../../../../services/multiService";
 import { translateError } from "../../../../errors/errorUtils";
 import "../../../../pages/profile/update-profile.css";
 import { useMatrixContext } from "../../../../context/MatrixContext";
-import { getRootPlace } from "../../../../services/matrixService";
+import { getRootPlace, getPlacesCount } from "../../../../services/fakeMatrixService";
+import { getProfileProgramData } from "../../../../services/profileService";
+import { Programs } from "../../../../contracts/MultiConstants";
 
 export default function MultiMatrixFilters() {
   const { t } = useTranslation();
@@ -56,6 +58,24 @@ export default function MultiMatrixFilters() {
 
     setBuyLoading(true);
     setBuyStatus(null);
+
+    if (selectedMatrix === 1) {
+      const program = await getProfileProgramData(currentProfile.address, Programs.multi);
+      if (!program.success || !program.data || !program.data.confirmed) {
+        setBuyLoading(false);
+        alert(t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."));
+        return;
+      }
+    }
+
+    if (selectedMatrix > 1) {
+      const prevCount = await getPlacesCount(selectedMatrix - 1, currentProfile.address);
+      if (prevCount <= 0) {
+        setBuyLoading(false);
+        alert(t("multiMatrix.filters.prevMatrixRequired", "You need a place in the previous matrix before buying here."));
+        return;
+      }
+    }
 
     const result = await buyPlace(Date.now(), selectedMatrix, currentProfile.address, undefined);
     if (result.success) {

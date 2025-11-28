@@ -1,7 +1,8 @@
 import "./multi-matrix-bread-crumbs.css";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getPath, type MatrixPlace } from "../../../services/matrixService";
+import { getPath } from "../../../services/fakeMatrixService";
+import type { MatrixPlace } from "../../../services/matrixService";
 import { useMatrixContext } from "../../../context/MatrixContext";
 
 export default function MultiMatrixBreadCrumbs() {

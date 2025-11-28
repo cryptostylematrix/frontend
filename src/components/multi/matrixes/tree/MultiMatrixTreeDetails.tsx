@@ -6,6 +6,9 @@ import { useProfileContext } from "../../../../context/ProfileContext";
 import { buyPlace, lockPos, unlockPos } from "../../../../services/multiService";
 import { translateError } from "../../../../errors/errorUtils";
 import { useState } from "react";
+import { getPlacesCount } from "../../../../services/fakeMatrixService";
+import { getProfileProgramData } from "../../../../services/profileService";
+import { Programs } from "../../../../contracts/MultiConstants";
 
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -80,6 +83,12 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
             onClick={async () => {
               if (!currentProfile || selectedNode.kind !== "filled") return;
               setLockLoading(true);
+              const count = await getPlacesCount(selectedMatrix, currentProfile.address);
+              if (count <= 0) {
+                setLockLoading(false);
+                alert(t("multiMatrix.filters.noPlacesInMatrix", "You need a place in this matrix to perform this action."));
+                return;
+              }
               const handler = isLocked ? unlockPos : lockPos;
               const result = await handler(Date.now(), selectedMatrix, currentProfile.address, selectedNode.address);
               setLockLoading(false);
@@ -125,6 +134,22 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
               if (!window.confirm(t("multiMatrix.filters.confirmBuy", "Are you sure?"))) return;
 
               setBuyLoading(true);
+              if (selectedMatrix === 1) {
+                const program = await getProfileProgramData(currentProfile.address, Programs.multi);
+                if (!program.success || !program.data || !program.data.confirmed) {
+                  setBuyLoading(false);
+                  alert(t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."));
+                  return;
+                }
+              }
+              if (selectedMatrix > 1) {
+                const prevCount = await getPlacesCount(selectedMatrix - 1, currentProfile.address);
+                if (prevCount <= 0) {
+                  setBuyLoading(false);
+                  alert(t("multiMatrix.filters.prevMatrixRequired", "You need a place in the previous matrix before buying here."));
+                  return;
+                }
+              }
               const result = await buyPlace(Date.now(), selectedMatrix, currentProfile.address, undefined);
               setBuyLoading(false);
               if (result.success) {
