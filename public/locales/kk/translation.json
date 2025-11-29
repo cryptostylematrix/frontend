@@ -81,7 +81,25 @@
     "structure_link": "Құрылым",
     "matrixes_link": "Матрицалар",
     "marketing_link": "Маркетинг",
-    "stat_link": "Статистика"
+    "stat_link": "Статистика",
+    "marketing": {
+      "title": "Маркетинг",
+      "pdfTitle": "Презентация PDF",
+      "pdfDescription": "Презентацияны өз тіліңізде қараңыз.",
+      "download": "PDF жүктеп алу",
+      "view": "PDF қарау",
+      "videoTitle": "Бейне шолу",
+      "videoDescription": "YouTube-тен маркетингке шолуды қараңыз.",
+      "watch": "Бейнені қарау"
+    },
+    "inviter": {
+      "title": "Шақырушыны таңдау",
+      "loginLabel": "Шақырушының логині",
+      "loginPlaceholder": "Шақырушы логинін енгізіңіз",
+      "submit": "Шақырушыны таңдау",
+      "success": "Шақырушы таңдалды. Жаңартулар жақында шығады, бетті кейінірек жаңартыңыз.",
+      "alreadySelected": "Inviter already selected."
+    }
   },
   "multiMatrix": {
     "filters": {
@@ -106,7 +124,8 @@
       "clone": "клон",
       "prevMatrixRequired": "Бұл матрицада сатып алу үшін алдымен алдыңғы матрицада орын болуы керек.",
       "noPlacesInMatrix": "Бұл әрекет үшін осы матрицада орын болуы керек.",
-      "programNotConfirmed": "Алдымен шақырушыны таңдаңыз."
+      "programNotConfirmed": "Алдымен шақырушыны таңдаңыз.",
+      "inviterNotInProgram": "Бұл шақырушы бағдарламға әлі қатыспайды."
     },
     "tree": {
       "up": "Жоғары ▲",
@@ -139,6 +158,9 @@
     "err_is_not_deployed": "Келісімшарт орналастырылмаған.",
     "err_contract_doesnot_belong_to_the_wallet": "Бұл келісімшарт сіздің әмияныңызға тиесілі емес.",
     "err_invalid_wallet_address": "Жарамсыз әмиян мекенжайы.",
+    "err_inviter_not_in_program": "Шақырушы әлі бағдарламаға қатыспайды.",
+    "err_inviter_already_chosen": "Шақырушы қазірдің өзінде таңдалған.",
+    "err_inviter_has_no_places": "Шақырушыда әлі орын жоқ.",
     "err_network_timeout": "Желі күту уақыты аяқталды.",
     "err_rpc_unreachable": "RPC серверіне қосылу мүмкін емес.",
     "err_balance_fetch_failed": "Әмиян балансы алынбады.",

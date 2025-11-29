@@ -1,0 +1,11 @@
+.multi-inviter {
+  padding: 1rem;
+}
+
+.inviter-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.75rem;
+}

@@ -81,7 +81,25 @@
     "structure_link": "Struttura",
     "matrixes_link": "Matrici",
     "marketing_link": "Marketing",
-    "stat_link": "Statistiche"
+    "stat_link": "Statistiche",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Presentazione PDF",
+      "pdfDescription": "Visualizza il materiale nella tua lingua.",
+      "download": "Scarica PDF",
+      "view": "Apri PDF",
+      "videoTitle": "Video panoramica",
+      "videoDescription": "Guarda l'overview marketing su YouTube.",
+      "watch": "Guarda il video"
+    },
+    "inviter": {
+      "title": "Scegli un referente",
+      "loginLabel": "Login referente",
+      "loginPlaceholder": "Inserisci il login del referente",
+      "submit": "Scegli referente",
+      "success": "Referente scelto. Gli aggiornamenti appariranno presto, aggiorna la pagina più tardi.",
+      "alreadySelected": "Inviter already selected."
+    }
   },
   "multiMatrix": {
     "filters": {
@@ -106,7 +124,8 @@
       "clone": "clone",
       "prevMatrixRequired": "Serve prima un posto nella matrice precedente per comprare qui.",
       "noPlacesInMatrix": "Serve un posto in questa matrice per eseguire questa azione.",
-      "programNotConfirmed": "Scegli prima un referente."
+      "programNotConfirmed": "Scegli prima un referente.",
+      "inviterNotInProgram": "Questo referente non partecipa ancora al programma."
     },
     "tree": {
       "up": "Su ▲",
@@ -139,6 +158,9 @@
     "err_is_not_deployed": "Contratto non distribuito.",
     "err_contract_doesnot_belong_to_the_wallet": "Questo contratto non appartiene al tuo portafoglio.",
     "err_invalid_wallet_address": "Indirizzo del portafoglio non valido.",
+    "err_inviter_not_in_program": "Il referente non partecipa ancora al programma.",
+    "err_inviter_already_chosen": "Il referente è già stato scelto.",
+    "err_inviter_has_no_places": "Il referente non ha ancora posti.",
     "err_network_timeout": "Timeout di rete.",
     "err_rpc_unreachable": "Server RPC non raggiungibile.",
     "err_balance_fetch_failed": "Impossibile recuperare il saldo del portafoglio.",

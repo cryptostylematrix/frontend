@@ -26,7 +26,10 @@ export const ErrorCode = {
     INSUFFICIENT_FUNDS: "err_insufficient_funds",
     FORBIDDEN: "err_forbidden",
     NOT_FOUND: "err_not_found",
-    INVALID_WORKCHAIN: "err_invalid_workchain"
+    INVALID_WORKCHAIN: "err_invalid_workchain",
+    INVITER_NOT_IN_PROGRAM: "err_inviter_not_in_program",
+    INVITER_ALREADY_CHOSEN: "err_inviter_already_chosen",
+    INVITER_HAS_NO_PLACES: "err_inviter_has_no_places"
 
 } as const;
 

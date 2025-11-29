@@ -81,7 +81,25 @@
     "structure_link": "Структура",
     "matrixes_link": "Матрицы",
     "marketing_link": "Маркетинг",
-    "stat_link": "Статистика"
+    "stat_link": "Статистика",
+    "marketing": {
+      "title": "Маркетинг",
+      "pdfTitle": "Презентация PDF",
+      "pdfDescription": "Посмотрите материалы на вашем языке.",
+      "download": "Скачать PDF",
+      "view": "Открыть PDF",
+      "videoTitle": "Видео-обзор",
+      "videoDescription": "Посмотрите маркетинговый обзор на YouTube.",
+      "watch": "Смотреть видео"
+    },
+    "inviter": {
+      "title": "Выбор куратора",
+      "loginLabel": "Логин куратора",
+      "loginPlaceholder": "Введите логин куратора",
+      "submit": "Выбрать куратора",
+      "success": "Куратор выбран. Обновление появится скоро, пожалуйста, обновите страницу позже.",
+      "alreadySelected": "Inviter already selected."
+    }
   },
   "multiMatrix": {
     "filters": {
@@ -106,7 +124,8 @@
       "clone": "клон",
       "prevMatrixRequired": "Сначала нужно место в предыдущей матрице, чтобы купить здесь.",
       "noPlacesInMatrix": "Нужно место в этой матрице, чтобы выполнить действие.",
-      "programNotConfirmed": "Сначала выберите куратора."
+      "programNotConfirmed": "Сначала выберите куратора.",
+      "inviterNotInProgram": "Этот куратор еще не участвует в программе."
     },
     "tree": {
       "up": "Вверх ▲",
@@ -141,6 +160,9 @@
     "err_is_not_deployed": "Контракт не развернут.",
     "err_contract_doesnot_belong_to_the_wallet": "Этот контракт не принадлежит вашему кошельку.",
     "err_invalid_wallet_address": "Неверный адрес кошелька.",
+    "err_inviter_not_in_program": "Куратор еще не участвует в программе.",
+    "err_inviter_already_chosen": "Куратор уже выбран.",
+    "err_inviter_has_no_places": "У куратора пока нет мест.",
     "err_network_timeout": "Превышено время ожидания сети.",
     "err_rpc_unreachable": "RPC сервер недоступен.",
     "err_balance_fetch_failed": "Не удалось получить баланс кошелька.",

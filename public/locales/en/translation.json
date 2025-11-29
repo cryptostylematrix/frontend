@@ -81,7 +81,25 @@
     "structure_link": "Structure",
     "matrixes_link": "Matrixes",
     "marketing_link": "Marketing",
-    "stat_link": "Stat"
+    "stat_link": "Stat",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Presentation PDF",
+      "pdfDescription": "Preview the deck in your language.",
+      "download": "Download PDF",
+      "view": "View PDF",
+      "videoTitle": "Video overview",
+      "videoDescription": "Watch the marketing overview on YouTube.",
+      "watch": "Watch video"
+    },
+    "inviter": {
+      "title": "Choose inviter",
+      "loginLabel": "Inviter login",
+      "loginPlaceholder": "Enter inviter login",
+      "submit": "Choose inviter",
+      "success": "Inviter chosen. Updates will appear soon, please refresh the page later.",
+      "alreadySelected": "Inviter already selected."
+    }
   },
   "multiMatrix": {
     "filters": {
@@ -106,7 +124,8 @@
       "clone": "clone",
       "prevMatrixRequired": "You need a place in the previous matrix before buying here.",
       "noPlacesInMatrix": "You need a place in this matrix to perform this action.",
-      "programNotConfirmed": "You need to choose an inviter first."
+      "programNotConfirmed": "You need to choose an inviter first.",
+      "inviterNotInProgram": "This inviter is not participating in the program yet."
     },
     "tree": {
       "up": "Up ▲",
@@ -139,6 +158,9 @@
     "err_is_not_deployed": "Contract is not deployed.",
     "err_contract_doesnot_belong_to_the_wallet": "This contract does not belong to your wallet.",
     "err_invalid_wallet_address": "Invalid wallet address.",
+    "err_inviter_not_in_program": "The inviter is not participating in the program yet.",
+    "err_inviter_already_chosen": "Inviter already chosen.",
+    "err_inviter_has_no_places": "The inviter has no places yet.",
     "err_network_timeout": "Network timeout.",
     "err_rpc_unreachable": "RPC server unreachable.",
     "err_balance_fetch_failed": "Failed to fetch wallet balance.",

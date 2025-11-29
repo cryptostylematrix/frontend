@@ -9,7 +9,7 @@ import { ProfileItemV1, ProgramDataCodec, type ProgramData } from "../contracts/
 import { type NftContentOnchain } from "../contracts/ProfileContent";
 import { NFTDictValueSerializer } from "../contracts/dict";
 import { sha256_sync } from "@ton/crypto";
-import { Programs } from "../contracts/MultiConstants";
+
 
 const tonClient = new TonClient({
     endpoint: "https://toncenter.com/api/v2/jsonRPC",
@@ -50,6 +50,54 @@ export type ProfilePreviewResult =
 export type ProfileProgramsResult =
   | { success: true; data: ProgramData | null }
   | { success: false; errors: ErrorCode[] };
+
+export type ChooseInviterResult =
+  | { success: true }
+  | { success: false; errors: ErrorCode[] };
+
+export interface NftProfileData {
+  address: string;
+  login: string;
+  imageUrl: string;
+  firstName?: string;
+  lastName?: string;
+  tgUsername?: string;
+}
+
+export type NftDataResult =
+  | { success: true; data: NftProfileData }
+  | { success: false; errors: ErrorCode[] };
+
+export async function chooseInviter(
+  tonConnectUI: TonConnectUI,
+  profile_addr: string,
+  program: number,
+  inviter_addr: string,
+  seqNo: number,
+  invite_addr: string
+): Promise<ChooseInviterResult> {
+  if (!profile_addr?.trim() || !inviter_addr?.trim() || !invite_addr?.trim()) {
+    return { success: false, errors: [ErrorCode.INVALID_WALLET_ADDRESS] };
+  }
+
+  try {
+   
+    const body = ProfileItemV1.chooseInviterMessage(
+      program,
+      Address.parse(inviter_addr),
+      seqNo,
+      Address.parse(invite_addr),
+      Date.now()
+    );
+
+    await sendTransaction(tonConnectUI, profile_addr, toNano("0.05"), body);
+
+    return { success: true };
+  } catch (err) {
+    console.error("chooseInviter error:", err);
+    return { success: false, errors: [ErrorCode.TRANSACTION_FAILED] };
+  }
+}
 
 // /**
 //  * Helper: simulate async task delay.
@@ -120,6 +168,7 @@ export async function sendTransaction(
     };
 
     await tonConnectUI.sendTransaction(tx);
+
     return { success: true };
   } catch (err: any) {
     console.error("TonConnect transaction error:", err);
@@ -486,6 +535,78 @@ export async function getProfile(
     return { success: true, data: profile };
   } catch (err) {
     console.error('getProfile error:', err);
+    return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
+  }
+}
+
+export async function getNftData(nftAddress: string): Promise<NftDataResult> {
+  if (!nftAddress?.trim()) {
+    return { success: false, errors: [ErrorCode.INVALID_WALLET_ADDRESS] };
+  }
+
+  try {
+    const address = Address.parse(nftAddress.trim());
+    const item = ProfileItemV1.createFromAddress(address);
+    const provider = tonClient.provider(address);
+    const dataCell = await item.getNftData(provider);
+
+    const contentSlice = dataCell.content?.asSlice();
+    if (!contentSlice) {
+      return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
+    }
+
+    const start = contentSlice.loadUint(8);
+    if (start !== 0) {
+      return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
+    }
+
+    const dict = contentSlice.loadDict(Dictionary.Keys.Buffer(32), NFTDictValueSerializer);
+
+    const image = dict.get(sha256_sync("image"))?.content.toString("utf-8");
+    const name = dict.get(sha256_sync("name"))?.content.toString("utf-8");
+    const attributes = dict.get(sha256_sync("attributes"))?.content.toString("utf-8");
+
+    let firstName: string | undefined;
+    let lastName: string | undefined;
+    let tgUsername: string | undefined;
+
+    if (attributes) {
+      try {
+        const parsed = JSON.parse(attributes);
+        const getValue = (trait: string) =>
+          parsed.find((a: any) => a.trait_type === trait)?.value;
+
+        firstName = getValue("firstName");
+        lastName = getValue("lastName");
+        tgUsername = getValue("tgUsername");
+      } catch {
+        console.warn("Failed to parse NFT attributes JSON");
+      }
+    }
+
+    const normalizedImageUrl =
+      toLower(image) && toLower(image) !== ""
+        ? toLower(image)
+        : "https://cryptostylematrix.github.io/frontend/cs-big.png";
+
+    const normalizedLogin = toLower(name) || "unknown";
+    const normalizedFirstName = capitalize(firstName);
+    const normalizedLastName = capitalize(lastName);
+    const normalizedTgUsername = toLower(tgUsername);
+
+    return {
+      success: true,
+      data: {
+        address: address.toString({ urlSafe: true, bounceable: true, testOnly: false }),
+        login: normalizedLogin,
+        imageUrl: normalizedImageUrl!,
+        firstName: normalizedFirstName,
+        lastName: normalizedLastName,
+        tgUsername: normalizedTgUsername,
+      },
+    };
+  } catch (err) {
+    console.error("getNftData error:", err);
     return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
   }
 }

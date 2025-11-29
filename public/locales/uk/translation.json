@@ -81,7 +81,25 @@
     "structure_link": "Структура",
     "matrixes_link": "Матриці",
     "marketing_link": "Маркетинг",
-    "stat_link": "Статистика"
+    "stat_link": "Статистика",
+    "marketing": {
+      "title": "Маркетинг",
+      "pdfTitle": "Презентація PDF",
+      "pdfDescription": "Перегляньте матеріали вашою мовою.",
+      "download": "Завантажити PDF",
+      "view": "Відкрити PDF",
+      "videoTitle": "Відео-огляд",
+      "videoDescription": "Подивіться маркетинговий огляд на YouTube.",
+      "watch": "Дивитися відео"
+    },
+    "inviter": {
+      "title": "Вибір куратора",
+      "loginLabel": "Логін куратора",
+      "loginPlaceholder": "Введіть логін куратора",
+      "submit": "Обрати куратора",
+      "success": "Куратора обрано. Оновлення з'явиться скоро, будь ласка, оновіть сторінку пізніше.",
+      "alreadySelected": "Inviter already selected."
+    }
   },
   "multiMatrix": {
     "filters": {
@@ -106,7 +124,8 @@
       "clone": "клон",
       "prevMatrixRequired": "Спочатку потрібне місце в попередній матриці, щоб купувати тут.",
       "noPlacesInMatrix": "Потрібне місце в цій матриці, щоб виконати дію.",
-      "programNotConfirmed": "Спершу оберіть куратора."
+      "programNotConfirmed": "Спершу оберіть куратора.",
+      "inviterNotInProgram": "Цей куратор ще не бере участі в програмі."
     },
     "tree": {
       "up": "Вгору ▲",
@@ -139,6 +158,9 @@
     "err_is_not_deployed": "Контракт не розгорнуто.",
     "err_contract_doesnot_belong_to_the_wallet": "Цей контракт не належить вашому гаманцю.",
     "err_invalid_wallet_address": "Невірна адреса гаманця.",
+    "err_inviter_not_in_program": "Куратор ще не бере участь у програмі.",
+    "err_inviter_already_chosen": "Куратора вже обрано.",
+    "err_inviter_has_no_places": "У куратора ще немає місць.",
     "err_network_timeout": "Час очікування мережі вичерпано.",
     "err_rpc_unreachable": "RPC-сервер недоступний.",
     "err_balance_fetch_failed": "Не вдалося отримати баланс гаманця.",

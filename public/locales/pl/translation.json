@@ -81,7 +81,25 @@
     "structure_link": "Struktura",
     "matrixes_link": "Macierze",
     "marketing_link": "Marketing",
-    "stat_link": "Statystyka"
+    "stat_link": "Statystyka",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Prezentacja PDF",
+      "pdfDescription": "Zobacz materiały w swoim języku.",
+      "download": "Pobierz PDF",
+      "view": "Otwórz PDF",
+      "videoTitle": "Wideo przegląd",
+      "videoDescription": "Obejrzyj przegląd marketingowy na YouTube.",
+      "watch": "Obejrzyj wideo"
+    },
+    "inviter": {
+      "title": "Wybierz opiekuna",
+      "loginLabel": "Login opiekuna",
+      "loginPlaceholder": "Wpisz login opiekuna",
+      "submit": "Wybierz opiekuna",
+      "success": "Opiekun wybrany. Aktualizacje pojawią się wkrótce, odśwież stronę później.",
+      "alreadySelected": "Inviter already selected."
+    }
   },
   "multiMatrix": {
     "filters": {
@@ -106,7 +124,8 @@
       "clone": "klon",
       "prevMatrixRequired": "Najpierw potrzebujesz miejsca w poprzedniej macierzy, aby kupić tutaj.",
       "noPlacesInMatrix": "Musisz mieć miejsce w tej macierzy, aby wykonać tę akcję.",
-      "programNotConfirmed": "Najpierw wybierz opiekuna."
+      "programNotConfirmed": "Najpierw wybierz opiekuna.",
+      "inviterNotInProgram": "Ten opiekun nie uczestniczy jeszcze w programie."
     },
     "tree": {
       "up": "W górę ▲",
@@ -139,6 +158,9 @@
     "err_is_not_deployed": "Kontrakt nie został wdrożony.",
     "err_contract_doesnot_belong_to_the_wallet": "Ten kontrakt nie należy do twojego portfela.",
     "err_invalid_wallet_address": "Nieprawidłowy adres portfela.",
+    "err_inviter_not_in_program": "Opiekun jeszcze nie uczestniczy w programie.",
+    "err_inviter_already_chosen": "Opiekun został już wybrany.",
+    "err_inviter_has_no_places": "Opiekun nie ma jeszcze miejsc.",
     "err_network_timeout": "Przekroczono limit czasu sieci.",
     "err_rpc_unreachable": "Serwer RPC jest niedostępny.",
     "err_balance_fetch_failed": "Nie udało się pobrać salda portfela.",

@@ -81,7 +81,25 @@
     "structure_link": "Struktúra",
     "matrixes_link": "Mátrixok",
     "marketing_link": "Marketing",
-    "stat_link": "Statisztika"
+    "stat_link": "Statisztika",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Prezentáció PDF",
+      "pdfDescription": "Nézd meg a bemutatót a saját nyelveden.",
+      "download": "PDF letöltése",
+      "view": "PDF megnyitása",
+      "videoTitle": "Videós összefoglaló",
+      "videoDescription": "Nézd meg a marketing áttekintést a YouTube-on.",
+      "watch": "Videó megtekintése"
+    },
+    "inviter": {
+      "title": "Meghívó választása",
+      "loginLabel": "Meghívó bejelentkezése",
+      "loginPlaceholder": "Add meg a meghívó bejelentkezését",
+      "submit": "Meghívó választása",
+      "success": "A meghívó kiválasztva. A frissítések hamarosan megjelennek, kérjük, frissítsd az oldalt később.",
+      "alreadySelected": "Inviter already selected."
+    }
   },
   "multiMatrix": {
     "filters": {
@@ -106,7 +124,8 @@
       "clone": "klón",
       "prevMatrixRequired": "Először szükség van helyre az előző mátrixban, hogy itt vásárolhass.",
       "noPlacesInMatrix": "Szükség van helyre ebben a mátrixban a művelethez.",
-      "programNotConfirmed": "Először válassz meghívót."
+      "programNotConfirmed": "Először válassz meghívót.",
+      "inviterNotInProgram": "Ez a meghívó még nem vesz részt a programban."
     },
     "tree": {
       "up": "Fel ▲",
@@ -139,6 +158,9 @@
     "err_is_not_deployed": "A szerződés nincs telepítve.",
     "err_contract_doesnot_belong_to_the_wallet": "Ez a szerződés nem a pénztárcához tartozik.",
     "err_invalid_wallet_address": "Érvénytelen pénztárca-cím.",
+    "err_inviter_not_in_program": "A meghívó még nem vesz részt a programban.",
+    "err_inviter_already_chosen": "A meghívót már kiválasztották.",
+    "err_inviter_has_no_places": "A meghívónak még nincsenek helyei.",
     "err_network_timeout": "Hálózati időtúllépés.",
     "err_rpc_unreachable": "Az RPC szerver nem elérhető.",
     "err_balance_fetch_failed": "A pénztárca egyenlegének lekérése nem sikerült.",
