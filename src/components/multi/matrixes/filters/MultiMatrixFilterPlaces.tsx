@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./multi-matrix-filters.css";
 import "./multi-matrix-filter-places.css";
-import { fetchPlaces } from "../../../../services/fakeMatrixService";
+import { fetchPlaces } from "../../../../services/matrixService";
 import type { MatrixPlace } from "../../../../services/matrixService";
 import { useProfileContext } from "../../../../context/ProfileContext";
 import { useMatrixContext } from "../../../../context/MatrixContext";
@@ -37,7 +37,7 @@ export default function MultiMatrixFilterPlaces() {
     }
 
     setLoading(true);
-    fetchPlaces(selectedMatrix, currentProfile.login, 1, PAGE_SIZE)
+    fetchPlaces(selectedMatrix, currentProfile.address, 1, PAGE_SIZE)
       .then((data) => {
         if (cancelled) return;
         setPlaces(data.items);
@@ -164,7 +164,7 @@ export default function MultiMatrixFilterPlaces() {
                 onClick={() => {
                   if (loadingMore) return;
                   setLoadingMore(true);
-                  fetchPlaces(selectedMatrix, currentProfile!.login, page + 1, PAGE_SIZE)
+                  fetchPlaces(selectedMatrix, currentProfile!.address, page + 1, PAGE_SIZE)
                     .then((data) => {
                       setPlaces((prev) => [...prev, ...data.items]);
                       setPage(data.page);

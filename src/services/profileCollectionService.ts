@@ -3,10 +3,11 @@ import { TonClient } from "@ton/ton";
 import { ProfileCollectionV1 } from "../contracts/ProfileCollectionV1";
 import { sha256n } from "../utils/cryptoHelper";
 import { ErrorCode } from "../errors/ErrorCodes";
+import { appConfig } from "../config";
 
 const tonClient = new TonClient({
-  endpoint: "https://toncenter.com/api/v2/jsonRPC",
-  apiKey: "193210c5feca89e2e483c94b7e7e43797c5c3e33cd61c7e711d4868dd8a4ed04", // optional
+  endpoint: appConfig.ton.endpoint,
+  apiKey: appConfig.ton.apiKey, // optional
 });
 
 const nftCollectionAddress = Address.parse("EQAiWZqRPp39Z46Y4Pahvj5UQSzafJrUiTbYDcQ0kldLebjn");

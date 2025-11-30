@@ -3,10 +3,11 @@ import { MultiInvite } from "../contracts/MultiInvite";
 import type { MultiInviteData } from "../contracts/MultiInvite";
 import { ErrorCode } from "../errors/ErrorCodes";
 import { TonClient } from "@ton/ton";
+import { appConfig } from "../config";
 
 const tonClient = new TonClient({
-  endpoint: "https://toncenter.com/api/v2/jsonRPC",
-  apiKey: "193210c5feca89e2e483c94b7e7e43797c5c3e33cd61c7e711d4868dd8a4ed04",
+  endpoint: appConfig.ton.endpoint,
+  apiKey: appConfig.ton.apiKey,
 });
 
 export type InviteResult =
@@ -30,6 +31,10 @@ export async function getInviteData(invite_addr: string): Promise<InviteDataResu
   try {
     const contract = MultiInvite.createFromAddress(Address.parse(address));
     const provider = tonClient.provider(contract.address);
+
+
+    console.log('loading invite data of  ', address)
+
     const data = await contract.getInviteData(provider);
     return { success: true, data };
   } catch (err) {

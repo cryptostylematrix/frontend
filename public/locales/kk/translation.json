@@ -92,6 +92,20 @@
       "videoDescription": "YouTube-тен маркетингке шолуды қараңыз.",
       "watch": "Бейнені қарау"
     },
+    "structure": {
+      "breadcrumbsTitle": "Навигация",
+      "breadcrumbsPlaceholder": "Мұнда навигация көрсетіледі.",
+      "searchTitle": "Логин бойынша іздеу",
+      "searchPlaceholder": "Логинді енгізіңіз",
+      "searchButton": "Іздеу",
+      "treeTitle": "Құрылым",
+      "treePlaceholder": "Ағаш көрінісі мұнда көрсетіледі.",
+      "loadMore": "Тағы жүктеу",
+      "notFound": "Логинге шақыру табылмады.",
+      "loading": "Жүктелуде...",
+      "expand": "Ашу",
+      "collapse": "Жабу"
+    },
     "inviter": {
       "title": "Шақырушыны таңдау",
       "loginLabel": "Шақырушының логині",
@@ -161,6 +175,7 @@
     "err_inviter_not_in_program": "Шақырушы әлі бағдарламаға қатыспайды.",
     "err_inviter_already_chosen": "Шақырушы қазірдің өзінде таңдалған.",
     "err_inviter_has_no_places": "Шақырушыда әлі орын жоқ.",
+      "err_structure_root_not_found": "Куратор \"{{login}}\" табылмады.",
     "err_network_timeout": "Желі күту уақыты аяқталды.",
     "err_rpc_unreachable": "RPC серверіне қосылу мүмкін емес.",
     "err_balance_fetch_failed": "Әмиян балансы алынбады.",

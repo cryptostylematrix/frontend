@@ -6,9 +6,10 @@ import { useProfileContext } from "../../../../context/ProfileContext";
 import { buyPlace, lockPos, unlockPos } from "../../../../services/multiService";
 import { translateError } from "../../../../errors/errorUtils";
 import { useState } from "react";
-import { getPlacesCount } from "../../../../services/fakeMatrixService";
+import { getPlacesCount } from "../../../../services/matrixService";
 import { getProfileProgramData } from "../../../../services/profileService";
 import { Programs } from "../../../../contracts/MultiConstants";
+import { useTonConnectUI } from "@tonconnect/ui-react";
 
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -19,6 +20,7 @@ type Props = {
 export function MultiMatrixTreeDetails({ selectedNode }: Props) {
   const { matrixPrice, setSelectedPlace, selectedMatrix } = useMatrixContext();
   const { currentProfile } = useProfileContext();
+  const [tonConnectUI] = useTonConnectUI();
   const { t } = useTranslation();
   const upLabel = t("multiMatrix.tree.up", { defaultValue: "Up ▲" });
   const [buyLoading, setBuyLoading] = useState(false);
@@ -90,7 +92,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
                 return;
               }
               const handler = isLocked ? unlockPos : lockPos;
-              const result = await handler(Date.now(), selectedMatrix, currentProfile.address, selectedNode.address);
+              const result = await handler(tonConnectUI, Date.now(), selectedMatrix, currentProfile.address, selectedNode.address);
               setLockLoading(false);
               if (result.success) {
                 alert(
@@ -150,7 +152,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
                   return;
                 }
               }
-              const result = await buyPlace(Date.now(), selectedMatrix, currentProfile.address, undefined);
+              const result = await buyPlace(tonConnectUI, Date.now(), selectedMatrix, currentProfile.address, undefined);
               setBuyLoading(false);
               if (result.success) {
                 alert(t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."));

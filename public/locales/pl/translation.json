@@ -92,6 +92,20 @@
       "videoDescription": "Obejrzyj przegląd marketingowy na YouTube.",
       "watch": "Obejrzyj wideo"
     },
+    "structure": {
+      "breadcrumbsTitle": "Nawigacja okruszkowa",
+      "breadcrumbsPlaceholder": "Breadcrumby pojawią się tutaj.",
+      "searchTitle": "Szukaj po loginie",
+      "searchPlaceholder": "Wpisz login",
+      "searchButton": "Szukaj",
+      "treeTitle": "Struktura",
+      "treePlaceholder": "Widok drzewa pojawi się tutaj.",
+      "loadMore": "Załaduj więcej",
+      "notFound": "Zaproszenie dla podanego loginu nie zostało znalezione.",
+      "loading": "Ładowanie...",
+      "expand": "Rozwiń",
+      "collapse": "Zwiń"
+    },
     "inviter": {
       "title": "Wybierz opiekuna",
       "loginLabel": "Login opiekuna",
@@ -161,6 +175,7 @@
     "err_inviter_not_in_program": "Opiekun jeszcze nie uczestniczy w programie.",
     "err_inviter_already_chosen": "Opiekun został już wybrany.",
     "err_inviter_has_no_places": "Opiekun nie ma jeszcze miejsc.",
+      "err_structure_root_not_found": "Kurator \"{{login}}\" nie został znaleziony.",
     "err_network_timeout": "Przekroczono limit czasu sieci.",
     "err_rpc_unreachable": "Serwer RPC jest niedostępny.",
     "err_balance_fetch_failed": "Nie udało się pobrać salda portfela.",

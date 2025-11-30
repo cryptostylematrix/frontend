@@ -92,6 +92,20 @@
       "videoDescription": "Подивіться маркетинговий огляд на YouTube.",
       "watch": "Дивитися відео"
     },
+    "structure": {
+      "breadcrumbsTitle": "Хлібні крихти",
+      "breadcrumbsPlaceholder": "Тут з’являться хлібні крихти.",
+      "searchTitle": "Пошук за логіном",
+      "searchPlaceholder": "Введіть логін",
+      "searchButton": "Пошук",
+      "treeTitle": "Структура",
+      "treePlaceholder": "Тут буде відображено дерево.",
+      "loadMore": "Завантажити ще",
+      "notFound": "Запрошення з таким логіном не знайдено.",
+      "loading": "Завантаження...",
+      "expand": "Розгорнути",
+      "collapse": "Згорнути"
+    },
     "inviter": {
       "title": "Вибір куратора",
       "loginLabel": "Логін куратора",
@@ -161,6 +175,7 @@
     "err_inviter_not_in_program": "Куратор ще не бере участь у програмі.",
     "err_inviter_already_chosen": "Куратора вже обрано.",
     "err_inviter_has_no_places": "У куратора ще немає місць.",
+      "err_structure_root_not_found": "Куратор \"{{login}}\" не знайдений.",
     "err_network_timeout": "Час очікування мережі вичерпано.",
     "err_rpc_unreachable": "RPC-сервер недоступний.",
     "err_balance_fetch_failed": "Не вдалося отримати баланс гаманця.",

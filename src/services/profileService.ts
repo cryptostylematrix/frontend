@@ -9,11 +9,12 @@ import { ProfileItemV1, ProgramDataCodec, type ProgramData } from "../contracts/
 import { type NftContentOnchain } from "../contracts/ProfileContent";
 import { NFTDictValueSerializer } from "../contracts/dict";
 import { sha256_sync } from "@ton/crypto";
+import { appConfig } from "../config";
 
 
 const tonClient = new TonClient({
-    endpoint: "https://toncenter.com/api/v2/jsonRPC",
-    apiKey: "193210c5feca89e2e483c94b7e7e43797c5c3e33cd61c7e711d4868dd8a4ed04", // optional, if you have one
+    endpoint: appConfig.ton.endpoint,
+    apiKey: appConfig.ton.apiKey, // optional, if you have one
   });
 
 
@@ -51,10 +52,6 @@ export type ProfileProgramsResult =
   | { success: true; data: ProgramData | null }
   | { success: false; errors: ErrorCode[] };
 
-export type ChooseInviterResult =
-  | { success: true }
-  | { success: false; errors: ErrorCode[] };
-
 export interface NftProfileData {
   address: string;
   login: string;
@@ -68,6 +65,7 @@ export type NftDataResult =
   | { success: true; data: NftProfileData }
   | { success: false; errors: ErrorCode[] };
 
+// kept for backward compatibility: prefer chooseInviterCommand in api/commands
 export async function chooseInviter(
   tonConnectUI: TonConnectUI,
   profile_addr: string,
@@ -75,13 +73,12 @@ export async function chooseInviter(
   inviter_addr: string,
   seqNo: number,
   invite_addr: string
-): Promise<ChooseInviterResult> {
+): Promise<{ success: boolean; errors?: ErrorCode[] }> {
   if (!profile_addr?.trim() || !inviter_addr?.trim() || !invite_addr?.trim()) {
     return { success: false, errors: [ErrorCode.INVALID_WALLET_ADDRESS] };
   }
 
   try {
-   
     const body = ProfileItemV1.chooseInviterMessage(
       program,
       Address.parse(inviter_addr),
@@ -91,7 +88,6 @@ export async function chooseInviter(
     );
 
     await sendTransaction(tonConnectUI, profile_addr, toNano("0.05"), body);
-
     return { success: true };
   } catch (err) {
     console.error("chooseInviter error:", err);

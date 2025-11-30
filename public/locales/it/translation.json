@@ -92,6 +92,20 @@
       "videoDescription": "Guarda l'overview marketing su YouTube.",
       "watch": "Guarda il video"
     },
+    "structure": {
+      "breadcrumbsTitle": "Breadcrumb",
+      "breadcrumbsPlaceholder": "I breadcrumb appariranno qui.",
+      "searchTitle": "Cerca per login",
+      "searchPlaceholder": "Inserisci login",
+      "searchButton": "Cerca",
+      "treeTitle": "Struttura",
+      "treePlaceholder": "La vista ad albero apparirà qui.",
+      "loadMore": "Carica altro",
+      "notFound": "Invito per il login non trovato.",
+      "loading": "Caricamento...",
+      "expand": "Espandi",
+      "collapse": "Comprimi"
+    },
     "inviter": {
       "title": "Scegli un referente",
       "loginLabel": "Login referente",
@@ -161,6 +175,7 @@
     "err_inviter_not_in_program": "Il referente non partecipa ancora al programma.",
     "err_inviter_already_chosen": "Il referente è già stato scelto.",
     "err_inviter_has_no_places": "Il referente non ha ancora posti.",
+      "err_structure_root_not_found": "Curatore \"{{login}}\" non trovato.",
     "err_network_timeout": "Timeout di rete.",
     "err_rpc_unreachable": "Server RPC non raggiungibile.",
     "err_balance_fetch_failed": "Impossibile recuperare il saldo del portafoglio.",

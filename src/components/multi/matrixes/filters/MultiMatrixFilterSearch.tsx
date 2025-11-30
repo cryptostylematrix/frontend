@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./multi-matrix-filter-search.css";
-import { searchPlaces } from "../../../../services/fakeMatrixService";
+import { searchPlaces } from "../../../../services/matrixService";
 import type { MatrixPlace } from "../../../../services/matrixService";
 import { useProfileContext } from "../../../../context/ProfileContext";
 import { useMatrixContext } from "../../../../context/MatrixContext";
@@ -32,7 +32,7 @@ export default function MultiMatrixFilterSearch() {
     return () => {
       cancelled = true;
     };
-  }, [searchLogin]);
+  }, [searchLogin, selectedMatrix, currentProfile]);
 
 
   const selectLogin = (place: MatrixPlace) => {

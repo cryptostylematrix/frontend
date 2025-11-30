@@ -9,7 +9,7 @@ import { Programs } from "../../../contracts/MultiConstants";
 import { getInviteData, getInviteAddressBySeqNo } from "../../../services/inviteService";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { useProfileContext } from "../../../context/ProfileContext";
-import { getPlacesCount } from "../../../services/fakeMatrixService";
+import { getPlacesCount } from "../../../services/matrixService";
 import "./multi-inviter-choose-inviter.css";
 
 type Props = {

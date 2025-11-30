@@ -10,13 +10,15 @@ import { buyPlace } from "../../../../services/multiService";
 import { translateError } from "../../../../errors/errorUtils";
 import "../../../../pages/profile/update-profile.css";
 import { useMatrixContext } from "../../../../context/MatrixContext";
-import { getRootPlace, getPlacesCount } from "../../../../services/fakeMatrixService";
+import { getRootPlace, getPlacesCount } from "../../../../services/matrixService";
 import { getProfileProgramData } from "../../../../services/profileService";
 import { Programs } from "../../../../contracts/MultiConstants";
+import { useTonConnectUI } from "@tonconnect/ui-react";
 
 export default function MultiMatrixFilters() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
+  const [tonConnectUI] = useTonConnectUI();
   const {
     resetRooPlacetAndSelectedPlace,
     resetAll,
@@ -77,7 +79,7 @@ export default function MultiMatrixFilters() {
       }
     }
 
-    const result = await buyPlace(Date.now(), selectedMatrix, currentProfile.address, undefined);
+    const result = await buyPlace(tonConnectUI, Date.now(), selectedMatrix, currentProfile.address, undefined);
     if (result.success) {
       setBuyStatus({
         type: "success",

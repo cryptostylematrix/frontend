@@ -92,6 +92,20 @@
       "videoDescription": "Nézd meg a marketing áttekintést a YouTube-on.",
       "watch": "Videó megtekintése"
     },
+    "structure": {
+      "breadcrumbsTitle": "Kenyérmorzsák",
+      "breadcrumbsPlaceholder": "Itt jelennek meg a kenyérmorzsák.",
+      "searchTitle": "Keresés bejelentkezés alapján",
+      "searchPlaceholder": "Írd be a bejelentkezést",
+      "searchButton": "Keresés",
+      "treeTitle": "Struktúra",
+      "treePlaceholder": "Itt jelenik meg a fa nézet.",
+      "loadMore": "Továbbiak betöltése",
+      "notFound": "A megadott meghívó nem található.",
+      "loading": "Betöltés...",
+      "expand": "Kinyitás",
+      "collapse": "Bezárás"
+    },
     "inviter": {
       "title": "Meghívó választása",
       "loginLabel": "Meghívó bejelentkezése",
@@ -161,6 +175,7 @@
     "err_inviter_not_in_program": "A meghívó még nem vesz részt a programban.",
     "err_inviter_already_chosen": "A meghívót már kiválasztották.",
     "err_inviter_has_no_places": "A meghívónak még nincsenek helyei.",
+      "err_structure_root_not_found": "Kurátor \"{{login}}\" nem található.",
     "err_network_timeout": "Hálózati időtúllépés.",
     "err_rpc_unreachable": "Az RPC szerver nem elérhető.",
     "err_balance_fetch_failed": "A pénztárca egyenlegének lekérése nem sikerült.",

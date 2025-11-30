@@ -92,6 +92,20 @@
       "videoDescription": "Watch the marketing overview on YouTube.",
       "watch": "Watch video"
     },
+    "structure": {
+      "breadcrumbsTitle": "Breadcrumbs",
+      "breadcrumbsPlaceholder": "Breadcrumbs will appear here.",
+      "searchTitle": "Search by login",
+      "searchPlaceholder": "Enter login",
+      "searchButton": "Search",
+      "treeTitle": "Structure",
+      "treePlaceholder": "Tree view will appear here.",
+      "loadMore": "Load more",
+      "notFound": "Login invite not found.",
+      "loading": "Loading...",
+      "expand": "Expand",
+      "collapse": "Collapse"
+    },
     "inviter": {
       "title": "Choose inviter",
       "loginLabel": "Inviter login",
@@ -161,6 +175,7 @@
     "err_inviter_not_in_program": "The inviter is not participating in the program yet.",
     "err_inviter_already_chosen": "Inviter already chosen.",
     "err_inviter_has_no_places": "The inviter has no places yet.",
+      "err_structure_root_not_found": "Curator \"{{login}}\" not found.",
     "err_network_timeout": "Network timeout.",
     "err_rpc_unreachable": "RPC server unreachable.",
     "err_balance_fetch_failed": "Failed to fetch wallet balance.",
