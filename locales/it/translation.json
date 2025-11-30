@@ -81,7 +81,80 @@
     "structure_link": "Struttura",
     "matrixes_link": "Matrici",
     "marketing_link": "Marketing",
-    "stat_link": "Statistiche"
+    "stat_link": "Statistiche",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Presentazione PDF",
+      "pdfDescription": "Visualizza il materiale nella tua lingua.",
+      "download": "Scarica PDF",
+      "view": "Apri PDF",
+      "videoTitle": "Video panoramica",
+      "videoDescription": "Guarda l'overview marketing su YouTube.",
+      "watch": "Guarda il video"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Breadcrumb",
+      "breadcrumbsPlaceholder": "I breadcrumb appariranno qui.",
+      "searchTitle": "Cerca per login",
+      "searchPlaceholder": "Inserisci login",
+      "searchButton": "Cerca",
+      "treeTitle": "Struttura",
+      "treePlaceholder": "La vista ad albero apparirà qui.",
+      "loadMore": "Carica altro",
+      "notFound": "Invito per il login non trovato.",
+      "loading": "Caricamento...",
+      "expand": "Espandi",
+      "collapse": "Comprimi"
+    },
+    "inviter": {
+      "title": "Scegli un referente",
+      "loginLabel": "Login referente",
+      "loginPlaceholder": "Inserisci il login del referente",
+      "submit": "Scegli referente",
+      "success": "Referente scelto. Gli aggiornamenti appariranno presto, aggiorna la pagina più tardi.",
+      "alreadySelected": "Inviter already selected."
+    }
+  },
+  "multiMatrix": {
+    "filters": {
+      "title": "Filtri",
+      "show": "Mostra",
+      "hide": "Nascondi",
+      "matrixes": "Matrici",
+      "places": "Posti",
+      "noPlaces": "Nessun posto",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Cerca",
+      "searchPlaceholder": "login",
+      "locks": "Bloccaggi",
+      "noLocks": "Nessun bloccaggio",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Compra un nuovo posto ({{price}} TON)",
+      "confirmBuy": "Sei sicuro?",
+      "buySuccess": "Il nuovo posto apparirà presto nell'elenco.",
+      "buyFail": "Errore",
+      "loadMore": "Carica altro",
+      "nextPos": "Prossima pos",
+      "clone": "clone",
+      "prevMatrixRequired": "Serve prima un posto nella matrice precedente per comprare qui.",
+      "noPlacesInMatrix": "Serve un posto in questa matrice per eseguire questa azione.",
+      "programNotConfirmed": "Scegli prima un referente.",
+      "inviterNotInProgram": "Questo referente non partecipa ancora al programma."
+    },
+    "tree": {
+      "up": "Su ▲",
+      "placesBelow_one": "{{formattedCount}} posto sotto",
+      "placesBelow_other": "{{formattedCount}} posti sotto",
+      "unlock": "Sblocca",
+      "lock": "Blocca",
+      "unlockSuccess": "Posizione sbloccata.",
+      "lockSuccess": "Posizione bloccata.",
+      "select": "Seleziona ▼",
+      "buy": "Compra ({{price}} TON)",
+      "loadingPath": "Caricamento percorso...",
+      "breadcrumbEmpty": "I breadcrumb appariranno dopo aver selezionato un posto.",
+      "breadcrumbs": "Breadcrumb"
+    }
   },
   "common": {
     "warning": {
@@ -99,14 +172,22 @@
     "err_is_not_deployed": "Contratto non distribuito.",
     "err_contract_doesnot_belong_to_the_wallet": "Questo contratto non appartiene al tuo portafoglio.",
     "err_invalid_wallet_address": "Indirizzo del portafoglio non valido.",
+    "err_inviter_not_in_program": "Il referente non partecipa ancora al programma.",
+    "err_inviter_already_chosen": "Il referente è già stato scelto.",
+    "err_inviter_has_no_places": "Il referente non ha ancora posti.",
+      "err_structure_root_not_found": "Curatore \"{{login}}\" non trovato.",
     "err_network_timeout": "Timeout di rete.",
     "err_rpc_unreachable": "Server RPC non raggiungibile.",
     "err_balance_fetch_failed": "Impossibile recuperare il saldo del portafoglio.",
-
+    "err_invalid_payload": "Payload non valido.",
+    "err_unauthorized": "Non autorizzato.",
+    "err_insufficient_funds": "Fondi insufficienti.",
+    "err_forbidden": "Accesso negato.",
+    "err_not_found": "Non trovato.",
+    "err_invalid_workchain": "Workchain non valido.",
     "err_local_storage_read_failed": "Impossibile leggere i dati dall'archiviazione locale.",
     "err_local_storage_write_failed": "Impossibile scrivere i dati nell'archiviazione locale.",
     "err_local_storage_clear_failed": "Impossibile cancellare l'archiviazione locale.",
-
     "err_user_rejected_transaction": "Transazione rifiutata dall'utente.",
     "err_transaction_failed": "Transazione non riuscita."
   }

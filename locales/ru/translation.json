@@ -81,7 +81,82 @@
     "structure_link": "Структура",
     "matrixes_link": "Матрицы",
     "marketing_link": "Маркетинг",
-    "stat_link": "Статистика"
+    "stat_link": "Статистика",
+    "marketing": {
+      "title": "Маркетинг",
+      "pdfTitle": "Презентация PDF",
+      "pdfDescription": "Посмотрите материалы на вашем языке.",
+      "download": "Скачать PDF",
+      "view": "Открыть PDF",
+      "videoTitle": "Видео-обзор",
+      "videoDescription": "Посмотрите маркетинговый обзор на YouTube.",
+      "watch": "Смотреть видео"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Хлебные крошки",
+      "breadcrumbsPlaceholder": "Здесь появятся хлебные крошки.",
+      "searchTitle": "Поиск по логину",
+      "searchPlaceholder": "Введите логин",
+      "searchButton": "Поиск",
+      "treeTitle": "Структура",
+      "treePlaceholder": "Здесь будет отображаться дерево.",
+      "loadMore": "Загрузить еще",
+      "notFound": "Приглашение с таким логином не найдено.",
+      "loading": "Загрузка...",
+      "expand": "Развернуть",
+      "collapse": "Свернуть"
+    },
+    "inviter": {
+      "title": "Выбор куратора",
+      "loginLabel": "Логин куратора",
+      "loginPlaceholder": "Введите логин куратора",
+      "submit": "Выбрать куратора",
+      "success": "Куратор выбран. Обновление появится скоро, пожалуйста, обновите страницу позже.",
+      "alreadySelected": "Inviter already selected."
+    }
+  },
+  "multiMatrix": {
+    "filters": {
+      "title": "Фильтры",
+      "show": "Показать",
+      "hide": "Скрыть",
+      "matrixes": "Матрицы",
+      "places": "Места",
+      "noPlaces": "Нет мест",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Поиск",
+      "searchPlaceholder": "логин",
+      "locks": "Блокировки",
+      "noLocks": "Нет блокировок",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Купить новое место ({{price}} TON)",
+      "confirmBuy": "Вы уверены?",
+      "buySuccess": "Новое место скоро появится в списке.",
+      "buyFail": "Ошибка",
+      "loadMore": "Загрузить ещё",
+      "nextPos": "Следующая позиция",
+      "clone": "клон",
+      "prevMatrixRequired": "Сначала нужно место в предыдущей матрице, чтобы купить здесь.",
+      "noPlacesInMatrix": "Нужно место в этой матрице, чтобы выполнить действие.",
+      "programNotConfirmed": "Сначала выберите куратора.",
+      "inviterNotInProgram": "Этот куратор еще не участвует в программе."
+    },
+    "tree": {
+      "up": "Вверх ▲",
+      "placesBelow_one": "{{formattedCount}} место ниже",
+      "placesBelow_few": "{{formattedCount}} места ниже",
+      "placesBelow_many": "{{formattedCount}} мест ниже",
+      "placesBelow_other": "{{formattedCount}} мест ниже",
+      "unlock": "Разблокировать",
+      "lock": "Заблокировать",
+      "unlockSuccess": "Позиция разблокирована.",
+      "lockSuccess": "Позиция заблокирована.",
+      "select": "Выбрать ▼",
+      "buy": "Купить ({{price}} TON)",
+      "loadingPath": "Загрузка пути...",
+      "breadcrumbEmpty": "Путь появится после выбора места.",
+      "breadcrumbs": "Хлебные крошки"
+    }
   },
   "common": {
     "warning": {
@@ -99,14 +174,22 @@
     "err_is_not_deployed": "Контракт не развернут.",
     "err_contract_doesnot_belong_to_the_wallet": "Этот контракт не принадлежит вашему кошельку.",
     "err_invalid_wallet_address": "Неверный адрес кошелька.",
+    "err_inviter_not_in_program": "Куратор еще не участвует в программе.",
+    "err_inviter_already_chosen": "Куратор уже выбран.",
+    "err_inviter_has_no_places": "У куратора пока нет мест.",
+      "err_structure_root_not_found": "Куратор \"{{login}}\" не найден.",
     "err_network_timeout": "Превышено время ожидания сети.",
     "err_rpc_unreachable": "RPC сервер недоступен.",
     "err_balance_fetch_failed": "Не удалось получить баланс кошелька.",
-
+    "err_invalid_payload": "Некорректные данные.",
+    "err_unauthorized": "Не авторизовано.",
+    "err_insufficient_funds": "Недостаточно средств.",
+    "err_forbidden": "Доступ запрещен.",
+    "err_not_found": "Не найдено.",
+    "err_invalid_workchain": "Неверный воркчейн.",
     "err_local_storage_read_failed": "Не удалось прочитать данные из локального хранилища.",
     "err_local_storage_write_failed": "Не удалось записать данные в локальное хранилище.",
     "err_local_storage_clear_failed": "Не удалось очистить локальное хранилище.",
-
     "err_user_rejected_transaction": "Транзакция отклонена пользователем.",
     "err_transaction_failed": "Транзакция не выполнена."
   }
