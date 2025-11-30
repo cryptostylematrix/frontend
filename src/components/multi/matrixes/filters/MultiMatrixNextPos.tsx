@@ -9,7 +9,7 @@ import { useProfileContext } from "../../../../context/ProfileContext";
 export default function NextPosButton() {
   const { currentProfile } = useProfileContext();
   const { t } = useTranslation();
-  const { setSelection, selectedMatrix } = useMatrixContext();
+  const { setSelectedPlace, selectedMatrix } = useMatrixContext();
   const [nextPos, setNextPos] = useState<{ address: string } | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -32,7 +32,7 @@ export default function NextPosButton() {
       className="next-pos-button"
       onClick={() => {
         if (!nextPos) return;
-        setSelection(nextPos.address);
+        setSelectedPlace(nextPos.address);
       }}
       disabled={!nextPos || loading}
     >

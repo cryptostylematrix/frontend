@@ -82,7 +82,6 @@ export async function loadChildren(invite_addr: string, from_ref_no: number, to_
 
   try {
     const children: StructureNode[] = [];
-    let lastFetched = from_ref_no;
 
     for (let i = from_ref_no; i < to_ref_no; i++) {
 
@@ -117,7 +116,6 @@ export async function loadChildren(invite_addr: string, from_ref_no: number, to_
         nextRefNo: inviteData.data.next_ref_no,
       });
 
-      lastFetched = i;
     }
 
     return { success: children.length > 0, children };
