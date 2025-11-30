@@ -81,7 +81,80 @@
     "structure_link": "Құрылым",
     "matrixes_link": "Матрицалар",
     "marketing_link": "Маркетинг",
-    "stat_link": "Статистика"
+    "stat_link": "Статистика",
+    "marketing": {
+      "title": "Маркетинг",
+      "pdfTitle": "Презентация PDF",
+      "pdfDescription": "Презентацияны өз тіліңізде қараңыз.",
+      "download": "PDF жүктеп алу",
+      "view": "PDF қарау",
+      "videoTitle": "Бейне шолу",
+      "videoDescription": "YouTube-тен маркетингке шолуды қараңыз.",
+      "watch": "Бейнені қарау"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Навигация",
+      "breadcrumbsPlaceholder": "Мұнда навигация көрсетіледі.",
+      "searchTitle": "Логин бойынша іздеу",
+      "searchPlaceholder": "Логинді енгізіңіз",
+      "searchButton": "Іздеу",
+      "treeTitle": "Құрылым",
+      "treePlaceholder": "Ағаш көрінісі мұнда көрсетіледі.",
+      "loadMore": "Тағы жүктеу",
+      "notFound": "Логинге шақыру табылмады.",
+      "loading": "Жүктелуде...",
+      "expand": "Ашу",
+      "collapse": "Жабу"
+    },
+    "inviter": {
+      "title": "Шақырушыны таңдау",
+      "loginLabel": "Шақырушының логині",
+      "loginPlaceholder": "Шақырушы логинін енгізіңіз",
+      "submit": "Шақырушыны таңдау",
+      "success": "Шақырушы таңдалды. Жаңартулар жақында шығады, бетті кейінірек жаңартыңыз.",
+      "alreadySelected": "Inviter already selected."
+    }
+  },
+  "multiMatrix": {
+    "filters": {
+      "title": "Сүзгілер",
+      "show": "Көрсету",
+      "hide": "Жасыру",
+      "matrixes": "Матрицалар",
+      "places": "Орындар",
+      "noPlaces": "Орындар жоқ",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Іздеу",
+      "searchPlaceholder": "логин",
+      "locks": "Блоктаулар",
+      "noLocks": "Блоктаулар жоқ",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Жаңа орынды сатып алу ({{price}} TON)",
+      "confirmBuy": "Сіз сенімдісіз бе?",
+      "buySuccess": "Жаңа орын жақында тізімде пайда болады.",
+      "buyFail": "Сәтсіз",
+      "loadMore": "Көбірек жүктеу",
+      "nextPos": "Келесі позиция",
+      "clone": "клон",
+      "prevMatrixRequired": "Бұл матрицада сатып алу үшін алдымен алдыңғы матрицада орын болуы керек.",
+      "noPlacesInMatrix": "Бұл әрекет үшін осы матрицада орын болуы керек.",
+      "programNotConfirmed": "Алдымен шақырушыны таңдаңыз.",
+      "inviterNotInProgram": "Бұл шақырушы бағдарламға әлі қатыспайды."
+    },
+    "tree": {
+      "up": "Жоғары ▲",
+      "placesBelow_one": "{{formattedCount}} орын төменде",
+      "placesBelow_other": "{{formattedCount}} орын төменде",
+      "unlock": "Бұғаттан шығару",
+      "lock": "Бұғаттау",
+      "unlockSuccess": "Позиция бұғаттан шығарылды.",
+      "lockSuccess": "Позиция бұғатталды.",
+      "select": "Таңдау ▼",
+      "buy": "Сатып алу ({{price}} TON)",
+      "loadingPath": "Маршрут жүктелуде...",
+      "breadcrumbEmpty": "Навигациялық жол орын таңдалғанда пайда болады.",
+      "breadcrumbs": "Навигациялық жол"
+    }
   },
   "common": {
     "warning": {
@@ -99,14 +172,22 @@
     "err_is_not_deployed": "Келісімшарт орналастырылмаған.",
     "err_contract_doesnot_belong_to_the_wallet": "Бұл келісімшарт сіздің әмияныңызға тиесілі емес.",
     "err_invalid_wallet_address": "Жарамсыз әмиян мекенжайы.",
+    "err_inviter_not_in_program": "Шақырушы әлі бағдарламаға қатыспайды.",
+    "err_inviter_already_chosen": "Шақырушы қазірдің өзінде таңдалған.",
+    "err_inviter_has_no_places": "Шақырушыда әлі орын жоқ.",
+      "err_structure_root_not_found": "Куратор \"{{login}}\" табылмады.",
     "err_network_timeout": "Желі күту уақыты аяқталды.",
     "err_rpc_unreachable": "RPC серверіне қосылу мүмкін емес.",
     "err_balance_fetch_failed": "Әмиян балансы алынбады.",
-
+    "err_invalid_payload": "Жарамсыз деректер.",
+    "err_unauthorized": "Рұқсат жоқ.",
+    "err_insufficient_funds": "Қаражат жеткіліксіз.",
+    "err_forbidden": "Қол жеткізуге тыйым салынған.",
+    "err_not_found": "Табылмады.",
+    "err_invalid_workchain": "Жарамсыз workchain.",
     "err_local_storage_read_failed": "Жергілікті сақтау орнынан деректерді оқу мүмкін болмады.",
     "err_local_storage_write_failed": "Жергілікті сақтау орнына деректерді жазу мүмкін болмады.",
     "err_local_storage_clear_failed": "Жергілікті сақтау орнын тазалау мүмкін болмады.",
-
     "err_user_rejected_transaction": "Пайдаланушы транзакцияны қабылдамады.",
     "err_transaction_failed": "Транзакция сәтсіз аяқталды."
   }

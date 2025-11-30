@@ -81,7 +81,80 @@
     "structure_link": "Структура",
     "matrixes_link": "Матриці",
     "marketing_link": "Маркетинг",
-    "stat_link": "Статистика"
+    "stat_link": "Статистика",
+    "marketing": {
+      "title": "Маркетинг",
+      "pdfTitle": "Презентація PDF",
+      "pdfDescription": "Перегляньте матеріали вашою мовою.",
+      "download": "Завантажити PDF",
+      "view": "Відкрити PDF",
+      "videoTitle": "Відео-огляд",
+      "videoDescription": "Подивіться маркетинговий огляд на YouTube.",
+      "watch": "Дивитися відео"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Хлібні крихти",
+      "breadcrumbsPlaceholder": "Тут з’являться хлібні крихти.",
+      "searchTitle": "Пошук за логіном",
+      "searchPlaceholder": "Введіть логін",
+      "searchButton": "Пошук",
+      "treeTitle": "Структура",
+      "treePlaceholder": "Тут буде відображено дерево.",
+      "loadMore": "Завантажити ще",
+      "notFound": "Запрошення з таким логіном не знайдено.",
+      "loading": "Завантаження...",
+      "expand": "Розгорнути",
+      "collapse": "Згорнути"
+    },
+    "inviter": {
+      "title": "Вибір куратора",
+      "loginLabel": "Логін куратора",
+      "loginPlaceholder": "Введіть логін куратора",
+      "submit": "Обрати куратора",
+      "success": "Куратора обрано. Оновлення з'явиться скоро, будь ласка, оновіть сторінку пізніше.",
+      "alreadySelected": "Inviter already selected."
+    }
+  },
+  "multiMatrix": {
+    "filters": {
+      "title": "Фільтри",
+      "show": "Показати",
+      "hide": "Сховати",
+      "matrixes": "Матриці",
+      "places": "Місця",
+      "noPlaces": "Немає місць",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Пошук",
+      "searchPlaceholder": "логін",
+      "locks": "Блокування",
+      "noLocks": "Немає блокувань",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Купити нове місце ({{price}} TON)",
+      "confirmBuy": "Ви впевнені?",
+      "buySuccess": "Нове місце скоро з'явиться у списку.",
+      "buyFail": "Помилка",
+      "loadMore": "Завантажити ще",
+      "nextPos": "Наступна позиція",
+      "clone": "клон",
+      "prevMatrixRequired": "Спочатку потрібне місце в попередній матриці, щоб купувати тут.",
+      "noPlacesInMatrix": "Потрібне місце в цій матриці, щоб виконати дію.",
+      "programNotConfirmed": "Спершу оберіть куратора.",
+      "inviterNotInProgram": "Цей куратор ще не бере участі в програмі."
+    },
+    "tree": {
+      "up": "Вгору ▲",
+      "placesBelow_one": "{{formattedCount}} місце нижче",
+      "placesBelow_other": "{{formattedCount}} місць нижче",
+      "unlock": "Розблокувати",
+      "lock": "Заблокувати",
+      "unlockSuccess": "Позицію розблоковано.",
+      "lockSuccess": "Позицію заблоковано.",
+      "select": "Вибрати ▼",
+      "buy": "Купити ({{price}} TON)",
+      "loadingPath": "Завантаження шляху...",
+      "breadcrumbEmpty": "Хлібні крихти з'являться після вибору місця.",
+      "breadcrumbs": "Хлібні крихти"
+    }
   },
   "common": {
     "warning": {
@@ -99,14 +172,22 @@
     "err_is_not_deployed": "Контракт не розгорнуто.",
     "err_contract_doesnot_belong_to_the_wallet": "Цей контракт не належить вашому гаманцю.",
     "err_invalid_wallet_address": "Невірна адреса гаманця.",
+    "err_inviter_not_in_program": "Куратор ще не бере участь у програмі.",
+    "err_inviter_already_chosen": "Куратора вже обрано.",
+    "err_inviter_has_no_places": "У куратора ще немає місць.",
+      "err_structure_root_not_found": "Куратор \"{{login}}\" не знайдений.",
     "err_network_timeout": "Час очікування мережі вичерпано.",
     "err_rpc_unreachable": "RPC-сервер недоступний.",
     "err_balance_fetch_failed": "Не вдалося отримати баланс гаманця.",
-
+    "err_invalid_payload": "Некоректні дані.",
+    "err_unauthorized": "Немає авторизації.",
+    "err_insufficient_funds": "Недостатньо коштів.",
+    "err_forbidden": "Доступ заборонено.",
+    "err_not_found": "Не знайдено.",
+    "err_invalid_workchain": "Невірний workchain.",
     "err_local_storage_read_failed": "Не вдалося зчитати дані з локального сховища.",
     "err_local_storage_write_failed": "Не вдалося записати дані до локального сховища.",
     "err_local_storage_clear_failed": "Не вдалося очистити локальне сховище.",
-
     "err_user_rejected_transaction": "Транзакцію відхилено користувачем.",
     "err_transaction_failed": "Транзакція не виконана."
   }

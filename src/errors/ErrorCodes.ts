@@ -19,7 +19,18 @@ export const ErrorCode = {
     LOCAL_STORAGE_CLEAR_FAILED: "err_local_storage_clear_failed",
 
     USER_REJECTED_TRANSACTION: "err_user_rejected_transaction",
-    TRANSACTION_FAILED: "err_transaction_failed"
+    TRANSACTION_FAILED: "err_transaction_failed",
+
+    INVALID_PAYLOAD: "err_invalid_payload",
+    UNAUTHORIZED: "err_unauthorized",
+    INSUFFICIENT_FUNDS: "err_insufficient_funds",
+    FORBIDDEN: "err_forbidden",
+    NOT_FOUND: "err_not_found",
+    INVALID_WORKCHAIN: "err_invalid_workchain",
+    INVITER_NOT_IN_PROGRAM: "err_inviter_not_in_program",
+    INVITER_ALREADY_CHOSEN: "err_inviter_already_chosen",
+    INVITER_HAS_NO_PLACES: "err_inviter_has_no_places",
+    STRUCTURE_ROOT_NOT_FOUND: "err_structure_root_not_found"
 
 } as const;
 

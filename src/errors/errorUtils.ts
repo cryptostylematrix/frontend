@@ -9,3 +9,4 @@ export function translateError(t: TFunction, code: string): string {
   }
   return t(`errors.${ErrorCode.UNEXPECTED}`);
 }
+

@@ -81,7 +81,80 @@
     "structure_link": "Structure",
     "matrixes_link": "Matrixes",
     "marketing_link": "Marketing",
-    "stat_link": "Stat"
+    "stat_link": "Stat",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Presentation PDF",
+      "pdfDescription": "Preview the deck in your language.",
+      "download": "Download PDF",
+      "view": "View PDF",
+      "videoTitle": "Video overview",
+      "videoDescription": "Watch the marketing overview on YouTube.",
+      "watch": "Watch video"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Breadcrumbs",
+      "breadcrumbsPlaceholder": "Breadcrumbs will appear here.",
+      "searchTitle": "Search by login",
+      "searchPlaceholder": "Enter login",
+      "searchButton": "Search",
+      "treeTitle": "Structure",
+      "treePlaceholder": "Tree view will appear here.",
+      "loadMore": "Load more",
+      "notFound": "Login invite not found.",
+      "loading": "Loading...",
+      "expand": "Expand",
+      "collapse": "Collapse"
+    },
+    "inviter": {
+      "title": "Choose inviter",
+      "loginLabel": "Inviter login",
+      "loginPlaceholder": "Enter inviter login",
+      "submit": "Choose inviter",
+      "success": "Inviter chosen. Updates will appear soon, please refresh the page later.",
+      "alreadySelected": "Inviter already selected."
+    }
+  },
+  "multiMatrix": {
+    "filters": {
+      "title": "Filters",
+      "show": "Show",
+      "hide": "Hide",
+      "matrixes": "Matrixes",
+      "places": "Places",
+      "noPlaces": "No places",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Search",
+      "searchPlaceholder": "login",
+      "locks": "Blocks",
+      "noLocks": "No blocks",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Buy new place ({{price}} TON)",
+      "confirmBuy": "Are you sure?",
+      "buySuccess": "New place will appear on places list soon.",
+      "buyFail": "Fail",
+      "loadMore": "Load more",
+      "nextPos": "Next pos",
+      "clone": "clone",
+      "prevMatrixRequired": "You need a place in the previous matrix before buying here.",
+      "noPlacesInMatrix": "You need a place in this matrix to perform this action.",
+      "programNotConfirmed": "You need to choose an inviter first.",
+      "inviterNotInProgram": "This inviter is not participating in the program yet."
+    },
+    "tree": {
+      "up": "Up ▲",
+      "placesBelow_one": "{{formattedCount}} place below",
+      "placesBelow_other": "{{formattedCount}} places below",
+      "unlock": "Unlock",
+      "lock": "Lock",
+      "unlockSuccess": "Position unlocked.",
+      "lockSuccess": "Position locked.",
+      "select": "Select ▼",
+      "buy": "Buy ({{price}} TON)",
+      "loadingPath": "Loading path...",
+      "breadcrumbEmpty": "Breadcrumbs will appear here once a place is selected.",
+      "breadcrumbs": "Breadcrumb"
+    }
   },
   "common": {
     "warning": {
@@ -99,14 +172,22 @@
     "err_is_not_deployed": "Contract is not deployed.",
     "err_contract_doesnot_belong_to_the_wallet": "This contract does not belong to your wallet.",
     "err_invalid_wallet_address": "Invalid wallet address.",
+    "err_inviter_not_in_program": "The inviter is not participating in the program yet.",
+    "err_inviter_already_chosen": "Inviter already chosen.",
+    "err_inviter_has_no_places": "The inviter has no places yet.",
+      "err_structure_root_not_found": "Curator \"{{login}}\" not found.",
     "err_network_timeout": "Network timeout.",
     "err_rpc_unreachable": "RPC server unreachable.",
     "err_balance_fetch_failed": "Failed to fetch wallet balance.",
-
+    "err_invalid_payload": "Invalid payload.",
+    "err_unauthorized": "Unauthorized.",
+    "err_insufficient_funds": "Insufficient funds.",
+    "err_forbidden": "Forbidden.",
+    "err_not_found": "Not found.",
+    "err_invalid_workchain": "Invalid workchain.",
     "err_local_storage_read_failed": "Failed to read data from local storage.",
     "err_local_storage_write_failed": "Failed to write data to local storage.",
     "err_local_storage_clear_failed": "Failed to clear local storage.",
-
     "err_user_rejected_transaction": "Transaction was rejected by the user.",
     "err_transaction_failed": "Transaction failed."
   }

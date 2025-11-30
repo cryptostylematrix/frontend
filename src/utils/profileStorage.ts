@@ -4,6 +4,7 @@ import { ErrorCode } from "../errors/ErrorCodes";
  * Represents a locally stored user profile tied to a specific wallet.
  */
 export interface Profile {
+  address: string;
   wallet: string;
   login: string;
   valid: boolean;

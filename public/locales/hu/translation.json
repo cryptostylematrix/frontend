@@ -81,7 +81,80 @@
     "structure_link": "Struktúra",
     "matrixes_link": "Mátrixok",
     "marketing_link": "Marketing",
-    "stat_link": "Statisztika"
+    "stat_link": "Statisztika",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Prezentáció PDF",
+      "pdfDescription": "Nézd meg a bemutatót a saját nyelveden.",
+      "download": "PDF letöltése",
+      "view": "PDF megnyitása",
+      "videoTitle": "Videós összefoglaló",
+      "videoDescription": "Nézd meg a marketing áttekintést a YouTube-on.",
+      "watch": "Videó megtekintése"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Kenyérmorzsák",
+      "breadcrumbsPlaceholder": "Itt jelennek meg a kenyérmorzsák.",
+      "searchTitle": "Keresés bejelentkezés alapján",
+      "searchPlaceholder": "Írd be a bejelentkezést",
+      "searchButton": "Keresés",
+      "treeTitle": "Struktúra",
+      "treePlaceholder": "Itt jelenik meg a fa nézet.",
+      "loadMore": "Továbbiak betöltése",
+      "notFound": "A megadott meghívó nem található.",
+      "loading": "Betöltés...",
+      "expand": "Kinyitás",
+      "collapse": "Bezárás"
+    },
+    "inviter": {
+      "title": "Meghívó választása",
+      "loginLabel": "Meghívó bejelentkezése",
+      "loginPlaceholder": "Add meg a meghívó bejelentkezését",
+      "submit": "Meghívó választása",
+      "success": "A meghívó kiválasztva. A frissítések hamarosan megjelennek, kérjük, frissítsd az oldalt később.",
+      "alreadySelected": "Inviter already selected."
+    }
+  },
+  "multiMatrix": {
+    "filters": {
+      "title": "Szűrők",
+      "show": "Mutat",
+      "hide": "Elrejt",
+      "matrixes": "Mátrixok",
+      "places": "Helyek",
+      "noPlaces": "Nincsenek helyek",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Keresés",
+      "searchPlaceholder": "login",
+      "locks": "Blokkolások",
+      "noLocks": "Nincsenek blokkolások",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Új hely vásárlása ({{price}} TON)",
+      "confirmBuy": "Biztos benne?",
+      "buySuccess": "Az új hely hamarosan megjelenik a listában.",
+      "buyFail": "Sikertelen",
+      "loadMore": "Továbbiak betöltése",
+      "nextPos": "Következő pozíció",
+      "clone": "klón",
+      "prevMatrixRequired": "Először szükség van helyre az előző mátrixban, hogy itt vásárolhass.",
+      "noPlacesInMatrix": "Szükség van helyre ebben a mátrixban a művelethez.",
+      "programNotConfirmed": "Először válassz meghívót.",
+      "inviterNotInProgram": "Ez a meghívó még nem vesz részt a programban."
+    },
+    "tree": {
+      "up": "Fel ▲",
+      "placesBelow_one": "{{formattedCount}} hely lejjebb",
+      "placesBelow_other": "{{formattedCount}} hely lejjebb",
+      "unlock": "Feloldás",
+      "lock": "Zárolás",
+      "unlockSuccess": "Pozíció feloldva.",
+      "lockSuccess": "Pozíció zárolva.",
+      "select": "Kiválasztás ▼",
+      "buy": "Vásárlás ({{price}} TON)",
+      "loadingPath": "Útvonal betöltése...",
+      "breadcrumbEmpty": "A morzsák a hely kiválasztása után jelennek meg.",
+      "breadcrumbs": "Morzsák"
+    }
   },
   "common": {
     "warning": {
@@ -99,14 +172,22 @@
     "err_is_not_deployed": "A szerződés nincs telepítve.",
     "err_contract_doesnot_belong_to_the_wallet": "Ez a szerződés nem a pénztárcához tartozik.",
     "err_invalid_wallet_address": "Érvénytelen pénztárca-cím.",
+    "err_inviter_not_in_program": "A meghívó még nem vesz részt a programban.",
+    "err_inviter_already_chosen": "A meghívót már kiválasztották.",
+    "err_inviter_has_no_places": "A meghívónak még nincsenek helyei.",
+      "err_structure_root_not_found": "Kurátor \"{{login}}\" nem található.",
     "err_network_timeout": "Hálózati időtúllépés.",
     "err_rpc_unreachable": "Az RPC szerver nem elérhető.",
     "err_balance_fetch_failed": "A pénztárca egyenlegének lekérése nem sikerült.",
-
+    "err_invalid_payload": "Érvénytelen adatok.",
+    "err_unauthorized": "Nincs jogosultság.",
+    "err_insufficient_funds": "Nincs elég fedezet.",
+    "err_forbidden": "Hozzáférés megtagadva.",
+    "err_not_found": "Nem található.",
+    "err_invalid_workchain": "Érvénytelen workchain.",
     "err_local_storage_read_failed": "Nem sikerült beolvasni az adatokat a helyi tárolóból.",
     "err_local_storage_write_failed": "Nem sikerült adatokat írni a helyi tárolóba.",
     "err_local_storage_clear_failed": "Nem sikerült törölni a helyi tárolót.",
-
     "err_user_rejected_transaction": "A felhasználó elutasította a tranzakciót.",
     "err_transaction_failed": "A tranzakció sikertelen volt."
   }

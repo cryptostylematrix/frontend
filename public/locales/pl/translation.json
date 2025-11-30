@@ -81,7 +81,80 @@
     "structure_link": "Struktura",
     "matrixes_link": "Macierze",
     "marketing_link": "Marketing",
-    "stat_link": "Statystyka"
+    "stat_link": "Statystyka",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Prezentacja PDF",
+      "pdfDescription": "Zobacz materiały w swoim języku.",
+      "download": "Pobierz PDF",
+      "view": "Otwórz PDF",
+      "videoTitle": "Wideo przegląd",
+      "videoDescription": "Obejrzyj przegląd marketingowy na YouTube.",
+      "watch": "Obejrzyj wideo"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Nawigacja okruszkowa",
+      "breadcrumbsPlaceholder": "Breadcrumby pojawią się tutaj.",
+      "searchTitle": "Szukaj po loginie",
+      "searchPlaceholder": "Wpisz login",
+      "searchButton": "Szukaj",
+      "treeTitle": "Struktura",
+      "treePlaceholder": "Widok drzewa pojawi się tutaj.",
+      "loadMore": "Załaduj więcej",
+      "notFound": "Zaproszenie dla podanego loginu nie zostało znalezione.",
+      "loading": "Ładowanie...",
+      "expand": "Rozwiń",
+      "collapse": "Zwiń"
+    },
+    "inviter": {
+      "title": "Wybierz opiekuna",
+      "loginLabel": "Login opiekuna",
+      "loginPlaceholder": "Wpisz login opiekuna",
+      "submit": "Wybierz opiekuna",
+      "success": "Opiekun wybrany. Aktualizacje pojawią się wkrótce, odśwież stronę później.",
+      "alreadySelected": "Inviter already selected."
+    }
+  },
+  "multiMatrix": {
+    "filters": {
+      "title": "Filtry",
+      "show": "Pokaż",
+      "hide": "Ukryj",
+      "matrixes": "Macierze",
+      "places": "Miejsca",
+      "noPlaces": "Brak miejsc",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Szukaj",
+      "searchPlaceholder": "login",
+      "locks": "Blokowania",
+      "noLocks": "Brak blokowań",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Kup nowe miejsce ({{price}} TON)",
+      "confirmBuy": "Jesteś pewien?",
+      "buySuccess": "Nowe miejsce wkrótce pojawi się na liście.",
+      "buyFail": "Niepowodzenie",
+      "loadMore": "Załaduj więcej",
+      "nextPos": "Następna pozycja",
+      "clone": "klon",
+      "prevMatrixRequired": "Najpierw potrzebujesz miejsca w poprzedniej macierzy, aby kupić tutaj.",
+      "noPlacesInMatrix": "Musisz mieć miejsce w tej macierzy, aby wykonać tę akcję.",
+      "programNotConfirmed": "Najpierw wybierz opiekuna.",
+      "inviterNotInProgram": "Ten opiekun nie uczestniczy jeszcze w programie."
+    },
+    "tree": {
+      "up": "W górę ▲",
+      "placesBelow_one": "{{formattedCount}} miejsce niżej",
+      "placesBelow_other": "{{formattedCount}} miejsc niżej",
+      "unlock": "Odblokuj",
+      "lock": "Zablokuj",
+      "unlockSuccess": "Pozycja odblokowana.",
+      "lockSuccess": "Pozycja zablokowana.",
+      "select": "Wybierz ▼",
+      "buy": "Kup ({{price}} TON)",
+      "loadingPath": "Ładowanie ścieżki...",
+      "breadcrumbEmpty": "Okruszki pojawią się po wybraniu miejsca.",
+      "breadcrumbs": "Okruszki"
+    }
   },
   "common": {
     "warning": {
@@ -99,14 +172,22 @@
     "err_is_not_deployed": "Kontrakt nie został wdrożony.",
     "err_contract_doesnot_belong_to_the_wallet": "Ten kontrakt nie należy do twojego portfela.",
     "err_invalid_wallet_address": "Nieprawidłowy adres portfela.",
+    "err_inviter_not_in_program": "Opiekun jeszcze nie uczestniczy w programie.",
+    "err_inviter_already_chosen": "Opiekun został już wybrany.",
+    "err_inviter_has_no_places": "Opiekun nie ma jeszcze miejsc.",
+      "err_structure_root_not_found": "Kurator \"{{login}}\" nie został znaleziony.",
     "err_network_timeout": "Przekroczono limit czasu sieci.",
     "err_rpc_unreachable": "Serwer RPC jest niedostępny.",
     "err_balance_fetch_failed": "Nie udało się pobrać salda portfela.",
-
+    "err_invalid_payload": "Nieprawidłowe dane.",
+    "err_unauthorized": "Brak autoryzacji.",
+    "err_insufficient_funds": "Niewystarczające środki.",
+    "err_forbidden": "Dostęp zabroniony.",
+    "err_not_found": "Nie znaleziono.",
+    "err_invalid_workchain": "Nieprawidłowy workchain.",
     "err_local_storage_read_failed": "Nie udało się odczytać danych z pamięci lokalnej.",
     "err_local_storage_write_failed": "Nie udało się zapisać danych do pamięci lokalnej.",
     "err_local_storage_clear_failed": "Nie udało się wyczyścić pamięci lokalnej.",
-
     "err_user_rejected_transaction": "Transakcja została odrzucona przez użytkownika.",
     "err_transaction_failed": "Transakcja nie powiodła się."
   }

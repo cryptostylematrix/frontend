@@ -1,0 +1,63 @@
+.structure-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.structure-tree-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 10px;
+  background: rgba(255, 249, 240, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  margin-bottom: 0.2rem;
+}
+
+.structure-tree-toggle {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  background: #fffef8;
+  color: #3a2e0e;
+  cursor: pointer;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.structure-tree-index {
+  font-weight: 600;
+  color: #3a2e0e;
+}
+
+.structure-tree-login {
+  font-weight: 700;
+  color: #d4af37;
+}
+
+.structure-tree-meta {
+  color: #5c4a1b;
+  font-size: 0.9rem;
+}
+
+.structure-tree-load-more {
+  margin: 0.25rem 0;
+}
+
+.structure-tree-load {
+  background: transparent;
+  border: 1px dashed rgba(212, 175, 55, 0.6);
+  border-radius: 10px;
+  padding: 0.4rem 0.65rem;
+  color: #3a2e0e;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.structure-tree-load:hover {
+  background: rgba(212, 175, 55, 0.08);
+  transform: translateY(-1px);
+}

@@ -48,6 +48,52 @@
   width: 100%;
 }
 
+
+/* ===========================
+   Active Link Styling
+   =========================== */
+
+.multi-submenu a.active {
+  color: #d4af37; /* Gold accent */
+  font-weight: 600;
+}
+
+.multi-submenu a.active::after {
+  width: 100%; /* Keep underline visible */
+  background-color: #d4af37;
+}
+
+/* ===========================
+   Multi Matrixes Layout
+   =========================== */
+
+.multi-matrixes {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  font-family: 'Poppins', sans-serif;
+  color: #3a2e0e;
+}
+
+.matrix-row {
+  background: #fff;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 10px 24px rgba(212, 175, 55, 0.12);
+}
+
+.matrix-row h2 {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.placeholder-text {
+  margin: 0;
+  color: #6b5a2c;
+}
+
 /* ===========================
    Responsive
    =========================== */

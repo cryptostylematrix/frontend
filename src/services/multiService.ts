@@ -1,0 +1,74 @@
+import type { TonConnectUI } from "@tonconnect/ui-react";
+import { Address, toNano, type Cell } from "@ton/core";
+import { Multi, type PlacePosData } from "../contracts/Mutli";
+import { ErrorCode } from "../errors/ErrorCodes";
+import { sendTransaction } from "./profileService";
+import { appConfig } from "../config";
+
+export type ContractResult =
+  | { success: true }
+  | { success: false; error_code: ErrorCode };
+
+const ensureMultiAddress = (): string => {
+  const addr = appConfig.multi.contractAddress?.trim();
+  if (!addr) {
+    throw new Error("Multi contract address is not configured");
+  }
+  return addr;
+};
+
+const buildPlacePos = (pos_addr?: string): PlacePosData | null => {
+  const addr = pos_addr?.trim();
+  return addr ? { parent: Address.parse(addr) } : null;
+};
+
+const submitMultiTx = async (tonConnectUI: TonConnectUI, body: Cell, amount: bigint = toNano("0.01")): Promise<ContractResult> => {
+  try {
+    const target = ensureMultiAddress();
+    const result = await sendTransaction(tonConnectUI, target, amount, body);
+    if (!result.success) {
+      return { success: false, error_code: result.errors?.[0] ?? ErrorCode.TRANSACTION_FAILED };
+    }
+    return { success: true };
+  } catch (err) {
+    console.error("Multi tx error:", err);
+    return { success: false, error_code: ErrorCode.UNEXPECTED };
+  }
+};
+
+export async function buyPlace(
+  tonConnectUI: TonConnectUI,
+  query_id: number,
+  m: number,
+  profile_addr: string,
+  pos_addr: string | undefined
+): Promise<ContractResult> {
+  const body = Multi.buyPlaceMessage(m, Address.parse(profile_addr), buildPlacePos(pos_addr), query_id);
+  return submitMultiTx(tonConnectUI, body);
+}
+
+export async function lockPos(
+  tonConnectUI: TonConnectUI,
+  query_id: number,
+  m: number,
+  profile_addr: string,
+  pos_addr: string
+): Promise<ContractResult> {
+  const pos = buildPlacePos(pos_addr);
+  if (!pos) return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
+  const body = Multi.lockPosMessage(m, Address.parse(profile_addr), pos, query_id);
+  return submitMultiTx(tonConnectUI, body);
+}
+
+export async function unlockPos(
+  tonConnectUI: TonConnectUI,
+  query_id: number,
+  m: number,
+  profile_addr: string,
+  pos_addr: string
+): Promise<ContractResult> {
+  const pos = buildPlacePos(pos_addr);
+  if (!pos) return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
+  const body = Multi.unlockPosMessage(m, Address.parse(profile_addr), pos, query_id);
+  return submitMultiTx(tonConnectUI, body);
+}
