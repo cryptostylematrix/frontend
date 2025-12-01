@@ -79,7 +79,7 @@ export default function MultiMatrixFilters() {
       }
     }
 
-    const result = await buyPlace(tonConnectUI, Date.now(), selectedMatrix, currentProfile.address, undefined);
+    const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, undefined);
     if (result.success) {
       setBuyStatus({
         type: "success",

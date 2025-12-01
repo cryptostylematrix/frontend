@@ -152,7 +152,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
                   return;
                 }
               }
-              const result = await buyPlace(tonConnectUI, Date.now(), selectedMatrix, currentProfile.address, undefined);
+              const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, undefined);
               setBuyLoading(false);
               if (result.success) {
                 alert(t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."));
