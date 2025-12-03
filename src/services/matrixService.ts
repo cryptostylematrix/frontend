@@ -30,6 +30,9 @@ export type TreeFilledNode = {
   login: string;
   image_url: string;
   children?: [TreeNode | undefined, TreeNode | undefined];
+  can_be_locked: boolean;
+  is_root: boolean;
+  is_lock: boolean;
 };
 
 export type TreeEmptyNode = {

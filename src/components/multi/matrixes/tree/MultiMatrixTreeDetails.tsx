@@ -20,6 +20,7 @@ type Props = {
 export function MultiMatrixTreeDetails({ selectedNode }: Props) {
   const { matrixPrice, setSelectedPlace, selectedMatrix } = useMatrixContext();
   const { currentProfile } = useProfileContext();
+  const { selectedPlaceAddress } = useMatrixContext();
   const [tonConnectUI] = useTonConnectUI();
   const { t } = useTranslation();
   const upLabel = t("multiMatrix.tree.up", { defaultValue: "Up ▲" });
@@ -34,24 +35,29 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
 
   const isFilled = selectedNode.kind === "filled";
   const isLocked = isFilled && selectedNode.locked;
+  const canBeLocked = isFilled && selectedNode.can_be_locked;
+  const isLock = isFilled && selectedNode.is_lock;
   const isNext = selectedNode.kind === "empty" && selectedNode.is_next_pos;
 
   return (
     <div className={`details-panel ${isLocked ? "details-panel--locked" : ""} ${isNext ? "details-panel--next" : ""}`}>
-      <div className="details-top-actions">
-        <button
-          type="button"
-          className="details-action details-action--ghost"
-          onClick={() => {
-            if (selectedNode.kind === "filled") {
-              setSelectedPlace(selectedNode.parent_address || undefined);
-            }
-          }}
-          disabled={selectedNode.kind !== "filled"}
-        >
-          {upLabel}
-        </button>
-      </div>
+      { isFilled && selectedNode.address == selectedPlaceAddress && 
+        <div className="details-top-actions">
+       
+            <button
+              type="button"
+              className="details-action details-action--ghost"
+              onClick={() => {
+                if (selectedNode.kind === "filled") {
+                  setSelectedPlace(selectedNode.parent_address || undefined);
+                }
+              }}
+              disabled={selectedNode.kind !== "filled"}
+            >
+              {upLabel}
+            </button>
+        </div>
+      }
 
       {isFilled ? (
         <>
@@ -79,52 +85,60 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
               </div>
             </div>
           </div>
-          <button
-            type="button"
-            className={`details-action ${!isLocked ? "danger" : ""}`}
-            onClick={async () => {
-              if (!currentProfile || selectedNode.kind !== "filled") return;
-              setLockLoading(true);
-              const count = await getPlacesCount(selectedMatrix, currentProfile.address);
-              if (count <= 0) {
-                setLockLoading(false);
-                alert(t("multiMatrix.filters.noPlacesInMatrix", "You need a place in this matrix to perform this action."));
-                return;
-              }
-              const handler = isLocked ? unlockPos : lockPos;
-              const result = await handler(tonConnectUI, Date.now(), selectedMatrix, currentProfile.address, selectedNode.address);
-              setLockLoading(false);
-              if (result.success) {
-                alert(
-                  isLocked
-                    ? t("multiMatrix.tree.unlockSuccess", { defaultValue: "Position unlocked." })
-                    : t("multiMatrix.tree.lockSuccess", { defaultValue: "Position locked." })
-                );
-              } else {
-                const code = result.error_code;
-                alert(code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"));
-              }
-            }}
-            disabled={lockLoading}
-          >
-            {lockLoading
-              ? t("home.loading", "Loading...")
-              : isLocked
-                ? t("multiMatrix.tree.unlock", { defaultValue: "Unlock" })
-                : t("multiMatrix.tree.lock", { defaultValue: "Lock" })}
-          </button>
 
-          <div className="details-desc-actions">
+          { (isLock || canBeLocked) && 
             <button
               type="button"
-              className="details-action details-action--ghost"
-              onClick={() => {
-                 setSelectedPlace(selectedNode.kind === "filled" ? selectedNode.address : undefined);
+              className={`details-action ${!isLock ? "danger" : ""}`}
+              onClick={async () => {
+                if (!currentProfile || selectedNode.kind !== "filled") return;
+                setLockLoading(true);
+                const count = await getPlacesCount(selectedMatrix, currentProfile.address);
+                if (count <= 0) {
+                  setLockLoading(false);
+                  alert(t("multiMatrix.filters.noPlacesInMatrix", "You need a place in this matrix to perform this action."));
+                  return;
+                }
+                const handler = isLock ? unlockPos : lockPos;
+                const result = await handler(tonConnectUI, Date.now(), selectedMatrix, currentProfile.address, selectedNode.address);
+                setLockLoading(false);
+                if (result.success) {
+                  alert(
+                    isLock
+                      ? t("multiMatrix.tree.unlockSuccess", { defaultValue: "Position unlocked." })
+                      : t("multiMatrix.tree.lockSuccess", { defaultValue: "Position locked." })
+                  );
+                } else {
+                  const code = result.error_code;
+                  alert(code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"));
+                }
               }}
+              disabled={lockLoading}
             >
-              {t("multiMatrix.tree.select", { defaultValue: "Select ▼" })}
+              {lockLoading
+                ? t("home.loading", "Loading...")
+                : isLock
+                  ? t("multiMatrix.tree.unlock", { defaultValue: "Unlock" })
+                  : t("multiMatrix.tree.lock", { defaultValue: "Lock" })}
             </button>
-          </div>
+          }
+
+         
+          
+          { isFilled && selectedNode.address != selectedPlaceAddress && 
+            <div className="details-desc-actions">
+              <button
+                type="button"
+                className="details-action details-action--ghost"
+                onClick={() => {
+                  setSelectedPlace(selectedNode.kind === "filled" ? selectedNode.address : undefined);
+                }}
+              >
+                {t("multiMatrix.tree.select", { defaultValue: "Select ▼" })}
+              </button>
+            </div>
+          }
+         
         </>
       ) : (
         <>
