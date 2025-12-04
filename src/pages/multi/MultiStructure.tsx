@@ -22,6 +22,11 @@ export default function MultiStructure() {
     setRootLogin(trimmed);
   };
 
+  const handleCuratorSelect = (login: string) => {
+    setSearchLogin(login);
+    setRootLogin(login);
+  };
+
   return (
     <section className="multi-structure">
 
@@ -33,7 +38,8 @@ export default function MultiStructure() {
             placeholder={t("multi.structure.searchPlaceholder", "Enter login")}
             aria-label={t("multi.structure.searchTitle", "Search by login")}
             value={searchLogin}
-            onChange={(e) => setSearchLogin(e.target.value)}
+            onChange={(event) => setSearchLogin(event.target.value)}
+            onKeyDown={(event) => event.key === "Enter" && handleSearch()}
           />
           <button type="button" className="btn structure-search__btn" onClick={handleSearch}>
             {t("multi.structure.searchButton", "Search")}
@@ -43,7 +49,7 @@ export default function MultiStructure() {
 
       <div className="structure-card">
         <div className="structure-card__header">{t("multi.structure.treeTitle", "Structure")}</div>
-        <MultiStructureTree rootLogin={rootLogin} />
+        <MultiStructureTree rootLogin={rootLogin} onCuratorSelect={handleCuratorSelect} />
       </div>
     </section>
   );

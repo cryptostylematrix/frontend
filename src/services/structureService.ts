@@ -2,10 +2,12 @@ import { Address } from "@ton/core";
 import { Programs } from "../contracts/MultiConstants";
 import { getInviteAddressBySeqNo, getInviteData } from "./inviteService";
 import { getProfileAddressByLogin } from "./profileCollectionService";
-import { getProfileDataByAddress, getProfileProgramData } from "./profileService";
+import { getNftData, getProfileDataByAddress, getProfileProgramData } from "./profileService";
 
 export type StructureNode = {
-  id: string; // invite_addr analogue
+  addr: string; // invite_addr analogue
+  parent_addr: string | null;
+  parent_login: string | null;
   login: string;
   index: number;
   createdAt: string;
@@ -23,7 +25,7 @@ export type StructureChildrenResult = {
 
 export interface StructureService {
   loadRootByLogin: (login: string) => Promise<StructureRootResult>;
-  loadChildren: (invite_addr: string, from_ref_no: number, to_ref_no: number) => Promise<StructureChildrenResult>;
+  loadChildren: (node: StructureNode, from_ref_no: number, to_ref_no: number) => Promise<StructureChildrenResult>;
 }
 
 const toFriendly = (address: Address) => address.toString({ urlSafe: true, bounceable: true, testOnly: false });
@@ -34,6 +36,28 @@ const toIsoDate = (timestamp?: number | bigint | null): string => {
   const millis = asNumber > 1e12 ? asNumber : asNumber * 1000;
   return new Date(millis).toISOString();
 };
+
+export async function loadInviteLogin(inviteAddr: string) : Promise<string | null> {
+  const InviteDataResult = await getInviteData(inviteAddr);
+  if (!InviteDataResult.success)
+  {
+    return null;
+  }
+
+  const profileAddr = InviteDataResult.data.owner?.owner;
+  if (!profileAddr)
+  {
+    return null;
+  }
+
+  const profileContentResult = await getNftData(toFriendly(profileAddr));
+  if (!profileContentResult.success)
+  {
+    return null;
+  }
+
+  return profileContentResult.data.login;
+}
 
 export async function loadRootByLogin(login: string): Promise<StructureRootResult> {
   const normalized = login.trim().toLowerCase();
@@ -50,6 +74,18 @@ export async function loadRootByLogin(login: string): Promise<StructureRootResul
     const inviteData = await getInviteData(inviteAddress);
     if (!inviteData.success || !inviteData.data) return { success: false };
 
+    let inviterAddress: string | null = toFriendly(program.data.inviter);
+    if (inviterAddress == inviteAddress)
+    {
+      inviterAddress = null;
+    }
+
+    let inviterLogin: string | null = null;
+    if (inviterAddress)
+    {
+      inviterLogin = await loadInviteLogin(inviterAddress);
+    }
+
     const referals = inviteData.data.next_ref_no - 1;
     const createdAt = toIsoDate(inviteData.data.owner?.set_at ?? Date.now());
     const index = inviteData.data.number;
@@ -59,7 +95,9 @@ export async function loadRootByLogin(login: string): Promise<StructureRootResul
     return {
       success: true,
       node: {
-        id: inviteAddress,
+        addr: inviteAddress,
+        parent_addr: inviterAddress,
+        parent_login: inviterLogin,
         login: normalized,
         index,
         createdAt,
@@ -73,23 +111,23 @@ export async function loadRootByLogin(login: string): Promise<StructureRootResul
   }
 }
 
-export async function loadChildren(invite_addr: string, from_ref_no: number, to_ref_no: number): Promise<StructureChildrenResult> {
+export async function loadChildren(node: StructureNode, from_ref_no: number, to_ref_no: number): Promise<StructureChildrenResult> {
   console.log(from_ref_no);
   console.log(to_ref_no);
 
-  const address = invite_addr.trim();
-  if (!address) return { success: false, children: [] };
+  const parent_addr = node.addr.trim();
+  if (!parent_addr) return { success: false, children: [] };
 
   try {
     const children: StructureNode[] = [];
 
     for (let i = from_ref_no; i < to_ref_no; i++) {
 
-      const inviteAddressResult = await getInviteAddressBySeqNo(address, i);
+      const inviteAddressResult = await getInviteAddressBySeqNo(parent_addr, i);
       if (!inviteAddressResult.success) break;
 
       let inviteAddres = inviteAddressResult.address;
-      if (invite_addr == "EQDWtmELnfdGiCQeLCBcu8w0WGQ9KlWixQw4-Hekbf9teB2a" && i == 1) // upgradaed contract
+      if (node.addr == "EQDWtmELnfdGiCQeLCBcu8w0WGQ9KlWixQw4-Hekbf9teB2a" && i == 1) // upgradaed contract
       {
           inviteAddres = "EQAPqoZn7SXpwRLYHTmNpNdcr36iRFO4zfH8A9T-0wdaWh9X";
       }
@@ -108,7 +146,9 @@ export async function loadChildren(invite_addr: string, from_ref_no: number, to_
       const referals = inviteData.data.next_ref_no - 1;
 
       children.push({
-        id: inviteAddressResult.address,
+        addr: inviteAddressResult.address,
+        parent_addr: parent_addr,
+        parent_login: node.login,
         login: profile.data.login,
         index: i,
         createdAt,

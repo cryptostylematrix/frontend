@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import "./multi-matrix-nextpos.css";
 import { getNextPos } from "../../../../services/matrixService";
 import { useMatrixContext } from "../../../../context/MatrixContext";
 import { useProfileContext } from "../../../../context/ProfileContext";
@@ -29,7 +28,7 @@ export default function NextPosButton() {
   return (
     <button
       type="button"
-      className="next-pos-button"
+      className="filter-button secondary update-page-button"
       onClick={() => {
         if (!nextPos) return;
         setSelectedPlace(nextPos.address);

@@ -1,15 +1,16 @@
 import "./multi-structure-tree.css";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { loadRootByLogin, loadChildren, type StructureNode } from "../../../services/structureService";
 import { ErrorCode } from "../../../errors/ErrorCodes";
 
 type Props = {
   rootLogin: string;
+  onCuratorSelect?: (login: string) => void;
 };
 
 function updateNode(tree: StructureNode, targetId: string, updater: (node: StructureNode) => StructureNode): StructureNode {
-  if (tree.id === targetId) {
+  if (tree.addr === targetId) {
     return updater(tree);
   }
   if (!tree.children) return tree;
@@ -19,7 +20,7 @@ function updateNode(tree: StructureNode, targetId: string, updater: (node: Struc
   };
 }
 
-export default function MultiStructureTree({ rootLogin }: Props) {
+function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
   const { t } = useTranslation();
   const [root, setRoot] = useState<StructureNode | null>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
@@ -69,26 +70,26 @@ export default function MultiStructureTree({ rootLogin }: Props) {
   };
 
   const calcToRefNo = (node: StructureNode, lastIdx: number): number => {
-    let diff = lastIdx + 10;
+    let toRefNo = lastIdx + 10; 
 
-    if (node.nextRefNo < diff) {
-      diff = node.nextRefNo - lastIdx;
+    if (node.nextRefNo < toRefNo) { 
+      toRefNo = node.nextRefNo;
     }
 
-    return diff;
+    return toRefNo;
   };
 
   const handleToggle = async (node: StructureNode) => {
-    if (expanded[node.id]) {
-      setExpanded((prev) => ({ ...prev, [node.id]: false }));
+    if (expanded[node.addr]) {
+      setExpanded((prev) => ({ ...prev, [node.addr]: false }));
       return;
     }
 
-    setExpanded((prev) => ({ ...prev, [node.id]: true }));
+    setExpanded((prev) => ({ ...prev, [node.addr]: true }));
 
     if (node.children && node.children.length > 0) return;
 
-    setLoadingNodes((prev) => ({ ...prev, [node.id]: true }));
+    setLoadingNodes((prev) => ({ ...prev, [node.addr]: true }));
 
     const lastIdx = 0;
     const toRefNo = calcToRefNo(node, lastIdx);
@@ -100,17 +101,17 @@ export default function MultiStructureTree({ rootLogin }: Props) {
     //   });
     //   return;
     // }
-    const res = await loadChildren(node.id, lastIdx + 1, toRefNo);
+    const res = await loadChildren(node, lastIdx + 1, toRefNo);
     setLoadingNodes((prev) => {
       const next = { ...prev };
-      delete next[node.id];
+      delete next[node.addr];
       return next;
     });
 
     if (!res.success) return;
     setRoot((prev) => {
       if (!prev) return prev;
-      return updateNode(prev, node.id, (n) => ({
+      return updateNode(prev, node.addr, (n) => ({
         ...n,
         children: res.children,
       }));
@@ -120,28 +121,28 @@ export default function MultiStructureTree({ rootLogin }: Props) {
   const handleLoadMore = async (node: StructureNode) => {
     const lastIdx = getLastChildIndex(node);
 
-    setLoadingNodes((prev) => ({ ...prev, [node.id]: true }));
+    setLoadingNodes((prev) => ({ ...prev, [node.addr]: true }));
     const toRefNo = calcToRefNo(node, lastIdx);
 
     if (toRefNo === lastIdx) {
       setLoadingNodes((prev) => {
         const next = { ...prev };
-        delete next[node.id];
+        delete next[node.addr];
         return next;
       });
       return;
     }
-    const res = await loadChildren(node.id, lastIdx + 1, toRefNo);
+    const res = await loadChildren(node, lastIdx + 1, toRefNo);
     setLoadingNodes((prev) => {
       const next = { ...prev };
-      delete next[node.id];
+      delete next[node.addr];
       return next;
     });
     if (!res.success) return;
     const children = res.children;
     setRoot((prev) => {
       if (!prev) return prev;
-      return updateNode(prev, node.id, (n) => ({
+      return updateNode(prev, node.addr, (n) => ({
         ...n,
         children: [...(n.children ?? []), ...children],
       }));
@@ -149,31 +150,57 @@ export default function MultiStructureTree({ rootLogin }: Props) {
   };
 
   const renderNode = (node: StructureNode, level: number, path: number[]) => {
+
     const hasChildren = !!node.children?.length;
-    const isOpen = !!expanded[node.id];
+    const isOpen = !!expanded[node.addr];
     const created = new Date(node.createdAt).toLocaleString();
     const lastIdx = getLastChildIndex(node);
 
+    const hasExpandable = hasChildren || node.nextRefNo > 1;
     const showLoadMore = isOpen && node.nextRefNo > lastIdx + 1;
     const displayIndex = path.join(".");
     return (
-      <div key={node.id}>
+      <div key={node.addr}>
         <div className="structure-tree-row" style={{ marginLeft: `${level * 18}px` }}>
-          {(node.children || node.nextRefNo  > 1) && (
+          {hasExpandable ? (
             <button
               type="button"
               className="structure-tree-toggle"
-              aria-label={isOpen ? t("multi.structure.collapse", "Collapse") : t("multi.structure.expand", "Expand")}
+              aria-label={
+                isOpen ? t("multi.structure.collapse", "Collapse") : t("multi.structure.expand", "Expand")
+              }
               onClick={() => handleToggle(node)}
-              disabled={!!loadingNodes[node.id]}
+              disabled={!!loadingNodes[node.addr]}
             >
               {isOpen ? "−" : "+"}
             </button>
+          ) : (
+            <span className="structure-tree-toggle-placeholder" aria-hidden />
           )}
           <span className="structure-tree-index">{displayIndex}.</span>
           <span className="structure-tree-login">{node.login}</span>
-          <span className="structure-tree-meta">created: {created}</span>
-          <span className="structure-tree-meta">referals: {node.referals}</span>
+          <span className="structure-tree-meta">
+            {t("multi.structure.created", "Created")}: {created}
+          </span>
+          {node.parent_login ? (
+            <span className="structure-tree-meta">
+              {t("multi.structure.curator", "Curator")}:{" "}
+              {onCuratorSelect ? (
+                <button
+                  type="button"
+                  className="structure-tree-login structure-tree-curator"
+                  onClick={() => onCuratorSelect(node.parent_login!)}
+                >
+                  {node.parent_login}
+                </button>
+              ) : (
+                node.parent_login
+              )}
+            </span>
+          ) : null}
+          <span className="structure-tree-meta">
+            {t("multi.structure.referrals", "Referrals")}: {node.referals}
+          </span>
         </div>
 
         {isOpen && hasChildren && node.children!.map((child) => renderNode(child, level + 1, [...path, child.index]))}
@@ -184,9 +211,9 @@ export default function MultiStructureTree({ rootLogin }: Props) {
               type="button"
               className="structure-tree-load"
               onClick={() => handleLoadMore(node)}
-              disabled={!!loadingNodes[node.id]}
+              disabled={!!loadingNodes[node.addr]}
             >
-              {loadingNodes[node.id]
+              {loadingNodes[node.addr]
                 ? t("multi.structure.loading", "Loading...")
                 : t("multi.structure.loadMore", "Load more")}
             </button>
@@ -226,3 +253,5 @@ export default function MultiStructureTree({ rootLogin }: Props) {
     </div>
   );
 }
+
+export default memo(MultiStructureTree);

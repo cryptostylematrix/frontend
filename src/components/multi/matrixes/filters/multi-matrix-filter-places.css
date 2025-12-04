@@ -68,6 +68,12 @@
   background: rgba(212, 175, 55, 0.12);
 }
 
+.custom-select__option.option-full {
+  color: #b8860b;
+}
+
+
+
 .custom-select__separator {
   text-align: center;
   color: rgba(58, 46, 14, 0.45);

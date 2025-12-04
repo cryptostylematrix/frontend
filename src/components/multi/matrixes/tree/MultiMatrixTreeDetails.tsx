@@ -27,6 +27,9 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
   const [buyLoading, setBuyLoading] = useState(false);
   const [lockLoading, setLockLoading] = useState(false);
 
+
+
+
   if (!selectedNode) {
     return (
       <div className="details-panel" />
@@ -38,6 +41,8 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
   const canBeLocked = isFilled && selectedNode.can_be_locked;
   const isLock = isFilled && selectedNode.is_lock;
   const isNext = selectedNode.kind === "empty" && selectedNode.is_next_pos;
+  const createdAt = isFilled ? new Date(Number(selectedNode.created_at)) : undefined;
+
 
   return (
     <div className={`details-panel ${isLocked ? "details-panel--locked" : ""} ${isNext ? "details-panel--next" : ""}`}>
@@ -70,10 +75,14 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
                 <span className="details-type-inline">{selectedNode.clone ? "⧉" : "$"}</span>
                 <span className="details-id-inline">#{selectedNode.place_number}</span>
               </div>
-              <div className="details-meta__date">
-                {new Date(selectedNode.created_at * 1000).toLocaleDateString()}{" "}
-                {new Date(selectedNode.created_at * 1000).toLocaleTimeString()}
-              </div>
+
+              { createdAt && 
+                  <div className="details-meta__date">
+                    { createdAt.toLocaleDateString() }{" "}
+                    { createdAt.toLocaleTimeString() }
+                  </div>
+              }
+            
             <div className="details-meta__login">{selectedNode.login}</div>
               <div className="details-meta__desc">
                 {t("multiMatrix.tree.placesBelow", {
@@ -105,8 +114,14 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
                 if (result.success) {
                   alert(
                     isLock
-                      ? t("multiMatrix.tree.unlockSuccess", { defaultValue: "Position unlocked." })
-                      : t("multiMatrix.tree.lockSuccess", { defaultValue: "Position locked." })
+                      ? t("multiMatrix.tree.unlockSuccess", {
+                          defaultValue:
+                            "Unlock request sent. The unlock will appear soon; update the page in a while to see it.",
+                        })
+                      : t("multiMatrix.tree.lockSuccess", {
+                          defaultValue:
+                            "Lock request sent. The lock will appear soon; update the page in a while to see it.",
+                        })
                   );
                 } else {
                   const code = result.error_code;

@@ -158,6 +158,13 @@ export default function MultiMatrixFilters() {
             {buyLoading ? t("home.loading") : buyPlaceLabel}
           </button>
           <NextPosButton />
+          <button
+            type="button"
+            className="filter-button secondary next-pos-style"
+            onClick={() => window.location.reload()}
+          >
+            {t("multiMatrix.filters.updatePage", "Update page")}
+          </button>
           {buyStatus && (
             <div className="buy-status-row">
               <div className={`op-message ${buyStatus.type}`} role="status">

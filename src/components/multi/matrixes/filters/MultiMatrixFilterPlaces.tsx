@@ -62,7 +62,7 @@ export default function MultiMatrixFilterPlaces() {
   const groupedPlaces = useMemo(() => {
     const groups: Record<string, MatrixPlace[]> = {};
     places.forEach((place) => {
-      const date = new Date(place.created_at);
+      const date = new Date(Number(place.created_at));
       const dateKey = `${pad2(date.getDate())}.${pad2(
         date.getMonth() + 1
       )}.${date.getFullYear().toString().slice(-2)}`;
@@ -74,15 +74,15 @@ export default function MultiMatrixFilterPlaces() {
         date,
         items: items.sort(
           (a, b) =>
-            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+            b.created_at - a.created_at
         ),
       }))
       .filter((group) => group.items.length > 0);
   }, [places]);
 
   const formatPlaceLabel = (place: MatrixPlace) => {
-    const label = `[${place.place_number}] ${place.login} (${place.fill_count}/6) ${place.clone ? t("multiMatrix.filters.clone", "clone") : ""}`;
-    return { label, isFull: place.fill_count >= 6 };
+    const label = `[${place.place_number}] ${place.login} (${place.fill_count}/4) ${place.clone ? t("multiMatrix.filters.clone", "clone") : ""}`;
+    return { label, isFull: place.fill_count >= 4 };
   };
 
   const selectedPlaceLabel = useMemo(() => {

@@ -95,6 +95,34 @@
   box-shadow: 0 10px 20px rgba(212, 175, 55, 0.25);
 }
 
+.filter-button.secondary.next-pos-style {
+  background: #fff;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+}
+
+.filter-button.secondary.next-pos-style:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(212, 175, 55, 0.25);
+}
+
+.filter-button.secondary.next-pos-style:disabled {
+  opacity: 0.65;
+  cursor: default;
+  box-shadow: none;
+}
+
+.filter-button.secondary.update-page-button {
+  background: #fff7eb;
+  color: #3a2e0e;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 6px 14px rgba(212, 175, 55, 0.15);
+}
+
+.filter-button.secondary.update-page-button:hover {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 8px 18px rgba(212, 175, 55, 0.2);
+}
+
 .buy-status {
   width: 100%;
   margin-top: 0.5rem;

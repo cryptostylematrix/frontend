@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  width: 100%;
+  overflow-x: auto;
 }
 
 .structure-tree-row {
@@ -13,6 +15,9 @@
   background: rgba(255, 249, 240, 0.6);
   border: 1px solid rgba(212, 175, 55, 0.25);
   margin-bottom: 0.2rem;
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
 }
 
 .structure-tree-toggle {
@@ -27,19 +32,73 @@
   font-weight: 700;
 }
 
+.structure-tree-toggle-placeholder {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
+
 .structure-tree-index {
   font-weight: 600;
   color: #3a2e0e;
+  flex: 0 0 auto;
+  min-width: 0;
 }
 
 .structure-tree-login {
   font-weight: 700;
   color: #d4af37;
+  flex: 1 1 160px;
+  min-width: 0;
+  word-break: break-word;
 }
 
 .structure-tree-meta {
   color: #5c4a1b;
   font-size: 0.9rem;
+  flex: 1 1 180px;
+  min-width: 0;
+  white-space: normal;
+}
+
+.structure-tree-row span,
+.structure-tree-row button {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .structure-tree {
+    gap: 0.25rem;
+  }
+
+  .structure-tree-row {
+    gap: 0.35rem;
+    padding: 0.35rem 0.45rem;
+  }
+
+  .structure-tree-meta {
+    font-size: 0.8rem;
+  }
+
+  .structure-tree-login {
+    flex-basis: 140px;
+  }
+
+  .structure-tree-load {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.structure-tree-curator {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  color: #d4af37;
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .structure-tree-load-more {
