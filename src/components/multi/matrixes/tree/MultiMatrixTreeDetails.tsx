@@ -42,6 +42,16 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
   const isLock = isFilled && selectedNode.is_lock;
   const isNext = selectedNode.kind === "empty" && selectedNode.is_next_pos;
   const createdAt = isFilled ? new Date(Number(selectedNode.created_at)) : undefined;
+  const tonViewerUrl = isFilled ? `https://tonviewer.com/${selectedNode.address}` : undefined;
+  const createdAtDate = createdAt ? createdAt.toLocaleDateString() : undefined;
+  const createdAtTime = createdAt
+    ? createdAt.toLocaleTimeString(undefined, {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      })
+    : undefined;
+  const canBuy = (selectedNode.kind == "empty") && selectedNode.can_buy;
 
 
   return (
@@ -70,23 +80,39 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
             <div className="details-avatar details-avatar--inline">
               <img src={selectedNode.image_url} alt={selectedNode.login} />
             </div>
-            <div className="details-meta">
+              <div className="details-meta">
               <div className="details-meta__top">
                 <span className="details-type-inline">{selectedNode.clone ? "⧉" : "$"}</span>
                 <span className="details-id-inline">#{selectedNode.place_number}</span>
+                {tonViewerUrl && (
+                  <a
+                    className="details-meta__tonviewer-link"
+                    href={tonViewerUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={t("multiMatrix.tree.viewInTonViewer", {
+                      defaultValue: "Open in TonViewer",
+                    })}
+                  >
+                    <span className="details-meta__tonviewer-label">
+                      {t("multiMatrix.tree.toViewer", { defaultValue: "tonviewer" })}
+                      <span className="details-meta__tonviewer-arrow">➤</span>
+                    </span>
+                  </a>
+                )}
               </div>
 
               { createdAt && 
                   <div className="details-meta__date">
-                    { createdAt.toLocaleDateString() }{" "}
-                    { createdAt.toLocaleTimeString() }
+                    { createdAtDate }{" "}
+                    { createdAtTime }
                   </div>
               }
             
             <div className="details-meta__login">{selectedNode.login}</div>
-              <div className="details-meta__desc">
-                {t("multiMatrix.tree.placesBelow", {
-                  count: selectedNode.descendants,
+            <div className="details-meta__desc">
+              {t("multiMatrix.tree.placesBelow", {
+                count: selectedNode.descendants,
                   formattedCount: formatter.format(selectedNode.descendants),
                   defaultValue: "{{formattedCount}} place below",
                   defaultValue_plural: "{{formattedCount}} places below",
@@ -155,51 +181,52 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
           }
          
         </>
-      ) : (
-        <>
-          <button
-            type="button"
-            className="details-action details-action--primary"
-            onClick={async () => {
-              if (!currentProfile) return;
-              if (!window.confirm(t("multiMatrix.filters.confirmBuy", "Are you sure?"))) return;
+      ) :
+      ( canBuy && 
+          <>
+            <button
+              type="button"
+              className="details-action details-action--primary"
+              onClick={async () => {
+                if (!currentProfile) return;
+                if (!window.confirm(t("multiMatrix.filters.confirmBuy", "Are you sure?"))) return;
 
-              setBuyLoading(true);
-              if (selectedMatrix === 1) {
-                const program = await getProfileProgramData(currentProfile.address, Programs.multi);
-                if (!program.success || !program.data || !program.data.confirmed) {
-                  setBuyLoading(false);
-                  alert(t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."));
-                  return;
+                setBuyLoading(true);
+                if (selectedMatrix === 1) {
+                  const program = await getProfileProgramData(currentProfile.address, Programs.multi);
+                  if (!program.success || !program.data || !program.data.confirmed) {
+                    setBuyLoading(false);
+                    alert(t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."));
+                    return;
+                  }
                 }
-              }
-              if (selectedMatrix > 1) {
-                const prevCount = await getPlacesCount(selectedMatrix - 1, currentProfile.address);
-                if (prevCount <= 0) {
-                  setBuyLoading(false);
-                  alert(t("multiMatrix.filters.prevMatrixRequired", "You need a place in the previous matrix before buying here."));
-                  return;
+                if (selectedMatrix > 1) {
+                  const prevCount = await getPlacesCount(selectedMatrix - 1, currentProfile.address);
+                  if (prevCount <= 0) {
+                    setBuyLoading(false);
+                    alert(t("multiMatrix.filters.prevMatrixRequired", "You need a place in the previous matrix before buying here."));
+                    return;
+                  }
                 }
-              }
-              const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, undefined);
-              setBuyLoading(false);
-              if (result.success) {
-                alert(t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."));
-              } else {
-                const code = result.error_code;
-                alert(code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"));
-              }
-            }}
-            disabled={buyLoading}
-          >
-            {buyLoading
-              ? t("home.loading", "Loading...")
-              : t("multiMatrix.tree.buy", {
-                  defaultValue: "Buy ({{price}} TON)",
-                  price: matrixPrice,
-                })}
-          </button>
-        </>
+                const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, selectedNode.parent_addr);
+                setBuyLoading(false);
+                if (result.success) {
+                  alert(t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."));
+                } else {
+                  const code = result.error_code;
+                  alert(code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"));
+                }
+              }}
+              disabled={buyLoading}
+            >
+              {buyLoading
+                ? t("home.loading", "Loading...")
+                : t("multiMatrix.tree.buy", {
+                    defaultValue: "Buy ({{price}} TON)",
+                    price: matrixPrice,
+                  })}
+            </button>
+          </>
       )}
     </div>
   );

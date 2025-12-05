@@ -198,6 +198,36 @@
   gap: 0.25rem;
 }
 
+.details-meta__tonviewer-link {
+  margin-left: 0.35rem;
+  font-size: 1rem;
+  line-height: 1;
+  text-decoration: none;
+  color: #3a2e0e;
+  transition: color 0.2s ease;
+}
+
+.details-meta__tonviewer-link:hover,
+.details-meta__tonviewer-link:focus-visible {
+  color: #d4af37;
+}
+.details-meta__tonviewer-label {
+  text-transform: lowercase;
+}
+.details-meta__tonviewer-arrow {
+  margin-left: 0.2rem;
+  font-size: 1rem;
+}
+.details-meta__tonviewer-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  display: inline-block;
+  vertical-align: middle;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .details-meta__top {
   display: flex;
   align-items: center;

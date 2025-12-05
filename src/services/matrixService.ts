@@ -38,6 +38,8 @@ export type TreeFilledNode = {
 export type TreeEmptyNode = {
   kind: "empty";
   is_next_pos: boolean;
+  can_buy: boolean;
+  parent_addr: string | undefined;
 };
 
 export type TreeNode = TreeFilledNode | TreeEmptyNode;
@@ -80,7 +82,7 @@ const buildUrl = (path: string, query?: Record<string, string | number | undefin
 };
 
 const emptyPage: PaginatedPlaces = { items: [], page: 1, totalPages: 1 };
-const emptyTree: TreeEmptyNode = { kind: "empty", is_next_pos: true };
+const emptyTree: TreeEmptyNode = { kind: "empty", is_next_pos: false, can_buy: false, parent_addr: undefined };
 
 const safeGet = async <T>(path: string, query?: Record<string, string | number | undefined>): Promise<T | null> => {
   try {
