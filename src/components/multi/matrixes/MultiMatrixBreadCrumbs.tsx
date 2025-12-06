@@ -56,16 +56,16 @@ export default function MultiMatrixBreadCrumbs() {
           <ol className="breadcrumbs">
             {items.map((item, index) => {
               const label = `#${item.place_number} ${item.login}`;
-              const isSelected = item.address === selectedAddress;
+              const isSelected = item.addr === selectedAddress;
               return (
-                <li key={item.address} className="breadcrumb-item">
+                <li key={item.addr} className="breadcrumb-item">
                   {isSelected ? (
                     <span className="breadcrumb-current">{label}</span>
                   ) : (
                     <button
                       type="button"
                       className="breadcrumb-link"
-                      onClick={() => setSelectedPlace(item.address)}
+                      onClick={() => setSelectedPlace(item.addr)}
                       aria-current={isSelected ? "page" : undefined}
                     >
                       {label}

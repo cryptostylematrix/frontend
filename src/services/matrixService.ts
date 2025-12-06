@@ -2,18 +2,33 @@ import { ErrorCode } from "../errors/ErrorCodes";
 import { appConfig } from "../config";
 
 export type MatrixPlace = {
-  address: string;
-  parent_address: string | null;
+  addr: string;
+  profile_addr: string;
+  parent_addr: string | null;
   place_number: number;
   created_at: number;
   fill_count: number;
   clone: number; // 1 means clone
+  pos: 0 | 1;
   login: string;
-  index: string;
+  m: number;
 };
 
-export type PaginatedPlaces = {
-  items: MatrixPlace[];
+export type MatrixLock = {
+  m: number;
+  profile_addr: string;
+
+  place_addr: string;
+  locked_pos:  0 | 1;
+
+  place_profile_login: string;
+  place_number: number;
+  craeted_at: number;
+};
+
+
+export type Paginated<T> = {
+  items: T[];
   page: number;
   totalPages: number;
 };
@@ -21,28 +36,40 @@ export type PaginatedPlaces = {
 export type TreeFilledNode = {
   kind: "filled";
   locked: boolean;
+  can_lock: boolean;
+  is_lock: boolean;
+  children: [TreeNode, TreeNode] | undefined;
+  parent_addr: string | undefined | null;
+  pos: 0 | 1,
+
   address: string;
-  parent_address: string;
-  descendants: number;
   place_number: number;
   clone: number;
   created_at: number;
   login: string;
   image_url: string;
-  children?: [TreeNode | undefined, TreeNode | undefined];
-  can_be_locked: boolean;
+  
+  descendants: number;
   is_root: boolean;
-  is_lock: boolean;
 };
 
 export type TreeEmptyNode = {
   kind: "empty";
+  locked: boolean;
+  can_lock: boolean;
+  is_lock: boolean;
+  children?: [TreeNode, TreeNode] | undefined;
+  parent_addr: string | undefined | null;
+  pos: 0 | 1,
+
   is_next_pos: boolean;
   can_buy: boolean;
-  parent_addr: string | undefined;
+
 };
 
 export type TreeNode = TreeFilledNode | TreeEmptyNode;
+
+
 
 export type BuyPlaceResult =
   | { success: true }
@@ -52,10 +79,10 @@ export interface MatrixService {
   getRootPlace: (m: number, profile_addr: string) => Promise<MatrixPlace | null>;
   getNextPos: (m: number, profile_addr: string) => Promise<MatrixPlace | null>;
   getPath: (root_addr: string, place_addr: string) => Promise<MatrixPlace[] | null>;
-  fetchPlaces: (m: number, profile_addr: string, page?: number, pageSize?: number) => Promise<PaginatedPlaces>;
+  fetchPlaces: (m: number, profile_addr: string, page?: number, pageSize?: number) => Promise<Paginated<MatrixPlace>>;
   getPlacesCount: (m: number, profile_addr: string) => Promise<number>;
-  fetchLocks: (m: number, profile_addr: string, page?: number, pageSize?: number) => Promise<PaginatedPlaces>;
-  searchPlaces: (m: number, profile_addr: string, query: string, page?: number, pageSize?: number) => Promise<PaginatedPlaces>;
+  fetchLocks: (m: number, profile_addr: string, page?: number, pageSize?: number) => Promise<Paginated<MatrixLock>>;
+  searchPlaces: (m: number, profile_addr: string, query: string, page?: number, pageSize?: number) => Promise<Paginated<MatrixPlace>>;
   getMatrix: (place_addr: string, profile_addr: string) => Promise<TreeNode>;
 }
 
@@ -81,8 +108,9 @@ const buildUrl = (path: string, query?: Record<string, string | number | undefin
   return url.toString();
 };
 
-const emptyPage: PaginatedPlaces = { items: [], page: 1, totalPages: 1 };
-const emptyTree: TreeEmptyNode = { kind: "empty", is_next_pos: false, can_buy: false, parent_addr: undefined };
+const emptyPlacesPage: Paginated<MatrixPlace> = { items: [], page: 1, totalPages: 1 };
+const emptyLocksPage: Paginated<MatrixLock> = { items: [], page: 1, totalPages: 1 };
+const emptyTree: TreeEmptyNode = { kind: "empty", is_next_pos: false, can_buy: false, parent_addr: undefined, locked: false, can_lock: false, is_lock: false, pos: 0 };
 
 const safeGet = async <T>(path: string, query?: Record<string, string | number | undefined>): Promise<T | null> => {
   try {
@@ -108,9 +136,9 @@ export async function getPath(root_addr: string, place_addr: string): Promise<Ma
   return safeGet<MatrixPlace[]>("/api/matrix/path", { root_addr, place_addr });
 }
 
-export async function fetchPlaces(m: number, profile_addr: string, page = 1, pageSize = 50): Promise<PaginatedPlaces> {
-  const result = await safeGet<PaginatedPlaces>(`/api/matrix/${m}/${profile_addr}/places`, { page, pageSize });
-  return result ?? emptyPage;
+export async function fetchPlaces(m: number, profile_addr: string, page = 1, pageSize = 50): Promise<Paginated<MatrixPlace>> {
+  const result = await safeGet<Paginated<MatrixPlace>>(`/api/matrix/${m}/${profile_addr}/places`, { page, pageSize });
+  return result ?? emptyPlacesPage;
 }
 
 export async function getPlacesCount(m: number, profile_addr: string): Promise<number> {
@@ -118,14 +146,14 @@ export async function getPlacesCount(m: number, profile_addr: string): Promise<n
   return result?.count ?? 0;
 }
 
-export async function fetchLocks(m: number, profile_addr: string, page = 1, pageSize = 50): Promise<PaginatedPlaces> {
-  const result = await safeGet<PaginatedPlaces>(`/api/matrix/${m}/${profile_addr}/locks`, { page, pageSize });
-  return result ?? emptyPage;
+export async function fetchLocks(m: number, profile_addr: string, page = 1, pageSize = 50): Promise<Paginated<MatrixLock>> {
+  const result = await safeGet<Paginated<MatrixLock>>(`/api/matrix/${m}/${profile_addr}/locks`, { page, pageSize });
+  return result ?? emptyLocksPage;
 }
 
-export async function searchPlaces(m: number, profile_addr: string, query: string, page = 1, pageSize = 50): Promise<PaginatedPlaces> {
-  const result = await safeGet<PaginatedPlaces>(`/api/matrix/${m}/${profile_addr}/search`, { query, page, pageSize });
-  return result ?? emptyPage;
+export async function searchPlaces(m: number, profile_addr: string, query: string, page = 1, pageSize = 50): Promise<Paginated<MatrixPlace>> {
+  const result = await safeGet<Paginated<MatrixPlace>>(`/api/matrix/${m}/${profile_addr}/search`, { query, page, pageSize });
+  return result ?? emptyPlacesPage;
 }
 
 export async function getMatrix(place_addr: string, profile_addr: string): Promise<TreeNode> {

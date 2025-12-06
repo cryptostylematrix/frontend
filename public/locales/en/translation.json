@@ -131,6 +131,8 @@
       "searchPlaceholder": "login",
       "locks": "Blocks",
       "noLocks": "No blocks",
+      "left": "left",
+      "right": "right",
       "lockOption": "{{lock}}",
       "buyPlace": "Buy new place ({{price}} TON)",
       "confirmBuy": "Are you sure?",

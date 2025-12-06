@@ -20,7 +20,7 @@ export default function NextPosButton() {
     setLoading(true);
     getNextPos(selectedMatrix, currentProfile.address)
       .then((next) => {
-        setNextPos(next ? { address: next.address } : null);
+        setNextPos(next ? { address: next.addr } : null);
       })
       .finally(() => setLoading(false));
   }, [selectedMatrix, currentProfile]);

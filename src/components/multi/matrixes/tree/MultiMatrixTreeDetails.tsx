@@ -10,6 +10,8 @@ import { getPlacesCount } from "../../../../services/matrixService";
 import { getProfileProgramData } from "../../../../services/profileService";
 import { Programs } from "../../../../contracts/MultiConstants";
 import { useTonConnectUI } from "@tonconnect/ui-react";
+import { Address } from "@ton/core";
+import type { PlacePosData } from "../../../../contracts/Mutli";
 
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -37,9 +39,9 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
   }
 
   const isFilled = selectedNode.kind === "filled";
-  const isLocked = isFilled && selectedNode.locked;
-  const canBeLocked = isFilled && selectedNode.can_be_locked;
-  const isLock = isFilled && selectedNode.is_lock;
+  const isLocked = selectedNode.locked;
+  const canLock = selectedNode.can_lock;
+  const isLock = selectedNode.is_lock;
   const isNext = selectedNode.kind === "empty" && selectedNode.is_next_pos;
   const createdAt = isFilled ? new Date(Number(selectedNode.created_at)) : undefined;
   const tonViewerUrl = isFilled ? `https://tonviewer.com/${selectedNode.address}` : undefined;
@@ -51,20 +53,23 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
         hour12: false,
       })
     : undefined;
-  const canBuy = (selectedNode.kind == "empty") && selectedNode.can_buy;
+  const canBuy = selectedNode.kind == "empty" && selectedNode.can_buy;
+
+  const fixedpos: PlacePosData | undefined = selectedNode.parent_addr ? 
+    { parent: Address.parse(selectedNode.parent_addr), pos: selectedNode.pos } :
+    undefined;
 
 
   return (
     <div className={`details-panel ${isLocked ? "details-panel--locked" : ""} ${isNext ? "details-panel--next" : ""}`}>
       { isFilled && selectedNode.address == selectedPlaceAddress && 
         <div className="details-top-actions">
-       
             <button
               type="button"
               className="details-action details-action--ghost"
               onClick={() => {
                 if (selectedNode.kind === "filled") {
-                  setSelectedPlace(selectedNode.parent_address || undefined);
+                  setSelectedPlace(selectedNode.parent_addr || undefined);
                 }
               }}
               disabled={selectedNode.kind !== "filled"}
@@ -74,7 +79,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
         </div>
       }
 
-      {isFilled ? (
+      {isFilled && 
         <>
           <div className="details-card-row">
             <div className="details-avatar details-avatar--inline">
@@ -84,31 +89,29 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
               <div className="details-meta__top">
                 <span className="details-type-inline">{selectedNode.clone ? "⧉" : "$"}</span>
                 <span className="details-id-inline">#{selectedNode.place_number}</span>
-                {tonViewerUrl && (
-                  <a
-                    className="details-meta__tonviewer-link"
-                    href={tonViewerUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={t("multiMatrix.tree.viewInTonViewer", {
-                      defaultValue: "Open in TonViewer",
-                    })}
-                  >
-                    <span className="details-meta__tonviewer-label">
-                      {t("multiMatrix.tree.toViewer", { defaultValue: "tonviewer" })}
-                      <span className="details-meta__tonviewer-arrow">➤</span>
-                    </span>
-                  </a>
-                )}
+
+              <a
+                  className="details-meta__tonviewer-link"
+                  href={tonViewerUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={t("multiMatrix.tree.viewInTonViewer", {
+                    defaultValue: "Open in TonViewer",
+                  })}
+                >
+                  <span className="details-meta__tonviewer-label">
+                    {t("multiMatrix.tree.toViewer", { defaultValue: "tonviewer" })}
+                    <span className="details-meta__tonviewer-arrow">➤</span>
+                  </span>
+                </a>
+
               </div>
 
-              { createdAt && 
-                  <div className="details-meta__date">
-                    { createdAtDate }{" "}
-                    { createdAtTime }
-                  </div>
-              }
-            
+            <div className="details-meta__date">
+              { createdAtDate }{" "}
+              { createdAtTime }
+            </div>
+
             <div className="details-meta__login">{selectedNode.login}</div>
             <div className="details-meta__desc">
               {t("multiMatrix.tree.placesBelow", {
@@ -120,53 +123,8 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
               </div>
             </div>
           </div>
-
-          { (isLock || canBeLocked) && 
-            <button
-              type="button"
-              className={`details-action ${!isLock ? "danger" : ""}`}
-              onClick={async () => {
-                if (!currentProfile || selectedNode.kind !== "filled") return;
-                setLockLoading(true);
-                const count = await getPlacesCount(selectedMatrix, currentProfile.address);
-                if (count <= 0) {
-                  setLockLoading(false);
-                  alert(t("multiMatrix.filters.noPlacesInMatrix", "You need a place in this matrix to perform this action."));
-                  return;
-                }
-                const handler = isLock ? unlockPos : lockPos;
-                const result = await handler(tonConnectUI, Date.now(), selectedMatrix, currentProfile.address, selectedNode.address);
-                setLockLoading(false);
-                if (result.success) {
-                  alert(
-                    isLock
-                      ? t("multiMatrix.tree.unlockSuccess", {
-                          defaultValue:
-                            "Unlock request sent. The unlock will appear soon; update the page in a while to see it.",
-                        })
-                      : t("multiMatrix.tree.lockSuccess", {
-                          defaultValue:
-                            "Lock request sent. The lock will appear soon; update the page in a while to see it.",
-                        })
-                  );
-                } else {
-                  const code = result.error_code;
-                  alert(code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"));
-                }
-              }}
-              disabled={lockLoading}
-            >
-              {lockLoading
-                ? t("home.loading", "Loading...")
-                : isLock
-                  ? t("multiMatrix.tree.unlock", { defaultValue: "Unlock" })
-                  : t("multiMatrix.tree.lock", { defaultValue: "Lock" })}
-            </button>
-          }
-
-         
           
-          { isFilled && selectedNode.address != selectedPlaceAddress && 
+          { selectedNode.address != selectedPlaceAddress && 
             <div className="details-desc-actions">
               <button
                 type="button"
@@ -179,55 +137,97 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
               </button>
             </div>
           }
-         
         </>
-      ) :
-      ( canBuy && 
-          <>
-            <button
-              type="button"
-              className="details-action details-action--primary"
-              onClick={async () => {
-                if (!currentProfile) return;
-                if (!window.confirm(t("multiMatrix.filters.confirmBuy", "Are you sure?"))) return;
+      }
 
-                setBuyLoading(true);
-                if (selectedMatrix === 1) {
-                  const program = await getProfileProgramData(currentProfile.address, Programs.multi);
-                  if (!program.success || !program.data || !program.data.confirmed) {
-                    setBuyLoading(false);
-                    alert(t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."));
-                    return;
-                  }
+      { canBuy && fixedpos &&
+        <button
+            type="button"
+            className="details-action details-action--primary"
+            onClick={async () => {
+              if (!currentProfile) return;
+              if (!window.confirm(t("multiMatrix.filters.confirmBuy", "Are you sure?"))) return;
+
+              setBuyLoading(true);
+              if (selectedMatrix === 1) {
+                const program = await getProfileProgramData(currentProfile.address, Programs.multi);
+                if (!program.success || !program.data || !program.data.confirmed) {
+                  setBuyLoading(false);
+                  alert(t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."));
+                  return;
                 }
-                if (selectedMatrix > 1) {
-                  const prevCount = await getPlacesCount(selectedMatrix - 1, currentProfile.address);
-                  if (prevCount <= 0) {
-                    setBuyLoading(false);
-                    alert(t("multiMatrix.filters.prevMatrixRequired", "You need a place in the previous matrix before buying here."));
-                    return;
-                  }
+              }
+              if (selectedMatrix > 1) {
+                const prevCount = await getPlacesCount(selectedMatrix - 1, currentProfile.address);
+                if (prevCount <= 0) {
+                  setBuyLoading(false);
+                  alert(t("multiMatrix.filters.prevMatrixRequired", "You need a place in the previous matrix before buying here."));
+                  return;
                 }
-                const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, selectedNode.parent_addr);
-                setBuyLoading(false);
-                if (result.success) {
-                  alert(t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."));
-                } else {
-                  const code = result.error_code;
-                  alert(code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"));
-                }
-              }}
-              disabled={buyLoading}
-            >
-              {buyLoading
-                ? t("home.loading", "Loading...")
-                : t("multiMatrix.tree.buy", {
-                    defaultValue: "Buy ({{price}} TON)",
-                    price: matrixPrice,
-                  })}
-            </button>
-          </>
-      )}
+              }
+              const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, fixedpos);
+              setBuyLoading(false);
+              if (result.success) {
+                alert(t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."));
+              } else {
+                const code = result.error_code;
+                alert(code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"));
+              }
+            }}
+            disabled={buyLoading}
+          >
+            {buyLoading
+              ? t("home.loading", "Loading...")
+              : t("multiMatrix.tree.buy", {
+                  defaultValue: "Buy ({{price}} TON)",
+                  price: matrixPrice,
+              })}
+        </button>
+      }
+
+
+      { (isLock || canLock) && fixedpos &&
+        <button
+          type="button"
+          className={`details-action ${!isLock ? "danger" : ""}`}
+          onClick={async () => {
+            if (!currentProfile) return;
+            setLockLoading(true);
+            const count = await getPlacesCount(selectedMatrix, currentProfile.address);
+            if (count <= 0) {
+              setLockLoading(false);
+              alert(t("multiMatrix.filters.noPlacesInMatrix", "You need a place in this matrix to perform this action."));
+              return;
+            }
+            const handler = isLock ? unlockPos : lockPos;
+            const result = await handler(tonConnectUI, Date.now(), selectedMatrix, currentProfile.address, fixedpos);
+            setLockLoading(false);
+            if (result.success) {
+              alert(
+                isLock
+                  ? t("multiMatrix.tree.unlockSuccess", {
+                      defaultValue:
+                        "Unlock request sent. The unlock will appear soon; update the page in a while to see it.",
+                    })
+                  : t("multiMatrix.tree.lockSuccess", {
+                      defaultValue:
+                        "Lock request sent. The lock will appear soon; update the page in a while to see it.",
+                    })
+              );
+            } else {
+              const code = result.error_code;
+              alert(code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"));
+            }
+          }}
+          disabled={lockLoading}
+        >
+          {lockLoading
+            ? t("home.loading", "Loading...")
+            : isLock
+              ? t("multiMatrix.tree.unlock", { defaultValue: "Unlock" })
+              : t("multiMatrix.tree.lock", { defaultValue: "Lock" })}
+        </button>
+      }
     </div>
   );
 }

@@ -131,6 +131,8 @@
       "searchPlaceholder": "логин",
       "locks": "Блоктаулар",
       "noLocks": "Блоктаулар жоқ",
+      "left": "сол жақ",
+      "right": "оң жақ",
       "lockOption": "{{lock}}",
       "buyPlace": "Жаңа орынды сатып алу ({{price}} TON)",
       "confirmBuy": "Сіз сенімдісіз бе?",

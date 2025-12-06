@@ -41,7 +41,7 @@ export default function MultiMatrixFilters() {
 
     const run = async () => {
       getRootPlace(selectedMatrix, currentProfile.address).then((root) => {
-        setRootPlace(root?.address);
+        setRootPlace(root?.addr);
       });
     };
 
@@ -79,7 +79,7 @@ export default function MultiMatrixFilters() {
       }
     }
 
-    const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, undefined);
+    const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, null);
     if (result.success) {
       setBuyStatus({
         type: "success",

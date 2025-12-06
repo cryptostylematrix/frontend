@@ -42,7 +42,7 @@ export default function MultiMatrixFilterPlaces() {
         if (cancelled) return;
         setPlaces(data.items);
         if (data.items[0]) {
-            setSelectedPlace(data.items[0].address);
+            setSelectedPlace(data.items[0].addr);
           } else {
             setSelectedPlace(undefined);
           }
@@ -87,7 +87,7 @@ export default function MultiMatrixFilterPlaces() {
 
   const selectedPlaceLabel = useMemo(() => {
     if (loading) return t("home.loading");
-    const found = places.find((p) => p.address === selectedPlaceAddress);
+    const found = places.find((p) => p.addr === selectedPlaceAddress);
     if (!found) {
       return places.length > 0 ? "..." : t("multiMatrix.filters.noPlaces", "No places");
     }
@@ -130,7 +130,7 @@ export default function MultiMatrixFilterPlaces() {
                   <div className="custom-select__group">{date}</div>
               {items.map((place) => {
                 const { label, isFull } = formatPlaceLabel(place);
-                const isSelected = place.address === selectedPlaceAddress;
+                const isSelected = place.addr === selectedPlaceAddress;
                 return (
                   <div
                         key={place.place_number}
@@ -141,7 +141,7 @@ export default function MultiMatrixFilterPlaces() {
                         } ${isSelected ? "is-selected" : ""}`}
                         onMouseDown={(e) => {
                           e.preventDefault();
-                          setSelectedPlace(place.address);
+                          setSelectedPlace(place.addr);
                           setIsPlacesOpen(false);
                         }}
                       >

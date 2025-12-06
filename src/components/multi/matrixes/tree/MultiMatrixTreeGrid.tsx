@@ -8,7 +8,7 @@ type Props = {
   onSelect: (node: TreeNode) => void;
 };
 
-const placeholderEmptyNode: TreeNode = { kind: "empty", is_next_pos: false, can_buy: false, parent_addr: undefined };
+const placeholderEmptyNode: TreeNode = { kind: "empty", is_next_pos: false, can_buy: false, parent_addr: undefined, locked: false, can_lock: false, is_lock: false, pos: 0 };
 const PLACEHOLDER_LEVELS: Array<Array<{ node: TreeNode; pos: number }>> = (() => {
   const result: Array<Array<{ node: TreeNode; pos: number }>> = [];
   let pos = 1;

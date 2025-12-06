@@ -131,6 +131,8 @@
       "searchPlaceholder": "login",
       "locks": "Bloccaggi",
       "noLocks": "Nessun bloccaggio",
+      "left": "sinistra",
+      "right": "destra",
       "lockOption": "{{lock}}",
       "buyPlace": "Compra un nuovo posto ({{price}} TON)",
       "confirmBuy": "Sei sicuro?",

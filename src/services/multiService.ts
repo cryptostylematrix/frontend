@@ -35,10 +35,10 @@ const ensureMultiAddress = (): string => {
   return addr;
 };
 
-const buildPlacePos = (pos_addr?: string): PlacePosData | null => {
-  const addr = pos_addr?.trim();
-  return addr ? { parent: Address.parse(addr) } : null;
-};
+// const buildPlacePos = (pos_addr?: string): PlacePosData | null => {
+//   const addr = pos_addr?.trim();
+//   return addr ? { parent: Address.parse(addr) } : null;
+// };
 
 const getBuyPlaceValue = (m: number): bigint | null => {
   const price = MATRIX_PRICES_TON[m];
@@ -70,12 +70,12 @@ export async function buyPlace(
   tonConnectUI: TonConnectUI,
   m: number,
   profile_addr: string,
-  pos_addr: string | undefined
+  pos: PlacePosData | null,
 ): Promise<ContractResult> {
   const value = getBuyPlaceValue(m);
   if (!value) return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
 
-  const body = Multi.buyPlaceMessage(m, Address.parse(profile_addr), buildPlacePos(pos_addr), Date.now());
+  const body = Multi.buyPlaceMessage(m, Address.parse(profile_addr), pos, Date.now());
   return submitMultiTx(tonConnectUI, body, value);
 }
 
@@ -84,10 +84,8 @@ export async function lockPos(
   query_id: number,
   m: number,
   profile_addr: string,
-  pos_addr: string
+  pos: PlacePosData
 ): Promise<ContractResult> {
-  const pos = buildPlacePos(pos_addr);
-  if (!pos) return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
   const value = getMatrixFeeValue(m);
   if (!value) return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
   const body = Multi.lockPosMessage(m, Address.parse(profile_addr), pos, query_id);
@@ -99,10 +97,8 @@ export async function unlockPos(
   query_id: number,
   m: number,
   profile_addr: string,
-  pos_addr: string
+  pos: PlacePosData
 ): Promise<ContractResult> {
-  const pos = buildPlacePos(pos_addr);
-  if (!pos) return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
   const value = getMatrixFeeValue(m);
   if (!value) return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
   const body = Multi.unlockPosMessage(m, Address.parse(profile_addr), pos, query_id);

@@ -13,7 +13,7 @@ export default function MultiMatrixFilterSearch() {
   const [searchLogin, setSearchLogin] = useState("");
   const [results, setResults] = useState<MatrixPlace[]>([]);
 
-  const formatLabel = (place: MatrixPlace) => `[${place.place_number}] ${place.index}`;
+  const formatLabel = (place: MatrixPlace) => `[${place.place_number}] ${place.login}`;
 
   useEffect(() => {
     let cancelled = false;
@@ -36,7 +36,7 @@ export default function MultiMatrixFilterSearch() {
 
 
   const selectLogin = (place: MatrixPlace) => {
-    setSelectedPlace(place.address);
+    setSelectedPlace(place.addr);
     setSearchLogin("");
     setResults([]);
   };

@@ -4,15 +4,15 @@ import "./multi-matrix-filters.css";
 import "./multi-matrix-filter-locks.css";
 import "./multi-matrix-filter-places.css";
 import { fetchLocks } from "../../../../services/matrixService";
-import type { MatrixPlace } from "../../../../services/matrixService";
+import type { MatrixLock } from "../../../../services/matrixService";
 import { useProfileContext } from "../../../../context/ProfileContext";
 import { useMatrixContext } from "../../../../context/MatrixContext";
 
 export default function MultiMatrixFilterLocks() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
-  const { selectedPlaceAddress, setSelectedPlace, selectedMatrix } = useMatrixContext();
-  const [locks, setLocks] = useState<MatrixPlace[]>([]);
+  const { setSelectedPlace, selectedMatrix } = useMatrixContext();
+  const [locks, setLocks] = useState<MatrixLock[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -67,15 +67,7 @@ export default function MultiMatrixFilterLocks() {
         >
           {loading
             ? t("home.loading")
-            : selectedPlaceAddress
-              ? (() => {
-                  const selected = locks.find((l) => l.address === selectedPlaceAddress);
-                  if (!selected) {
-                    return locks.length > 0 ? "..." : t("multiMatrix.filters.noLocks", "No locks");
-                  }
-                  return `[${selected.place_number}] ${selected.login}`;
-                })()
-              : locks.length > 0
+            : locks.length > 0
                 ? "..."
                 : t("multiMatrix.filters.noLocks", "No locks")}
           <span className={`custom-select__arrow ${isOpen ? "up" : ""}`} />
@@ -92,17 +84,21 @@ export default function MultiMatrixFilterLocks() {
             ) : (
               <>
                 {locks.map((lock) => {
-                  const label = `[${lock.place_number}] ${lock.login}`;
-                  const isSelected = lock.address === selectedPlaceAddress;
+                  const lockSide =
+                    lock.locked_pos == 0
+                      ? t("multiMatrix.filters.left", "left")
+                      : t("multiMatrix.filters.right", "right");
+                  const label = `[${lock.place_number}] ${lock.place_profile_login} (${lockSide})`;
+                
                   return (
                     <div
                       key={lock.place_number}
                       role="option"
-                      aria-selected={isSelected}
-                      className={`custom-select__option ${isSelected ? "is-selected" : ""}`}
+                  
+                      className={`custom-select__option}`}
                       onMouseDown={(e) => {
                         e.preventDefault();
-                        setSelectedPlace(lock.address);
+                        setSelectedPlace(lock.place_addr);
                         setIsOpen(false);
                       }}
                     >
