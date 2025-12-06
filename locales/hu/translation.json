@@ -131,6 +131,8 @@
       "searchPlaceholder": "login",
       "locks": "Blokkolások",
       "noLocks": "Nincsenek blokkolások",
+      "left": "bal",
+      "right": "jobb",
       "lockOption": "{{lock}}",
       "buyPlace": "Új hely vásárlása ({{price}} TON)",
       "confirmBuy": "Biztos benne?",

@@ -131,6 +131,8 @@
       "searchPlaceholder": "логин",
       "locks": "Блокировки",
       "noLocks": "Нет блокировок",
+      "left": "левый",
+      "right": "правый",
       "lockOption": "{{lock}}",
       "buyPlace": "Купить новое место ({{price}} TON)",
       "confirmBuy": "Вы уверены?",

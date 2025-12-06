@@ -131,6 +131,8 @@
       "searchPlaceholder": "логін",
       "locks": "Блокування",
       "noLocks": "Немає блокувань",
+      "left": "лівий",
+      "right": "правий",
       "lockOption": "{{lock}}",
       "buyPlace": "Купити нове місце ({{price}} TON)",
       "confirmBuy": "Ви впевнені?",
