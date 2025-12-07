@@ -63,7 +63,7 @@ export function MultiMatrixTreeGrid({ node, onSelect }: Props) {
               {level.map(({ node, pos }) => {
                 const isSelected = selectedPos === pos;
                 const nextClass = node.kind === "empty" && node.is_next_pos ? "node-next" : "";
-                const lockedClass = node.kind === "filled" && node.locked ? "node-locked" : "";
+                const lockedClass = node.locked ? "node-locked" : "";
                 return (
                   <div
                     key={pos}
