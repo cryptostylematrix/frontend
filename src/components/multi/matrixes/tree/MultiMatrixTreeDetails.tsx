@@ -1,17 +1,16 @@
 import "./multi-matrix-tree-details.css";
-import type { TreeNode } from "../../../../services/matrixService";
+import type { TreeNode } from "../../../../services/matrixApi";
 import { useMatrixContext } from "../../../../context/MatrixContext";
 import { useTranslation } from "react-i18next";
 import { useProfileContext } from "../../../../context/ProfileContext";
 import { buyPlace, lockPos, unlockPos } from "../../../../services/multiService";
 import { translateError } from "../../../../errors/errorUtils";
-import { useState } from "react";
-import { getPlacesCount } from "../../../../services/matrixService";
-import { getProfileProgramData } from "../../../../services/profileService";
-import { Programs } from "../../../../contracts/MultiConstants";
+import { useEffect, useState } from "react";
+import { getPlacesCount } from "../../../../services/matrixApi";
+import { getProfileNftData, getProfilePrograms } from "../../../../services/contractsApi";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { Address } from "@ton/core";
-import type { PlacePosData } from "../../../../contracts/Mutli";
+import type { PlacePosData } from "../../../../types/multi";
 
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -28,7 +27,25 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
   const upLabel = t("multiMatrix.tree.up", { defaultValue: "Up ▲" });
   const [buyLoading, setBuyLoading] = useState(false);
   const [lockLoading, setLockLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
+  useEffect(() => {
+    let cancelled = false;
+    setImageUrl("");
+
+    const loadImage = async () => {
+      if (!selectedNode || selectedNode.kind !== "filled") return;
+      const nftData = await getProfileNftData(selectedNode.profile_addr);
+      if (cancelled) return;
+      setImageUrl(nftData?.content?.image_url ?? "");
+    };
+
+    loadImage();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedNode]);
 
 
 
@@ -44,7 +61,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
   const isLock = selectedNode.is_lock;
   const isNext = selectedNode.kind === "empty" && selectedNode.is_next_pos;
   const createdAt = isFilled ? new Date(Number(selectedNode.created_at)) : undefined;
-  const tonViewerUrl = isFilled ? `https://tonviewer.com/${selectedNode.address}` : undefined;
+  const tonViewerUrl = isFilled ? `https://tonviewer.com/${selectedNode.addr}` : undefined;
   const createdAtDate = createdAt ? createdAt.toLocaleDateString() : undefined;
   const createdAtTime = createdAt
     ? createdAt.toLocaleTimeString(undefined, {
@@ -62,7 +79,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
 
   return (
     <div className={`details-panel ${isLocked ? "details-panel--locked" : ""} ${isNext ? "details-panel--next" : ""}`}>
-      { isFilled && selectedNode.address == selectedPlaceAddress && 
+      { isFilled && selectedNode.addr == selectedPlaceAddress && 
         <div className="details-top-actions">
             <button
               type="button"
@@ -83,7 +100,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
         <>
           <div className="details-card-row">
             <div className="details-avatar details-avatar--inline">
-              <img src={selectedNode.image_url} alt={selectedNode.login} />
+              <img src={imageUrl} alt={selectedNode.profile_login} />
             </div>
               <div className="details-meta">
               <div className="details-meta__top">
@@ -112,7 +129,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
               { createdAtTime }
             </div>
 
-            <div className="details-meta__login">{selectedNode.login}</div>
+            <div className="details-meta__login">{selectedNode.profile_login}</div>
             <div className="details-meta__desc">
               {t("multiMatrix.tree.placesBelow", {
                 count: selectedNode.descendants,
@@ -124,13 +141,13 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
             </div>
           </div>
           
-          { selectedNode.address != selectedPlaceAddress && 
+          { selectedNode.addr != selectedPlaceAddress && 
             <div className="details-desc-actions">
               <button
                 type="button"
                 className="details-action details-action--ghost"
                 onClick={() => {
-                  setSelectedPlace(selectedNode.kind === "filled" ? selectedNode.address : undefined);
+                  setSelectedPlace(selectedNode.kind === "filled" ? selectedNode.addr : undefined);
                 }}
               >
                 {t("multiMatrix.tree.select", { defaultValue: "Select ▼" })}
@@ -150,8 +167,8 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
 
               setBuyLoading(true);
               if (selectedMatrix === 1) {
-                const program = await getProfileProgramData(currentProfile.address, Programs.multi);
-                if (!program.success || !program.data || !program.data.confirmed) {
+                const program = await getProfilePrograms(currentProfile.address);
+                if (!program?.multi || program.multi.confirmed !== 1) {
                   setBuyLoading(false);
                   alert(t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."));
                   return;

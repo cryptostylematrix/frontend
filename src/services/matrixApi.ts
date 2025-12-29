@@ -3,7 +3,6 @@ import { appConfig } from "../config";
 
 export type MatrixPlace = {
   addr: string;
-  profile_addr: string;
   parent_addr: string | null;
   place_number: number;
   created_at: number;
@@ -12,25 +11,23 @@ export type MatrixPlace = {
   pos: 0 | 1;
   login: string;
   m: number;
+  profile_addr: string;
 };
 
 export type MatrixLock = {
   m: number;
   profile_addr: string;
-
   place_addr: string;
-  locked_pos:  0 | 1;
-
+  locked_pos: 0 | 1;
   place_profile_login: string;
   place_number: number;
-  craeted_at: number;
+  created_at: number;
 };
-
 
 export type Paginated<T> = {
   items: T[];
   page: number;
-  totalPages: number;
+  total_pages: number;
 };
 
 export type TreeFilledNode = {
@@ -38,17 +35,15 @@ export type TreeFilledNode = {
   locked: boolean;
   can_lock: boolean;
   is_lock: boolean;
-  children: [TreeNode, TreeNode] | undefined;
   parent_addr: string | undefined | null;
-  pos: 0 | 1,
-
-  address: string;
+  pos: 0 | 1;
+  children: [TreeNode, TreeNode] | undefined;
+  addr: string;
   place_number: number;
   clone: number;
   created_at: number;
-  login: string;
-  image_url: string;
-  
+  profile_login: string;
+  profile_addr: string;
   descendants: number;
   is_root: boolean;
 };
@@ -58,26 +53,27 @@ export type TreeEmptyNode = {
   locked: boolean;
   can_lock: boolean;
   is_lock: boolean;
-  children?: [TreeNode, TreeNode] | undefined;
   parent_addr: string | undefined | null;
-  pos: 0 | 1,
-
+  pos: 0 | 1;
+  children?: [TreeNode, TreeNode] | undefined;
   is_next_pos: boolean;
   can_buy: boolean;
-
 };
 
 export type TreeNode = TreeFilledNode | TreeEmptyNode;
 
-
+export type NextPos = {
+  parent_addr: string;
+  pos: 0 | 1;
+};
 
 export type BuyPlaceResult =
   | { success: true }
   | { success: false; errors: ErrorCode[] };
 
-export interface MatrixService {
+export interface MatrixApi {
   getRootPlace: (m: number, profile_addr: string) => Promise<MatrixPlace | null>;
-  getNextPos: (m: number, profile_addr: string) => Promise<MatrixPlace | null>;
+  getNextPos: (m: number, profile_addr: string) => Promise<NextPos | null>;
   getPath: (root_addr: string, place_addr: string) => Promise<MatrixPlace[] | null>;
   fetchPlaces: (m: number, profile_addr: string, page?: number, pageSize?: number) => Promise<Paginated<MatrixPlace>>;
   getPlacesCount: (m: number, profile_addr: string) => Promise<number>;
@@ -108,9 +104,18 @@ const buildUrl = (path: string, query?: Record<string, string | number | undefin
   return url.toString();
 };
 
-const emptyPlacesPage: Paginated<MatrixPlace> = { items: [], page: 1, totalPages: 1 };
-const emptyLocksPage: Paginated<MatrixLock> = { items: [], page: 1, totalPages: 1 };
-const emptyTree: TreeEmptyNode = { kind: "empty", is_next_pos: false, can_buy: false, parent_addr: undefined, locked: false, can_lock: false, is_lock: false, pos: 0 };
+const emptyPlacesPage: Paginated<MatrixPlace> = { items: [], page: 1, total_pages: 1 };
+const emptyLocksPage: Paginated<MatrixLock> = { items: [], page: 1, total_pages: 1 };
+const emptyTree: TreeEmptyNode = {
+  kind: "empty",
+  is_next_pos: false,
+  can_buy: false,
+  parent_addr: undefined,
+  locked: false,
+  can_lock: false,
+  is_lock: false,
+  pos: 0,
+};
 
 const safeGet = async <T>(path: string, query?: Record<string, string | number | undefined>): Promise<T | null> => {
   try {
@@ -119,7 +124,7 @@ const safeGet = async <T>(path: string, query?: Record<string, string | number |
     if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
     return (await res.json()) as T;
   } catch (err) {
-    console.error("matrixService request error:", err);
+    console.error("matrixApi request error:", err);
     return null;
   }
 };
@@ -128,8 +133,8 @@ export async function getRootPlace(m: number, profile_addr: string): Promise<Mat
   return safeGet<MatrixPlace>(`/api/matrix/${m}/${profile_addr}/root`);
 }
 
-export async function getNextPos(m: number, profile_addr: string): Promise<MatrixPlace | null> {
-  return safeGet<MatrixPlace>(`/api/matrix/${m}/${profile_addr}/next-pos`);
+export async function getNextPos(m: number, profile_addr: string): Promise<NextPos | null> {
+  return safeGet<NextPos>(`/api/matrix/${m}/${profile_addr}/next-pos`);
 }
 
 export async function getPath(root_addr: string, place_addr: string): Promise<MatrixPlace[] | null> {
@@ -161,7 +166,7 @@ export async function getMatrix(place_addr: string, profile_addr: string): Promi
   return result ?? emptyTree;
 }
 
-export const matrixService: MatrixService = {
+export const matrixApi: MatrixApi = {
   getRootPlace,
   getNextPos,
   getPath,

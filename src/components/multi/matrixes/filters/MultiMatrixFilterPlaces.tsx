@@ -2,8 +2,8 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./multi-matrix-filters.css";
 import "./multi-matrix-filter-places.css";
-import { fetchPlaces } from "../../../../services/matrixService";
-import type { MatrixPlace } from "../../../../services/matrixService";
+import { fetchPlaces } from "../../../../services/matrixApi";
+import type { MatrixPlace } from "../../../../services/matrixApi";
 import { useProfileContext } from "../../../../context/ProfileContext";
 import { useMatrixContext } from "../../../../context/MatrixContext";
 
@@ -47,7 +47,7 @@ export default function MultiMatrixFilterPlaces() {
             setSelectedPlace(undefined);
           }
           setPage(data.page);
-          setTotalPages(data.totalPages);
+          setTotalPages(data.total_pages);
         })
       .finally(() => {
         if (cancelled) return;
@@ -168,7 +168,7 @@ export default function MultiMatrixFilterPlaces() {
                     .then((data) => {
                       setPlaces((prev) => [...prev, ...data.items]);
                       setPage(data.page);
-                      setTotalPages(data.totalPages);
+                      setTotalPages(data.total_pages);
                     })
                     .finally(() => setLoadingMore(false));
                 }}

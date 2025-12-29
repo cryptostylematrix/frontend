@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ErrorCode } from "../../../errors/ErrorCodes";
 import { translateError } from "../../../errors/errorUtils";
-import { getInviteData } from "../../../services/inviteService";
-import { getNftData, type NftProfileData } from "../../../services/profileService";
+import { getInviteData } from "../../../services/contractsApi";
+import { getProfileNftData } from "../../../services/contractsApi";
 import "./multi-inviter-inviter-data.css";
 
 type Props = {
@@ -12,7 +12,14 @@ type Props = {
 
 export default function MultiInviterInviterData({ inviterAddress }: Props) {
   const { t } = useTranslation();
-  const [inviterProfile, setInviterProfile] = useState<NftProfileData | null>(null);
+  const [inviterProfile, setInviterProfile] = useState<{
+    address: string;
+    login: string;
+    imageUrl: string;
+    firstName?: string;
+    lastName?: string;
+    tgUsername?: string;
+  } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorCodes, setErrorCodes] = useState<ErrorCode[] | null>(null);
 
@@ -33,14 +40,14 @@ export default function MultiInviterInviterData({ inviterAddress }: Props) {
 
       // get getting invite data fails
       const inviteData = await getInviteData(inviterAddress);
-      if (!inviteData.success) {
-        setErrorCodes(inviteData.errors ?? [ErrorCode.UNEXPECTED]);
+      if (!inviteData) {
+        setErrorCodes([ErrorCode.UNEXPECTED]);
         setIsLoading(false);
         return;
       }
 
       // if owner is not set
-      const ownerAddress = inviteData.data.owner?.owner;
+      const ownerAddress = inviteData.owner?.owner_addr;
       if (!ownerAddress) {
         setErrorCodes([ErrorCode.PROFILE_NOT_FOUND]);
         setIsLoading(false);
@@ -48,15 +55,21 @@ export default function MultiInviterInviterData({ inviterAddress }: Props) {
       }
 
       // get nft data
-      const profileAddr = ownerAddress.toString({ urlSafe: true, bounceable: true, testOnly: false });
-      const inviterNft = await getNftData(profileAddr);
+      const inviterNft = await getProfileNftData(ownerAddress);
 
       if (cancelled) return;
 
-      if (!inviterNft.success) {
-        setErrorCodes(inviterNft.errors ?? [ErrorCode.UNEXPECTED]);
+      if (!inviterNft?.content?.login) {
+        setErrorCodes([ErrorCode.PROFILE_NOT_FOUND]);
       } else {
-        setInviterProfile(inviterNft.data);
+        setInviterProfile({
+          address: ownerAddress,
+          login: inviterNft.content.login,
+          imageUrl: inviterNft.content.image_url ?? "",
+          firstName: inviterNft.content.first_name ?? undefined,
+          lastName: inviterNft.content.last_name ?? undefined,
+          tgUsername: inviterNft.content.tg_username ?? undefined,
+        });
       }
       setIsLoading(false);
     };

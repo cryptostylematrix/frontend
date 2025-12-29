@@ -6,11 +6,10 @@ import { useContext, useEffect, useState } from "react";
 import ProfileStatusBlock from "../components/ProfileStatusBlock";
 import { WalletContext } from "../App";
 import { useProfileContext } from "../context/ProfileContext";
-import { getBalance } from "../services/profileService";
+import { getContractBalance } from "../services/contractsApi";
 import { useTranslation } from "react-i18next";
 import { translateError } from "../errors/errorUtils";
 import { ErrorCode } from "../errors/ErrorCodes";
-import { fromNano } from "@ton/core";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -29,11 +28,11 @@ export default function Home() {
       setError(null);
       setBalance(null);
 
-      const result = await getBalance(wallet);
-      if (result.success) {
-        setBalance(fromNano(result.balance));
+      const result = await getContractBalance(wallet);
+      if (result) {
+        setBalance(result.balance.toString());
       } else {
-        setError(result.errors);
+        setError([ErrorCode.BALANCE_FETCH_FAILED]);
       }
 
       setLoading(false);

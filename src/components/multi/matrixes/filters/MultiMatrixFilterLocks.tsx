@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import "./multi-matrix-filters.css";
 import "./multi-matrix-filter-locks.css";
 import "./multi-matrix-filter-places.css";
-import { fetchLocks } from "../../../../services/matrixService";
-import type { MatrixLock } from "../../../../services/matrixService";
+import { fetchLocks } from "../../../../services/matrixApi";
+import type { MatrixLock } from "../../../../services/matrixApi";
 import { useProfileContext } from "../../../../context/ProfileContext";
 import { useMatrixContext } from "../../../../context/MatrixContext";
 
@@ -39,7 +39,7 @@ export default function MultiMatrixFilterLocks() {
         setLocks(data.items);
     
         setPage(data.page);
-        setTotalPages(data.totalPages);
+        setTotalPages(data.total_pages);
       })
       .finally(() => {
         if (cancelled) return;
@@ -119,7 +119,7 @@ export default function MultiMatrixFilterLocks() {
                     .then((data) => {
                       setLocks((prev) => [...prev, ...data.items]);
                       setPage(data.page);
-                      setTotalPages(data.totalPages);
+                      setTotalPages(data.total_pages);
                     })
                         .finally(() => setLoadingMore(false));
                     }}

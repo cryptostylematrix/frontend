@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getNextPos } from "../../../../services/matrixService";
+import { getNextPos } from "../../../../services/matrixApi";
 import { useMatrixContext } from "../../../../context/MatrixContext";
 import { useProfileContext } from "../../../../context/ProfileContext";
 
@@ -9,7 +9,7 @@ export default function NextPosButton() {
   const { currentProfile } = useProfileContext();
   const { t } = useTranslation();
   const { setSelectedPlace, selectedMatrix } = useMatrixContext();
-  const [nextPos, setNextPos] = useState<{ address: string } | null>(null);
+  const [nextPos, setNextPos] = useState<{ parent_addr: string; pos: number } | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function NextPosButton() {
     setLoading(true);
     getNextPos(selectedMatrix, currentProfile.address)
       .then((next) => {
-        setNextPos(next ? { address: next.addr } : null);
+        setNextPos(next ? { parent_addr: next.parent_addr, pos: next.pos } : null);
       })
       .finally(() => setLoading(false));
   }, [selectedMatrix, currentProfile]);
@@ -31,7 +31,7 @@ export default function NextPosButton() {
       className="filter-button secondary update-page-button"
       onClick={() => {
         if (!nextPos) return;
-        setSelectedPlace(nextPos.address);
+        setSelectedPlace(nextPos.parent_addr);
       }}
       disabled={!nextPos || loading}
     >

@@ -1,4 +1,4 @@
-import type { TreeNode } from "../../../../services/matrixService";
+import type { TreeNode } from "../../../../services/matrixApi";
 import "./multi-matrix-tree-grid.css";
 
 import { useEffect, useMemo, useState } from "react";
@@ -78,7 +78,7 @@ export function MultiMatrixTreeGrid({ node, onSelect }: Props) {
                         isSelected ? "is-selected" : ""
                       }`}
                     >
-                      <div className="tree-node__login">{node.kind == "filled" ? node.login : "—"}</div>
+                      <div className="tree-node__login">{node.kind == "filled" ? node.profile_login : "—"}</div>
                     </div>
                   </div>
                 );

@@ -13,13 +13,14 @@ import {
   type Profile,
 } from "../utils/profileStorage";
 import {
-  getProfile,
   updateProfile,
   createProfile as createProfileService,
   type ProfileResult,
 } from "../services/profileService";
+import { getNftAddrByLogin, getProfileNftData } from "../services/contractsApi";
 import { ErrorCode } from "../errors/ErrorCodes";
 import { TonConnectUI } from "@tonconnect/ui-react";
+import { Address } from "@ton/core";
 
 interface ProfileContextType {
   profiles: Profile[];
@@ -45,6 +46,49 @@ interface ProfileContextType {
 }
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
+
+const fetchProfile = async (wallet: string, login: string): Promise<ProfileResult> => {
+  if (!wallet) {
+    return { success: false, errors: [ErrorCode.WALLET_NOT_CONNECTED] };
+  }
+  const trimmedLogin = login.trim();
+  if (!trimmedLogin) {
+    return { success: false, errors: [ErrorCode.INVALID_LOGIN] };
+  }
+
+  try {
+    const nftAddr = await getNftAddrByLogin(trimmedLogin.toLowerCase());
+    const address = nftAddr?.addr;
+    if (!address) return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
+
+    const apiData = await getProfileNftData(address);
+    if (!apiData?.content) return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
+
+    if (apiData.owner_addr) {
+      const walletRaw = Address.parse(wallet).toRawString();
+      const ownerRaw = Address.parse(apiData.owner_addr).toRawString();
+      if (walletRaw !== ownerRaw) {
+        return { success: false, errors: [ErrorCode.CONTRACT_DOES_NOT_BELONG] };
+      }
+    }
+
+    return {
+      success: true,
+      data: {
+        address,
+        wallet: wallet.trim(),
+        login: apiData.content.login,
+        imageUrl: apiData.content.image_url ?? "",
+        firstName: apiData.content.first_name ?? undefined,
+        lastName: apiData.content.last_name ?? undefined,
+        tgUsername: apiData.content.tg_username ?? undefined,
+      },
+    };
+  } catch (err) {
+    console.error("fetchProfile error:", err);
+    return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
+  }
+};
 
 export const ProfileProvider: React.FC<{
   wallet: string;
@@ -76,11 +120,9 @@ export const ProfileProvider: React.FC<{
 
     const validated = await Promise.all(
       stored.map(async (p) => {
-        const result = await getProfile(wallet, p.login);
-        return result.success
-          ? { ...p, valid: true, ...result.data }
-          : { ...p, valid: false };
-      })
+        const result = await fetchProfile(wallet, p.login);
+        return result.success ? { ...p, valid: true, ...result.data } : { ...p, valid: false };
+      }),
     );
 
     saveProfiles(wallet, validated);
@@ -101,7 +143,7 @@ export const ProfileProvider: React.FC<{
    */
   const addProfile = useCallback(
     async (wallet: string, login: string): Promise<ProfileResult> => {
-      const result = await getProfile(wallet, login);
+      const result = await fetchProfile(wallet, login);
       if (!result.success) return result;
 
       const profile: Profile = { ...result.data, wallet, valid: true };

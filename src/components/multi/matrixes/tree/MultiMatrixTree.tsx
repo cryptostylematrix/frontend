@@ -4,8 +4,8 @@ import { MultiMatrixTreeGrid } from "./MultiMatrixTreeGrid";
 import { MultiMatrixTreeDetails } from "./MultiMatrixTreeDetails";
 import { useMatrixContext } from "../../../../context/MatrixContext";
 import { useProfileContext } from "../../../../context/ProfileContext";
-import { type TreeNode } from "../../../../services/matrixService";
-import { getMatrix } from "../../../../services/matrixService";
+import { type TreeNode } from "../../../../services/matrixApi";
+import { getMatrix } from "../../../../services/matrixApi";
 
 export default function MultiMatrixTree() {
   const { selectedPlaceAddress } = useMatrixContext();

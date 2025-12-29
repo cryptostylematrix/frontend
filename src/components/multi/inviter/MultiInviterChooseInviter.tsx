@@ -3,13 +3,12 @@ import { useTranslation } from "react-i18next";
 import { Save } from "lucide-react";
 import { ErrorCode } from "../../../errors/ErrorCodes";
 import { translateError } from "../../../errors/errorUtils";
-import { chooseInviter, getProfileProgramData } from "../../../services/profileService";
-import { getProfileAddressByLogin } from "../../../services/profileCollectionService";
-import { Programs } from "../../../contracts/MultiConstants";
-import { getInviteData, getInviteAddressBySeqNo } from "../../../services/inviteService";
+import { chooseInviter } from "../../../services/profileService";
+import { Programs } from "../../../constants/programs";
+import { getInviteAddrBySeqNo, getInviteData, getNftAddrByLogin, getProfilePrograms } from "../../../services/contractsApi";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { useProfileContext } from "../../../context/ProfileContext";
-import { getPlacesCount } from "../../../services/matrixService";
+import { getPlacesCount } from "../../../services/matrixApi";
 import "./multi-inviter-choose-inviter.css";
 
 type Props = {
@@ -44,54 +43,44 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
 
     setIsSubmitting(true);
 
-    // get current porgram
-    const currentProgram = await getProfileProgramData(currentProfileAddress, Programs.multi);
-    if (!currentProgram.success) {
-      setIsSubmitting(false);
-      setErrorCodes(currentProgram.errors ?? [ErrorCode.UNEXPECTED]);
-      return;
-    }
-
+    // get current program
+    const currentProgram = await getProfilePrograms(currentProfileAddress);
+    const currentMulti = currentProgram?.multi;
     // if inviter is already chosen
-    if (currentProgram.data?.confirmed) {
+    if (currentMulti?.confirmed === 1) {
       setIsSubmitting(false);
       onInviterChosen();
       return;
     }
 
     // if loading inviter profile fails
-    const inviterProfileResult = await getProfileAddressByLogin(trimmed);
-    if (!inviterProfileResult.success) {
+    const inviterProfileResult = await getNftAddrByLogin(trimmed);
+    if (!inviterProfileResult?.addr) {
       setIsSubmitting(false);
-      setErrorCodes(inviterProfileResult.errors ?? [ErrorCode.PROFILE_NOT_FOUND]);
+      setErrorCodes([ErrorCode.PROFILE_NOT_FOUND]);
       return;
     }
 
     // get inviter's program data
-    const programResult = await getProfileProgramData(inviterProfileResult.address, Programs.multi);
-    if (!programResult.success) {
-      setIsSubmitting(false);
-      setErrorCodes(programResult.errors ?? [ErrorCode.UNEXPECTED]);
-      return;
-    }
-
+    const programResult = await getProfilePrograms(inviterProfileResult.addr);
+    const inviterProgram = programResult?.multi;
     // if inviter participated to the program
-    if (!programResult.data || !programResult.data.confirmed) {
+    if (!inviterProgram || inviterProgram.confirmed !== 1) {
       setIsSubmitting(false);
       setErrorCodes([ErrorCode.INVITER_NOT_IN_PROGRAM]);
       return;
     }
 
     // if loading inviter data failed
-    const inviterAddr = programResult.data.invite.toString({ urlSafe: true, bounceable: true, testOnly: false });
+    const inviterAddr = inviterProgram.invite_addr;
     const inviterData = await getInviteData(inviterAddr);
-    if (!inviterData.success) {
+    if (!inviterData) {
       setIsSubmitting(false);
-      setErrorCodes(inviterData.errors ?? [ErrorCode.UNEXPECTED]);
+      setErrorCodes([ErrorCode.UNEXPECTED]);
       return;
     }
 
-    const inviterOwnerAddress = inviterData.data.owner?.owner?.toString({ urlSafe: true, bounceable: true, testOnly: false }) ?? "";
+    const inviterOwnerAddress = inviterData.owner?.owner_addr ?? "";
     if (!inviterOwnerAddress) {
       setIsSubmitting(false);
       setErrorCodes([ErrorCode.PROFILE_NOT_FOUND]);
@@ -106,10 +95,10 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
     }
 
     // if calculating invite's address fails
-    const inviteAddrResult = await getInviteAddressBySeqNo(inviterAddr, inviterData.data.next_ref_no);
-    if (!inviteAddrResult.success) {
+    const inviteAddrResult = await getInviteAddrBySeqNo(inviterAddr, inviterData.next_ref_no);
+    if (!inviteAddrResult) {
       setIsSubmitting(false);
-      setErrorCodes(inviteAddrResult.errors ?? [ErrorCode.UNEXPECTED]);
+      setErrorCodes([ErrorCode.UNEXPECTED]);
       return;
     }
 
@@ -119,8 +108,8 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
       currentProfileAddress,
       Programs.multi,
       inviterAddr,
-      inviterData.data.next_ref_no,
-      inviteAddrResult.address
+      inviterData.next_ref_no,
+      inviteAddrResult.addr
     );
 
     setIsSubmitting(false);

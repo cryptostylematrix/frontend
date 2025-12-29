@@ -8,17 +8,22 @@ import { useProfileContext } from "../../context/ProfileContext";
 import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { ErrorCode } from "../../errors/ErrorCodes";
 import { translateError } from "../../errors/errorUtils";
-import { getProfileProgramData } from "../../services/profileService";
-import { Programs } from "../../contracts/MultiConstants";
-import { type ProgramData } from "../../contracts/ProfileItemV1";
+import { getProfilePrograms } from "../../services/contractsApi";
 import MultiInviterInviterData from "../../components/multi/inviter/MultiInviterInviterData";
 import MultiInviterChooseInviter from "../../components/multi/inviter/MultiInviterChooseInviter";
+
+type ProgramInfo = {
+  confirmed: boolean;
+  inviter_addr: string;
+  invite_addr: string;
+  seq_no: number;
+};
 
 export default function MultiInviter() {
   const { t } = useTranslation();
   const { wallet } = useContext(WalletContext)!;
   const { currentProfile } = useProfileContext();
-  const [programData, setProgramData] = useState<ProgramData | null>(null);
+  const [programData, setProgramData] = useState<ProgramInfo | null>(null);
   const [programErrors, setProgramErrors] = useState<ErrorCode[] | null>(null);
   const [isProgramLoading, setIsProgramLoading] = useState(false);
   const [reloadKey, setReloadKey] = useState(0);
@@ -34,14 +39,20 @@ export default function MultiInviter() {
     };
 
     const loadProgramStatus = async () => {
-      const program = await getProfileProgramData(currentProfile.address, Programs.multi);
+      const program = await getProfilePrograms(currentProfile.address);
       if (cancelled) return;
 
-      if (!program.success) {
-        setProgramErrors(program.errors ?? [ErrorCode.UNEXPECTED]);
+      const multi = program?.multi;
+      if (!multi || multi.confirmed !== 1) {
+        setProgramErrors([ErrorCode.UNEXPECTED]);
         setProgramData(null);
       } else {
-        setProgramData(program.data ?? null);
+        setProgramData({
+          confirmed: true,
+          inviter_addr: multi.inviter_addr,
+          invite_addr: multi.invite_addr,
+          seq_no: multi.seq_no,
+        });
       }
       setIsProgramLoading(false);
     };
@@ -74,9 +85,7 @@ export default function MultiInviter() {
             <span className="spinner" />
           </div>
         ) : programData?.confirmed ? (
-          <MultiInviterInviterData
-            inviterAddress={programData.inviter.toString({ urlSafe: true, bounceable: true, testOnly: false })}
-          />
+          <MultiInviterInviterData inviterAddress={programData.inviter_addr} />
         ) : (
           <MultiInviterChooseInviter onInviterChosen={handleInviterChosen} />
         )}
