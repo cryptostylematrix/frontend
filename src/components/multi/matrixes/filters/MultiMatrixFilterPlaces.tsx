@@ -72,10 +72,7 @@ export default function MultiMatrixFilterPlaces() {
     return Object.entries(groups)
       .map(([date, items]) => ({
         date,
-        items: items.sort(
-          (a, b) =>
-            b.created_at - a.created_at
-        ),
+        items: items.sort((a, b) => a.created_at - b.created_at),
       }))
       .filter((group) => group.items.length > 0);
   }, [places]);

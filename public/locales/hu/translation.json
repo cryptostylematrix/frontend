@@ -55,6 +55,9 @@
   },
   "footer": {
     "channel": "Csatorna",
+    "news": "Hírek",
+    "group": "Közösség",
+    "youtube": "YouTube",
     "privacy": "Adatvédelmi irányelvek",
     "agreement": "Felhasználói megállapodás",
     "copyright": "© {{year}} Crypto Style. Minden jog fenntartva."

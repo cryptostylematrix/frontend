@@ -28,10 +28,12 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
   const [buyLoading, setBuyLoading] = useState(false);
   const [lockLoading, setLockLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+  const [imageFailed, setImageFailed] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     setImageUrl("");
+    setImageFailed(false);
 
     const loadImage = async () => {
       if (!selectedNode || selectedNode.kind !== "filled") return;
@@ -100,7 +102,15 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
         <>
           <div className="details-card-row">
             <div className="details-avatar details-avatar--inline">
-              <img src={imageUrl} alt={selectedNode.profile_login} />
+              {imageUrl && !imageFailed ? (
+                <img
+                  src={imageUrl}
+                  alt={selectedNode.profile_login}
+                  onError={() => setImageFailed(true)}
+                />
+              ) : (
+                <div className="details-avatar__placeholder" aria-hidden />
+              )}
             </div>
               <div className="details-meta">
               <div className="details-meta__top">

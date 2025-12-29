@@ -55,6 +55,9 @@
   },
   "footer": {
     "channel": "Канал",
+    "news": "Новини",
+    "group": "Спільнота",
+    "youtube": "YouTube",
     "privacy": "Політика конфіденційності",
     "agreement": "Угода користувача",
     "copyright": "© {{year}} Crypto Style. Усі права захищено."

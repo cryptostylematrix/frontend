@@ -55,6 +55,9 @@
   },
   "footer": {
     "channel": "Канал",
+    "news": "Жаңалықтар",
+    "group": "Қауымдастық",
+    "youtube": "YouTube",
     "privacy": "Құпиялылық саясаты",
     "agreement": "Пайдаланушы келісімі",
     "copyright": "© {{year}} Crypto Style. Барлық құқықтар қорғалған."

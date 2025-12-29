@@ -11,7 +11,7 @@ import { useMatrixContext } from "../../../../context/MatrixContext";
 export default function MultiMatrixFilterLocks() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
-  const { setSelectedPlace, selectedMatrix } = useMatrixContext();
+  const { setSelectedPlace, selectedMatrix, selectedPlaceAddress } = useMatrixContext();
   const [locks, setLocks] = useState<MatrixLock[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -89,13 +89,16 @@ export default function MultiMatrixFilterLocks() {
                       ? t("multiMatrix.filters.left", "left")
                       : t("multiMatrix.filters.right", "right");
                   const label = `[${lock.place_number}] ${lock.place_profile_login} (${lockSide})`;
+                  const isSelected = lock.place_addr === selectedPlaceAddress;
                 
                   return (
                     <div
                       key={lock.place_number}
                       role="option"
-                  
-                      className={`custom-select__option}`}
+                      aria-selected={isSelected}
+                      className={`custom-select__option ${
+                        isSelected ? "is-selected" : ""
+                      }`}
                       onMouseDown={(e) => {
                         e.preventDefault();
                         setSelectedPlace(lock.place_addr);

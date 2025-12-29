@@ -55,6 +55,9 @@
   },
   "footer": {
     "channel": "Kanał",
+    "news": "Aktualności",
+    "group": "Społeczność",
+    "youtube": "YouTube",
     "privacy": "Polityka prywatności",
     "agreement": "Regulamin użytkownika",
     "copyright": "© {{year}} Crypto Style. Wszelkie prawa zastrzeżone."

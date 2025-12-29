@@ -5,18 +5,35 @@ import { useTranslation } from "react-i18next";
 export default function Footer() {
   const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
+  const copyright = t("footer.copyright", { year: currentYear });
 
   return (
     <footer className="footer">
       <div className="footer-content">
         <nav className="footer-links" aria-label="Footer navigation">
           <a
-            href="https://t.me/yourchannel"
+            href="https://t.me/CryptoStyleMatrixNews"
             target="_blank"
             rel="noopener noreferrer"
             className="footer-link"
           >
-            {t("footer.channel")}
+            {t("footer.news", { defaultValue: "News" })}
+          </a>
+          <a
+            href="https://t.me/CryptoStyleMatrixbot"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+          >
+            {t("footer.group", { defaultValue: "Community" })}
+          </a>
+          <a
+            href="https://www.youtube.com/@CryptoStyleOfficial"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+          >
+            {t("footer.youtube", { defaultValue: "YouTube" })}
           </a>
           <Link to="/privacy" className="footer-link">
             {t("footer.privacy")}
@@ -27,7 +44,7 @@ export default function Footer() {
         </nav>
 
         <div className="footer-copy">
-          © {currentYear} {t("footer.copyright")}
+          {copyright}
         </div>
       </div>
     </footer>
