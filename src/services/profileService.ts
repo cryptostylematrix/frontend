@@ -1,51 +1,18 @@
 // src/services/profileService.ts
 import { ErrorCode } from "../errors/ErrorCodes";
 import type { TonConnectUI } from "@tonconnect/ui-react";
-import { Address, Cell, Dictionary, beginCell, toNano } from "@ton/core";
-import { sha256_sync } from "@ton/crypto";
+import { Address, beginCell, toNano, type Cell } from "@ton/core";
 import { getCollectionData, getNftAddrByLogin } from "./contractsApi";
 import { sendTransaction } from "./tonConnectService";
-
-type NftContentOnchain = {
-  type: "onchain";
-  data: {
-    name: string;
-    description: string;
-    image: string;
-    attributes?: string;
-  };
-};
-
-const NFTDictValueSerializer = {
-  serialize: (src: { content: Buffer }, builder: any) => {
-    builder.storeRef(beginCell().storeBuffer(src.content).endCell());
-  },
-  parse: (src: any): { content: Buffer } => {
-    const ref = src.loadRef();
-    return { content: ref.beginParse().loadBuffer(ref.remaining) };
-  },
-};
-
-const nftContentToCell = (content: NftContentOnchain): Cell => {
-  const dict = Dictionary.empty(Dictionary.Keys.Buffer(32), NFTDictValueSerializer);
-  Object.entries(content.data).forEach(([key, value]) => {
-    if (value === undefined || value === null) return;
-    const bufferVal = Buffer.from(String(value), "utf-8");
-    dict.set(sha256_sync(key), { content: bufferVal });
-  });
-  return beginCell().storeUint(0, 8).storeDict(dict).endCell();
-};
-
-const buildDeployItemBody = (content: Cell, login: string, queryId: number | bigint = 0): Cell =>
-  beginCell()
-    .storeUint(1, 32) // COLLECTION_DEPLOY_ITEM
-    .storeUint(queryId, 64)
-    .storeStringTail(login)
-    .storeRef(content)
-    .endCell();
-
-const buildEditContentBody = (content: Cell, queryId: number | bigint = 0): Cell =>
-  beginCell().storeUint(0x1a0b9d51, 32).storeUint(queryId, 64).storeRef(content).endCell();
+import {
+  buildDeployItemBody,
+  buildEditContentBody,
+  capitalize,
+  normalizeImage,
+  profileToNftContent,
+  toLower,
+} from "./nftContentHelper";
+import { nftContentToCell } from "./ProfileContent";
 
 const buildChooseInviterBody = (
   program: number,
@@ -62,21 +29,6 @@ const buildChooseInviterBody = (
     .storeUint(seqNo, 32)
     .storeAddress(invite)
     .endCell();
-
-const normalizeImage = (value?: string | null): string => {
-  const lower = value?.trim().toLowerCase();
-  return lower && lower !== "" ? lower : "https://cryptostylematrix.github.io/frontend/cs-big.png";
-};
-
-const capitalize = (str?: string | null): string | undefined => {
-  if (!str?.trim()) return undefined;
-  const t = str.trim();
-  return t.charAt(0).toUpperCase() + t.slice(1).toLowerCase();
-};
-
-const toLower = (str?: string | null): string | undefined => {
-  return str?.trim() ? str.trim().toLowerCase() : undefined;
-};
 
 export type ProfileResult =
   | {
@@ -117,62 +69,6 @@ export async function chooseInviter(
   }
 }
 
-type PackedProfile = {
-  name: string;
-  description: string;
-  image: string;
-  attributes: { trait_type: string; value: string | undefined }[];
-};
-
-function packProfile(
-  login: string,
-  imageUrl?: string,
-  firstName?: string,
-  lastName?: string,
-  tgUsername?: string,
-): PackedProfile {
-  const formattedLogin = toLower(login)!;
-  const formattedImageUrl = normalizeImage(imageUrl);
-  const formattedFirstName = capitalize(firstName);
-  const formattedLastName = capitalize(lastName);
-  const formattedTgUsername = toLower(tgUsername);
-
-  return {
-    name: formattedLogin,
-    description: "Crypto Style Profile",
-    image: formattedImageUrl,
-    attributes: [
-      { trait_type: "firstName", value: formattedFirstName },
-      { trait_type: "lastName", value: formattedLastName },
-      { trait_type: "tgUsername", value: formattedTgUsername },
-    ],
-  };
-}
-
-// -------------------- PROFILE TO CELL --------------------
-
-export function profileToNftContent(
-  login: string,
-  imageUrl?: string,
-  firstName?: string,
-  lastName?: string,
-  tgUsername?: string,
-): NftContentOnchain {
-  const profile = packProfile(login, imageUrl, firstName, lastName, tgUsername);
-
-  const onchain: NftContentOnchain = {
-    type: "onchain",
-    data: {
-      name: profile.name,
-      description: profile.description,
-      image: profile.image,
-      attributes: JSON.stringify(profile.attributes), // 👈 store attributes as JSON
-    },
-  };
-
-  return onchain;
-}
-
 /**
  * Create a new profile (sends a TON message).
  */
@@ -192,18 +88,18 @@ export async function createProfile(
 
   // ---- Normalize all fields ----
   const normalizedLogin = toLower(login)!;
-  const normalizedImageUrl = normalizeImage(imageUrl);
-  const normalizedFirstName = capitalize(firstName);
-  const normalizedLastName = capitalize(lastName);
-  const normalizedTgUsername = toLower(tgUsername);
+  const normalizedImageUrl = normalizeImage();
+  const normalizedFirstName = capitalize();
+  const normalizedLastName = capitalize();
+  const normalizedTgUsername = toLower();
 
   // ---- Prepare NFT content ----
   const nftContent = profileToNftContent(
-    normalizedLogin,
-    normalizedImageUrl,
-    normalizedFirstName,
-    normalizedLastName,
-    normalizedTgUsername,
+    login,
+    imageUrl,
+    firstName,
+    lastName,
+    tgUsername,
   );
 
   const contentCell = nftContentToCell(nftContent);
@@ -315,6 +211,8 @@ export async function updateProfile(
     return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
   }
 }
+
+export { profileToNftContent };
 
 /**
  * Get an existing profile by wallet + login.

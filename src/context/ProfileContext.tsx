@@ -21,6 +21,7 @@ import { getNftAddrByLogin, getProfileNftData } from "../services/contractsApi";
 import { ErrorCode } from "../errors/ErrorCodes";
 import { TonConnectUI } from "@tonconnect/ui-react";
 import { Address } from "@ton/core";
+import { toLower } from "../services/nftContentHelper";
 
 interface ProfileContextType {
   profiles: Profile[];
@@ -77,7 +78,7 @@ const fetchProfile = async (wallet: string, login: string): Promise<ProfileResul
       data: {
         address,
         wallet: wallet.trim(),
-        login: apiData.content.login,
+        login: toLower(login)!, // apiData.content.login,
         imageUrl: apiData.content.image_url ?? "",
         firstName: apiData.content.first_name ?? undefined,
         lastName: apiData.content.last_name ?? undefined,
@@ -144,6 +145,7 @@ export const ProfileProvider: React.FC<{
   const addProfile = useCallback(
     async (wallet: string, login: string): Promise<ProfileResult> => {
       const result = await fetchProfile(wallet, login);
+
       if (!result.success) return result;
 
       const profile: Profile = { ...result.data, wallet, valid: true };
