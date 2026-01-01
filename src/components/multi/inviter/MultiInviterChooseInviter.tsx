@@ -4,7 +4,6 @@ import { Save } from "lucide-react";
 import { ErrorCode } from "../../../errors/ErrorCodes";
 import { translateError } from "../../../errors/errorUtils";
 import { chooseInviter } from "../../../services/profileService";
-import { Programs } from "../../../constants/programs";
 import { getInviteAddrBySeqNo, getInviteData, getNftAddrByLogin, getProfilePrograms } from "../../../services/contractsApi";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { useProfileContext } from "../../../context/ProfileContext";
@@ -103,14 +102,7 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
     }
 
     // choose inviter
-    const chooseResult = await chooseInviter(
-      tonConnectUI,
-      currentProfileAddress,
-      Programs.multi,
-      inviterAddr,
-      inviterData.next_ref_no,
-      inviteAddrResult.addr
-    );
+    const chooseResult = await chooseInviter(tonConnectUI, currentProfileAddress, inviterAddr, inviterData.next_ref_no, inviteAddrResult.addr);
 
     setIsSubmitting(false);
 

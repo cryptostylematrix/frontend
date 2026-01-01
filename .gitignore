@@ -139,3 +139,8 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+src/cell/bitsForNumber.ts
+src/cell/descriptor.ts
+src/cell/paddedBits.ts
+src/cell/serialization.ts
+src/cell/topologicalSort.ts

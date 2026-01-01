@@ -139,6 +139,73 @@ export type ProfileProgramsResponse = {
   multi?: ProgramDataResponse | null;
 };
 
+export type BuildMultiChooseInviterBodyRequest = {
+  inviterAddr: string;
+  seqNo: number;
+  inviteAddr: string;
+};
+
+export type MultiChooseInviterBodyResponse = {
+  boc_hex?: string;
+};
+
+export type BuildEditContentBodyRequest = {
+  login: string;
+  imageUrl?: string;
+  firstName?: string;
+  lastName?: string;
+  tgUsername?: string;
+};
+
+export type EditContentBodyResponse = {
+  boc_hex?: string;
+};
+
+export type BuildDeployItemBodyRequest = {
+  login: string;
+  imageUrl?: string;
+  firstName?: string;
+  lastName?: string;
+  tgUsername?: string;
+};
+
+export type DeployItemBodyResponse = {
+  boc_hex?: string;
+};
+
+export type BuildBuyPlaceBodyRequest = {
+  m: number;
+  profileAddr: string;
+  parentAddr?: string | null;
+  pos?: number | null;
+};
+
+export type BuyPlaceBodyResponse = {
+  boc_hex?: string;
+};
+
+export type BuildLockPosBodyRequest = {
+  m: number;
+  profileAddr: string;
+  parentAddr: string;
+  pos: number;
+};
+
+export type LockPosBodyResponse = {
+  boc_hex?: string;
+};
+
+export type BuildUnlockPosBodyRequest = {
+  m: number;
+  profileAddr: string;
+  parentAddr: string;
+  pos: number;
+};
+
+export type UnlockPosBodyResponse = {
+  boc_hex?: string;
+};
+
 export type ContractBalanceResponse = {
   balance: number;
 };
@@ -159,6 +226,12 @@ export interface ContractsApi {
   getProfilePrograms: (addr: string) => Promise<ProfileProgramsResponse | null>;
   getContractBalance: (addr: string) => Promise<ContractBalanceResponse | null>;
   getCollectionData: () => Promise<CollectionDataResponse | null>;
+  buildMultiChooseInviterBody: (request: BuildMultiChooseInviterBodyRequest) => Promise<MultiChooseInviterBodyResponse | null>;
+  buildEditContentBody: (request: BuildEditContentBodyRequest) => Promise<EditContentBodyResponse | null>;
+  buildDeployItemBody: (request: BuildDeployItemBodyRequest) => Promise<DeployItemBodyResponse | null>;
+  buildBuyPlaceBody: (request: BuildBuyPlaceBodyRequest) => Promise<BuyPlaceBodyResponse | null>;
+  buildLockPosBody: (request: BuildLockPosBodyRequest) => Promise<LockPosBodyResponse | null>;
+  buildUnlockPosBody: (request: BuildUnlockPosBodyRequest) => Promise<UnlockPosBodyResponse | null>;
 }
 
 const trimTrailingSlash = (value: string) => value.replace(/\/+$/, "");
@@ -261,6 +334,96 @@ export async function getCollectionData(): Promise<CollectionDataResponse | null
   return safeGet<CollectionDataResponse>(url);
 }
 
+export async function buildMultiChooseInviterBody(request: BuildMultiChooseInviterBodyRequest): Promise<MultiChooseInviterBodyResponse | null> {
+  const inviterAddr = request.inviterAddr?.trim();
+  const inviteAddr = request.inviteAddr?.trim();
+  if (!inviterAddr || !inviteAddr) return null;
+  if (!Number.isFinite(request.seqNo)) return null;
+
+  const url = new URL("/contracts/profile-item/body/choose-inviter/multi", normalizedBase || defaultOrigin);
+  url.searchParams.set("inviterAddr", inviterAddr);
+  url.searchParams.set("seqNo", String(request.seqNo));
+  url.searchParams.set("inviteAddr", inviteAddr);
+
+  return safeGet<MultiChooseInviterBodyResponse>(url.toString());
+}
+
+export async function buildEditContentBody(request: BuildEditContentBodyRequest): Promise<EditContentBodyResponse | null> {
+  const login = request.login?.trim();
+  if (!login) return null;
+
+  const url = new URL("/contracts/profile-item/body/edit-content", normalizedBase || defaultOrigin);
+  url.searchParams.set("login", login);
+  if (request.imageUrl) url.searchParams.set("imageUrl", request.imageUrl);
+  if (request.firstName) url.searchParams.set("firstName", request.firstName);
+  if (request.lastName) url.searchParams.set("lastName", request.lastName);
+  if (request.tgUsername) url.searchParams.set("tgUsername", request.tgUsername);
+
+  return safeGet<EditContentBodyResponse>(url.toString());
+}
+
+export async function buildDeployItemBody(request: BuildDeployItemBodyRequest): Promise<DeployItemBodyResponse | null> {
+  const login = request.login?.trim();
+  if (!login) return null;
+
+  const url = new URL("/contracts/profile-collection/body/deploy-item-content", normalizedBase || defaultOrigin);
+  url.searchParams.set("login", login);
+  if (request.imageUrl) url.searchParams.set("imageUrl", request.imageUrl);
+  if (request.firstName) url.searchParams.set("firstName", request.firstName);
+  if (request.lastName) url.searchParams.set("lastName", request.lastName);
+  if (request.tgUsername) url.searchParams.set("tgUsername", request.tgUsername);
+
+  return safeGet<DeployItemBodyResponse>(url.toString());
+}
+
+export async function buildBuyPlaceBody(request: BuildBuyPlaceBodyRequest): Promise<BuyPlaceBodyResponse | null> {
+  if (!Number.isFinite(request.m)) return null;
+  const profileAddr = request.profileAddr?.trim();
+  const parentAddr = request.parentAddr?.trim();
+  const pos = request.pos ?? undefined;
+  if (!profileAddr) return null;
+
+  const url = new URL("/contracts/multi/body/buy-place", normalizedBase || defaultOrigin);
+  url.searchParams.set("m", String(request.m));
+  url.searchParams.set("profileAddr", profileAddr);
+  if (parentAddr) url.searchParams.set("parentAddr", parentAddr);
+  if (pos !== undefined && pos !== null) url.searchParams.set("pos", String(pos));
+
+  return safeGet<BuyPlaceBodyResponse>(url.toString());
+}
+
+export async function buildLockPosBody(request: BuildLockPosBodyRequest): Promise<LockPosBodyResponse | null> {
+  if (!Number.isFinite(request.m)) return null;
+  const profileAddr = request.profileAddr?.trim();
+  const parentAddr = request.parentAddr?.trim();
+  const pos = request.pos;
+  if (!profileAddr || !parentAddr || !Number.isFinite(pos)) return null;
+
+  const url = new URL("/contracts/multi/body/lock-pos", normalizedBase || defaultOrigin);
+  url.searchParams.set("m", String(request.m));
+  url.searchParams.set("profileAddr", profileAddr);
+  url.searchParams.set("parentAddr", parentAddr);
+  url.searchParams.set("pos", String(pos));
+
+  return safeGet<LockPosBodyResponse>(url.toString());
+}
+
+export async function buildUnlockPosBody(request: BuildUnlockPosBodyRequest): Promise<UnlockPosBodyResponse | null> {
+  if (!Number.isFinite(request.m)) return null;
+  const profileAddr = request.profileAddr?.trim();
+  const parentAddr = request.parentAddr?.trim();
+  const pos = request.pos;
+  if (!profileAddr || !parentAddr || !Number.isFinite(pos)) return null;
+
+  const url = new URL("/contracts/multi/body/unlock-pos", normalizedBase || defaultOrigin);
+  url.searchParams.set("m", String(request.m));
+  url.searchParams.set("profileAddr", profileAddr);
+  url.searchParams.set("parentAddr", parentAddr);
+  url.searchParams.set("pos", String(pos));
+
+  return safeGet<UnlockPosBodyResponse>(url.toString());
+}
+
 export const contractsApi: ContractsApi = {
   getInviteAddrBySeqNo,
   getInviteData,
@@ -272,4 +435,10 @@ export const contractsApi: ContractsApi = {
   getProfilePrograms,
   getContractBalance,
   getCollectionData,
+  buildMultiChooseInviterBody,
+  buildEditContentBody,
+  buildDeployItemBody,
+  buildBuyPlaceBody,
+  buildLockPosBody,
+  buildUnlockPosBody,
 };

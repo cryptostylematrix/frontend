@@ -1,34 +1,10 @@
 // src/services/profileService.ts
 import { ErrorCode } from "../errors/ErrorCodes";
 import type { TonConnectUI } from "@tonconnect/ui-react";
-import { Address, beginCell, toNano, type Cell } from "@ton/core";
-import { getCollectionData, getNftAddrByLogin } from "./contractsApi";
+import { Address, Cell, toNano } from "@ton/core";
+import { contractsApi, getCollectionData, getNftAddrByLogin } from "./contractsApi";
 import { sendTransaction } from "./tonConnectService";
-import {
-  buildDeployItemBody,
-  buildEditContentBody,
-  capitalize,
-  normalizeImage,
-  profileToNftContent,
-  toLower,
-} from "./nftContentHelper";
-import { nftContentToCell } from "./ProfileContent";
-
-const buildChooseInviterBody = (
-  program: number,
-  inviter: Address,
-  seqNo: number,
-  invite: Address,
-  queryId: bigint | number = 0,
-): Cell =>
-  beginCell()
-    .storeUint(0xef27e2d6, 32) // ITEM_CHOOSE_INVITER
-    .storeUint(queryId, 64)
-    .storeUint(program, 32)
-    .storeAddress(inviter)
-    .storeUint(seqNo, 32)
-    .storeAddress(invite)
-    .endCell();
+import { capitalize, normalizeImage, toLower } from "./nftContentHelper";
 
 export type ProfileResult =
   | {
@@ -49,7 +25,6 @@ export type ProfileResult =
 export async function chooseInviter(
   tonConnectUI: TonConnectUI,
   profile_addr: string,
-  program: number,
   inviter_addr: string,
   seqNo: number,
   invite_addr: string,
@@ -59,9 +34,23 @@ export async function chooseInviter(
   }
 
   try {
-    const body = buildChooseInviterBody(program, Address.parse(inviter_addr), seqNo, Address.parse(invite_addr), Date.now());
+    const result = await contractsApi.buildMultiChooseInviterBody({
+      inviterAddr: inviter_addr,
+      seqNo,
+      inviteAddr: invite_addr,
+    });
+    const bocHex = result?.boc_hex;
+    if (!bocHex) {
+      return { success: false, errors: [ErrorCode.TRANSACTION_FAILED] };
+    }
 
-    await sendTransaction(tonConnectUI, profile_addr, toNano("0.05"), body);
+    const body = Cell.fromHex(bocHex);
+
+    const tx = await sendTransaction(tonConnectUI, profile_addr.trim(), toNano("0.05"), body);
+    if (!tx.success) {
+      return { success: false, errors: tx.errors ?? [ErrorCode.TRANSACTION_FAILED] };
+    }
+
     return { success: true };
   } catch (err) {
     console.error("chooseInviter error:", err);
@@ -88,24 +77,26 @@ export async function createProfile(
 
   // ---- Normalize all fields ----
   const normalizedLogin = toLower(login)!;
-  const normalizedImageUrl = normalizeImage();
-  const normalizedFirstName = capitalize();
-  const normalizedLastName = capitalize();
-  const normalizedTgUsername = toLower();
+  const normalizedImageUrl = normalizeImage(imageUrl);
+  const normalizedFirstName = capitalize(firstName);
+  const normalizedLastName = capitalize(lastName);
+  const normalizedTgUsername = toLower(tgUsername);
 
-  // ---- Prepare NFT content ----
-  const nftContent = profileToNftContent(
-    login,
-    imageUrl,
-    firstName,
-    lastName,
-    tgUsername,
-  );
+  // ---- Build deploy body via API ----
+  const bodyResponse = await contractsApi.buildDeployItemBody({
+    login: normalizedLogin,
+    imageUrl: normalizedImageUrl,
+    firstName: normalizedFirstName,
+    lastName: normalizedLastName,
+    tgUsername: normalizedTgUsername,
+  });
 
-  const contentCell = nftContentToCell(nftContent);
+  const bocHex = bodyResponse?.boc_hex;
+  if (!bocHex) {
+    return { success: false, errors: [ErrorCode.TRANSACTION_FAILED] };
+  }
 
-  // ---- Create body for deploy transaction ----
-  const body = buildDeployItemBody(contentCell, normalizedLogin);
+  const body = Cell.fromHex(bocHex);
 
   const collectionAddressStr = (await getCollectionData())?.addr;
   if (!collectionAddressStr) return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
@@ -135,6 +126,21 @@ export async function createProfile(
     },
   };
 }
+
+// function toBoc(cell: Cell, opts?: {
+//         idx?: boolean | null | undefined;
+//         crc32?: boolean | null | undefined;
+//     }): Buffer {
+//         let idx =
+//             opts && opts.idx !== null && opts.idx !== undefined
+//                 ? opts.idx
+//                 : false;
+//         let crc32 =
+//             opts && opts.crc32 !== null && opts.crc32 !== undefined
+//                 ? opts.crc32
+//                 : true;
+//         return serializeBoc(cell, { idx, crc32 });
+//     }
 
 /**
  * Update existing profile (sends a TON message).
@@ -172,16 +178,21 @@ export async function updateProfile(
       };
     }
 
-    // ---- Build new on-chain content ----
-    const nftContent = profileToNftContent(
-      normalizedLogin,
-      normalizedImageUrl,
-      normalizedFirstName,
-      normalizedLastName,
-      normalizedTgUsername,
-    );
+    const bodyResponse = await contractsApi.buildEditContentBody({
+      login: normalizedLogin,
+      imageUrl: normalizedImageUrl,
+      firstName: normalizedFirstName,
+      lastName: normalizedLastName,
+      tgUsername: normalizedTgUsername,
+    });
 
-    const body = buildEditContentBody(nftContentToCell(nftContent));
+    const bocHex = bodyResponse?.boc_hex;
+    if (!bocHex) {
+      return { success: false, errors: [ErrorCode.TRANSACTION_FAILED] };
+    }
+
+    const body = Cell.fromHex(bocHex);
+
 
     // ---- Send transaction ----
     const tx = await sendTransaction(
@@ -211,9 +222,3 @@ export async function updateProfile(
     return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
   }
 }
-
-export { profileToNftContent };
-
-/**
- * Get an existing profile by wallet + login.
- */
