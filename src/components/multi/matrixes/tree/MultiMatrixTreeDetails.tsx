@@ -1,4 +1,5 @@
 import "./multi-matrix-tree-details.css";
+import "../../../../pages/profile/update-profile.css";
 import type { TreeNode } from "../../../../services/matrixApi";
 import { useMatrixContext } from "../../../../context/MatrixContext";
 import { useTranslation } from "react-i18next";
@@ -11,6 +12,7 @@ import { getProfileNftData, getProfilePrograms } from "../../../../services/cont
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { Address } from "@ton/core";
 import type { PlacePosData } from "../../../../types/multi";
+import ConfirmDialog from "../../../common/ConfirmDialog";
 
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -29,6 +31,8 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
   const [lockLoading, setLockLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [imageFailed, setImageFailed] = useState(false);
+  const [detailsStatus, setDetailsStatus] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [showBuyConfirm, setShowBuyConfirm] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -49,6 +53,10 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
     };
   }, [selectedNode]);
 
+  useEffect(() => {
+    setDetailsStatus(null);
+    setShowBuyConfirm(false);
+  }, [selectedNode]);
 
 
   if (!selectedNode) {
@@ -78,6 +86,100 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
     { parent: Address.parse(selectedNode.parent_addr), pos: selectedNode.pos } :
     undefined;
 
+  const handleBuy = async () => {
+    if (!currentProfile || !fixedpos) return;
+
+    setDetailsStatus(null);
+    setBuyLoading(true);
+
+    try {
+      if (selectedMatrix === 1) {
+        const program = await getProfilePrograms(currentProfile.address);
+        if (!program?.multi || program.multi.confirmed !== 1) {
+          setDetailsStatus({
+            type: "error",
+            text: t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."),
+          });
+          return;
+        }
+      }
+
+      if (selectedMatrix > 1) {
+        const prevCount = await getPlacesCount(selectedMatrix - 1, currentProfile.address);
+        if (prevCount <= 0) {
+          setDetailsStatus({
+            type: "error",
+            text: t(
+              "multiMatrix.filters.prevMatrixRequired",
+              "You need a place in the previous matrix before buying here."
+            ),
+          });
+          return;
+        }
+      }
+
+      const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, fixedpos);
+      if (result.success) {
+        setDetailsStatus({
+          type: "success",
+          text: t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."),
+        });
+      } else {
+        const code = result.error_code;
+        setDetailsStatus({
+          type: "error",
+          text: code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"),
+        });
+      }
+    } finally {
+      setBuyLoading(false);
+    }
+  };
+
+  const handleLockToggle = async () => {
+    if (!currentProfile || !fixedpos) return;
+
+    setDetailsStatus(null);
+    setLockLoading(true);
+
+    try {
+      const count = await getPlacesCount(selectedMatrix, currentProfile.address);
+      if (count <= 0) {
+        setDetailsStatus({
+          type: "error",
+          text: t(
+            "multiMatrix.filters.noPlacesInMatrix",
+            "You need a place in this matrix to perform this action."
+          ),
+        });
+        return;
+      }
+      const handler = isLock ? unlockPos : lockPos;
+      const result = await handler(tonConnectUI, Date.now(), selectedMatrix, currentProfile.address, fixedpos);
+      if (result.success) {
+        setDetailsStatus({
+          type: "success",
+          text: isLock
+            ? t("multiMatrix.tree.unlockSuccess", {
+                defaultValue:
+                  "Unlock request sent. The unlock will appear soon; update the page in a while to see it.",
+              })
+            : t("multiMatrix.tree.lockSuccess", {
+                defaultValue:
+                  "Lock request sent. The lock will appear soon; update the page in a while to see it.",
+              }),
+        });
+      } else {
+        const code = result.error_code;
+        setDetailsStatus({
+          type: "error",
+          text: code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"),
+        });
+      }
+    } finally {
+      setLockLoading(false);
+    }
+  };
 
   return (
     <div className={`details-panel ${isLocked ? "details-panel--locked" : ""} ${isNext ? "details-panel--next" : ""}`}>
@@ -171,35 +273,8 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
         <button
             type="button"
             className="details-action details-action--primary"
-            onClick={async () => {
-              if (!currentProfile) return;
-              if (!window.confirm(t("multiMatrix.filters.confirmBuy", "Are you sure?"))) return;
-
-              setBuyLoading(true);
-              if (selectedMatrix === 1) {
-                const program = await getProfilePrograms(currentProfile.address);
-                if (!program?.multi || program.multi.confirmed !== 1) {
-                  setBuyLoading(false);
-                  alert(t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."));
-                  return;
-                }
-              }
-              if (selectedMatrix > 1) {
-                const prevCount = await getPlacesCount(selectedMatrix - 1, currentProfile.address);
-                if (prevCount <= 0) {
-                  setBuyLoading(false);
-                  alert(t("multiMatrix.filters.prevMatrixRequired", "You need a place in the previous matrix before buying here."));
-                  return;
-                }
-              }
-              const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, fixedpos);
-              setBuyLoading(false);
-              if (result.success) {
-                alert(t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."));
-              } else {
-                const code = result.error_code;
-                alert(code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"));
-              }
+            onClick={() => {
+              if (currentProfile) setShowBuyConfirm(true);
             }}
             disabled={buyLoading}
           >
@@ -217,35 +292,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
         <button
           type="button"
           className={`details-action ${!isLock ? "danger" : ""}`}
-          onClick={async () => {
-            if (!currentProfile) return;
-            setLockLoading(true);
-            const count = await getPlacesCount(selectedMatrix, currentProfile.address);
-            if (count <= 0) {
-              setLockLoading(false);
-              alert(t("multiMatrix.filters.noPlacesInMatrix", "You need a place in this matrix to perform this action."));
-              return;
-            }
-            const handler = isLock ? unlockPos : lockPos;
-            const result = await handler(tonConnectUI, Date.now(), selectedMatrix, currentProfile.address, fixedpos);
-            setLockLoading(false);
-            if (result.success) {
-              alert(
-                isLock
-                  ? t("multiMatrix.tree.unlockSuccess", {
-                      defaultValue:
-                        "Unlock request sent. The unlock will appear soon; update the page in a while to see it.",
-                    })
-                  : t("multiMatrix.tree.lockSuccess", {
-                      defaultValue:
-                        "Lock request sent. The lock will appear soon; update the page in a while to see it.",
-                    })
-              );
-            } else {
-              const code = result.error_code;
-              alert(code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"));
-            }
-          }}
+          onClick={handleLockToggle}
           disabled={lockLoading}
         >
           {lockLoading
@@ -255,6 +302,27 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
               : t("multiMatrix.tree.lock", { defaultValue: "Lock" })}
         </button>
       }
+
+      {detailsStatus && (
+        <div className="details-status-row">
+          <div className={`op-message ${detailsStatus.type}`} role="status">
+            {detailsStatus.text}
+          </div>
+        </div>
+      )}
+
+      <ConfirmDialog
+        open={showBuyConfirm}
+        title={t("multiMatrix.filters.confirmTitle", "Confirm purchase")}
+        message={t("multiMatrix.filters.confirmBuy", "Are you sure?")}
+        confirmLabel={t("multiMatrix.tree.buy", { defaultValue: "Buy", price: matrixPrice })}
+        cancelLabel={t("common.cancel", "Cancel")}
+        onCancel={() => setShowBuyConfirm(false)}
+        onConfirm={() => {
+          setShowBuyConfirm(false);
+          handleBuy();
+        }}
+      />
     </div>
   );
 }

@@ -13,6 +13,7 @@ import { useMatrixContext } from "../../../../context/MatrixContext";
 import { getRootPlace, getPlacesCount } from "../../../../services/matrixApi";
 import { getProfilePrograms } from "../../../../services/contractsApi";
 import { useTonConnectUI } from "@tonconnect/ui-react";
+import ConfirmDialog from "../../../common/ConfirmDialog";
 
 export default function MultiMatrixFilters() {
   const { t } = useTranslation();
@@ -29,6 +30,7 @@ export default function MultiMatrixFilters() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [buyStatus, setBuyStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
   const [buyLoading, setBuyLoading] = useState(false);
+  const [showBuyConfirm, setShowBuyConfirm] = useState(false);
 
   useEffect(() => {
     resetAll();
@@ -55,44 +57,52 @@ export default function MultiMatrixFilters() {
 
   const handleBuy = async () => {
     if (!currentProfile) return;
-    if (!window.confirm(t("multiMatrix.filters.confirmBuy", "Are you sure?"))) return;
 
     setBuyLoading(true);
     setBuyStatus(null);
 
-    if (selectedMatrix === 1) {
-      const program = await getProfilePrograms(currentProfile.address);
-      if (!program?.multi || program.multi.confirmed !== 1) {
-        setBuyLoading(false);
-        alert(t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."));
-        return;
+    try {
+      if (selectedMatrix === 1) {
+        const program = await getProfilePrograms(currentProfile.address);
+        if (!program?.multi || program.multi.confirmed !== 1) {
+          setBuyStatus({
+            type: "error",
+            message: t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."),
+          });
+          return;
+        }
       }
-    }
 
-    if (selectedMatrix > 1) {
-      const prevCount = await getPlacesCount(selectedMatrix - 1, currentProfile.address);
-      if (prevCount <= 0) {
-        setBuyLoading(false);
-        alert(t("multiMatrix.filters.prevMatrixRequired", "You need a place in the previous matrix before buying here."));
-        return;
+      if (selectedMatrix > 1) {
+        const prevCount = await getPlacesCount(selectedMatrix - 1, currentProfile.address);
+        if (prevCount <= 0) {
+          setBuyStatus({
+            type: "error",
+            message: t(
+              "multiMatrix.filters.prevMatrixRequired",
+              "You need a place in the previous matrix before buying here."
+            ),
+          });
+          return;
+        }
       }
-    }
 
-    const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, null);
-    if (result.success) {
-      setBuyStatus({
-        type: "success",
-        message: t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."),
-      });
-    } else {
-      const code = result.error_code;
-      setBuyStatus({
-        type: "error",
-        message: code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"),
-      });
+      const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, null);
+      if (result.success) {
+        setBuyStatus({
+          type: "success",
+          message: t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."),
+        });
+      } else {
+        const code = result.error_code;
+        setBuyStatus({
+          type: "error",
+          message: code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"),
+        });
+      }
+    } finally {
+      setBuyLoading(false);
     }
-
-    setBuyLoading(false);
   };
 
   return (
@@ -151,7 +161,9 @@ export default function MultiMatrixFilters() {
           <button
             type="button"
             className="filter-button primary"
-            onClick={handleBuy}
+            onClick={() => {
+              if (currentProfile) setShowBuyConfirm(true);
+            }}
             disabled={buyLoading}
           >
             {buyLoading ? t("home.loading") : buyPlaceLabel}
@@ -173,6 +185,19 @@ export default function MultiMatrixFilters() {
           )}
         </div>
       </div>
+
+      <ConfirmDialog
+        open={showBuyConfirm}
+        title={t("multiMatrix.filters.confirmTitle", "Confirm purchase")}
+        message={t("multiMatrix.filters.confirmBuy", "Are you sure?")}
+        confirmLabel={t("multiMatrix.filters.buyPlace", { defaultValue: "Buy", price: matrixPrice })}
+        cancelLabel={t("common.cancel", "Cancel")}
+        onCancel={() => setShowBuyConfirm(false)}
+        onConfirm={() => {
+          setShowBuyConfirm(false);
+          handleBuy();
+        }}
+      />
     </div>
   );
 }

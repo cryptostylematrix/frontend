@@ -7,6 +7,7 @@ import { useProfileContext } from "../../context/ProfileContext";
 import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { ErrorCode } from "../../errors/ErrorCodes";
 import { translateError } from "../../errors/errorUtils";
+import ConfirmDialog from "../../components/common/ConfirmDialog";
 
 type ProfileData = {
   avatar: string;
@@ -26,6 +27,7 @@ export default function UpdateProfile() {
     { type: "success" | "error"; text: string } | null
   >(null);
   const [errorCodes, setErrorCodes] = useState<ErrorCode[] | null>(null);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   const [profile, setProfile] = useState<ProfileData>({
     avatar: "",
@@ -85,7 +87,6 @@ export default function UpdateProfile() {
 
   const handleLogout = () => {
     if (!wallet || !currentProfile) return;
-    if (!window.confirm(t("profile.confirm_logout"))) return;
 
     removeProfile(wallet, currentProfile.login);
     setMessage({ type: "success", text: t("profile.removed") });
@@ -171,7 +172,7 @@ export default function UpdateProfile() {
 
           <button
             className="btn logout"
-            onClick={handleLogout}
+            onClick={() => setShowLogoutConfirm(true)}
             disabled={loading}
           >
             <LogOut className="btn-icon" /> {t("profile.logout_btn")}
@@ -182,6 +183,19 @@ export default function UpdateProfile() {
           <div className={`op-message ${message.type}`}>{message.text}</div>
         )}
       </div>
+
+      <ConfirmDialog
+        open={showLogoutConfirm}
+        title={t("profile.logout_title", "Log out")}
+        message={t("profile.confirm_logout")}
+        confirmLabel={t("profile.logout_btn")}
+        cancelLabel={t("common.cancel", "Cancel")}
+        onCancel={() => setShowLogoutConfirm(false)}
+        onConfirm={() => {
+          setShowLogoutConfirm(false);
+          handleLogout();
+        }}
+      />
     </div>
   );
 }

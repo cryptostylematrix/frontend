@@ -297,3 +297,11 @@
   justify-content: center;
   align-items: center;
 }
+
+.details-status-row {
+  margin-top: 0.85rem;
+}
+
+.details-status-row .op-message {
+  margin: 0;
+}
