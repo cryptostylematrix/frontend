@@ -215,6 +215,31 @@ export type CollectionDataResponse = {
   owner_addr: string;
 };
 
+export type TransactionMessageResponse = {
+  addr: string;
+  value: number;
+  op: string;
+  comment: string;
+  profile_addr: string;
+};
+
+export type TransactionResponse = {
+  hash: string;
+  lt: number;
+  unix_time: number;
+  messages: TransactionMessageResponse[];
+};
+
+export type TransactionHistoryResponse = {
+  items: TransactionResponse[];
+};
+
+export type WalletHistoryRequest = {
+  limit?: number;
+  lt?: number;
+  hash?: string;
+};
+
 export interface ContractsApi {
   getInviteAddrBySeqNo: (addr: string, seqNo: number) => Promise<InviteAddressResponse | null>;
   getInviteData: (addr: string) => Promise<InviteDataResponse | null>;
@@ -226,6 +251,7 @@ export interface ContractsApi {
   getProfilePrograms: (addr: string) => Promise<ProfileProgramsResponse | null>;
   getContractBalance: (addr: string) => Promise<ContractBalanceResponse | null>;
   getCollectionData: () => Promise<CollectionDataResponse | null>;
+  getWalletHistory: (addr: string, request?: WalletHistoryRequest) => Promise<TransactionHistoryResponse | null>;
   buildMultiChooseInviterBody: (request: BuildMultiChooseInviterBodyRequest) => Promise<MultiChooseInviterBodyResponse | null>;
   buildEditContentBody: (request: BuildEditContentBodyRequest) => Promise<EditContentBodyResponse | null>;
   buildDeployItemBody: (request: BuildDeployItemBodyRequest) => Promise<DeployItemBodyResponse | null>;
@@ -334,6 +360,21 @@ export async function getCollectionData(): Promise<CollectionDataResponse | null
   return safeGet<CollectionDataResponse>(url);
 }
 
+export async function getWalletHistory(
+  addr: string,
+  request: WalletHistoryRequest = {},
+): Promise<TransactionHistoryResponse | null> {
+  const normalizedAddr = addr?.trim();
+  if (!normalizedAddr) return null;
+
+  const url = new URL(`/contracts/wallet/${normalizedAddr}/history`, normalizedBase || defaultOrigin);
+  if (request.limit !== undefined) url.searchParams.set("limit", String(request.limit));
+  if (request.lt !== undefined) url.searchParams.set("lt", String(request.lt));
+  if (request.hash) url.searchParams.set("hash", request.hash);
+
+  return safeGet<TransactionHistoryResponse>(url.toString());
+}
+
 export async function buildMultiChooseInviterBody(request: BuildMultiChooseInviterBodyRequest): Promise<MultiChooseInviterBodyResponse | null> {
   const inviterAddr = request.inviterAddr?.trim();
   const inviteAddr = request.inviteAddr?.trim();
@@ -435,6 +476,7 @@ export const contractsApi: ContractsApi = {
   getProfilePrograms,
   getContractBalance,
   getCollectionData,
+  getWalletHistory,
   buildMultiChooseInviterBody,
   buildEditContentBody,
   buildDeployItemBody,

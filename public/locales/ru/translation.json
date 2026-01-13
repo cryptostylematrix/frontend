@@ -76,7 +76,37 @@
     "no_avatar_alt": "Без аватара"
   },
   "finance": {
-    "title": "Финансы"
+    "title": "Финансы",
+    "columns": {
+      "date": "Дата",
+      "profile": "Профиль",
+      "addr": "Адрес",
+      "description": "Описание",
+      "value": "Сумма"
+    },
+    "labels": {
+      "date_time": "Дата/время"
+    },
+    "actions": {
+      "load_more": "Загрузить еще",
+      "copy_addr": "Копировать адрес"
+    },
+    "empty": "Транзакций пока нет.",
+    "loading": "Загрузка...",
+    "ops": {
+      "bonus": "Бонус",
+      "excesses": "Остаток средств",
+      "ownership_assigned": "Получен NFT",
+      "bounce": "Отмена операции",
+      "refund": "Возврат средств",
+      "buy_place": "Покупка места",
+      "lock_pos": "Блокировка позиции",
+      "unlock_pos": "Разблокировка позиции",
+      "deploy_nft_item": "Создание NFT",
+      "edit_content": "Изменение NFT",
+      "choose_inviter": "Выбор куратора",
+      "transfer": "Передача NFT"
+    }
   },
   "multi": {
     "title": "Мульти",

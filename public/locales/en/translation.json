@@ -76,7 +76,37 @@
     "no_avatar_alt": "No avatar"
   },
   "finance": {
-    "title": "Finance"
+    "title": "Finance",
+    "columns": {
+      "date": "Date",
+      "profile": "Profile",
+      "addr": "Address",
+      "description": "Description",
+      "value": "Value"
+    },
+    "labels": {
+      "date_time": "Date/Time"
+    },
+    "actions": {
+      "load_more": "Load more",
+      "copy_addr": "Copy address"
+    },
+    "empty": "No transactions yet.",
+    "loading": "Loading...",
+    "ops": {
+      "bonus": "Bonus",
+      "excesses": "Excess funds",
+      "ownership_assigned": "NFT received",
+      "bounce": "Operation cancelled",
+      "refund": "Refund",
+      "buy_place": "Place purchase",
+      "lock_pos": "Position locked",
+      "unlock_pos": "Position unlocked",
+      "deploy_nft_item": "NFT created",
+      "edit_content": "NFT updated",
+      "choose_inviter": "Curator selected",
+      "transfer": "NFT transfer"
+    }
   },
   "multi": {
     "title": "Multi",

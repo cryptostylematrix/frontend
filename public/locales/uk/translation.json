@@ -76,7 +76,37 @@
     "no_avatar_alt": "Без аватарки"
   },
   "finance": {
-    "title": "Фінанси"
+    "title": "Фінанси",
+    "columns": {
+      "date": "Дата",
+      "profile": "Профіль",
+      "addr": "Адреса",
+      "description": "Опис",
+      "value": "Сума"
+    },
+    "labels": {
+      "date_time": "Дата/час"
+    },
+    "actions": {
+      "load_more": "Завантажити ще",
+      "copy_addr": "Копіювати адресу"
+    },
+    "empty": "Транзакцій ще немає.",
+    "loading": "Завантаження...",
+    "ops": {
+      "bonus": "Бонус",
+      "excesses": "Залишок коштів",
+      "ownership_assigned": "Отримано NFT",
+      "bounce": "Скасування операції",
+      "refund": "Повернення коштів",
+      "buy_place": "Покупка місця",
+      "lock_pos": "Блокування позиції",
+      "unlock_pos": "Розблокування позиції",
+      "deploy_nft_item": "Створення NFT",
+      "edit_content": "Зміна NFT",
+      "choose_inviter": "Вибір куратора",
+      "transfer": "Передача NFT"
+    }
   },
   "multi": {
     "title": "Мульти",

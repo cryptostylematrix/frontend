@@ -76,7 +76,37 @@
     "no_avatar_alt": "Brak awatara"
   },
   "finance": {
-    "title": "Finanse"
+    "title": "Finanse",
+    "columns": {
+      "date": "Data",
+      "profile": "Profil",
+      "addr": "Adres",
+      "description": "Opis",
+      "value": "Kwota"
+    },
+    "labels": {
+      "date_time": "Data/Godzina"
+    },
+    "actions": {
+      "load_more": "Załaduj więcej",
+      "copy_addr": "Kopiuj adres"
+    },
+    "empty": "Brak transakcji.",
+    "loading": "Ładowanie...",
+    "ops": {
+      "bonus": "Bonus",
+      "excesses": "Nadwyżka środków",
+      "ownership_assigned": "Otrzymano NFT",
+      "bounce": "Anulowanie operacji",
+      "refund": "Zwrot środków",
+      "buy_place": "Zakup miejsca",
+      "lock_pos": "Blokada pozycji",
+      "unlock_pos": "Odblokowanie pozycji",
+      "deploy_nft_item": "Utworzenie NFT",
+      "edit_content": "Zmiana NFT",
+      "choose_inviter": "Wybór kuratora",
+      "transfer": "Transfer NFT"
+    }
   },
   "multi": {
     "title": "Multi",
