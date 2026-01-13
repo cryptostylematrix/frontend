@@ -76,7 +76,37 @@
     "no_avatar_alt": "Аватар жоқ"
   },
   "finance": {
-    "title": "Қаржы"
+    "title": "Қаржы",
+    "columns": {
+      "date": "Күні",
+      "profile": "Профиль",
+      "addr": "Мекенжай",
+      "description": "Сипаттама",
+      "value": "Сома"
+    },
+    "labels": {
+      "date_time": "Күні/Уақыты"
+    },
+    "actions": {
+      "load_more": "Тағы жүктеу",
+      "copy_addr": "Мекенжайды көшіру"
+    },
+    "empty": "Әзірге транзакциялар жоқ.",
+    "loading": "Жүктелуде...",
+    "ops": {
+      "bonus": "Бонус",
+      "excesses": "Қаражат қалдығы",
+      "ownership_assigned": "NFT алынды",
+      "bounce": "Операция тоқтатылды",
+      "refund": "Қаражатты қайтару",
+      "buy_place": "Орын сатып алу",
+      "lock_pos": "Позицияны бұғаттау",
+      "unlock_pos": "Позицияны бұғаттан босату",
+      "deploy_nft_item": "NFT жасау",
+      "edit_content": "NFT өзгерту",
+      "choose_inviter": "Кураторды таңдау",
+      "transfer": "NFT беру"
+    }
   },
   "multi": {
     "title": "Мульти",

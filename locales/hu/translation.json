@@ -76,7 +76,37 @@
     "no_avatar_alt": "Nincs avatar"
   },
   "finance": {
-    "title": "Pénzügy"
+    "title": "Pénzügy",
+    "columns": {
+      "date": "Dátum",
+      "profile": "Profil",
+      "addr": "Cím",
+      "description": "Leírás",
+      "value": "Érték"
+    },
+    "labels": {
+      "date_time": "Dátum/Idő"
+    },
+    "actions": {
+      "load_more": "Továbbiak betöltése",
+      "copy_addr": "Cím másolása"
+    },
+    "empty": "Még nincs tranzakció.",
+    "loading": "Betöltés...",
+    "ops": {
+      "bonus": "Bónusz",
+      "excesses": "Többletösszeg",
+      "ownership_assigned": "NFT megkapva",
+      "bounce": "Művelet visszavonva",
+      "refund": "Visszatérítés",
+      "buy_place": "Hely vásárlása",
+      "lock_pos": "Pozíció zárolása",
+      "unlock_pos": "Pozíció feloldása",
+      "deploy_nft_item": "NFT létrehozása",
+      "edit_content": "NFT módosítása",
+      "choose_inviter": "Kurátor kiválasztása",
+      "transfer": "NFT átadás"
+    }
   },
   "multi": {
     "title": "Multi",
