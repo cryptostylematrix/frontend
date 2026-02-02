@@ -8,6 +8,7 @@ import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { ErrorCode } from "../../errors/ErrorCodes";
 import { translateError } from "../../errors/errorUtils";
 import ConfirmDialog from "../../components/common/ConfirmDialog";
+import { refreshProfileNftData } from "../../services/contractsApi";
 
 type ProfileData = {
   avatar: string;
@@ -76,6 +77,11 @@ export default function UpdateProfile() {
     });
 
     if (result?.success === true) {
+      try {
+        await refreshProfileNftData(currentProfile.address);
+      } catch (err) {
+        console.error("refreshProfileNftData error:", err);
+      }
       setMessage({ type: "success", text: t("profile.update_success") });
     } else if (result?.success === false) {
       setErrorCodes(result.errors);

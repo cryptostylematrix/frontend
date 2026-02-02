@@ -248,6 +248,7 @@ export interface ContractsApi {
   getPlaceData: (addr: string) => Promise<PlaceDataResponse | null>;
   getNftAddrByLogin: (login: string) => Promise<NftAddressResponse | null>;
   getProfileNftData: (addr: string) => Promise<ProfileDataResponse | null>;
+  refreshProfileNftData: (addr: string) => Promise<ProfileDataResponse | null>;
   getProfilePrograms: (addr: string) => Promise<ProfileProgramsResponse | null>;
   getContractBalance: (addr: string) => Promise<ContractBalanceResponse | null>;
   getCollectionData: () => Promise<CollectionDataResponse | null>;
@@ -282,6 +283,24 @@ const safeGet = async <T>(url: string): Promise<T | null> => {
       return null;
     }
     return (await res.json()) as T;
+  } catch (err) {
+    console.error("contractsApi request error:", err);
+    return null;
+  }
+};
+
+const safeDelete = async <T>(url: string): Promise<T | null> => {
+  try {
+    const res = await fetch(url, { method: "DELETE" });
+    if (res.status === 404) return null;
+    if (!res.ok) {
+      console.error(`Request failed with status ${res.status}`);
+      return null;
+    }
+    if (res.status === 204) return null;
+    const text = await res.text();
+    if (!text) return null;
+    return JSON.parse(text) as T;
   } catch (err) {
     console.error("contractsApi request error:", err);
     return null;
@@ -337,6 +356,14 @@ export async function getProfileNftData(addr: string): Promise<ProfileDataRespon
 
   const url = buildUrl(`/contracts/profile-item/${normalizedAddr}/nft-data`);
   return safeGet<ProfileDataResponse>(url);
+}
+
+export async function refreshProfileNftData(addr: string): Promise<ProfileDataResponse | null> {
+  const normalizedAddr = addr?.trim();
+  if (!normalizedAddr) return null;
+
+  const url = buildUrl(`/contracts/profile-item/${normalizedAddr}/nft-data`);
+  return safeDelete<ProfileDataResponse>(url);
 }
 
 export async function getProfilePrograms(addr: string): Promise<ProfileProgramsResponse | null> {
@@ -473,6 +500,7 @@ export const contractsApi: ContractsApi = {
   getPlaceData,
   getNftAddrByLogin,
   getProfileNftData,
+  refreshProfileNftData,
   getProfilePrograms,
   getContractBalance,
   getCollectionData,
