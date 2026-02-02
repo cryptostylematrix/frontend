@@ -35,6 +35,14 @@ export default function Footer() {
           >
             {t("footer.youtube", { defaultValue: "YouTube" })}
           </a>
+          <a
+            href="https://x.com/CryptoStyleTON"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+          >
+            {t("footer.twitter", { defaultValue: "Twitter" })}
+          </a>
           <Link to="/privacy" className="footer-link">
             {t("footer.privacy")}
           </Link>

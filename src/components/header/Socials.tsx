@@ -4,7 +4,7 @@ import "./socials.css";
 type Social = {
   href: string;
   label: string;
-  icon: "telegramNews" | "telegramCommunity" | "youtube";
+  icon: "telegramNews" | "telegramCommunity" | "youtube" | "twitter";
 };
 
 const socials: Social[] = [
@@ -22,6 +22,11 @@ const socials: Social[] = [
     href: "https://www.youtube.com/@CryptoStyleOfficial",
     label: "YouTube",
     icon: "youtube",
+  },
+  {
+    href: "https://x.com/CryptoStyleTON",
+    label: "X (Twitter)",
+    icon: "twitter",
   },
 ];
 
@@ -52,6 +57,20 @@ const Socials: React.FC = () => {
         >
           <path d="M7.5 12.5a3.5 3.5 0 1 1 3.06-1.795A3.5 3.5 0 0 1 7.5 12.5Zm9 0a3.5 3.5 0 1 1 3.06-1.795A3.5 3.5 0 0 1 16.5 12.5Z" />
           <path d="M3 18.5a4.5 4.5 0 1 1 9 0V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm11 0a4.5 4.5 0 1 1 9 0V19a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1Z" />
+        </svg>
+      );
+    }
+
+    if (icon === "twitter") {
+      return (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="social-icon"
+          aria-hidden
+        >
+          <path d="M18.9 2H22l-6.8 7.8L23 22h-6.5l-4.7-6.1L6.2 22H3l7.3-8.4L1 2h6.7l4.2 5.5L18.9 2Zm-1.1 18h1.8L7 3.8H5.1l12.7 16.2Z" />
         </svg>
       );
     }
