@@ -1,11 +1,16 @@
-import { Link } from "react-router-dom";
 import "./footer.css";
 import { useTranslation } from "react-i18next";
 
 export default function Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const currentYear = new Date().getFullYear();
   const copyright = t("footer.copyright", { year: currentYear });
+  const supportedLangs = ["en", "ru", "uk", "kk", "hu", "it", "pl"] as const;
+  const language = i18n.language?.split(/[-_]/)[0] ?? "en";
+  const resolvedLang = supportedLangs.includes(language as (typeof supportedLangs)[number]) ? language : "en";
+  const baseUrl = import.meta.env.BASE_URL || "/";
+  const privacyHref = `${baseUrl}privacy-policy_crypto-style_${resolvedLang}.pdf`;
+  const agreementHref = `${baseUrl}user-agreement_crypto-style_${resolvedLang}.pdf`;
 
   return (
     <footer className="footer">
@@ -43,12 +48,22 @@ export default function Footer() {
           >
             {t("footer.twitter", { defaultValue: "Twitter" })}
           </a>
-          <Link to="/privacy" className="footer-link">
+          <a
+            href={privacyHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+          >
             {t("footer.privacy")}
-          </Link>
-          <Link to="/user-agreement" className="footer-link">
+          </a>
+          <a
+            href={agreementHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer-link"
+          >
             {t("footer.agreement")}
-          </Link>
+          </a>
         </nav>
 
         <div className="footer-copy">
