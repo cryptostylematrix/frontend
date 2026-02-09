@@ -180,6 +180,22 @@
       "programNotConfirmed": "Сначала выберите куратора.",
       "inviterNotInProgram": "Этот куратор еще не участвует в программе."
     },
+    "queue": {
+      "title": "Очередь задач",
+      "refreshIn": "Данные обновятся через",
+      "seconds": "секунд",
+      "refreshNow": "Обновить сейчас",
+      "summaryPrefix": "Всего",
+      "summarySuffix": "задач, связанных с профилем",
+      "task": "Задача",
+      "count": "Количество",
+      "orderIndex": "Номер в очереди",
+      "buyPlace": "Купить место",
+      "createClone": "Создать клон",
+      "lockPos": "Заблокировать позицию",
+      "unlockPos": "Разблокировать позицию",
+      "tasksCount": "{{count}} задач"
+    },
     "tree": {
       "up": "Вверх ▲",
       "placesBelow_one": "{{formattedCount}} место ниже",

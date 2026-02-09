@@ -180,6 +180,22 @@
       "programNotConfirmed": "Először válassz meghívót.",
       "inviterNotInProgram": "Ez a meghívó még nem vesz részt a programban."
     },
+    "queue": {
+      "title": "Feladatok sora",
+      "refreshIn": "Az adatok frissülnek ennyi idő múlva:",
+      "seconds": "másodperc",
+      "refreshNow": "Frissítés most",
+      "summaryPrefix": "Összesen",
+      "summarySuffix": "feladat kapcsolódik a profilhoz",
+      "task": "Feladat",
+      "count": "Darab",
+      "orderIndex": "Sorszám a sorban",
+      "buyPlace": "Hely vásárlása",
+      "createClone": "Klón létrehozása",
+      "lockPos": "Pozíció zárolása",
+      "unlockPos": "Pozíció feloldása",
+      "tasksCount": "{{count}} feladat"
+    },
     "tree": {
       "up": "Fel ▲",
       "placesBelow_one": "{{formattedCount}} hely lejjebb",

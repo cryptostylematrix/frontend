@@ -180,6 +180,22 @@
       "programNotConfirmed": "You need to choose an inviter first.",
       "inviterNotInProgram": "This inviter is not participating in the program yet."
     },
+    "queue": {
+      "title": "Task queue",
+      "refreshIn": "The data will refresh in",
+      "seconds": "seconds",
+      "refreshNow": "Refresh now",
+      "summaryPrefix": "There are",
+      "summarySuffix": "tasks associated with the profile",
+      "task": "Task",
+      "count": "Count",
+      "orderIndex": "Queue number",
+      "buyPlace": "Buy a place",
+      "createClone": "Create a clone",
+      "lockPos": "Lock pos",
+      "unlockPos": "Unlock pos",
+      "tasksCount": "{{count}} tasks"
+    },
     "tree": {
       "up": "Up ▲",
       "placesBelow_one": "{{formattedCount}} place below",

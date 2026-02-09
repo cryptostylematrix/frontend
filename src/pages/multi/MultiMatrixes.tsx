@@ -3,6 +3,7 @@ import { useContext } from "react";
 import MultiMatrixFilters from "../../components/multi/matrixes/filters/MultiMatrixFilters";
 import MultiMatrixBreadCrumbs from "../../components/multi/matrixes/MultiMatrixBreadCrumbs";
 import MultiMatrixTree from "../../components/multi/matrixes/tree/MultiMatrixTree";
+import TaskQueueBlock from "../../components/multi/matrixes/TaskQueueBlock";
 import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { WalletContext } from "../../App";
 import { useProfileContext } from "../../context/ProfileContext";
@@ -63,6 +64,7 @@ export default function MultiMatrixes() {
     <MatrixProvider>
       <section className="multi-matrixes">
         <MultiMatrixFilters />
+        <TaskQueueBlock />
         <MultiMatrixBreadCrumbs />
         <MultiMatrixTree />
       </section>

@@ -180,6 +180,22 @@
       "programNotConfirmed": "Scegli prima un referente.",
       "inviterNotInProgram": "Questo referente non partecipa ancora al programma."
     },
+    "queue": {
+      "title": "Coda attività",
+      "refreshIn": "I dati si aggiorneranno tra",
+      "seconds": "secondi",
+      "refreshNow": "Aggiorna ora",
+      "summaryPrefix": "Ci sono",
+      "summarySuffix": "attività associate al profilo",
+      "task": "Attività",
+      "count": "Numero",
+      "orderIndex": "Numero in coda",
+      "buyPlace": "Compra un posto",
+      "createClone": "Crea un clone",
+      "lockPos": "Blocca posizione",
+      "unlockPos": "Sblocca posizione",
+      "tasksCount": "{{count}} attività"
+    },
     "tree": {
       "up": "Su ▲",
       "placesBelow_one": "{{formattedCount}} posto sotto",
