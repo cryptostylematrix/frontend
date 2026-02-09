@@ -180,6 +180,22 @@
       "programNotConfirmed": "Najpierw wybierz opiekuna.",
       "inviterNotInProgram": "Ten opiekun nie uczestniczy jeszcze w programie."
     },
+    "queue": {
+      "title": "Kolejka zadań",
+      "refreshIn": "Dane odświeżą się za",
+      "seconds": "sekund",
+      "refreshNow": "Odśwież teraz",
+      "summaryPrefix": "Jest",
+      "summarySuffix": "zadań powiązanych z profilem",
+      "task": "Zadanie",
+      "count": "Liczba",
+      "orderIndex": "Numer w kolejce",
+      "buyPlace": "Kup miejsce",
+      "createClone": "Utwórz klona",
+      "lockPos": "Zablokuj pozycję",
+      "unlockPos": "Odblokuj pozycję",
+      "tasksCount": "{{count}} zadań"
+    },
     "tree": {
       "up": "W górę ▲",
       "placesBelow_one": "{{formattedCount}} miejsce niżej",

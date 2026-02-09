@@ -180,6 +180,22 @@
       "programNotConfirmed": "Алдымен шақырушыны таңдаңыз.",
       "inviterNotInProgram": "Бұл шақырушы бағдарламға әлі қатыспайды."
     },
+    "queue": {
+      "title": "Тапсырмалар кезегі",
+      "refreshIn": "Деректер келесі уақытта жаңарады",
+      "seconds": "секунд",
+      "refreshNow": "Қазір жаңарту",
+      "summaryPrefix": "Барлығы",
+      "summarySuffix": "профильге байланысты тапсырма",
+      "task": "Тапсырма",
+      "count": "Саны",
+      "orderIndex": "Кезектегі нөмір",
+      "buyPlace": "Орын сатып алу",
+      "createClone": "Клон жасау",
+      "lockPos": "Позицияны бұғаттау",
+      "unlockPos": "Позицияны бұғаттан шығару",
+      "tasksCount": "{{count}} тапсырма"
+    },
     "tree": {
       "up": "Жоғары ▲",
       "placesBelow_one": "{{formattedCount}} орын төменде",

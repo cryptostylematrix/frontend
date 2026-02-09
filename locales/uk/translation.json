@@ -180,6 +180,22 @@
       "programNotConfirmed": "Спершу оберіть куратора.",
       "inviterNotInProgram": "Цей куратор ще не бере участі в програмі."
     },
+    "queue": {
+      "title": "Черга завдань",
+      "refreshIn": "Дані оновляться через",
+      "seconds": "секунд",
+      "refreshNow": "Оновити зараз",
+      "summaryPrefix": "Є",
+      "summarySuffix": "завдань, пов'язаних із профілем",
+      "task": "Завдання",
+      "count": "Кількість",
+      "orderIndex": "Номер у черзі",
+      "buyPlace": "Купити місце",
+      "createClone": "Створити клон",
+      "lockPos": "Заблокувати позицію",
+      "unlockPos": "Розблокувати позицію",
+      "tasksCount": "{{count}} завдань"
+    },
     "tree": {
       "up": "Вгору ▲",
       "placesBelow_one": "{{formattedCount}} місце нижче",
