@@ -44,7 +44,7 @@ export default function MultiInviter() {
 
       const multi = program?.multi;
       if (!multi || multi.confirmed !== 1) {
-        setProgramErrors([ErrorCode.UNEXPECTED]);
+        //setProgramErrors([ErrorCode.UNEXPECTED]);
         setProgramData(null);
       } else {
         setProgramData({

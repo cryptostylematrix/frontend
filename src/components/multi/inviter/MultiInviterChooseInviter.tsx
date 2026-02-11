@@ -56,13 +56,19 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
     const inviterProfileResult = await getNftAddrByLogin(trimmed);
     if (!inviterProfileResult?.addr) {
       setIsSubmitting(false);
-      setErrorCodes([ErrorCode.PROFILE_NOT_FOUND]);
+      setErrorCodes([ErrorCode.INVALID_LOGIN]);
       return;
     }
 
     // get inviter's program data
     const programResult = await getProfilePrograms(inviterProfileResult.addr);
-    const inviterProgram = programResult?.multi;
+    if (!programResult) {
+      setIsSubmitting(false);
+      setErrorCodes([ErrorCode.PROFILE_NOT_FOUND]);
+      return;
+    }
+
+    const inviterProgram = programResult.multi;
     // if inviter participated to the program
     if (!inviterProgram || inviterProgram.confirmed !== 1) {
       setIsSubmitting(false);
