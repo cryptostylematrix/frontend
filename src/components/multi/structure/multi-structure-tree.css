@@ -101,6 +101,12 @@
   text-decoration: none;
 }
 
+.structure-tree-tg {
+  color: #d4af37;
+  text-decoration: none;
+  word-break: break-all;
+}
+
 .structure-tree-load-more {
   margin: 0.25rem 0;
 }

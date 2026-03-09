@@ -5,6 +5,9 @@ export type StructureNode = {
   parent_addr: string | null;
   parent_login: string | null;
   login: string;
+  firstName: string | null;
+  lastName: string | null;
+  tgUsername: string | null;
   index: number;
   createdAt: string;
   referals: number;
@@ -50,9 +53,9 @@ export async function loadRootByLogin(login: string): Promise<StructureRootResul
   if (!normalized) return { success: false };
 
   try {
-
     const profile = await getNftAddrByLogin(normalized);
     if (!profile?.addr) return { success: false };
+    const profileData = await getProfileNftData(profile.addr);
 
     const program = await getProfilePrograms(profile.addr);
     const multiProgram = program?.multi;
@@ -87,13 +90,14 @@ export async function loadRootByLogin(login: string): Promise<StructureRootResul
         addr: inviteAddress,
         parent_addr: inviterAddress,
         parent_login: inviterLogin,
-        login: normalized,
+        login: profileData?.content?.login ?? normalized,
+        firstName: profileData?.content?.first_name ?? null,
+        lastName: profileData?.content?.last_name ?? null,
+        tgUsername: profileData?.content?.tg_username ?? null,
         index,
         createdAt,
         referals,
-
         nextRefNo: inviteData.next_ref_no,
-
       },
     };
   } catch (err) {
@@ -113,7 +117,6 @@ export async function loadChildren(node: StructureNode, from_ref_no: number, to_
     const children: StructureNode[] = [];
 
     for (let i = from_ref_no; i < to_ref_no; i++) {
-
       const inviteAddressResult = await getInviteAddrBySeqNo(parent_addr, i);
       if (!inviteAddressResult) break;
 
@@ -135,12 +138,14 @@ export async function loadChildren(node: StructureNode, from_ref_no: number, to_
         parent_addr: parent_addr,
         parent_login: node.login,
         login: profile.content.login,
+        firstName: profile.content.first_name ?? null,
+        lastName: profile.content.last_name ?? null,
+        tgUsername: profile.content.tg_username ?? null,
         index: i,
         createdAt,
         referals,
         nextRefNo: inviteData.next_ref_no,
       });
-
     }
 
     return { success: children.length > 0, children };

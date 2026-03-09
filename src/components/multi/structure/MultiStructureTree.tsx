@@ -154,6 +154,8 @@ function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
     const hasChildren = !!node.children?.length;
     const isOpen = !!expanded[node.addr];
     const created = new Date(node.createdAt).toLocaleString();
+    const displayName = [node.lastName, node.firstName].filter(Boolean).join(" ");
+    const cleanedTgUsername = node.tgUsername?.replace(/^@+/, "") ?? "";
     const lastIdx = getLastChildIndex(node);
 
     const hasExpandable = hasChildren || node.nextRefNo > 1;
@@ -181,6 +183,25 @@ function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
           <span className="structure-tree-login">{node.login}</span>
           <span className="structure-tree-meta">
             {t("multi.structure.created", "Created")}: {created}
+            {displayName && (
+              <>
+                <br />
+                {displayName}
+              </>
+            )}
+            {cleanedTgUsername && (
+              <>
+                <br />
+                <a
+                  href={`https://t.me/${cleanedTgUsername}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="structure-tree-tg"
+                >
+                  @{cleanedTgUsername}
+                </a>
+              </>
+            )}
           </span>
           {node.parent_login ? (
             <span className="structure-tree-meta">
