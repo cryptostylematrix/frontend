@@ -148,7 +148,10 @@
       "loginPlaceholder": "Enter inviter login",
       "submit": "Choose inviter",
       "success": "Inviter chosen. Updates will appear soon, please refresh the page later.",
-      "alreadySelected": "Inviter already selected."
+      "alreadySelected": "Inviter already selected.",
+      "systemPlaceDescription": "Registration under a system place for independent team building",
+      "confirmChooseTitle": "Confirm inviter selection",
+      "confirmChoosePopular": "Are you sure you want to choose this inviter?"
     }
   },
   "multiMatrix": {

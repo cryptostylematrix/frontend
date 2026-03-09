@@ -148,7 +148,10 @@
       "loginPlaceholder": "Wpisz login opiekuna",
       "submit": "Wybierz opiekuna",
       "success": "Opiekun wybrany. Aktualizacje pojawią się wkrótce, odśwież stronę później.",
-      "alreadySelected": "Inviter already selected."
+      "alreadySelected": "Inviter already selected.",
+      "systemPlaceDescription": "Rejestracja pod systemowym miejscem do samodzielnego budowania zespołu",
+      "confirmChooseTitle": "Potwierdź wybór opiekuna",
+      "confirmChoosePopular": "Czy na pewno chcesz wybrać tego opiekuna?"
     }
   },
   "multiMatrix": {

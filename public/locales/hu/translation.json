@@ -148,7 +148,10 @@
       "loginPlaceholder": "Add meg a meghívó bejelentkezését",
       "submit": "Meghívó választása",
       "success": "A meghívó kiválasztva. A frissítések hamarosan megjelennek, kérjük, frissítsd az oldalt később.",
-      "alreadySelected": "Inviter already selected."
+      "alreadySelected": "Inviter already selected.",
+      "systemPlaceDescription": "Regisztráció rendszerhely alá a csapat önálló felépítéséhez",
+      "confirmChooseTitle": "Meghívó kiválasztásának megerősítése",
+      "confirmChoosePopular": "Biztosan ezt a meghívót szeretnéd választani?"
     }
   },
   "multiMatrix": {
