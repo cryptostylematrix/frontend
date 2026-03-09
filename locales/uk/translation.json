@@ -148,7 +148,10 @@
       "loginPlaceholder": "Введіть логін куратора",
       "submit": "Обрати куратора",
       "success": "Куратора обрано. Оновлення з'явиться скоро, будь ласка, оновіть сторінку пізніше.",
-      "alreadySelected": "Inviter already selected."
+      "alreadySelected": "Inviter already selected.",
+      "systemPlaceDescription": "Реєстрація під системне місце для самостійного побудування команди",
+      "confirmChooseTitle": "Підтвердження вибору куратора",
+      "confirmChoosePopular": "Ви впевнені, що хочете обрати цього куратора?"
     }
   },
   "multiMatrix": {

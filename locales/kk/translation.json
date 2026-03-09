@@ -148,7 +148,10 @@
       "loginPlaceholder": "Шақырушы логинін енгізіңіз",
       "submit": "Шақырушыны таңдау",
       "success": "Шақырушы таңдалды. Жаңартулар жақында шығады, бетті кейінірек жаңартыңыз.",
-      "alreadySelected": "Inviter already selected."
+      "alreadySelected": "Inviter already selected.",
+      "systemPlaceDescription": "Команданы өз бетінше құру үшін жүйелік орынның астында тіркелу",
+      "confirmChooseTitle": "Шақырушыны таңдауды растау",
+      "confirmChoosePopular": "Осы шақырушыны таңдағыңыз келетініне сенімдісіз бе?"
     }
   },
   "multiMatrix": {

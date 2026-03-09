@@ -148,7 +148,10 @@
       "loginPlaceholder": "Inserisci il login del referente",
       "submit": "Scegli referente",
       "success": "Referente scelto. Gli aggiornamenti appariranno presto, aggiorna la pagina più tardi.",
-      "alreadySelected": "Inviter already selected."
+      "alreadySelected": "Inviter already selected.",
+      "systemPlaceDescription": "Registrazione sotto un posto di sistema per la costruzione autonoma del team",
+      "confirmChooseTitle": "Conferma selezione referente",
+      "confirmChoosePopular": "Sei sicuro di voler scegliere questo referente?"
     }
   },
   "multiMatrix": {
