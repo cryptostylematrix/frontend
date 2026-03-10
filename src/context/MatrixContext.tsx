@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import type { ReactNode } from "react";
 
 type MatrixContextType = {
@@ -7,6 +7,8 @@ type MatrixContextType = {
   matrixPrice: number;
   selectedPlaceAddress: string | undefined;
   rootPlaceAddress: string | undefined;
+  refreshKey: number;
+  refreshMatrixPage: () => void;
   setSelectedPlace: (addr: string | undefined) => void;
   setRootPlace: (addr: string | undefined) => void;
   resetRooPlacetAndSelectedPlace: () => void;
@@ -19,6 +21,7 @@ export function MatrixProvider({ children }: { children: ReactNode }) {
   const [selectedMatrix, setSelectedMatrix] = useState<number>(1);
   const [selectedPlaceAddress, setSelectedPlaceAddress] = useState<string | undefined>(undefined);
   const [rootPlaceAddress, setRootPlaceAddress] = useState<string | undefined>(undefined);
+  const [refreshKey, setRefreshKey] = useState(0);
   const matrixPrices: Record<number, number> = {
     1: 15,
     2: 45,
@@ -28,20 +31,23 @@ export function MatrixProvider({ children }: { children: ReactNode }) {
     6: 1200,
   };
 
-  const setSelectedPlace = (addr: string | undefined) => {
+  const setSelectedPlace = useCallback((addr: string | undefined) => {
     setSelectedPlaceAddress(addr);
-  };
-  const setRootPlace = (addr: string | undefined) => {
+  }, []);
+  const setRootPlace = useCallback((addr: string | undefined) => {
     setRootPlaceAddress(addr);
-  };
-  const resetRooPlacetAndSelectedPlace = () => {
+  }, []);
+  const refreshMatrixPage = useCallback(() => {
+    setRefreshKey((prev) => prev + 1);
+  }, []);
+  const resetRooPlacetAndSelectedPlace = useCallback(() => {
     setSelectedPlaceAddress(undefined);
     setRootPlaceAddress(undefined);
-  };
-  const resetAll = () => {
+  }, []);
+  const resetAll = useCallback(() => {
     resetRooPlacetAndSelectedPlace();
     setSelectedMatrix(1);
-  };
+  }, [resetRooPlacetAndSelectedPlace]);
 
   return (
     <MatrixContext.Provider
@@ -51,6 +57,8 @@ export function MatrixProvider({ children }: { children: ReactNode }) {
         matrixPrice: matrixPrices[selectedMatrix],
         selectedPlaceAddress,
         rootPlaceAddress,
+        refreshKey,
+        refreshMatrixPage,
         setSelectedPlace,
         setRootPlace,
         resetRooPlacetAndSelectedPlace,

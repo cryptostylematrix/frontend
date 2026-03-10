@@ -8,7 +8,7 @@ import { type TreeNode } from "../../../../services/matrixApi";
 import { getMatrix } from "../../../../services/matrixApi";
 
 export default function MultiMatrixTree() {
-  const { selectedPlaceAddress } = useMatrixContext();
+  const { refreshKey, selectedPlaceAddress } = useMatrixContext();
   const { currentProfile } = useProfileContext();
   const [ loadedNode, setLoadedNode] = useState<TreeNode | null>(null);
   const [selectedNode, setSelectedNode] = useState<TreeNode | null>(null);
@@ -31,7 +31,7 @@ export default function MultiMatrixTree() {
     return () => {
       isCancelled = true;
     };
-  }, [selectedPlaceAddress, currentProfile]);
+  }, [selectedPlaceAddress, currentProfile, refreshKey]);
 
   return (
     <div className="matrix-row matrix-row--layout">

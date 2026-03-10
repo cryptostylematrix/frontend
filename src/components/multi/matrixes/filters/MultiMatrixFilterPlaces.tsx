@@ -12,9 +12,8 @@ const pad2 = (n: number) => n.toString().padStart(2, "0");
 export default function MultiMatrixFilterPlaces() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
-  const { selectedPlaceAddress, setSelectedPlace, selectedMatrix } = useMatrixContext();
+  const { refreshKey, selectedPlaceAddress, setSelectedPlace, selectedMatrix } = useMatrixContext();
 
-  
   const PAGE_SIZE = 8;
   const selectRef = useRef<HTMLDivElement>(null);
   const [places, setPlaces] = useState<MatrixPlace[]>([]);
@@ -23,9 +22,18 @@ export default function MultiMatrixFilterPlaces() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
+  const previousMatrixRef = useRef<number | undefined>(undefined);
+  const previousProfileAddressRef = useRef<string | undefined>(undefined);
 
   useEffect(() => {
     let cancelled = false;
+    const profileAddress = currentProfile?.address;
+    const matrixChanged = previousMatrixRef.current !== selectedMatrix;
+    const profileChanged = previousProfileAddressRef.current !== profileAddress;
+
+    previousMatrixRef.current = selectedMatrix;
+    previousProfileAddressRef.current = profileAddress;
+
     setIsPlacesOpen(false);
     setPage(1);
     setTotalPages(1);
@@ -42,14 +50,15 @@ export default function MultiMatrixFilterPlaces() {
       .then((data) => {
         if (cancelled) return;
         setPlaces(data.items);
-        if (data.items[0]) {
-            setSelectedPlace(data.items[0].addr);
-          } else {
-            setSelectedPlace(undefined);
-          }
-          setPage(data.page);
-          setTotalPages(data.total_pages);
-        })
+
+        if (matrixChanged || profileChanged || !selectedPlaceAddress) {
+          setSelectedPlace(data.items[0]?.addr);
+        } else if (data.items.length === 0) {
+          setSelectedPlace(undefined);
+        }
+        setPage(data.page);
+        setTotalPages(data.total_pages);
+      })
       .finally(() => {
         if (cancelled) return;
         setLoading(false);
@@ -58,7 +67,7 @@ export default function MultiMatrixFilterPlaces() {
     return () => {
       cancelled = true;
     };
-  }, [selectedMatrix, currentProfile]);
+  }, [selectedMatrix, currentProfile, refreshKey]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

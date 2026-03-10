@@ -8,7 +8,7 @@ import { useProfileContext } from "../../../../context/ProfileContext";
 export default function NextPosButton() {
   const { currentProfile } = useProfileContext();
   const { t } = useTranslation();
-  const { setSelectedPlace, selectedMatrix } = useMatrixContext();
+  const { refreshKey, setSelectedPlace, selectedMatrix } = useMatrixContext();
   const [nextPos, setNextPos] = useState<{ parent_addr: string; pos: number } | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +23,7 @@ export default function NextPosButton() {
         setNextPos(next ? { parent_addr: next.parent_addr, pos: next.pos } : null);
       })
       .finally(() => setLoading(false));
-  }, [selectedMatrix, currentProfile]);
+  }, [selectedMatrix, currentProfile, refreshKey]);
 
   return (
     <button

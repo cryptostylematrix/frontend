@@ -11,7 +11,7 @@ import { useMatrixContext } from "../../../../context/MatrixContext";
 export default function MultiMatrixFilterLocks() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
-  const { setSelectedPlace, selectedMatrix, selectedPlaceAddress } = useMatrixContext();
+  const { refreshKey, setSelectedPlace, selectedMatrix, selectedPlaceAddress } = useMatrixContext();
   const [locks, setLocks] = useState<MatrixLock[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -49,7 +49,7 @@ export default function MultiMatrixFilterLocks() {
     return () => {
       cancelled = true;
     };
-  }, [selectedMatrix, currentProfile]);
+  }, [selectedMatrix, currentProfile, refreshKey]);
 
   return (
     <label className="filter-field">

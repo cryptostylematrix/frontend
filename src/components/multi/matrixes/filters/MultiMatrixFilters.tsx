@@ -23,6 +23,8 @@ export default function MultiMatrixFilters() {
     resetRooPlacetAndSelectedPlace,
     resetAll,
     setRootPlace,
+    refreshKey,
+    refreshMatrixPage,
     selectedMatrix,
     setSelectedMatrix,
     matrixPrice,
@@ -38,6 +40,9 @@ export default function MultiMatrixFilters() {
 
   useEffect(() => {
     resetRooPlacetAndSelectedPlace();
+  }, [selectedMatrix, currentProfile]);
+
+  useEffect(() => {
     if (!currentProfile) return;
 
     const run = async () => {
@@ -48,7 +53,7 @@ export default function MultiMatrixFilters() {
 
     run();
 
-  }, [selectedMatrix, currentProfile]);
+  }, [selectedMatrix, currentProfile, refreshKey]);
 
   const buyPlaceLabel = t("multiMatrix.filters.buyPlace", {
     price: matrixPrice,
@@ -172,7 +177,7 @@ export default function MultiMatrixFilters() {
           <button
             type="button"
             className="filter-button secondary next-pos-style"
-            onClick={() => window.location.reload()}
+            onClick={refreshMatrixPage}
           >
             {t("multiMatrix.filters.updatePage", "Update page")}
           </button>

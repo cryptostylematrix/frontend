@@ -7,7 +7,7 @@ import { useMatrixContext } from "../../../context/MatrixContext";
 
 export default function MultiMatrixBreadCrumbs() {
   const { t } = useTranslation();
-  const { selectedPlaceAddress, rootPlaceAddress, setSelectedPlace } = useMatrixContext();
+  const { refreshKey, selectedPlaceAddress, rootPlaceAddress, setSelectedPlace } = useMatrixContext();
   const [path, setPath] = useState<MatrixPlace[] | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -34,7 +34,7 @@ export default function MultiMatrixBreadCrumbs() {
     return () => {
       cancelled = true;
     };
-  }, [rootPlaceAddress, selectedPlaceAddress]);
+  }, [rootPlaceAddress, selectedPlaceAddress, refreshKey]);
 
   const selectedAddress = useMemo(
     () => selectedPlaceAddress || rootPlaceAddress,
