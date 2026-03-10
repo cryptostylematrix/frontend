@@ -1,10 +1,11 @@
 import { useId } from "react";
+import type { ReactNode } from "react";
 import "./confirm-dialog.css";
 
 type ConfirmDialogProps = {
   open: boolean;
   title?: string;
-  message: string;
+  message: ReactNode;
   confirmLabel?: string;
   cancelLabel?: string;
   onConfirm: () => void;
@@ -42,9 +43,9 @@ export default function ConfirmDialog({
             {title}
           </h3>
         )}
-        <p id={descriptionId} className="confirm-modal__message">
+        <div id={descriptionId} className="confirm-modal__message">
           {message}
-        </p>
+        </div>
         <div className="confirm-actions">
           <button type="button" className="confirm-btn secondary" onClick={onCancel}>
             {cancelLabel}

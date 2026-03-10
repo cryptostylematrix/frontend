@@ -59,6 +59,14 @@ export default function MultiMatrixFilters() {
     price: matrixPrice,
     defaultValue: `Buy new place (${matrixPrice} TON)`,
   });
+  const confirmBuyMessage = (
+    <>
+      <p>{t("multiMatrix.filters.confirmBuy", "Are you sure?")}</p>
+      <p>
+        {t("multiMatrix.filters.profileLabel", "Profile")}: <strong>{currentProfile?.login ?? ""}</strong>
+      </p>
+    </>
+  );
 
   const handleBuy = async () => {
     if (!currentProfile) return;
@@ -194,7 +202,7 @@ export default function MultiMatrixFilters() {
       <ConfirmDialog
         open={showBuyConfirm}
         title={t("multiMatrix.filters.confirmTitle", "Confirm purchase")}
-        message={t("multiMatrix.filters.confirmBuy", "Are you sure?")}
+        message={confirmBuyMessage}
         confirmLabel={t("multiMatrix.filters.buyPlace", { defaultValue: "Buy", price: matrixPrice })}
         cancelLabel={t("common.cancel", "Cancel")}
         onCancel={() => setShowBuyConfirm(false)}

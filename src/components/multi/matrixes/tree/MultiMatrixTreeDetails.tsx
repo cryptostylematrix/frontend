@@ -32,7 +32,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
   const [imageUrl, setImageUrl] = useState("");
   const [imageFailed, setImageFailed] = useState(false);
   const [detailsStatus, setDetailsStatus] = useState<{ type: "success" | "error"; text: string } | null>(null);
-  const [showBuyConfirm, setShowBuyConfirm] = useState(false);
+  const [confirmAction, setConfirmAction] = useState<"buy" | "lock" | "unlock" | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -55,7 +55,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
 
   useEffect(() => {
     setDetailsStatus(null);
-    setShowBuyConfirm(false);
+    setConfirmAction(null);
   }, [selectedNode]);
 
 
@@ -81,6 +81,26 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
       })
     : undefined;
   const canBuy = selectedNode.kind == "empty" && selectedNode.can_buy;
+  const confirmBuyMessage = (
+    <>
+      <p>{t("multiMatrix.filters.confirmBuy", "Are you sure?")}</p>
+      <p>
+        {t("multiMatrix.filters.profileLabel", "Profile")}: <strong>{currentProfile?.login ?? ""}</strong>
+      </p>
+    </>
+  );
+  const confirmTitle =
+    confirmAction === "lock"
+      ? t("multiMatrix.filters.confirmLockTitle", "Confirm locking")
+      : confirmAction === "unlock"
+        ? t("multiMatrix.filters.confirmUnlockTitle", "Confirm unlocking")
+        : t("multiMatrix.filters.confirmTitle", "Confirm purchase");
+  const confirmLabel =
+    confirmAction === "lock"
+      ? t("multiMatrix.tree.lock", { defaultValue: "Lock" })
+      : confirmAction === "unlock"
+        ? t("multiMatrix.tree.unlock", { defaultValue: "Unlock" })
+        : t("multiMatrix.tree.buy", { defaultValue: "Buy", price: matrixPrice });
 
   const fixedpos: PlacePosData | undefined = selectedNode.parent_addr ? 
     { parent: Address.parse(selectedNode.parent_addr), pos: selectedNode.pos } :
@@ -274,7 +294,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
             type="button"
             className="details-action details-action--primary"
             onClick={() => {
-              if (currentProfile) setShowBuyConfirm(true);
+              if (currentProfile) setConfirmAction("buy");
             }}
             disabled={buyLoading}
           >
@@ -292,7 +312,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
         <button
           type="button"
           className={`details-action ${!isLock ? "danger" : ""}`}
-          onClick={handleLockToggle}
+          onClick={() => setConfirmAction(isLock ? "unlock" : "lock")}
           disabled={lockLoading}
         >
           {lockLoading
@@ -312,15 +332,20 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
       )}
 
       <ConfirmDialog
-        open={showBuyConfirm}
-        title={t("multiMatrix.filters.confirmTitle", "Confirm purchase")}
-        message={t("multiMatrix.filters.confirmBuy", "Are you sure?")}
-        confirmLabel={t("multiMatrix.tree.buy", { defaultValue: "Buy", price: matrixPrice })}
+        open={confirmAction !== null}
+        title={confirmTitle}
+        message={confirmBuyMessage}
+        confirmLabel={confirmLabel}
         cancelLabel={t("common.cancel", "Cancel")}
-        onCancel={() => setShowBuyConfirm(false)}
+        onCancel={() => setConfirmAction(null)}
         onConfirm={() => {
-          setShowBuyConfirm(false);
-          handleBuy();
+          const action = confirmAction;
+          setConfirmAction(null);
+          if (action === "buy") {
+            handleBuy();
+            return;
+          }
+          handleLockToggle();
         }}
       />
     </div>
