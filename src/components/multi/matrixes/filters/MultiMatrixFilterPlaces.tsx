@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./multi-matrix-filters.css";
 import "./multi-matrix-filter-places.css";
@@ -16,6 +16,7 @@ export default function MultiMatrixFilterPlaces() {
 
   
   const PAGE_SIZE = 8;
+  const selectRef = useRef<HTMLDivElement>(null);
   const [places, setPlaces] = useState<MatrixPlace[]>([]);
   const [isPlacesOpen, setIsPlacesOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -59,6 +60,17 @@ export default function MultiMatrixFilterPlaces() {
     };
   }, [selectedMatrix, currentProfile]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
+        setIsPlacesOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const groupedPlaces = useMemo(() => {
     const groups: Record<string, MatrixPlace[]> = {};
     places.forEach((place) => {
@@ -98,9 +110,9 @@ export default function MultiMatrixFilterPlaces() {
         {t("multiMatrix.filters.places", "Places")}
       </span>
       <div
+        ref={selectRef}
         className="custom-select"
         tabIndex={0}
-        onBlur={() => setIsPlacesOpen(false)}
       >
         <button
           type="button"
