@@ -130,7 +130,7 @@ export default function MultiMatrixFilterPlaces() {
           aria-expanded={isPlacesOpen}
           aria-haspopup="listbox"
         >
-          {selectedPlaceLabel}
+          <span className="custom-select__trigger-label">{selectedPlaceLabel}</span>
           <span className={`custom-select__arrow ${isPlacesOpen ? "up" : ""}`} />
         </button>
 

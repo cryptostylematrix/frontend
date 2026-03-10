@@ -24,11 +24,22 @@
   overflow: hidden;
 }
 
+.custom-select__trigger-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
 .custom-select__arrow {
+  flex: 0 0 auto;
   border: solid #d4af37;
   border-width: 0 2px 2px 0;
   display: inline-block;
   padding: 3px;
+  margin-left: 0.5rem;
   transform: rotate(45deg);
   transition: transform 0.15s ease;
 }
