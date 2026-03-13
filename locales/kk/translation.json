@@ -73,7 +73,31 @@
     "balance_error": "Баланс жүктеу қатесі",
     "balance_unit": "TON",
     "avatar_alt": "Профиль",
-    "no_avatar_alt": "Аватар жоқ"
+    "no_avatar_alt": "Аватар жоқ",
+    "programs": {
+      "title": "Қолжетімді бағдарламалар",
+      "programLabel": "Бағдарлама",
+      "creatorLabel": "Жасаушы",
+      "descriptionLabel": "Сипаттама",
+      "open": "Ашу",
+      "multi": {
+        "name": "MULTI Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "MULTI Matrix бағдарламасы",
+        "pricing": {
+          "entryLabel": "Кіру",
+          "entryAmount": "15 TON",
+          "exitLabel": "Шығу",
+          "exitAmount": "3 500 TON-нан бастап"
+        },
+        "features": {
+          "platforms": "6 алаң",
+          "reinvest": "Қайта инвестиция",
+          "clones": "Клондар",
+          "structure": "Құрылымды басқару"
+        }
+      }
+    }
   },
   "finance": {
     "title": "Қаржы",
@@ -161,6 +185,7 @@
       "hide": "Жасыру",
       "matrixes": "Матрицалар",
       "places": "Орындар",
+      "placesWithTotal": "Орындар (барлығы {{total}})",
       "noPlaces": "Орындар жоқ",
       "placeOption": "{{place}}",
       "searchByLogin": "Іздеу",

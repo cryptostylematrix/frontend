@@ -1,0 +1,281 @@
+{
+  "wallet": {
+    "connect": "Wallet verbinden",
+    "copyAddress": "Adresse kopieren",
+    "disconnect": "Trennen"
+  },
+  "profile": {
+    "checking": "Profile werden geprüft...",
+    "add": "+ Profil hinzufügen",
+    "select": "Profil auswählen",
+    "title": "Profil",
+    "update_link": "Bearbeiten",
+    "add_link": "Hinzufügen",
+    "create_link": "Erstellen",
+    "add_login_label": "Login",
+    "add_login_placeholder": "Login eingeben",
+    "add_btn": "Hinzufügen",
+    "cancel_btn": "Abbrechen",
+    "create_btn": "Erstellen",
+    "create_login_label": "Login",
+    "create_login_placeholder": "Eindeutiger Login",
+    "create_firstname_label": "Vorname",
+    "create_firstname_placeholder": "John",
+    "create_lastname_label": "Nachname",
+    "create_lastname_placeholder": "Doe",
+    "create_avatar_label": "Avatar-URL",
+    "create_avatar_placeholder": "https://example.com/avatar.png",
+    "create_telegram_label": "Telegram-Benutzername",
+    "create_telegram_placeholder": "@username",
+    "save_btn": "Speichern",
+    "logout_btn": "Abmelden",
+    "update_success": "Profil erfolgreich gespeichert.",
+    "removed": "Profil entfernt.",
+    "confirm_logout": "Möchten Sie sich wirklich abmelden?",
+    "update_avatar_label": "Avatar-URL",
+    "update_avatar_placeholder": "https://...",
+    "update_firstname_label": "Vorname",
+    "update_firstname_placeholder": "John",
+    "update_lastname_label": "Nachname",
+    "update_lastname_placeholder": "Doe",
+    "update_telegram_label": "Telegram-Benutzername",
+    "update_telegram_placeholder": "@username",
+    "errors": {
+      "wallet_not_connected": "Wallet ist nicht verbunden",
+      "unexpected": "Ein unerwarteter Fehler ist aufgetreten",
+      "no_active": "Kein aktives Profil oder Wallet.",
+      "update_failed": "Unerwarteter Fehler beim Aktualisieren des Profils."
+    },
+    "status": {
+      "wallet_title": "Ihre Wallet ist nicht verbunden!",
+      "wallet_description": "Um die Website zu nutzen, müssen Sie Ihre Wallet verbinden.",
+      "profile_title": "Es wurde kein Profil hinzugefügt.",
+      "profile_description": "Um die Website zu nutzen, müssen Sie ein Profil hinzufügen."
+    }
+  },
+  "footer": {
+    "channel": "Kanal",
+    "news": "News",
+    "group": "Community",
+    "youtube": "YouTube",
+    "privacy": "Datenschutzerklärung",
+    "agreement": "Nutzungsvereinbarung",
+    "copyright": "© {{year}} Crypto Style. Alle Rechte vorbehalten."
+  },
+  "nav": {
+    "home_page": "Startseite",
+    "profile_page": "Profil",
+    "finance_page": "Finanzen",
+    "multi_page": "Multi"
+  },
+  "home": {
+    "loading": "Wird geladen...",
+    "balance_error": "Fehler beim Laden des Kontostands",
+    "balance_unit": "TON",
+    "avatar_alt": "Profil",
+    "no_avatar_alt": "Kein Avatar",
+    "programs": {
+      "title": "Verfügbare Programme",
+      "programLabel": "Programm",
+      "creatorLabel": "Ersteller",
+      "descriptionLabel": "Beschreibung",
+      "open": "Öffnen",
+      "multi": {
+        "name": "MULTI Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "MULTI Matrix Programm",
+        "pricing": {
+          "entryLabel": "Einstieg",
+          "entryAmount": "15 TON",
+          "exitLabel": "Ausstieg ab",
+          "exitAmount": "3,500 TON"
+        },
+        "features": {
+          "platforms": "6 Plattformen",
+          "reinvest": "Reinvestition",
+          "clones": "Klone",
+          "structure": "Strukturverwaltung"
+        }
+      }
+    }
+  },
+  "finance": {
+    "title": "Finanzen",
+    "columns": {
+      "date": "Datum",
+      "profile": "Profil",
+      "addr": "Adresse",
+      "description": "Beschreibung",
+      "value": "Wert"
+    },
+    "labels": {
+      "date_time": "Datum/Uhrzeit"
+    },
+    "actions": {
+      "load_more": "Mehr laden",
+      "copy_addr": "Adresse kopieren"
+    },
+    "empty": "Noch keine Transaktionen.",
+    "loading": "Wird geladen...",
+    "ops": {
+      "bonus": "Bonus",
+      "excesses": "Überschüssige Mittel",
+      "ownership_assigned": "NFT erhalten",
+      "bounce": "Vorgang abgebrochen",
+      "refund": "Rückerstattung",
+      "buy_place": "Platzkauf",
+      "lock_pos": "Position gesperrt",
+      "unlock_pos": "Position entsperrt",
+      "deploy_nft_item": "NFT erstellt",
+      "edit_content": "NFT aktualisiert",
+      "choose_inviter": "Kurator ausgewählt",
+      "transfer": "NFT-Transfer"
+    }
+  },
+  "multi": {
+    "title": "Multi",
+    "inviter_link": "Einlader",
+    "structure_link": "Struktur",
+    "matrixes_link": "Matrizen",
+    "marketing_link": "Marketing",
+    "stat_link": "Statistik",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Präsentation als PDF",
+      "pdfDescription": "Sehen Sie sich die Präsentation in Ihrer Sprache an.",
+      "download": "PDF herunterladen",
+      "view": "PDF ansehen",
+      "videoTitle": "Videoüberblick",
+      "videoDescription": "Sehen Sie sich den Marketingüberblick auf YouTube an.",
+      "watch": "Video ansehen"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Navigationspfad",
+      "breadcrumbsPlaceholder": "Der Navigationspfad wird hier angezeigt.",
+      "searchTitle": "Nach Login suchen",
+      "searchPlaceholder": "Login eingeben",
+      "searchButton": "Suchen",
+      "treeTitle": "Struktur",
+      "treePlaceholder": "Die Baumansicht wird hier angezeigt.",
+      "created": "Erstellt",
+      "curator": "Kurator",
+      "referrals": "Empfehlungen",
+      "loadMore": "Mehr laden",
+      "notFound": "Einladungs-Login nicht gefunden.",
+      "loading": "Wird geladen...",
+      "expand": "Erweitern",
+      "collapse": "Einklappen"
+    },
+    "inviter": {
+      "title": "Einlader wählen",
+      "loginLabel": "Einlader-Login",
+      "loginPlaceholder": "Einlader-Login eingeben",
+      "submit": "Einlader wählen",
+      "success": "Einlader ausgewählt. Aktualisierungen erscheinen bald, bitte laden Sie die Seite später neu.",
+      "alreadySelected": "Einlader wurde bereits ausgewählt.",
+      "systemPlaceDescription": "Registrierung unter einem Systemplatz für unabhängigen Teamaufbau",
+      "confirmChooseTitle": "Auswahl des Einladers bestätigen",
+      "confirmChoosePopular": "Möchten Sie diesen Einlader wirklich auswählen?"
+    }
+  },
+  "multiMatrix": {
+    "filters": {
+      "title": "Filter",
+      "show": "Anzeigen",
+      "hide": "Ausblenden",
+      "matrixes": "Matrizen",
+      "places": "Plätze",
+      "placesWithTotal": "Plätze (insgesamt {{total}})",
+      "noPlaces": "Keine Plätze",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Suchen",
+      "searchPlaceholder": "login",
+      "locks": "Sperren",
+      "noLocks": "Keine Sperren",
+      "left": "links",
+      "right": "rechts",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Neuen Platz kaufen ({{price}} TON)",
+      "confirmTitle": "Kauf bestätigen",
+      "confirmLockTitle": "Sperren bestätigen",
+      "confirmUnlockTitle": "Entsperren bestätigen",
+      "confirmBuy": "Sind Sie sicher?",
+      "profileLabel": "Profil",
+      "buySuccess": "Der neue Platz wird bald in der Platzliste erscheinen.",
+      "buyFail": "Fehlgeschlagen",
+      "loadMore": "Mehr laden",
+      "nextPos": "Nächste Pos",
+      "updatePage": "Seite aktualisieren",
+      "clone": "Klon",
+      "prevMatrixRequired": "Sie benötigen einen Platz in der vorherigen Matrix, bevor Sie hier kaufen können.",
+      "noPlacesInMatrix": "Sie benötigen einen Platz in dieser Matrix, um diese Aktion auszuführen.",
+      "programNotConfirmed": "Sie müssen zuerst einen Einlader auswählen.",
+      "inviterNotInProgram": "Dieser Einlader nimmt noch nicht am Programm teil."
+    },
+    "queue": {
+      "title": "Aufgabenwarteschlange",
+      "refreshIn": "Die Daten werden aktualisiert in",
+      "seconds": "Sekunden",
+      "refreshNow": "Jetzt aktualisieren",
+      "summaryPrefix": "Es gibt",
+      "summarySuffix": "Aufgaben, die dem Profil zugeordnet sind",
+      "task": "Aufgabe",
+      "count": "Anzahl",
+      "orderIndex": "Warteschlangennummer",
+      "buyPlace": "Einen Platz kaufen",
+      "createClone": "Einen Klon erstellen",
+      "lockPos": "Pos sperren",
+      "unlockPos": "Pos entsperren",
+      "tasksCount": "{{count}} Aufgaben"
+    },
+    "tree": {
+      "up": "Nach oben ▲",
+      "placesBelow_one": "{{formattedCount}} Platz darunter",
+      "placesBelow_other": "{{formattedCount}} Plätze darunter",
+      "unlock": "Entsperren",
+      "lock": "Sperren",
+      "unlockSuccess": "Anfrage zum Entsperren gesendet. Die Entsperrung wird bald angezeigt; aktualisieren Sie die Seite später.",
+      "lockSuccess": "Anfrage zum Sperren gesendet. Die Sperre wird bald angezeigt; aktualisieren Sie die Seite später.",
+      "select": "Auswählen ▼",
+      "buy": "Kaufen ({{price}} TON)",
+      "loadingPath": "Pfad wird geladen...",
+      "breadcrumbEmpty": "Der Navigationspfad wird hier angezeigt, sobald ein Platz ausgewählt wurde.",
+      "breadcrumbs": "Navigationspfad"
+    }
+  },
+  "common": {
+    "warning": {
+      "title": "Die Website befindet sich in Entwicklung",
+      "description": "Einige Funktionen sind möglicherweise noch nicht verfügbar."
+    }
+  },
+  "errors": {
+    "err_wallet_not_connected": "Wallet ist nicht verbunden.",
+    "err_profile_exists": "Profil existiert bereits.",
+    "err_profile_not_found": "Profil nicht gefunden.",
+    "err_invalid_login": "Ungültiger Login.",
+    "err_network": "Netzwerkfehler.",
+    "err_unexpected": "Ein unerwarteter Fehler ist aufgetreten.",
+    "err_is_not_deployed": "Vertrag ist nicht bereitgestellt.",
+    "err_contract_doesnot_belong_to_the_wallet": "Dieser Vertrag gehört nicht zu Ihrer Wallet.",
+    "err_invalid_wallet_address": "Ungültige Wallet-Adresse.",
+    "err_inviter_not_in_program": "Der Einlader nimmt noch nicht am Programm teil.",
+    "err_inviter_already_chosen": "Einlader wurde bereits ausgewählt.",
+    "err_inviter_has_no_places": "Der Einlader hat noch keine Plätze.",
+    "err_structure_root_not_found": "Kurator \"{{login}}\" nicht gefunden.",
+    "err_network_timeout": "Netzwerk-Timeout.",
+    "err_rpc_unreachable": "RPC-Server nicht erreichbar.",
+    "err_balance_fetch_failed": "Wallet-Guthaben konnte nicht abgerufen werden.",
+    "err_invalid_payload": "Ungültige Nutzlast.",
+    "err_unauthorized": "Nicht autorisiert.",
+    "err_insufficient_funds": "Unzureichende Mittel.",
+    "err_forbidden": "Verboten.",
+    "err_not_found": "Nicht gefunden.",
+    "err_invalid_workchain": "Ungültige Workchain.",
+    "err_local_storage_read_failed": "Daten aus dem lokalen Speicher konnten nicht gelesen werden.",
+    "err_local_storage_write_failed": "Daten konnten nicht in den lokalen Speicher geschrieben werden.",
+    "err_local_storage_clear_failed": "Lokaler Speicher konnte nicht geleert werden.",
+    "err_user_rejected_transaction": "Die Transaktion wurde vom Benutzer abgelehnt.",
+    "err_transaction_failed": "Transaktion fehlgeschlagen."
+  }
+}

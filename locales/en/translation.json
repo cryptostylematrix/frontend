@@ -73,7 +73,31 @@
     "balance_error": "Error loading balance",
     "balance_unit": "TON",
     "avatar_alt": "Profile",
-    "no_avatar_alt": "No avatar"
+    "no_avatar_alt": "No avatar",
+    "programs": {
+      "title": "Available Programs",
+      "programLabel": "Program",
+      "creatorLabel": "Creator",
+      "descriptionLabel": "Description",
+      "open": "Open",
+      "multi": {
+        "name": "MULTI Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "MULTI Matrix program",
+        "pricing": {
+          "entryLabel": "Entry",
+          "entryAmount": "15 TON",
+          "exitLabel": "Exit from",
+          "exitAmount": "3,500 TON"
+        },
+        "features": {
+          "platforms": "6 platforms",
+          "reinvest": "Reinvest",
+          "clones": "Clones",
+          "structure": "Structure management"
+        }
+      }
+    }
   },
   "finance": {
     "title": "Finance",
@@ -161,6 +185,7 @@
       "hide": "Hide",
       "matrixes": "Matrixes",
       "places": "Places",
+      "placesWithTotal": "Places (total {{total}})",
       "noPlaces": "No places",
       "placeOption": "{{place}}",
       "searchByLogin": "Search",

@@ -1,0 +1,281 @@
+{
+  "wallet": {
+    "connect": "Conectar carteira",
+    "copyAddress": "Copiar endereço",
+    "disconnect": "Desconectar"
+  },
+  "profile": {
+    "checking": "Verificando perfis...",
+    "add": "+ Adicionar perfil",
+    "select": "Selecionar perfil",
+    "title": "Perfil",
+    "update_link": "Editar",
+    "add_link": "Adicionar",
+    "create_link": "Criar",
+    "add_login_label": "Login",
+    "add_login_placeholder": "Digite o login",
+    "add_btn": "Adicionar",
+    "cancel_btn": "Cancelar",
+    "create_btn": "Criar",
+    "create_login_label": "Login",
+    "create_login_placeholder": "Login exclusivo",
+    "create_firstname_label": "Nome",
+    "create_firstname_placeholder": "John",
+    "create_lastname_label": "Sobrenome",
+    "create_lastname_placeholder": "Doe",
+    "create_avatar_label": "URL do avatar",
+    "create_avatar_placeholder": "https://example.com/avatar.png",
+    "create_telegram_label": "Nome de usuário do Telegram",
+    "create_telegram_placeholder": "@username",
+    "save_btn": "Salvar",
+    "logout_btn": "Sair",
+    "update_success": "Perfil salvo com sucesso.",
+    "removed": "Perfil removido.",
+    "confirm_logout": "Tem certeza de que deseja sair?",
+    "update_avatar_label": "URL do avatar",
+    "update_avatar_placeholder": "https://...",
+    "update_firstname_label": "Nome",
+    "update_firstname_placeholder": "John",
+    "update_lastname_label": "Sobrenome",
+    "update_lastname_placeholder": "Doe",
+    "update_telegram_label": "Nome de usuário do Telegram",
+    "update_telegram_placeholder": "@username",
+    "errors": {
+      "wallet_not_connected": "Carteira não conectada",
+      "unexpected": "Ocorreu um erro inesperado",
+      "no_active": "Nenhum perfil ou carteira ativo.",
+      "update_failed": "Erro inesperado ao atualizar o perfil."
+    },
+    "status": {
+      "wallet_title": "Sua carteira não está conectada!",
+      "wallet_description": "Para usar o site, você precisa conectar sua carteira.",
+      "profile_title": "Nenhum perfil foi adicionado.",
+      "profile_description": "Para usar o site, você precisa adicionar um perfil."
+    }
+  },
+  "footer": {
+    "channel": "Canal",
+    "news": "Notícias",
+    "group": "Comunidade",
+    "youtube": "YouTube",
+    "privacy": "Política de Privacidade",
+    "agreement": "Contrato do Usuário",
+    "copyright": "© {{year}} Crypto Style. Todos os direitos reservados."
+  },
+  "nav": {
+    "home_page": "Início",
+    "profile_page": "Perfil",
+    "finance_page": "Finanças",
+    "multi_page": "Multi"
+  },
+  "home": {
+    "loading": "Carregando...",
+    "balance_error": "Erro ao carregar o saldo",
+    "balance_unit": "TON",
+    "avatar_alt": "Perfil",
+    "no_avatar_alt": "Sem avatar",
+    "programs": {
+      "title": "Programas disponíveis",
+      "programLabel": "Programa",
+      "creatorLabel": "Criador",
+      "descriptionLabel": "Descrição",
+      "open": "Abrir",
+      "multi": {
+        "name": "MULTI Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "Programa MULTI Matrix",
+        "pricing": {
+          "entryLabel": "Entrada",
+          "entryAmount": "15 TON",
+          "exitLabel": "Saída a partir de",
+          "exitAmount": "3,500 TON"
+        },
+        "features": {
+          "platforms": "6 plataformas",
+          "reinvest": "Reinvestimento",
+          "clones": "Clones",
+          "structure": "Gerenciamento de estrutura"
+        }
+      }
+    }
+  },
+  "finance": {
+    "title": "Finanças",
+    "columns": {
+      "date": "Data",
+      "profile": "Perfil",
+      "addr": "Endereço",
+      "description": "Descrição",
+      "value": "Valor"
+    },
+    "labels": {
+      "date_time": "Data/Hora"
+    },
+    "actions": {
+      "load_more": "Carregar mais",
+      "copy_addr": "Copiar endereço"
+    },
+    "empty": "Ainda não há transações.",
+    "loading": "Carregando...",
+    "ops": {
+      "bonus": "Bônus",
+      "excesses": "Fundos excedentes",
+      "ownership_assigned": "NFT recebido",
+      "bounce": "Operação cancelada",
+      "refund": "Reembolso",
+      "buy_place": "Compra de vaga",
+      "lock_pos": "Posição bloqueada",
+      "unlock_pos": "Posição desbloqueada",
+      "deploy_nft_item": "NFT criado",
+      "edit_content": "NFT atualizado",
+      "choose_inviter": "Curador selecionado",
+      "transfer": "Transferência de NFT"
+    }
+  },
+  "multi": {
+    "title": "Multi",
+    "inviter_link": "Convidador",
+    "structure_link": "Estrutura",
+    "matrixes_link": "Matrizes",
+    "marketing_link": "Marketing",
+    "stat_link": "Estatísticas",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Apresentação em PDF",
+      "pdfDescription": "Visualize a apresentação no seu idioma.",
+      "download": "Baixar PDF",
+      "view": "Ver PDF",
+      "videoTitle": "Visão geral em vídeo",
+      "videoDescription": "Assista à visão geral de marketing no YouTube.",
+      "watch": "Assistir vídeo"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Navegação",
+      "breadcrumbsPlaceholder": "A navegação aparecerá aqui.",
+      "searchTitle": "Buscar por login",
+      "searchPlaceholder": "Digite o login",
+      "searchButton": "Buscar",
+      "treeTitle": "Estrutura",
+      "treePlaceholder": "A visualização em árvore aparecerá aqui.",
+      "created": "Criado",
+      "curator": "Curador",
+      "referrals": "Indicados",
+      "loadMore": "Carregar mais",
+      "notFound": "Login de convite não encontrado.",
+      "loading": "Carregando...",
+      "expand": "Expandir",
+      "collapse": "Recolher"
+    },
+    "inviter": {
+      "title": "Escolher convidador",
+      "loginLabel": "Login do convidador",
+      "loginPlaceholder": "Digite o login do convidador",
+      "submit": "Escolher convidador",
+      "success": "Convidador escolhido. As atualizações aparecerão em breve; atualize a página mais tarde.",
+      "alreadySelected": "O convidador já foi escolhido.",
+      "systemPlaceDescription": "Registro sob uma vaga do sistema para construção independente de equipe",
+      "confirmChooseTitle": "Confirmar seleção do convidador",
+      "confirmChoosePopular": "Tem certeza de que deseja escolher este convidador?"
+    }
+  },
+  "multiMatrix": {
+    "filters": {
+      "title": "Filtros",
+      "show": "Mostrar",
+      "hide": "Ocultar",
+      "matrixes": "Matrizes",
+      "places": "Vagas",
+      "placesWithTotal": "Vagas (total {{total}})",
+      "noPlaces": "Sem vagas",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Buscar",
+      "searchPlaceholder": "login",
+      "locks": "Bloqueios",
+      "noLocks": "Sem bloqueios",
+      "left": "esquerda",
+      "right": "direita",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Comprar nova vaga ({{price}} TON)",
+      "confirmTitle": "Confirmar compra",
+      "confirmLockTitle": "Confirmar bloqueio",
+      "confirmUnlockTitle": "Confirmar desbloqueio",
+      "confirmBuy": "Tem certeza?",
+      "profileLabel": "Perfil",
+      "buySuccess": "A nova vaga aparecerá em breve na lista de vagas.",
+      "buyFail": "Falha",
+      "loadMore": "Carregar mais",
+      "nextPos": "Próx. pos",
+      "updatePage": "Atualizar página",
+      "clone": "clone",
+      "prevMatrixRequired": "Você precisa de uma vaga na matriz anterior antes de comprar aqui.",
+      "noPlacesInMatrix": "Você precisa de uma vaga nesta matriz para realizar esta ação.",
+      "programNotConfirmed": "Você precisa escolher um convidador primeiro.",
+      "inviterNotInProgram": "Este convidador ainda não está participando do programa."
+    },
+    "queue": {
+      "title": "Fila de tarefas",
+      "refreshIn": "Os dados serão atualizados em",
+      "seconds": "segundos",
+      "refreshNow": "Atualizar agora",
+      "summaryPrefix": "Existem",
+      "summarySuffix": "tarefas associadas ao perfil",
+      "task": "Tarefa",
+      "count": "Quantidade",
+      "orderIndex": "Número da fila",
+      "buyPlace": "Comprar uma vaga",
+      "createClone": "Criar um clone",
+      "lockPos": "Bloquear pos",
+      "unlockPos": "Desbloquear pos",
+      "tasksCount": "{{count}} tarefas"
+    },
+    "tree": {
+      "up": "Acima ▲",
+      "placesBelow_one": "{{formattedCount}} vaga abaixo",
+      "placesBelow_other": "{{formattedCount}} vagas abaixo",
+      "unlock": "Desbloquear",
+      "lock": "Bloquear",
+      "unlockSuccess": "Solicitação de desbloqueio enviada. O desbloqueio aparecerá em breve; atualize a página daqui a pouco para vê-lo.",
+      "lockSuccess": "Solicitação de bloqueio enviada. O bloqueio aparecerá em breve; atualize a página daqui a pouco para vê-lo.",
+      "select": "Selecionar ▼",
+      "buy": "Comprar ({{price}} TON)",
+      "loadingPath": "Carregando caminho...",
+      "breadcrumbEmpty": "A navegação aparecerá aqui assim que uma vaga for selecionada.",
+      "breadcrumbs": "Navegação"
+    }
+  },
+  "common": {
+    "warning": {
+      "title": "O site está em desenvolvimento",
+      "description": "Alguns recursos podem ainda não estar disponíveis."
+    }
+  },
+  "errors": {
+    "err_wallet_not_connected": "Carteira não conectada.",
+    "err_profile_exists": "O perfil já existe.",
+    "err_profile_not_found": "Perfil não encontrado.",
+    "err_invalid_login": "Login inválido.",
+    "err_network": "Erro de rede.",
+    "err_unexpected": "Ocorreu um erro inesperado.",
+    "err_is_not_deployed": "O contrato não está implantado.",
+    "err_contract_doesnot_belong_to_the_wallet": "Este contrato não pertence à sua carteira.",
+    "err_invalid_wallet_address": "Endereço de carteira inválido.",
+    "err_inviter_not_in_program": "Este convidador ainda não está participando do programa.",
+    "err_inviter_already_chosen": "O convidador já foi escolhido.",
+    "err_inviter_has_no_places": "O convidador ainda não tem vagas.",
+    "err_structure_root_not_found": "Curador \"{{login}}\" não encontrado.",
+    "err_network_timeout": "Tempo limite de rede excedido.",
+    "err_rpc_unreachable": "Servidor RPC inacessível.",
+    "err_balance_fetch_failed": "Falha ao buscar o saldo da carteira.",
+    "err_invalid_payload": "Payload inválido.",
+    "err_unauthorized": "Não autorizado.",
+    "err_insufficient_funds": "Fundos insuficientes.",
+    "err_forbidden": "Proibido.",
+    "err_not_found": "Não encontrado.",
+    "err_invalid_workchain": "Workchain inválida.",
+    "err_local_storage_read_failed": "Falha ao ler dados do armazenamento local.",
+    "err_local_storage_write_failed": "Falha ao gravar dados no armazenamento local.",
+    "err_local_storage_clear_failed": "Falha ao limpar o armazenamento local.",
+    "err_user_rejected_transaction": "A transação foi rejeitada pelo usuário.",
+    "err_transaction_failed": "A transação falhou."
+  }
+}

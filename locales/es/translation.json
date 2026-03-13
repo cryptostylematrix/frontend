@@ -1,0 +1,281 @@
+{
+  "wallet": {
+    "connect": "Conectar billetera",
+    "copyAddress": "Copiar dirección",
+    "disconnect": "Desconectar"
+  },
+  "profile": {
+    "checking": "Comprobando perfiles...",
+    "add": "+ Añadir perfil",
+    "select": "Seleccionar perfil",
+    "title": "Perfil",
+    "update_link": "Editar",
+    "add_link": "Añadir",
+    "create_link": "Crear",
+    "add_login_label": "Inicio de sesión",
+    "add_login_placeholder": "Introduce el login",
+    "add_btn": "Añadir",
+    "cancel_btn": "Cancelar",
+    "create_btn": "Crear",
+    "create_login_label": "Inicio de sesión",
+    "create_login_placeholder": "Login único",
+    "create_firstname_label": "Nombre",
+    "create_firstname_placeholder": "John",
+    "create_lastname_label": "Apellido",
+    "create_lastname_placeholder": "Doe",
+    "create_avatar_label": "URL del avatar",
+    "create_avatar_placeholder": "https://example.com/avatar.png",
+    "create_telegram_label": "Nombre de usuario de Telegram",
+    "create_telegram_placeholder": "@username",
+    "save_btn": "Guardar",
+    "logout_btn": "Cerrar sesión",
+    "update_success": "Perfil guardado correctamente.",
+    "removed": "Perfil eliminado.",
+    "confirm_logout": "¿Seguro que quieres cerrar sesión?",
+    "update_avatar_label": "URL del avatar",
+    "update_avatar_placeholder": "https://...",
+    "update_firstname_label": "Nombre",
+    "update_firstname_placeholder": "John",
+    "update_lastname_label": "Apellido",
+    "update_lastname_placeholder": "Doe",
+    "update_telegram_label": "Nombre de usuario de Telegram",
+    "update_telegram_placeholder": "@username",
+    "errors": {
+      "wallet_not_connected": "La billetera no está conectada",
+      "unexpected": "Ocurrió un error inesperado",
+      "no_active": "No hay un perfil o billetera activos.",
+      "update_failed": "Error inesperado al actualizar el perfil."
+    },
+    "status": {
+      "wallet_title": "Tu billetera no está conectada.",
+      "wallet_description": "Para usar el sitio, debes conectar tu billetera.",
+      "profile_title": "No se ha añadido ningún perfil.",
+      "profile_description": "Para usar el sitio, debes añadir un perfil."
+    }
+  },
+  "footer": {
+    "channel": "Canal",
+    "news": "Noticias",
+    "group": "Comunidad",
+    "youtube": "YouTube",
+    "privacy": "Política de privacidad",
+    "agreement": "Acuerdo de usuario",
+    "copyright": "© {{year}} Crypto Style. Todos los derechos reservados."
+  },
+  "nav": {
+    "home_page": "Inicio",
+    "profile_page": "Perfil",
+    "finance_page": "Finanzas",
+    "multi_page": "Multi"
+  },
+  "home": {
+    "loading": "Cargando...",
+    "balance_error": "Error al cargar el saldo",
+    "balance_unit": "TON",
+    "avatar_alt": "Perfil",
+    "no_avatar_alt": "Sin avatar",
+    "programs": {
+      "title": "Programas disponibles",
+      "programLabel": "Programa",
+      "creatorLabel": "Creador",
+      "descriptionLabel": "Descripción",
+      "open": "Abrir",
+      "multi": {
+        "name": "MULTI Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "Programa MULTI Matrix",
+        "pricing": {
+          "entryLabel": "Entrada",
+          "entryAmount": "15 TON",
+          "exitLabel": "Salida desde",
+          "exitAmount": "3,500 TON"
+        },
+        "features": {
+          "platforms": "6 plataformas",
+          "reinvest": "Reinversión",
+          "clones": "Clones",
+          "structure": "Gestión de estructura"
+        }
+      }
+    }
+  },
+  "finance": {
+    "title": "Finanzas",
+    "columns": {
+      "date": "Fecha",
+      "profile": "Perfil",
+      "addr": "Dirección",
+      "description": "Descripción",
+      "value": "Valor"
+    },
+    "labels": {
+      "date_time": "Fecha/Hora"
+    },
+    "actions": {
+      "load_more": "Cargar más",
+      "copy_addr": "Copiar dirección"
+    },
+    "empty": "Todavía no hay transacciones.",
+    "loading": "Cargando...",
+    "ops": {
+      "bonus": "Bono",
+      "excesses": "Fondos excedentes",
+      "ownership_assigned": "NFT recibido",
+      "bounce": "Operación cancelada",
+      "refund": "Reembolso",
+      "buy_place": "Compra de lugar",
+      "lock_pos": "Posición bloqueada",
+      "unlock_pos": "Posición desbloqueada",
+      "deploy_nft_item": "NFT creado",
+      "edit_content": "NFT actualizado",
+      "choose_inviter": "Curador seleccionado",
+      "transfer": "Transferencia de NFT"
+    }
+  },
+  "multi": {
+    "title": "Multi",
+    "inviter_link": "Invitador",
+    "structure_link": "Estructura",
+    "matrixes_link": "Matrices",
+    "marketing_link": "Marketing",
+    "stat_link": "Estadísticas",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Presentación PDF",
+      "pdfDescription": "Consulta la presentación en tu idioma.",
+      "download": "Descargar PDF",
+      "view": "Ver PDF",
+      "videoTitle": "Resumen en video",
+      "videoDescription": "Mira el resumen de marketing en YouTube.",
+      "watch": "Ver video"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Ruta de navegación",
+      "breadcrumbsPlaceholder": "La ruta de navegación aparecerá aquí.",
+      "searchTitle": "Buscar por login",
+      "searchPlaceholder": "Introduce el login",
+      "searchButton": "Buscar",
+      "treeTitle": "Estructura",
+      "treePlaceholder": "La vista de árbol aparecerá aquí.",
+      "created": "Creado",
+      "curator": "Curador",
+      "referrals": "Referidos",
+      "loadMore": "Cargar más",
+      "notFound": "No se encontró el login de invitación.",
+      "loading": "Cargando...",
+      "expand": "Expandir",
+      "collapse": "Contraer"
+    },
+    "inviter": {
+      "title": "Elegir invitador",
+      "loginLabel": "Login del invitador",
+      "loginPlaceholder": "Introduce el login del invitador",
+      "submit": "Elegir invitador",
+      "success": "Invitador elegido. Las actualizaciones aparecerán pronto; por favor, recarga la página más tarde.",
+      "alreadySelected": "El invitador ya fue seleccionado.",
+      "systemPlaceDescription": "Registro bajo un lugar del sistema para construir un equipo de forma independiente",
+      "confirmChooseTitle": "Confirmar selección del invitador",
+      "confirmChoosePopular": "¿Seguro que quieres elegir a este invitador?"
+    }
+  },
+  "multiMatrix": {
+    "filters": {
+      "title": "Filtros",
+      "show": "Mostrar",
+      "hide": "Ocultar",
+      "matrixes": "Matrices",
+      "places": "Lugares",
+      "placesWithTotal": "Lugares (total {{total}})",
+      "noPlaces": "Sin lugares",
+      "placeOption": "{{place}}",
+      "searchByLogin": "Buscar",
+      "searchPlaceholder": "login",
+      "locks": "Bloqueos",
+      "noLocks": "Sin bloqueos",
+      "left": "izquierda",
+      "right": "derecha",
+      "lockOption": "{{lock}}",
+      "buyPlace": "Comprar nuevo lugar ({{price}} TON)",
+      "confirmTitle": "Confirmar compra",
+      "confirmLockTitle": "Confirmar bloqueo",
+      "confirmUnlockTitle": "Confirmar desbloqueo",
+      "confirmBuy": "¿Estás seguro?",
+      "profileLabel": "Perfil",
+      "buySuccess": "El nuevo lugar aparecerá pronto en la lista de lugares.",
+      "buyFail": "Error",
+      "loadMore": "Cargar más",
+      "nextPos": "Siguiente pos",
+      "updatePage": "Actualizar página",
+      "clone": "clon",
+      "prevMatrixRequired": "Necesitas un lugar en la matriz anterior antes de comprar aquí.",
+      "noPlacesInMatrix": "Necesitas un lugar en esta matriz para realizar esta acción.",
+      "programNotConfirmed": "Primero debes elegir un invitador.",
+      "inviterNotInProgram": "Este invitador aún no participa en el programa."
+    },
+    "queue": {
+      "title": "Cola de tareas",
+      "refreshIn": "Los datos se actualizarán en",
+      "seconds": "segundos",
+      "refreshNow": "Actualizar ahora",
+      "summaryPrefix": "Hay",
+      "summarySuffix": "tareas asociadas al perfil",
+      "task": "Tarea",
+      "count": "Cantidad",
+      "orderIndex": "Número de cola",
+      "buyPlace": "Comprar un lugar",
+      "createClone": "Crear un clon",
+      "lockPos": "Bloquear pos",
+      "unlockPos": "Desbloquear pos",
+      "tasksCount": "{{count}} tareas"
+    },
+    "tree": {
+      "up": "Arriba ▲",
+      "placesBelow_one": "{{formattedCount}} lugar debajo",
+      "placesBelow_other": "{{formattedCount}} lugares debajo",
+      "unlock": "Desbloquear",
+      "lock": "Bloquear",
+      "unlockSuccess": "Solicitud de desbloqueo enviada. El desbloqueo aparecerá pronto; actualiza la página dentro de un rato para verlo.",
+      "lockSuccess": "Solicitud de bloqueo enviada. El bloqueo aparecerá pronto; actualiza la página dentro de un rato para verlo.",
+      "select": "Seleccionar ▼",
+      "buy": "Comprar ({{price}} TON)",
+      "loadingPath": "Cargando ruta...",
+      "breadcrumbEmpty": "La ruta de navegación aparecerá aquí una vez que se seleccione un lugar.",
+      "breadcrumbs": "Ruta de navegación"
+    }
+  },
+  "common": {
+    "warning": {
+      "title": "El sitio está en desarrollo",
+      "description": "Es posible que algunas funciones aún no estén disponibles."
+    }
+  },
+  "errors": {
+    "err_wallet_not_connected": "La billetera no está conectada.",
+    "err_profile_exists": "El perfil ya existe.",
+    "err_profile_not_found": "Perfil no encontrado.",
+    "err_invalid_login": "Login no válido.",
+    "err_network": "Error de red.",
+    "err_unexpected": "Ocurrió un error inesperado.",
+    "err_is_not_deployed": "El contrato no está desplegado.",
+    "err_contract_doesnot_belong_to_the_wallet": "Este contrato no pertenece a tu billetera.",
+    "err_invalid_wallet_address": "Dirección de billetera no válida.",
+    "err_inviter_not_in_program": "El invitador aún no participa en el programa.",
+    "err_inviter_already_chosen": "El invitador ya fue elegido.",
+    "err_inviter_has_no_places": "El invitador aún no tiene lugares.",
+    "err_structure_root_not_found": "Curador \"{{login}}\" no encontrado.",
+    "err_network_timeout": "Tiempo de espera de red agotado.",
+    "err_rpc_unreachable": "Servidor RPC inalcanzable.",
+    "err_balance_fetch_failed": "No se pudo obtener el saldo de la billetera.",
+    "err_invalid_payload": "Payload no válido.",
+    "err_unauthorized": "No autorizado.",
+    "err_insufficient_funds": "Fondos insuficientes.",
+    "err_forbidden": "Prohibido.",
+    "err_not_found": "No encontrado.",
+    "err_invalid_workchain": "Workchain no válida.",
+    "err_local_storage_read_failed": "No se pudieron leer los datos del almacenamiento local.",
+    "err_local_storage_write_failed": "No se pudieron escribir datos en el almacenamiento local.",
+    "err_local_storage_clear_failed": "No se pudo limpiar el almacenamiento local.",
+    "err_user_rejected_transaction": "La transacción fue rechazada por el usuario.",
+    "err_transaction_failed": "La transacción falló."
+  }
+}
