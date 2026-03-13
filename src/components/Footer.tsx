@@ -5,7 +5,7 @@ export default function Footer() {
   const { t, i18n } = useTranslation();
   const currentYear = new Date().getFullYear();
   const copyright = t("footer.copyright", { year: currentYear });
-  const supportedLangs = ["en", "ru", "uk", "kk", "hu", "it", "pl"] as const;
+  const supportedLangs = ["en", "ru", "uk", "kk", "hu", "it", "pl", "de", "fr", "es", "pt"] as const;
   const language = i18n.language?.split(/[-_]/)[0] ?? "en";
   const resolvedLang = supportedLangs.includes(language as (typeof supportedLangs)[number]) ? language : "en";
   const baseUrl = import.meta.env.BASE_URL || "/";

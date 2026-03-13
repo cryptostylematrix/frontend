@@ -73,7 +73,31 @@
     "balance_error": "Ошибка загрузки баланса",
     "balance_unit": "TON",
     "avatar_alt": "Профиль",
-    "no_avatar_alt": "Без аватара"
+    "no_avatar_alt": "Без аватара",
+    "programs": {
+      "title": "Доступные программы",
+      "programLabel": "Программа",
+      "creatorLabel": "Создатель",
+      "descriptionLabel": "Описание",
+      "open": "Открыть",
+      "multi": {
+        "name": "MULTI Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "Программа MULTI Matrix",
+        "pricing": {
+          "entryLabel": "Вход",
+          "entryAmount": "15 TON",
+          "exitLabel": "Выход от",
+          "exitAmount": "3 500 TON"
+        },
+        "features": {
+          "platforms": "6 площадок",
+          "reinvest": "Реинвест",
+          "clones": "Клоны",
+          "structure": "Управление структурой"
+        }
+      }
+    }
   },
   "finance": {
     "title": "Финансы",

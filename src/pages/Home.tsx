@@ -1,9 +1,9 @@
 import "./home.css";
 import no_avatar from "../assets/no-avatar.jpg";
-import WarningBlock from "../components/WarningBlock";
 import { User, Send, Wallet } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import ProfileStatusBlock from "../components/ProfileStatusBlock";
+import AvailablePrograms from "../components/AvailablePrograms";
 import { WalletContext } from "../App";
 import { useProfileContext } from "../context/ProfileContext";
 import { getContractBalance } from "../services/contractsApi";
@@ -95,8 +95,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Optional warnings */}
-      <WarningBlock />
+      <AvailablePrograms />
     </>
   );
 }

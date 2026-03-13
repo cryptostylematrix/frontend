@@ -73,7 +73,31 @@
     "balance_error": "Błąd ładowania salda",
     "balance_unit": "TON",
     "avatar_alt": "Profil",
-    "no_avatar_alt": "Brak awatara"
+    "no_avatar_alt": "Brak awatara",
+    "programs": {
+      "title": "Dostępne programy",
+      "programLabel": "Program",
+      "creatorLabel": "Twórca",
+      "descriptionLabel": "Opis",
+      "open": "Otwórz",
+      "multi": {
+        "name": "MULTI Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "Program MULTI Matrix",
+        "pricing": {
+          "entryLabel": "Wejście",
+          "entryAmount": "15 TON",
+          "exitLabel": "Wyjście od",
+          "exitAmount": "3 500 TON"
+        },
+        "features": {
+          "platforms": "6 platform",
+          "reinvest": "Reinwestycja",
+          "clones": "Klony",
+          "structure": "Zarządzanie strukturą"
+        }
+      }
+    }
   },
   "finance": {
     "title": "Finanse",

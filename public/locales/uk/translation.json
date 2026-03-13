@@ -73,7 +73,31 @@
     "balance_error": "Помилка завантаження балансу",
     "balance_unit": "TON",
     "avatar_alt": "Профіль",
-    "no_avatar_alt": "Без аватарки"
+    "no_avatar_alt": "Без аватарки",
+    "programs": {
+      "title": "Доступні програми",
+      "programLabel": "Програма",
+      "creatorLabel": "Творець",
+      "descriptionLabel": "Опис",
+      "open": "Відкрити",
+      "multi": {
+        "name": "MULTI Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "Програма MULTI Matrix",
+        "pricing": {
+          "entryLabel": "Вхід",
+          "entryAmount": "15 TON",
+          "exitLabel": "Вихід від",
+          "exitAmount": "3 500 TON"
+        },
+        "features": {
+          "platforms": "6 майданчиків",
+          "reinvest": "Реінвест",
+          "clones": "Клони",
+          "structure": "Керування структурою"
+        }
+      }
+    }
   },
   "finance": {
     "title": "Фінанси",

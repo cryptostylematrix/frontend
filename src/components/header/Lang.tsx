@@ -8,13 +8,17 @@ interface LangOption {
 }
 
 const LANGUAGES: LangOption[] = [
+  { code: "de", label: "Deutsch" },
+  { code: "en", label: "English" },
+  { code: "es", label: "Español" },
+  { code: "fr", label: "Français" },
+  { code: "hu", label: "Magyar" },
+  { code: "it", label: "Italiano" },
+  { code: "kk", label: "Қазақша" },
+  { code: "pl", label: "Polski" },
+  { code: "pt", label: "Português" },
   { code: "ru", label: "Русский" },
   { code: "uk", label: "Український" },
-  { code: "pl", label: "Polski" },
-  { code: "it", label: "Italiano" },
-  { code: "en", label: "English" },
-  { code: "kk", label: "Қазақша" },
-  { code: "hu", label: "Magyar" },
 ];
 
 const Lang: React.FC = () => {
@@ -23,8 +27,9 @@ const Lang: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   // Determine current language (default to English)
+  const currentLangCode = i18n.language?.split(/[-_]/)[0] ?? "en";
   const currentLang =
-    LANGUAGES.find((lang) => lang.code === i18n.language) || LANGUAGES.find((l) => l.code === "en")!;
+    LANGUAGES.find((lang) => lang.code === currentLangCode) || LANGUAGES.find((l) => l.code === "en")!;
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 

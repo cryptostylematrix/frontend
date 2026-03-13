@@ -73,7 +73,31 @@
     "balance_error": "Hiba az egyenleg betöltésekor",
     "balance_unit": "TON",
     "avatar_alt": "Profil",
-    "no_avatar_alt": "Nincs avatar"
+    "no_avatar_alt": "Nincs avatar",
+    "programs": {
+      "title": "Elérhető programok",
+      "programLabel": "Program",
+      "creatorLabel": "Létrehozó",
+      "descriptionLabel": "Leírás",
+      "open": "Megnyitás",
+      "multi": {
+        "name": "MULTI Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "MULTI Matrix program",
+        "pricing": {
+          "entryLabel": "Belépés",
+          "entryAmount": "15 TON",
+          "exitLabel": "Kimenet",
+          "exitAmount": "3 500 TON-tól"
+        },
+        "features": {
+          "platforms": "6 platform",
+          "reinvest": "Újrabefektetés",
+          "clones": "Klónok",
+          "structure": "Struktúra kezelése"
+        }
+      }
+    }
   },
   "finance": {
     "title": "Pénzügy",
