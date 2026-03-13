@@ -161,6 +161,7 @@
       "hide": "Жасыру",
       "matrixes": "Матрицалар",
       "places": "Орындар",
+      "placesWithTotal": "Орындар (барлығы {{total}})",
       "noPlaces": "Орындар жоқ",
       "placeOption": "{{place}}",
       "searchByLogin": "Іздеу",

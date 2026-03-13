@@ -161,6 +161,7 @@
       "hide": "Elrejt",
       "matrixes": "Mátrixok",
       "places": "Helyek",
+      "placesWithTotal": "Helyek (összesen {{total}})",
       "noPlaces": "Nincsenek helyek",
       "placeOption": "{{place}}",
       "searchByLogin": "Keresés",

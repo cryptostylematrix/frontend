@@ -161,6 +161,7 @@
       "hide": "Скрыть",
       "matrixes": "Матрицы",
       "places": "Места",
+      "placesWithTotal": "Места (всего {{total}})",
       "noPlaces": "Нет мест",
       "placeOption": "{{place}}",
       "searchByLogin": "Поиск",

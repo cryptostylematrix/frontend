@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./multi-matrix-filters.css";
 import "./multi-matrix-filter-places.css";
-import { fetchPlaces } from "../../../../services/matrixApi";
+import { fetchPlaces, getPlacesCount } from "../../../../services/matrixApi";
 import type { MatrixPlace } from "../../../../services/matrixApi";
 import { useProfileContext } from "../../../../context/ProfileContext";
 import { useMatrixContext } from "../../../../context/MatrixContext";
@@ -10,7 +10,7 @@ import { useMatrixContext } from "../../../../context/MatrixContext";
 const pad2 = (n: number) => n.toString().padStart(2, "0");
 
 export default function MultiMatrixFilterPlaces() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { currentProfile } = useProfileContext();
   const { refreshKey, selectedPlaceAddress, setSelectedPlace, selectedMatrix } = useMatrixContext();
 
@@ -21,6 +21,7 @@ export default function MultiMatrixFilterPlaces() {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [placesCount, setPlacesCount] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
   const previousMatrixRef = useRef<number | undefined>(undefined);
   const previousProfileAddressRef = useRef<string | undefined>(undefined);
@@ -63,6 +64,24 @@ export default function MultiMatrixFilterPlaces() {
         if (cancelled) return;
         setLoading(false);
       });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedMatrix, currentProfile, refreshKey]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (!currentProfile) {
+      setPlacesCount(0);
+      return;
+    }
+
+    getPlacesCount(selectedMatrix, currentProfile.address).then((count) => {
+      if (cancelled) return;
+      setPlacesCount(count);
+    });
 
     return () => {
       cancelled = true;
@@ -113,11 +132,14 @@ export default function MultiMatrixFilterPlaces() {
     return label;
   }, [loading, places, selectedPlaceAddress, t]);
 
+  const placesLabel = useMemo(() => {
+    const formattedTotal = new Intl.NumberFormat(i18n.language).format(placesCount);
+    return t("multiMatrix.filters.placesWithTotal", { total: formattedTotal });
+  }, [i18n.language, placesCount, t]);
+
   return (
     <label className="filter-field">
-      <span className="filter-label">
-        {t("multiMatrix.filters.places", "Places")}
-      </span>
+      <span className="filter-label">{placesLabel}</span>
       <div
         ref={selectRef}
         className="custom-select"

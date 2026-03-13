@@ -161,6 +161,7 @@
       "hide": "Сховати",
       "matrixes": "Матриці",
       "places": "Місця",
+      "placesWithTotal": "Місця (усього {{total}})",
       "noPlaces": "Немає місць",
       "placeOption": "{{place}}",
       "searchByLogin": "Пошук",

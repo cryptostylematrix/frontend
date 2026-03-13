@@ -161,6 +161,7 @@
       "hide": "Hide",
       "matrixes": "Matrixes",
       "places": "Places",
+      "placesWithTotal": "Places (total {{total}})",
       "noPlaces": "No places",
       "placeOption": "{{place}}",
       "searchByLogin": "Search",

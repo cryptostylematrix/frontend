@@ -161,6 +161,7 @@
       "hide": "Nascondi",
       "matrixes": "Matrici",
       "places": "Posti",
+      "placesWithTotal": "Posti (totale {{total}})",
       "noPlaces": "Nessun posto",
       "placeOption": "{{place}}",
       "searchByLogin": "Cerca",
