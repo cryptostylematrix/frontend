@@ -203,14 +203,14 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
 
   return (
     <div className={`details-panel ${isLocked ? "details-panel--locked" : ""} ${isNext ? "details-panel--next" : ""}`}>
-      { isFilled && selectedNode.addr == selectedPlaceAddress && 
+      { isFilled && selectedNode.addr == selectedPlaceAddress && selectedNode.parent_addr &&
         <div className="details-top-actions">
             <button
               type="button"
               className="details-action details-action--ghost"
               onClick={() => {
                 if (selectedNode.kind === "filled") {
-                  setSelectedPlace(selectedNode.parent_addr || undefined);
+                  setSelectedPlace(selectedNode.parent_addr!);
                 }
               }}
               disabled={selectedNode.kind !== "filled"}
