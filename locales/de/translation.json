@@ -96,6 +96,23 @@
           "clones": "Klone",
           "structure": "Strukturverwaltung"
         }
+      },
+      "neo": {
+        "name": "NEO Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "NEO Matrix Programm",
+        "pricing": {
+          "entryLabel": "Einstieg",
+          "entryAmount": "$150",
+          "exitLabel": "Ausstieg ab",
+          "exitAmount": "$72 100"
+        },
+        "features": {
+          "platforms": "8 platforms",
+          "reinvest": "Reinvestition",
+          "clones": "Klone",
+          "structure": "Strukturverwaltung"
+        }
       }
     }
   },
@@ -277,5 +294,52 @@
     "err_local_storage_clear_failed": "Lokaler Speicher konnte nicht geleert werden.",
     "err_user_rejected_transaction": "Die Transaktion wurde vom Benutzer abgelehnt.",
     "err_transaction_failed": "Transaktion fehlgeschlagen."
+  },
+  "neo": {
+    "title": "Neo",
+    "inviter_link": "Einlader",
+    "structure_link": "Struktur",
+    "matrixes_link": "Matrizen",
+    "marketing_link": "Marketing",
+    "stat_link": "Statistik",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Präsentation als PDF",
+      "pdfDescription": "Sehen Sie sich die Präsentation in Ihrer Sprache an.",
+      "download": "PDF herunterladen",
+      "view": "PDF ansehen",
+      "videoTitle": "Videoüberblick",
+      "videoDescription": "Sehen Sie sich den Marketingüberblick auf YouTube an.",
+      "watch": "Video ansehen"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Navigationspfad",
+      "breadcrumbsPlaceholder": "Der Navigationspfad wird hier angezeigt.",
+      "searchTitle": "Nach Login suchen",
+      "searchPlaceholder": "Login eingeben",
+      "searchButton": "Suchen",
+      "treeTitle": "Struktur",
+      "treePlaceholder": "Die Baumansicht wird hier angezeigt.",
+      "created": "Erstellt",
+      "curator": "Kurator",
+      "referrals": "Empfehlungen",
+      "loadMore": "Mehr laden",
+      "notFound": "Einladungs-Login nicht gefunden.",
+      "loading": "Wird geladen...",
+      "expand": "Erweitern",
+      "collapse": "Einklappen"
+    },
+    "inviter": {
+      "title": "Einlader wählen",
+      "loginLabel": "Einlader-Login",
+      "loginPlaceholder": "Einlader-Login eingeben",
+      "submit": "Einlader wählen",
+      "success": "Einlader ausgewählt. Aktualisierungen erscheinen bald, bitte laden Sie die Seite später neu.",
+      "alreadySelected": "Einlader wurde bereits ausgewählt.",
+      "systemPlaceDescription": "Registrierung unter einem Systemplatz für unabhängigen Teamaufbau",
+      "confirmChooseTitle": "Auswahl des Einladers bestätigen",
+      "confirmChoosePopular": "Möchten Sie diesen Einlader wirklich auswählen?"
+    },
+    "submenu_label": "Neo-Untermenü"
   }
 }

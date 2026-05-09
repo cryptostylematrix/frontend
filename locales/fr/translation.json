@@ -96,6 +96,23 @@
           "clones": "Clones",
           "structure": "Gestion de la structure"
         }
+      },
+      "neo": {
+        "name": "NEO Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "Programme NEO Matrix",
+        "pricing": {
+          "entryLabel": "Entrée",
+          "entryAmount": "$150",
+          "exitLabel": "Sortie à partir de",
+          "exitAmount": "$72 100"
+        },
+        "features": {
+          "platforms": "8 platforms",
+          "reinvest": "Réinvestissement",
+          "clones": "Clones",
+          "structure": "Gestion de la structure"
+        }
       }
     }
   },
@@ -277,5 +294,52 @@
     "err_local_storage_clear_failed": "Échec du nettoyage du stockage local.",
     "err_user_rejected_transaction": "La transaction a été rejetée par l'utilisateur.",
     "err_transaction_failed": "La transaction a échoué."
+  },
+  "neo": {
+    "title": "Neo",
+    "inviter_link": "Inviteur",
+    "structure_link": "Structure",
+    "matrixes_link": "Matrices",
+    "marketing_link": "Marketing",
+    "stat_link": "Statistiques",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Présentation PDF",
+      "pdfDescription": "Consultez la présentation dans votre langue.",
+      "download": "Télécharger le PDF",
+      "view": "Voir le PDF",
+      "videoTitle": "Présentation vidéo",
+      "videoDescription": "Regardez la présentation marketing sur YouTube.",
+      "watch": "Voir la vidéo"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Fil d'Ariane",
+      "breadcrumbsPlaceholder": "Le fil d'Ariane apparaîtra ici.",
+      "searchTitle": "Rechercher par identifiant",
+      "searchPlaceholder": "Saisissez l'identifiant",
+      "searchButton": "Rechercher",
+      "treeTitle": "Structure",
+      "treePlaceholder": "La vue arborescente apparaîtra ici.",
+      "created": "Créé",
+      "curator": "Curateur",
+      "referrals": "Filleuls",
+      "loadMore": "Charger plus",
+      "notFound": "Identifiant d'invitation introuvable.",
+      "loading": "Chargement...",
+      "expand": "Développer",
+      "collapse": "Réduire"
+    },
+    "inviter": {
+      "title": "Choisir un inviteur",
+      "loginLabel": "Identifiant de l'inviteur",
+      "loginPlaceholder": "Saisissez l'identifiant de l'inviteur",
+      "submit": "Choisir l'inviteur",
+      "success": "Inviteur choisi. Les mises à jour apparaîtront bientôt, veuillez actualiser la page plus tard.",
+      "alreadySelected": "L'inviteur a déjà été sélectionné.",
+      "systemPlaceDescription": "Inscription sous une place système pour construire une équipe de manière indépendante",
+      "confirmChooseTitle": "Confirmer la sélection de l'inviteur",
+      "confirmChoosePopular": "Voulez-vous vraiment choisir cet inviteur ?"
+    },
+    "submenu_label": "Sous-menu Neo"
   }
 }

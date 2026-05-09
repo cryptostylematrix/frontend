@@ -96,6 +96,23 @@
           "clones": "Clones",
           "structure": "Structure management"
         }
+      },
+      "neo": {
+        "name": "NEO Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "NEO Matrix program",
+        "pricing": {
+          "entryLabel": "Entry",
+          "entryAmount": "$150",
+          "exitLabel": "Exit from",
+          "exitAmount": "$72 100"
+        },
+        "features": {
+          "platforms": "8 platforms",
+          "reinvest": "Reinvest",
+          "clones": "Clones",
+          "structure": "Structure management"
+        }
       }
     }
   },
@@ -262,7 +279,7 @@
     "err_inviter_not_in_program": "The inviter is not participating in the program yet.",
     "err_inviter_already_chosen": "Inviter already chosen.",
     "err_inviter_has_no_places": "The inviter has no places yet.",
-      "err_structure_root_not_found": "Curator \"{{login}}\" not found.",
+    "err_structure_root_not_found": "Curator \"{{login}}\" not found.",
     "err_network_timeout": "Network timeout.",
     "err_rpc_unreachable": "RPC server unreachable.",
     "err_balance_fetch_failed": "Failed to fetch wallet balance.",
@@ -277,5 +294,52 @@
     "err_local_storage_clear_failed": "Failed to clear local storage.",
     "err_user_rejected_transaction": "Transaction was rejected by the user.",
     "err_transaction_failed": "Transaction failed."
+  },
+  "neo": {
+    "title": "Neo",
+    "inviter_link": "Inviter",
+    "structure_link": "Structure",
+    "matrixes_link": "Matrixes",
+    "marketing_link": "Marketing",
+    "stat_link": "Stat",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Presentation PDF",
+      "pdfDescription": "Preview the deck in your language.",
+      "download": "Download PDF",
+      "view": "View PDF",
+      "videoTitle": "Video overview",
+      "videoDescription": "Watch the marketing overview on YouTube.",
+      "watch": "Watch video"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Breadcrumbs",
+      "breadcrumbsPlaceholder": "Breadcrumbs will appear here.",
+      "searchTitle": "Search by login",
+      "searchPlaceholder": "Enter login",
+      "searchButton": "Search",
+      "treeTitle": "Structure",
+      "treePlaceholder": "Tree view will appear here.",
+      "created": "Created",
+      "curator": "Curator",
+      "referrals": "Referrals",
+      "loadMore": "Load more",
+      "notFound": "Login invite not found.",
+      "loading": "Loading...",
+      "expand": "Expand",
+      "collapse": "Collapse"
+    },
+    "inviter": {
+      "title": "Choose inviter",
+      "loginLabel": "Inviter login",
+      "loginPlaceholder": "Enter inviter login",
+      "submit": "Choose inviter",
+      "success": "Inviter chosen. Updates will appear soon, please refresh the page later.",
+      "alreadySelected": "Inviter already selected.",
+      "systemPlaceDescription": "Registration under a system place for independent team building",
+      "confirmChooseTitle": "Confirm inviter selection",
+      "confirmChoosePopular": "Are you sure you want to choose this inviter?"
+    },
+    "submenu_label": "Neo submenu"
   }
 }

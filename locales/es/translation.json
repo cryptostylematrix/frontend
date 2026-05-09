@@ -96,6 +96,23 @@
           "clones": "Clones",
           "structure": "Gestión de estructura"
         }
+      },
+      "neo": {
+        "name": "NEO Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "Programa NEO Matrix",
+        "pricing": {
+          "entryLabel": "Entrada",
+          "entryAmount": "$150",
+          "exitLabel": "Salida desde",
+          "exitAmount": "$72 100"
+        },
+        "features": {
+          "platforms": "8 platforms",
+          "reinvest": "Reinversión",
+          "clones": "Clones",
+          "structure": "Gestión de estructura"
+        }
       }
     }
   },
@@ -277,5 +294,52 @@
     "err_local_storage_clear_failed": "No se pudo limpiar el almacenamiento local.",
     "err_user_rejected_transaction": "La transacción fue rechazada por el usuario.",
     "err_transaction_failed": "La transacción falló."
+  },
+  "neo": {
+    "title": "Neo",
+    "inviter_link": "Invitador",
+    "structure_link": "Estructura",
+    "matrixes_link": "Matrices",
+    "marketing_link": "Marketing",
+    "stat_link": "Estadísticas",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Presentación PDF",
+      "pdfDescription": "Consulta la presentación en tu idioma.",
+      "download": "Descargar PDF",
+      "view": "Ver PDF",
+      "videoTitle": "Resumen en video",
+      "videoDescription": "Mira el resumen de marketing en YouTube.",
+      "watch": "Ver video"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Ruta de navegación",
+      "breadcrumbsPlaceholder": "La ruta de navegación aparecerá aquí.",
+      "searchTitle": "Buscar por login",
+      "searchPlaceholder": "Introduce el login",
+      "searchButton": "Buscar",
+      "treeTitle": "Estructura",
+      "treePlaceholder": "La vista de árbol aparecerá aquí.",
+      "created": "Creado",
+      "curator": "Curador",
+      "referrals": "Referidos",
+      "loadMore": "Cargar más",
+      "notFound": "No se encontró el login de invitación.",
+      "loading": "Cargando...",
+      "expand": "Expandir",
+      "collapse": "Contraer"
+    },
+    "inviter": {
+      "title": "Elegir invitador",
+      "loginLabel": "Login del invitador",
+      "loginPlaceholder": "Introduce el login del invitador",
+      "submit": "Elegir invitador",
+      "success": "Invitador elegido. Las actualizaciones aparecerán pronto; por favor, recarga la página más tarde.",
+      "alreadySelected": "El invitador ya fue seleccionado.",
+      "systemPlaceDescription": "Registro bajo un lugar del sistema para construir un equipo de forma independiente",
+      "confirmChooseTitle": "Confirmar selección del invitador",
+      "confirmChoosePopular": "¿Seguro que quieres elegir a este invitador?"
+    },
+    "submenu_label": "Submenú Neo"
   }
 }
