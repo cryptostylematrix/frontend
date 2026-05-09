@@ -96,6 +96,23 @@
           "clones": "Клондар",
           "structure": "Құрылымды басқару"
         }
+      },
+      "neo": {
+        "name": "NEO Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "NEO Matrix бағдарламасы",
+        "pricing": {
+          "entryLabel": "Кіру",
+          "entryAmount": "$150",
+          "exitLabel": "Шығу",
+          "exitAmount": "$72 100"
+        },
+        "features": {
+          "platforms": "8 платформа",
+          "reinvest": "Қайта инвестиция",
+          "clones": "Клондар",
+          "structure": "Құрылымды басқару"
+        }
       }
     }
   },
@@ -262,7 +279,7 @@
     "err_inviter_not_in_program": "Шақырушы әлі бағдарламаға қатыспайды.",
     "err_inviter_already_chosen": "Шақырушы қазірдің өзінде таңдалған.",
     "err_inviter_has_no_places": "Шақырушыда әлі орын жоқ.",
-      "err_structure_root_not_found": "Куратор \"{{login}}\" табылмады.",
+    "err_structure_root_not_found": "Куратор \"{{login}}\" табылмады.",
     "err_network_timeout": "Желі күту уақыты аяқталды.",
     "err_rpc_unreachable": "RPC серверіне қосылу мүмкін емес.",
     "err_balance_fetch_failed": "Әмиян балансы алынбады.",
@@ -277,5 +294,52 @@
     "err_local_storage_clear_failed": "Жергілікті сақтау орнын тазалау мүмкін болмады.",
     "err_user_rejected_transaction": "Пайдаланушы транзакцияны қабылдамады.",
     "err_transaction_failed": "Транзакция сәтсіз аяқталды."
+  },
+  "neo": {
+    "title": "Neo",
+    "inviter_link": "Шақырушы",
+    "structure_link": "Құрылым",
+    "matrixes_link": "Матрицалар",
+    "marketing_link": "Маркетинг",
+    "stat_link": "Статистика",
+    "marketing": {
+      "title": "Маркетинг",
+      "pdfTitle": "Презентация PDF",
+      "pdfDescription": "Презентацияны өз тіліңізде қараңыз.",
+      "download": "PDF жүктеп алу",
+      "view": "PDF қарау",
+      "videoTitle": "Бейне шолу",
+      "videoDescription": "YouTube-тен маркетингке шолуды қараңыз.",
+      "watch": "Бейнені қарау"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Навигация",
+      "breadcrumbsPlaceholder": "Мұнда навигация көрсетіледі.",
+      "searchTitle": "Логин бойынша іздеу",
+      "searchPlaceholder": "Логинді енгізіңіз",
+      "searchButton": "Іздеу",
+      "treeTitle": "Құрылым",
+      "treePlaceholder": "Ағаш көрінісі мұнда көрсетіледі.",
+      "created": "Жасалған",
+      "curator": "Куратор",
+      "referrals": "Ұсыныстар",
+      "loadMore": "Тағы жүктеу",
+      "notFound": "Логинге шақыру табылмады.",
+      "loading": "Жүктелуде...",
+      "expand": "Ашу",
+      "collapse": "Жабу"
+    },
+    "inviter": {
+      "title": "Шақырушыны таңдау",
+      "loginLabel": "Шақырушының логині",
+      "loginPlaceholder": "Шақырушы логинін енгізіңіз",
+      "submit": "Шақырушыны таңдау",
+      "success": "Шақырушы таңдалды. Жаңартулар жақында шығады, бетті кейінірек жаңартыңыз.",
+      "alreadySelected": "Inviter already selected.",
+      "systemPlaceDescription": "Команданы өз бетінше құру үшін жүйелік орынның астында тіркелу",
+      "confirmChooseTitle": "Шақырушыны таңдауды растау",
+      "confirmChoosePopular": "Осы шақырушыны таңдағыңыз келетініне сенімдісіз бе?"
+    },
+    "submenu_label": "Neo ішкі мәзірі"
   }
 }

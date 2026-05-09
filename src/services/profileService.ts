@@ -6,6 +6,13 @@ import { contractsApi, getCollectionData, getNftAddrByLogin } from "./contractsA
 import { sendTransaction } from "./tonConnectService";
 import { capitalize, normalizeImage, toLower } from "./nftContentHelper";
 
+export const ProfilePrograms = {
+  multi: 0x1ce8c484,
+  neo: 0x435acabf,
+} as const;
+
+export type ProfileProgram = (typeof ProfilePrograms)[keyof typeof ProfilePrograms];
+
 export type ProfileResult =
   | {
       success: true;
@@ -28,13 +35,15 @@ export async function chooseInviter(
   inviter_addr: string,
   seqNo: number,
   invite_addr: string,
+  program: ProfileProgram = ProfilePrograms.multi,
 ): Promise<{ success: boolean; errors?: ErrorCode[] }> {
   if (!profile_addr?.trim() || !inviter_addr?.trim() || !invite_addr?.trim()) {
     return { success: false, errors: [ErrorCode.INVALID_WALLET_ADDRESS] };
   }
 
   try {
-    const result = await contractsApi.buildMultiChooseInviterBody({
+    const result = await contractsApi.buildChooseInviterBody({
+      program,
       inviterAddr: inviter_addr,
       seqNo,
       inviteAddr: invite_addr,

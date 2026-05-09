@@ -9,6 +9,7 @@ import CreateProfile from "./pages/profile/CreateProfile";
 import UpdateProfile from "./pages/profile/UpdateProfile";
 import Finance from "./pages/Finance";
 import Multi from "./pages/multi/Multi";
+import Neo from "./pages/neo/Neo";
 
 import Header from "./components/header/Header";
 import Footer from "./components/Footer";
@@ -21,6 +22,11 @@ import MultiStructure from "./pages/multi/MultiStructure";
 import MultiMatrixes from "./pages/multi/MultiMatrixes";
 import MultiMarketing from "./pages/multi/MultiMarketing";
 import MultiStat from "./pages/multi/MultiStat";
+import NeoInviter from "./pages/neo/NeoInviter";
+import NeoStructure from "./pages/neo/NeoStructure";
+import NeoMatrixes from "./pages/neo/NeoMatrixes";
+import NeoMarketing from "./pages/neo/NeoMarketing";
+import NeoStat from "./pages/neo/NeoStat";
 
 /**
  * Wallet context shared globally
@@ -65,6 +71,15 @@ function App() {
                   <Route path="matrixes" element={<MultiMatrixes />} />
                   <Route path="marketing" element={<MultiMarketing />} />
                   <Route path="stat" element={<MultiStat />} />
+                </Route>
+
+                <Route path="/neo" element={<Neo />}>
+                  <Route index element={<Navigate to="inviter" replace />} />
+                  <Route path="inviter" element={<NeoInviter />} />
+                  <Route path="structure" element={<NeoStructure />} />
+                  <Route path="matrixes" element={<NeoMatrixes />} />
+                  <Route path="marketing" element={<NeoMarketing />} />
+                  <Route path="stat" element={<NeoStat />} />
                 </Route>
               </Routes>
             </div>

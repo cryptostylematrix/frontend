@@ -1,5 +1,7 @@
 import { getInviteAddrBySeqNo, getInviteData, getNftAddrByLogin, getProfileNftData, getProfilePrograms } from "./contractsApi";
 
+export type StructureProgram = "multi" | "neo";
+
 export type StructureNode = {
   addr: string; // invite_addr analogue
   parent_addr: string | null;
@@ -23,7 +25,7 @@ export type StructureChildrenResult = {
 };
 
 export interface StructureService {
-  loadRootByLogin: (login: string) => Promise<StructureRootResult>;
+  loadRootByLogin: (login: string, program?: StructureProgram) => Promise<StructureRootResult>;
   loadChildren: (node: StructureNode, from_ref_no: number, to_ref_no: number) => Promise<StructureChildrenResult>;
 }
 
@@ -48,7 +50,7 @@ export async function loadInviteLogin(inviteAddr: string) : Promise<string | nul
   return profileContentResult.content.login;
 }
 
-export async function loadRootByLogin(login: string): Promise<StructureRootResult> {
+export async function loadRootByLogin(login: string, program: StructureProgram = "multi"): Promise<StructureRootResult> {
   const normalized = login.trim().toLowerCase();
   if (!normalized) return { success: false };
 
@@ -57,15 +59,15 @@ export async function loadRootByLogin(login: string): Promise<StructureRootResul
     if (!profile?.addr) return { success: false };
     const profileData = await getProfileNftData(profile.addr);
 
-    const program = await getProfilePrograms(profile.addr);
-    const multiProgram = program?.multi;
-    if (!multiProgram || multiProgram.confirmed !== 1) return { success: false };
+    const programs = await getProfilePrograms(profile.addr);
+    const programData = programs?.[program];
+    if (!programData || programData.confirmed !== 1) return { success: false };
 
-    const inviteAddress = multiProgram.invite_addr;
+    const inviteAddress = programData.invite_addr;
     const inviteData = await getInviteData(inviteAddress);
     if (!inviteData) return { success: false };
 
-    let inviterAddress: string | null = multiProgram.inviter_addr;
+    let inviterAddress: string | null = programData.inviter_addr;
 
     if (inviterAddress == inviteAddress)
     {

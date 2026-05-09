@@ -96,6 +96,23 @@
           "clones": "Klony",
           "structure": "Zarządzanie strukturą"
         }
+      },
+      "neo": {
+        "name": "NEO Matrix",
+        "creator": "Crypto Style",
+        "imageAlt": "Program NEO Matrix",
+        "pricing": {
+          "entryLabel": "Wejście",
+          "entryAmount": "$150",
+          "exitLabel": "Wyjście od",
+          "exitAmount": "$72 100"
+        },
+        "features": {
+          "platforms": "8 platforms",
+          "reinvest": "Reinwestycja",
+          "clones": "Klony",
+          "structure": "Zarządzanie strukturą"
+        }
       }
     }
   },
@@ -262,7 +279,7 @@
     "err_inviter_not_in_program": "Opiekun jeszcze nie uczestniczy w programie.",
     "err_inviter_already_chosen": "Opiekun został już wybrany.",
     "err_inviter_has_no_places": "Opiekun nie ma jeszcze miejsc.",
-      "err_structure_root_not_found": "Kurator \"{{login}}\" nie został znaleziony.",
+    "err_structure_root_not_found": "Kurator \"{{login}}\" nie został znaleziony.",
     "err_network_timeout": "Przekroczono limit czasu sieci.",
     "err_rpc_unreachable": "Serwer RPC jest niedostępny.",
     "err_balance_fetch_failed": "Nie udało się pobrać salda portfela.",
@@ -277,5 +294,52 @@
     "err_local_storage_clear_failed": "Nie udało się wyczyścić pamięci lokalnej.",
     "err_user_rejected_transaction": "Transakcja została odrzucona przez użytkownika.",
     "err_transaction_failed": "Transakcja nie powiodła się."
+  },
+  "neo": {
+    "title": "Neo",
+    "inviter_link": "Zaprośnik",
+    "structure_link": "Struktura",
+    "matrixes_link": "Macierze",
+    "marketing_link": "Marketing",
+    "stat_link": "Statystyka",
+    "marketing": {
+      "title": "Marketing",
+      "pdfTitle": "Prezentacja PDF",
+      "pdfDescription": "Zobacz materiały w swoim języku.",
+      "download": "Pobierz PDF",
+      "view": "Otwórz PDF",
+      "videoTitle": "Wideo przegląd",
+      "videoDescription": "Obejrzyj przegląd marketingowy na YouTube.",
+      "watch": "Obejrzyj wideo"
+    },
+    "structure": {
+      "breadcrumbsTitle": "Nawigacja okruszkowa",
+      "breadcrumbsPlaceholder": "Breadcrumby pojawią się tutaj.",
+      "searchTitle": "Szukaj po loginie",
+      "searchPlaceholder": "Wpisz login",
+      "searchButton": "Szukaj",
+      "treeTitle": "Struktura",
+      "treePlaceholder": "Widok drzewa pojawi się tutaj.",
+      "created": "Utworzono",
+      "curator": "Kurator",
+      "referrals": "Polecenia",
+      "loadMore": "Załaduj więcej",
+      "notFound": "Zaproszenie dla podanego loginu nie zostało znalezione.",
+      "loading": "Ładowanie...",
+      "expand": "Rozwiń",
+      "collapse": "Zwiń"
+    },
+    "inviter": {
+      "title": "Wybierz opiekuna",
+      "loginLabel": "Login opiekuna",
+      "loginPlaceholder": "Wpisz login opiekuna",
+      "submit": "Wybierz opiekuna",
+      "success": "Opiekun wybrany. Aktualizacje pojawią się wkrótce, odśwież stronę później.",
+      "alreadySelected": "Inviter already selected.",
+      "systemPlaceDescription": "Rejestracja pod systemowym miejscem do samodzielnego budowania zespołu",
+      "confirmChooseTitle": "Potwierdź wybór opiekuna",
+      "confirmChoosePopular": "Czy na pewno chcesz wybrać tego opiekuna?"
+    },
+    "submenu_label": "Podmenu Neo"
   }
 }
