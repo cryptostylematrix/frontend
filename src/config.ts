@@ -1,5 +1,5 @@
-//const defaultMatrixApiHost = "https://cs.apihub160.cc";
-const defaultMatrixApiHost = "http://localhost:5004";
+const defaultMatrixApiHost = "https://cs.apihub160.cc";
+//const defaultMatrixApiHost = "http://localhost:5004";
 const defaultContractsApiHost = defaultMatrixApiHost;
 const defaultMarketingApiHost = defaultMatrixApiHost;
 const defaultNeoMarketingAddr = "EQAc4cKpE4yQpsadUsem6r30HHjjrmmtT13pPsRpvtLSEUHi";
