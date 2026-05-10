@@ -1,22 +1,21 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import "./neo-matrix-filters.css";
-import "./neo-matrix-filter-places.css";
-import { fetchPlaces, getPlacesCount } from "../../../../services/matrixApi";
-import type { MatrixPlace } from "../../../../services/matrixApi";
+import "./matrix-filters.css";
+import "./matrix-filter-places.css";
 import { useProfileContext } from "../../../../context/ProfileContext";
-import { useMatrixContext } from "../../../../context/MatrixContext";
+import { useMarketingContext } from "../../../../context/MarketingContext";
+import { fetchPlaces, getPlacesCount, type MarketingPlace } from "../../../../services/marketingApi";
 
 const pad2 = (n: number) => n.toString().padStart(2, "0");
 
-export default function MultiMatrixFilterPlaces() {
+export default function MatrixFilterPlaces() {
   const { t, i18n } = useTranslation();
   const { currentProfile } = useProfileContext();
-  const { refreshKey, selectedPlaceAddress, setSelectedPlace, selectedMatrix } = useMatrixContext();
+  const { marketingAddr, refreshKey, selectedPlaceAddress, setSelectedPlace, selectedMatrix } = useMarketingContext();
 
   const PAGE_SIZE = 8;
   const selectRef = useRef<HTMLDivElement>(null);
-  const [places, setPlaces] = useState<MatrixPlace[]>([]);
+  const [places, setPlaces] = useState<MarketingPlace[]>([]);
   const [isPlacesOpen, setIsPlacesOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -40,14 +39,14 @@ export default function MultiMatrixFilterPlaces() {
     setTotalPages(1);
     setLoadingMore(false);
 
-    if (!currentProfile) {
+    if (!currentProfile || !marketingAddr) {
       setPlaces([]);
       setLoading(false);
       return;
     }
 
     setLoading(true);
-    fetchPlaces(selectedMatrix, currentProfile.address, 1, PAGE_SIZE)
+    fetchPlaces(marketingAddr, selectedMatrix, currentProfile.address, 1, PAGE_SIZE)
       .then((data) => {
         if (cancelled) return;
         setPlaces(data.items);
@@ -68,17 +67,17 @@ export default function MultiMatrixFilterPlaces() {
     return () => {
       cancelled = true;
     };
-  }, [selectedMatrix, currentProfile, refreshKey]);
+  }, [marketingAddr, selectedMatrix, currentProfile, refreshKey]);
 
   useEffect(() => {
     let cancelled = false;
 
-    if (!currentProfile) {
+    if (!currentProfile || !marketingAddr) {
       setPlacesCount(0);
       return;
     }
 
-    getPlacesCount(selectedMatrix, currentProfile.address).then((count) => {
+    getPlacesCount(marketingAddr, selectedMatrix, currentProfile.address).then((count) => {
       if (cancelled) return;
       setPlacesCount(count);
     });
@@ -86,7 +85,7 @@ export default function MultiMatrixFilterPlaces() {
     return () => {
       cancelled = true;
     };
-  }, [selectedMatrix, currentProfile, refreshKey]);
+  }, [marketingAddr, selectedMatrix, currentProfile, refreshKey]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -100,7 +99,7 @@ export default function MultiMatrixFilterPlaces() {
   }, []);
 
   const groupedPlaces = useMemo(() => {
-    const groups: Record<string, MatrixPlace[]> = {};
+    const groups: Record<string, MarketingPlace[]> = {};
     places.forEach((place) => {
       const date = new Date(Number(place.created_at));
       const dateKey = `${pad2(date.getDate())}.${pad2(
@@ -117,16 +116,16 @@ export default function MultiMatrixFilterPlaces() {
       .filter((group) => group.items.length > 0);
   }, [places]);
 
-  const formatPlaceLabel = (place: MatrixPlace) => {
-    const label = `[${place.place_number}] ${place.login} (${place.fill_count}/4) ${place.clone ? t("multiMatrix.filters.clone", "clone") : ""}`;
-    return { label, isFull: place.fill_count >= 4 };
+  const formatPlaceLabel = (place: MarketingPlace) => {
+    const label = `[${place.place_number}] ${place.login}`;
+    return { label, isFull: false };
   };
 
   const selectedPlaceLabel = useMemo(() => {
     if (loading) return t("home.loading");
     const found = places.find((p) => p.addr === selectedPlaceAddress);
     if (!found) {
-      return places.length > 0 ? "..." : t("multiMatrix.filters.noPlaces", "No places");
+      return places.length > 0 ? "..." : t("neoMatrix.filters.noPlaces", "No places");
     }
     const { label } = formatPlaceLabel(found);
     return label;
@@ -134,7 +133,7 @@ export default function MultiMatrixFilterPlaces() {
 
   const placesLabel = useMemo(() => {
     const formattedTotal = new Intl.NumberFormat(i18n.language).format(placesCount);
-    return t("multiMatrix.filters.placesWithTotal", { total: formattedTotal });
+    return t("neoMatrix.filters.placesWithTotal", { total: formattedTotal });
   }, [i18n.language, placesCount, t]);
 
   return (
@@ -162,7 +161,7 @@ export default function MultiMatrixFilterPlaces() {
               <div className="custom-select__loading">{t("home.loading")}</div>
             ) : places.length === 0 ? (
               <div className="custom-select__empty">
-                {t("multiMatrix.filters.noPlaces", "No places")}
+                {t("neoMatrix.filters.noPlaces", "No places")}
               </div>
             ) : (
               groupedPlaces.map(({ date, items }, idx) => (
@@ -204,7 +203,7 @@ export default function MultiMatrixFilterPlaces() {
                 onClick={() => {
                   if (loadingMore) return;
                   setLoadingMore(true);
-                  fetchPlaces(selectedMatrix, currentProfile!.address, page + 1, PAGE_SIZE)
+                  fetchPlaces(marketingAddr, selectedMatrix, currentProfile!.address, page + 1, PAGE_SIZE)
                     .then((data) => {
                       setPlaces((prev) => [...prev, ...data.items]);
                       setPage(data.page);
@@ -214,7 +213,7 @@ export default function MultiMatrixFilterPlaces() {
                 }}
                 disabled={loadingMore}
               >
-                {loadingMore ? t("home.loading") : t("multiMatrix.filters.loadMore", "Load more")}
+                {loadingMore ? t("home.loading") : t("neoMatrix.filters.loadMore", "Load more")}
               </button>
             )}
           </div>

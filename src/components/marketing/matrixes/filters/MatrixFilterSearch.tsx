@@ -1,30 +1,30 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import "./neo-matrix-filter-search.css";
-import { searchPlaces } from "../../../../services/matrixApi";
-import type { MatrixPlace } from "../../../../services/matrixApi";
+import "./matrix-filter-search.css";
 import { useProfileContext } from "../../../../context/ProfileContext";
-import { useMatrixContext } from "../../../../context/MatrixContext";
+import { useMarketingContext } from "../../../../context/MarketingContext";
+import { searchPlaces, type MarketingPlace } from "../../../../services/marketingApi";
 
-export default function MultiMatrixFilterSearch() {
+export default function MatrixFilterSearch() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
-  const { setSelectedPlace, selectedMatrix } = useMatrixContext();
+  const { marketingAddr, setSelectedPlace, selectedMatrix } = useMarketingContext();
   const [searchLogin, setSearchLogin] = useState("");
-  const [results, setResults] = useState<MatrixPlace[]>([]);
+  const [results, setResults] = useState<MarketingPlace[]>([]);
 
-  const formatLabel = (place: MatrixPlace) => `[${place.place_number}] ${place.login}`;
+  const formatLabel = (place: MarketingPlace) => `[${place.place_number}] ${place.login}`;
 
   useEffect(() => {
     let cancelled = false;
     const query = searchLogin.trim();
-    if (!query || !currentProfile) {
+    if (!query || !currentProfile || !marketingAddr) {
+      setResults([]);
       return () => {
         cancelled = true;
       };
     }
 
-    searchPlaces(selectedMatrix, currentProfile!.address, query, 1, 10).then((data) => {
+    searchPlaces(marketingAddr, selectedMatrix, currentProfile!.address, query, 1, 10).then((data) => {
       if (cancelled) return;
       setResults(data.items);
     });
@@ -32,10 +32,10 @@ export default function MultiMatrixFilterSearch() {
     return () => {
       cancelled = true;
     };
-  }, [searchLogin, selectedMatrix, currentProfile]);
+  }, [marketingAddr, searchLogin, selectedMatrix, currentProfile]);
 
 
-  const selectLogin = (place: MatrixPlace) => {
+  const selectLogin = (place: MarketingPlace) => {
     setSelectedPlace(place.addr);
     setSearchLogin("");
     setResults([]);
@@ -45,14 +45,14 @@ export default function MultiMatrixFilterSearch() {
   return (
     <label className="filter-field">
       <span className="filter-label">
-        {t("multiMatrix.filters.searchByLogin", "Search")}
+        {t("neoMatrix.filters.searchByLogin", "Search")}
       </span>
       <div className="filter-combobox">
         <input
           className="combobox-input"
           type="text"
           name="searchLogin"
-          placeholder={t("multiMatrix.filters.searchPlaceholder", "login")}
+          placeholder={t("neoMatrix.filters.searchPlaceholder", "login")}
           value={searchLogin}
           onChange={(e) => {
             const value = e.target.value;

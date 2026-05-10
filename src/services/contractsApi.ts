@@ -319,6 +319,16 @@ export type MatrixPlaceDataResponse = {
   descendants?: PlaceDescendantsResponse | null;
 };
 
+export type JettonWalletAddressResponse = {
+  wallet_addr: string;
+};
+
+export type JettonWalletDataResponse = {
+  balance: number | string;
+  owner_addr: string;
+  minter_addr: string;
+};
+
 export type ContractBalanceResponse = {
   balance: number;
 };
@@ -379,6 +389,8 @@ export interface ContractsApi {
   getMarketingFirstTask: (addr: string) => Promise<FirstTaskResponse | null>;
   getMarketingData: (addr: string) => Promise<MarketingDataResponse | null>;
   getMatrixPlaceData: (addr: string) => Promise<MatrixPlaceDataResponse | null>;
+  getJettonWalletAddress: (addr: string, ownerAddr: string) => Promise<JettonWalletAddressResponse | null>;
+  getJettonWalletData: (addr: string) => Promise<JettonWalletDataResponse | null>;
 }
 
 const trimTrailingSlash = (value: string) => value.replace(/\/+$/, "");
@@ -714,6 +726,24 @@ export async function getMatrixPlaceData(addr: string): Promise<MatrixPlaceDataR
   return safeGet<MatrixPlaceDataResponse>(url);
 }
 
+export async function getJettonWalletAddress(addr: string, ownerAddr: string): Promise<JettonWalletAddressResponse | null> {
+  const normalizedAddr = addr?.trim();
+  const normalizedOwnerAddr = ownerAddr?.trim();
+  if (!normalizedAddr || !normalizedOwnerAddr) return null;
+
+  const url = new URL(`/contracts/jetton-minter/${normalizedAddr}/wallet-addr`, normalizedBase || defaultOrigin);
+  url.searchParams.set("ownerAddr", normalizedOwnerAddr);
+  return safeGet<JettonWalletAddressResponse>(url.toString());
+}
+
+export async function getJettonWalletData(addr: string): Promise<JettonWalletDataResponse | null> {
+  const normalizedAddr = addr?.trim();
+  if (!normalizedAddr) return null;
+
+  const url = buildUrl(`/contracts/jetton-wallet/${normalizedAddr}/data`);
+  return safeGet<JettonWalletDataResponse>(url);
+}
+
 export const contractsApi: ContractsApi = {
   getInviteAddrBySeqNo,
   getInviteData,
@@ -740,4 +770,6 @@ export const contractsApi: ContractsApi = {
   getMarketingFirstTask,
   getMarketingData,
   getMatrixPlaceData,
+  getJettonWalletAddress,
+  getJettonWalletData,
 };

@@ -1,29 +1,29 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getNextPos } from "../../../../services/matrixApi";
-import { useMatrixContext } from "../../../../context/MatrixContext";
+import { getNextPos } from "../../../../services/marketingApi";
+import { useMarketingContext } from "../../../../context/MarketingContext";
 import { useProfileContext } from "../../../../context/ProfileContext";
 
 
-export default function NextPosButton() {
+export default function MatrixNextPos() {
   const { currentProfile } = useProfileContext();
   const { t } = useTranslation();
-  const { refreshKey, setSelectedPlace, selectedMatrix } = useMatrixContext();
+  const { marketingAddr, refreshKey, setSelectedPlace, selectedMatrix } = useMarketingContext();
   const [nextPos, setNextPos] = useState<{ parent_addr: string; pos: number } | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!currentProfile) {
+    if (!currentProfile || !marketingAddr) {
       setNextPos(null);
       return;
     }
     setLoading(true);
-    getNextPos(selectedMatrix, currentProfile.address)
+    getNextPos(marketingAddr, selectedMatrix, currentProfile.address)
       .then((next) => {
         setNextPos(next ? { parent_addr: next.parent_addr, pos: next.pos } : null);
       })
       .finally(() => setLoading(false));
-  }, [selectedMatrix, currentProfile, refreshKey]);
+  }, [marketingAddr, selectedMatrix, currentProfile, refreshKey]);
 
   return (
     <button
@@ -35,7 +35,7 @@ export default function NextPosButton() {
       }}
       disabled={!nextPos || loading}
     >
-      {loading ? t("home.loading") : t("multiMatrix.filters.nextPos", "Next pos")}
+      {loading ? t("home.loading") : t("neoMatrix.filters.nextPos", "Next pos")}
     </button>
   );
 }

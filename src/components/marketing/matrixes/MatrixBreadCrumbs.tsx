@@ -1,20 +1,19 @@
-import "./neo-matrix-bread-crumbs.css";
+import "./matrix-bread-crumbs.css";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getPath } from "../../../services/matrixApi";
-import type { MatrixPlace } from "../../../services/matrixApi";
-import { useMatrixContext } from "../../../context/MatrixContext";
+import { getPath, type MarketingPlace } from "../../../services/marketingApi";
+import { useMarketingContext } from "../../../context/MarketingContext";
 
-export default function MultiMatrixBreadCrumbs() {
+export default function MatrixBreadCrumbs() {
   const { t } = useTranslation();
-  const { refreshKey, selectedPlaceAddress, rootPlaceAddress, setSelectedPlace } = useMatrixContext();
-  const [path, setPath] = useState<MatrixPlace[] | null>(null);
+  const { marketingAddr, refreshKey, selectedPlaceAddress, rootPlaceAddress, setSelectedPlace } = useMarketingContext();
+  const [path, setPath] = useState<MarketingPlace[] | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
 
-    if (!rootPlaceAddress || !selectedPlaceAddress) {
+    if (!marketingAddr || !rootPlaceAddress || !selectedPlaceAddress) {
       setPath(null);
       setLoading(false);
       return;
@@ -22,7 +21,7 @@ export default function MultiMatrixBreadCrumbs() {
 
     setLoading(true);
     setPath(null);
-    getPath(rootPlaceAddress, selectedPlaceAddress)
+    getPath(marketingAddr, rootPlaceAddress, selectedPlaceAddress)
       .then((places) => {
         if (cancelled) return;
         setPath(places);
@@ -34,7 +33,7 @@ export default function MultiMatrixBreadCrumbs() {
     return () => {
       cancelled = true;
     };
-  }, [rootPlaceAddress, selectedPlaceAddress, refreshKey]);
+  }, [marketingAddr, rootPlaceAddress, selectedPlaceAddress, refreshKey]);
 
   const selectedAddress = useMemo(
     () => selectedPlaceAddress || rootPlaceAddress,

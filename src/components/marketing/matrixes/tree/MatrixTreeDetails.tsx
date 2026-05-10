@@ -1,32 +1,43 @@
-import "./neo-matrix-tree-details.css";
+import "./matrix-tree-details.css";
 import "../../../../pages/profile/update-profile.css";
-import type { TreeNode } from "../../../../services/matrixApi";
-import { useMatrixContext } from "../../../../context/MatrixContext";
+import type { MarketingTreeFilledNode, MarketingTreeNode } from "../../../../services/marketingApi";
+import { getPlacesCount } from "../../../../services/marketingApi";
+import { useMarketingContext } from "../../../../context/MarketingContext";
 import { useTranslation } from "react-i18next";
 import { useProfileContext } from "../../../../context/ProfileContext";
-import { buyPlace, lockPos, unlockPos } from "../../../../services/multiService";
+import { buyPlaceByJetton, buyPlaceByTon, lockPos, unlockPos } from "../../../../services/marketingService";
 import { translateError } from "../../../../errors/errorUtils";
-import { useEffect, useState } from "react";
-import { getPlacesCount } from "../../../../services/matrixApi";
+import { useContext, useEffect, useState } from "react";
 import { getProfileNftData, getProfilePrograms } from "../../../../services/contractsApi";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { Address } from "@ton/core";
 import type { PlacePosData } from "../../../../types/multi";
 import ConfirmDialog from "../../../common/ConfirmDialog";
+import { WalletContext } from "../../../../App";
 
 const formatter = new Intl.NumberFormat("en-US");
 
 type Props = {
-  selectedNode: TreeNode | null;
+  selectedNode: MarketingTreeNode | null;
 };
 
-export function MultiMatrixTreeDetails({ selectedNode }: Props) {
-  const { matrixPrice, setSelectedPlace, selectedMatrix } = useMatrixContext();
+const isFilledNode = (node: MarketingTreeNode): node is MarketingTreeFilledNode => "addr" in node;
+
+export function MatrixTreeDetails({ selectedNode }: Props) {
+  const {
+    jettonMarketing,
+    marketingAddr,
+    matrixCurrency,
+    matrixPrice,
+    selectedMatrix,
+    selectedPlaceAddress,
+    setSelectedPlace,
+  } = useMarketingContext();
   const { currentProfile } = useProfileContext();
-  const { selectedPlaceAddress } = useMatrixContext();
+  const { wallet } = useContext(WalletContext)!;
   const [tonConnectUI] = useTonConnectUI();
   const { t } = useTranslation();
-  const upLabel = t("multiMatrix.tree.up", { defaultValue: "Up ▲" });
+  const upLabel = t("neoMatrix.tree.up", { defaultValue: "Up ▲" });
   const [buyLoading, setBuyLoading] = useState(false);
   const [lockLoading, setLockLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -40,7 +51,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
     setImageFailed(false);
 
     const loadImage = async () => {
-      if (!selectedNode || selectedNode.kind !== "filled") return;
+      if (!selectedNode || !isFilledNode(selectedNode)) return;
       const nftData = await getProfileNftData(selectedNode.profile_addr);
       if (cancelled) return;
       setImageUrl(nftData?.content?.image_url ?? "");
@@ -58,18 +69,15 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
     setConfirmAction(null);
   }, [selectedNode]);
 
-
   if (!selectedNode) {
-    return (
-      <div className="details-panel" />
-    );
+    return <div className="details-panel" />;
   }
 
-  const isFilled = selectedNode.kind === "filled";
+  const isFilled = isFilledNode(selectedNode);
   const isLocked = selectedNode.locked;
   const canLock = selectedNode.can_lock;
   const isLock = selectedNode.is_lock;
-  const isNext = selectedNode.kind === "empty" && selectedNode.is_next_pos;
+  const isNext = !isFilled && selectedNode.is_next_pos;
   const createdAt = isFilled ? new Date(Number(selectedNode.created_at)) : undefined;
   const tonViewerUrl = isFilled ? `https://tonviewer.com/${selectedNode.addr}` : undefined;
   const createdAtDate = createdAt ? createdAt.toLocaleDateString() : undefined;
@@ -80,75 +88,61 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
         hour12: false,
       })
     : undefined;
-  const canBuy = selectedNode.kind == "empty" && selectedNode.can_buy;
+  const canBuy = !isFilled && selectedNode.can_buy;
   const confirmBuyMessage = (
     <>
-      <p>{t("multiMatrix.filters.confirmBuy", "Are you sure?")}</p>
+      <p>{t("neoMatrix.filters.confirmBuy", "Are you sure?")}</p>
       <p>
-        {t("multiMatrix.filters.profileLabel", "Profile")}: <strong>{currentProfile?.login ?? ""}</strong>
+        {t("neoMatrix.filters.profileLabel", "Profile")}: <strong>{currentProfile?.login ?? ""}</strong>
       </p>
     </>
   );
   const confirmTitle =
     confirmAction === "lock"
-      ? t("multiMatrix.filters.confirmLockTitle", "Confirm locking")
+      ? t("neoMatrix.filters.confirmLockTitle", "Confirm locking")
       : confirmAction === "unlock"
-        ? t("multiMatrix.filters.confirmUnlockTitle", "Confirm unlocking")
-        : t("multiMatrix.filters.confirmTitle", "Confirm purchase");
+        ? t("neoMatrix.filters.confirmUnlockTitle", "Confirm unlocking")
+        : t("neoMatrix.filters.confirmTitle", "Confirm purchase");
   const confirmLabel =
     confirmAction === "lock"
-      ? t("multiMatrix.tree.lock", { defaultValue: "Lock" })
+      ? t("neoMatrix.tree.lock", { defaultValue: "Lock" })
       : confirmAction === "unlock"
-        ? t("multiMatrix.tree.unlock", { defaultValue: "Unlock" })
-        : t("multiMatrix.tree.buy", { defaultValue: "Buy", price: matrixPrice });
+        ? t("neoMatrix.tree.unlock", { defaultValue: "Unlock" })
+        : t("neoMatrix.tree.buy", { defaultValue: "Buy", price: matrixPrice });
 
-  const fixedpos: PlacePosData | undefined = selectedNode.parent_addr ? 
-    { parent: Address.parse(selectedNode.parent_addr), pos: selectedNode.pos } :
-    undefined;
+  const fixedpos: PlacePosData | undefined = selectedNode.parent_addr
+    ? { parent: Address.parse(selectedNode.parent_addr), pos: selectedNode.pos }
+    : undefined;
 
   const handleBuy = async () => {
-    if (!currentProfile || !fixedpos) return;
+    if (!currentProfile || !fixedpos || !marketingAddr) return;
 
     setDetailsStatus(null);
     setBuyLoading(true);
 
     try {
-      if (selectedMatrix === 1) {
-        const program = await getProfilePrograms(currentProfile.address);
-        if (!program?.multi || program.multi.confirmed !== 1) {
-          setDetailsStatus({
-            type: "error",
-            text: t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."),
-          });
-          return;
-        }
+      const program = await getProfilePrograms(currentProfile.address);
+      if (!program?.neo || program.neo.confirmed !== 1) {
+        setDetailsStatus({
+          type: "error",
+          text: t("neoMatrix.filters.programNotConfirmed", "You need to choose an inviter first."),
+        });
+        return;
       }
 
-      if (selectedMatrix > 1) {
-        const prevCount = await getPlacesCount(selectedMatrix - 1, currentProfile.address);
-        if (prevCount <= 0) {
-          setDetailsStatus({
-            type: "error",
-            text: t(
-              "multiMatrix.filters.prevMatrixRequired",
-              "You need a place in the previous matrix before buying here."
-            ),
-          });
-          return;
-        }
-      }
-
-      const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, fixedpos);
+      const result = jettonMarketing
+        ? await buyPlaceByJetton(tonConnectUI, marketingAddr, selectedMatrix, currentProfile.address, wallet, fixedpos)
+        : await buyPlaceByTon(tonConnectUI, marketingAddr, selectedMatrix, currentProfile.address, fixedpos);
       if (result.success) {
         setDetailsStatus({
           type: "success",
-          text: t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."),
+          text: t("neoMatrix.filters.buySuccess", "New place will appear on places list soon."),
         });
       } else {
         const code = result.error_code;
         setDetailsStatus({
           type: "error",
-          text: code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"),
+          text: code ? translateError(t, code) : t("neoMatrix.filters.buyFail", "Fail"),
         });
       }
     } finally {
@@ -157,34 +151,34 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
   };
 
   const handleLockToggle = async () => {
-    if (!currentProfile || !fixedpos) return;
+    if (!currentProfile || !fixedpos || !marketingAddr) return;
 
     setDetailsStatus(null);
     setLockLoading(true);
 
     try {
-      const count = await getPlacesCount(selectedMatrix, currentProfile.address);
+      const count = await getPlacesCount(marketingAddr, selectedMatrix, currentProfile.address);
       if (count <= 0) {
         setDetailsStatus({
           type: "error",
           text: t(
-            "multiMatrix.filters.noPlacesInMatrix",
+            "neoMatrix.filters.noPlacesInMatrix",
             "You need a place in this matrix to perform this action."
           ),
         });
         return;
       }
       const handler = isLock ? unlockPos : lockPos;
-      const result = await handler(tonConnectUI, Date.now(), selectedMatrix, currentProfile.address, fixedpos);
+      const result = await handler(tonConnectUI, marketingAddr, selectedMatrix, currentProfile.address, fixedpos);
       if (result.success) {
         setDetailsStatus({
           type: "success",
           text: isLock
-            ? t("multiMatrix.tree.unlockSuccess", {
+            ? t("neoMatrix.tree.unlockSuccess", {
                 defaultValue:
                   "Unlock request sent. The unlock will appear soon; update the page in a while to see it.",
               })
-            : t("multiMatrix.tree.lockSuccess", {
+            : t("neoMatrix.tree.lockSuccess", {
                 defaultValue:
                   "Lock request sent. The lock will appear soon; update the page in a while to see it.",
               }),
@@ -193,7 +187,7 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
         const code = result.error_code;
         setDetailsStatus({
           type: "error",
-          text: code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"),
+          text: code ? translateError(t, code) : t("neoMatrix.filters.buyFail", "Fail"),
         });
       }
     } finally {
@@ -203,24 +197,19 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
 
   return (
     <div className={`details-panel ${isLocked ? "details-panel--locked" : ""} ${isNext ? "details-panel--next" : ""}`}>
-      { isFilled && selectedNode.addr == selectedPlaceAddress && selectedNode.parent_addr &&
+      {isFilled && selectedNode.addr === selectedPlaceAddress && selectedNode.parent_addr && (
         <div className="details-top-actions">
-            <button
-              type="button"
-              className="details-action details-action--ghost"
-              onClick={() => {
-                if (selectedNode.kind === "filled") {
-                  setSelectedPlace(selectedNode.parent_addr!);
-                }
-              }}
-              disabled={selectedNode.kind !== "filled"}
-            >
-              {upLabel}
-            </button>
+          <button
+            type="button"
+            className="details-action details-action--ghost"
+            onClick={() => setSelectedPlace(selectedNode.parent_addr!)}
+          >
+            {upLabel}
+          </button>
         </div>
-      }
+      )}
 
-      {isFilled && 
+      {isFilled && (
         <>
           <div className="details-card-row">
             <div className="details-avatar details-avatar--inline">
@@ -234,37 +223,35 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
                 <div className="details-avatar__placeholder" aria-hidden />
               )}
             </div>
-              <div className="details-meta">
+            <div className="details-meta">
               <div className="details-meta__top">
-                <span className="details-type-inline">{selectedNode.clone ? "⧉" : "$"}</span>
+                <span className="details-type-inline">$</span>
                 <span className="details-id-inline">#{selectedNode.place_number}</span>
 
-              <a
+                <a
                   className="details-meta__tonviewer-link"
                   href={tonViewerUrl}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={t("multiMatrix.tree.viewInTonViewer", {
+                  aria-label={t("neoMatrix.tree.viewInTonViewer", {
                     defaultValue: "Open in TonViewer",
                   })}
                 >
                   <span className="details-meta__tonviewer-label">
-                    {t("multiMatrix.tree.toViewer", { defaultValue: "tonviewer" })}
+                    {t("neoMatrix.tree.toViewer", { defaultValue: "tonviewer" })}
                     <span className="details-meta__tonviewer-arrow">➤</span>
                   </span>
                 </a>
-
               </div>
 
-            <div className="details-meta__date">
-              { createdAtDate }{" "}
-              { createdAtTime }
-            </div>
+              <div className="details-meta__date">
+                {createdAtDate} {createdAtTime}
+              </div>
 
-            <div className="details-meta__login">{selectedNode.profile_login}</div>
-            <div className="details-meta__desc">
-              {t("multiMatrix.tree.placesBelow", {
-                count: selectedNode.descendants,
+              <div className="details-meta__login">{selectedNode.profile_login}</div>
+              <div className="details-meta__desc">
+                {t("neoMatrix.tree.placesBelow", {
+                  count: selectedNode.descendants,
                   formattedCount: formatter.format(selectedNode.descendants),
                   defaultValue: "{{formattedCount}} place below",
                   defaultValue_plural: "{{formattedCount}} places below",
@@ -272,43 +259,41 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
               </div>
             </div>
           </div>
-          
-          { selectedNode.addr != selectedPlaceAddress && 
+
+          {selectedNode.addr !== selectedPlaceAddress && (
             <div className="details-desc-actions">
               <button
                 type="button"
                 className="details-action details-action--ghost"
-                onClick={() => {
-                  setSelectedPlace(selectedNode.kind === "filled" ? selectedNode.addr : undefined);
-                }}
+                onClick={() => setSelectedPlace(selectedNode.addr)}
               >
-                {t("multiMatrix.tree.select", { defaultValue: "Select ▼" })}
+                {t("neoMatrix.tree.select", { defaultValue: "Select ▼" })}
               </button>
             </div>
-          }
+          )}
         </>
-      }
+      )}
 
-      { canBuy && fixedpos &&
+      {canBuy && fixedpos && (
         <button
-            type="button"
-            className="details-action details-action--primary"
-            onClick={() => {
-              if (currentProfile) setConfirmAction("buy");
-            }}
-            disabled={buyLoading}
-          >
-            {buyLoading
-              ? t("home.loading", "Loading...")
-              : t("multiMatrix.tree.buy", {
-                  defaultValue: "Buy ({{price}} TON)",
-                  price: matrixPrice,
+          type="button"
+          className="details-action details-action--primary"
+          onClick={() => {
+            if (currentProfile) setConfirmAction("buy");
+          }}
+          disabled={buyLoading}
+        >
+          {buyLoading
+            ? t("home.loading", "Loading...")
+            : t("neoMatrix.tree.buy", {
+                defaultValue: "Buy ({{price}} {{currency}})",
+                price: matrixPrice,
+                currency: matrixCurrency,
               })}
         </button>
-      }
+      )}
 
-
-      { (isLock || canLock) && fixedpos &&
+      {(isLock || canLock) && fixedpos && (
         <button
           type="button"
           className={`details-action ${!isLock ? "danger" : ""}`}
@@ -318,10 +303,10 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
           {lockLoading
             ? t("home.loading", "Loading...")
             : isLock
-              ? t("multiMatrix.tree.unlock", { defaultValue: "Unlock" })
-              : t("multiMatrix.tree.lock", { defaultValue: "Lock" })}
+              ? t("neoMatrix.tree.unlock", { defaultValue: "Unlock" })
+              : t("neoMatrix.tree.lock", { defaultValue: "Lock" })}
         </button>
-      }
+      )}
 
       {detailsStatus && (
         <div className="details-status-row">

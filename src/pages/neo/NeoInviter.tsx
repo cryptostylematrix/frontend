@@ -9,8 +9,8 @@ import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { ErrorCode } from "../../errors/ErrorCodes";
 import { translateError } from "../../errors/errorUtils";
 import { getProfilePrograms } from "../../services/contractsApi";
-import NeoInviterInviterData from "../../components/neo/inviter/NeoInviterInviterData";
-import NeoInviterChooseInviter from "../../components/neo/inviter/NeoInviterChooseInviter";
+import NeoInviterInviterData from "../../components/marketing/inviter/NeoInviterInviterData";
+import NeoInviterChooseInviter from "../../components/marketing/inviter/NeoInviterChooseInviter";
 
 type ProgramInfo = {
   confirmed: boolean;

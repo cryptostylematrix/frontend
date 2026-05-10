@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import "./neo-matrix-filters.css";
-import "./neo-matrix-filter-locks.css";
-import "./neo-matrix-filter-places.css";
-import { fetchLocks } from "../../../../services/matrixApi";
-import type { MatrixLock } from "../../../../services/matrixApi";
+import "./matrix-filters.css";
+import "./matrix-filter-locks.css";
+import "./matrix-filter-places.css";
 import { useProfileContext } from "../../../../context/ProfileContext";
-import { useMatrixContext } from "../../../../context/MatrixContext";
+import { useMarketingContext } from "../../../../context/MarketingContext";
+import { fetchLocks, type MarketingLock } from "../../../../services/marketingApi";
 
-export default function MultiMatrixFilterLocks() {
+export default function MatrixFilterLocks() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
-  const { refreshKey, setSelectedPlace, selectedMatrix, selectedPlaceAddress } = useMatrixContext();
-  const [locks, setLocks] = useState<MatrixLock[]>([]);
+  const { marketingAddr, refreshKey, setSelectedPlace, selectedMatrix, selectedPlaceAddress } = useMarketingContext();
+  const [locks, setLocks] = useState<MarketingLock[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -27,13 +26,13 @@ export default function MultiMatrixFilterLocks() {
     setTotalPages(1);
     setLoadingMore(false);
 
-    if (!currentProfile) {
+    if (!currentProfile || !marketingAddr) {
       setLocks([]);
       return;
     }
 
     setLoading(true);
-    fetchLocks(selectedMatrix, currentProfile!.address, 1, PAGE_SIZE)
+    fetchLocks(marketingAddr, selectedMatrix, currentProfile!.address, 1, PAGE_SIZE)
       .then((data) => {
         if (cancelled) return;
         setLocks(data.items);
@@ -49,12 +48,12 @@ export default function MultiMatrixFilterLocks() {
     return () => {
       cancelled = true;
     };
-  }, [selectedMatrix, currentProfile, refreshKey]);
+  }, [marketingAddr, selectedMatrix, currentProfile, refreshKey]);
 
   return (
     <label className="filter-field">
       <span className="filter-label">
-        {t("multiMatrix.filters.locks", "Locks")}
+        {t("neoMatrix.filters.locks", "Locks")}
       </span>
       <div className="custom-select" tabIndex={0} onBlur={() => setIsOpen(false)}>
         <button
@@ -69,7 +68,7 @@ export default function MultiMatrixFilterLocks() {
             ? t("home.loading")
             : locks.length > 0
                 ? "..."
-                : t("multiMatrix.filters.noLocks", "No locks")}
+                : t("neoMatrix.filters.noLocks", "No locks")}
           <span className={`custom-select__arrow ${isOpen ? "up" : ""}`} />
         </button>
 
@@ -79,15 +78,15 @@ export default function MultiMatrixFilterLocks() {
               <div className="custom-select__loading">{t("home.loading")}</div>
             ) : locks.length === 0 ? (
               <div className="custom-select__empty">
-                {t("multiMatrix.filters.noLocks", "No locks")}
+                {t("neoMatrix.filters.noLocks", "No locks")}
               </div>
             ) : (
               <>
                 {locks.map((lock) => {
                   const lockSide =
                     lock.locked_pos == 0
-                      ? t("multiMatrix.filters.left", "left")
-                      : t("multiMatrix.filters.right", "right");
+                      ? t("neoMatrix.filters.left", "left")
+                      : t("neoMatrix.filters.right", "right");
                   const label = `[${lock.place_number}] ${lock.place_profile_login} (${lockSide})`;
                   const isSelected = lock.place_addr === selectedPlaceAddress;
                 
@@ -118,7 +117,7 @@ export default function MultiMatrixFilterLocks() {
                     onClick={() => {
                       if (loadingMore) return;
                       setLoadingMore(true);
-                  fetchLocks(selectedMatrix, currentProfile!.address, page + 1, PAGE_SIZE)
+                  fetchLocks(marketingAddr, selectedMatrix, currentProfile!.address, page + 1, PAGE_SIZE)
                     .then((data) => {
                       setLocks((prev) => [...prev, ...data.items]);
                       setPage(data.page);
@@ -128,7 +127,7 @@ export default function MultiMatrixFilterLocks() {
                     }}
                     disabled={loadingMore}
                   >
-                    {loadingMore ? t("home.loading") : t("multiMatrix.filters.loadMore", "Load more")}
+                    {loadingMore ? t("home.loading") : t("neoMatrix.filters.loadMore", "Load more")}
                   </button>
                 )}
               </>

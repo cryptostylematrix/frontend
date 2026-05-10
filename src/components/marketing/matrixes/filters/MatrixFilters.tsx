@@ -1,25 +1,28 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import "./neo-matrix-filters.css";
-import MultiMatrixFilterPlaces from "./NeoMatrixFilterPlaces";
-import MultiMatrixFilterLocks from "./NeoMatrixFilterLocks";
-import MultiMatrixFilterSearch from "./NeoMatrixFilterSearch";
-import NextPosButton from "./NeoMatrixNextPos";
+import "./matrix-filters.css";
+import MatrixFilterPlaces from "./MatrixFilterPlaces";
+import MatrixFilterLocks from "./MatrixFilterLocks";
+import MatrixFilterSearch from "./MatrixFilterSearch";
+import MatrixNextPos from "./MatrixNextPos";
 import { useProfileContext } from "../../../../context/ProfileContext";
-import { buyPlace } from "../../../../services/multiService";
+import { WalletContext } from "../../../../App";
+import { buyPlaceByJetton, buyPlaceByTon } from "../../../../services/marketingService";
 import { translateError } from "../../../../errors/errorUtils";
 import "../../../../pages/profile/update-profile.css";
-import { useMatrixContext } from "../../../../context/MatrixContext";
-import { getRootPlace, getPlacesCount } from "../../../../services/matrixApi";
+import { useMarketingContext } from "../../../../context/MarketingContext";
+import { getRootPlace } from "../../../../services/marketingApi";
 import { getProfilePrograms } from "../../../../services/contractsApi";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import ConfirmDialog from "../../../common/ConfirmDialog";
 
-export default function MultiMatrixFilters() {
+export default function MatrixFilters() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
+  const { wallet } = useContext(WalletContext)!;
   const [tonConnectUI] = useTonConnectUI();
   const {
+    marketingAddr,
     resetRooPlacetAndSelectedPlace,
     resetAll,
     setRootPlace,
@@ -27,8 +30,11 @@ export default function MultiMatrixFilters() {
     refreshMatrixPage,
     selectedMatrix,
     setSelectedMatrix,
+    matrixOptions,
     matrixPrice,
-  } = useMatrixContext();
+    matrixCurrency,
+    jettonMarketing,
+  } = useMarketingContext();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [buyStatus, setBuyStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
   const [buyLoading, setBuyLoading] = useState(false);
@@ -43,27 +49,28 @@ export default function MultiMatrixFilters() {
   }, [selectedMatrix, currentProfile]);
 
   useEffect(() => {
-    if (!currentProfile) return;
+    if (!currentProfile || !marketingAddr) return;
 
     const run = async () => {
-      getRootPlace(selectedMatrix, currentProfile.address).then((root) => {
+      getRootPlace(marketingAddr, selectedMatrix, currentProfile.address).then((root) => {
         setRootPlace(root?.addr);
       });
     };
 
     run();
 
-  }, [selectedMatrix, currentProfile, refreshKey]);
+  }, [marketingAddr, selectedMatrix, currentProfile, refreshKey, setRootPlace]);
 
-  const buyPlaceLabel = t("multiMatrix.filters.buyPlace", {
+  const buyPlaceLabel = t("neoMatrix.filters.buyPlace", {
     price: matrixPrice,
-    defaultValue: `Buy new place (${matrixPrice} TON)`,
+    currency: matrixCurrency,
+    defaultValue: `Buy new place (${matrixPrice} ${matrixCurrency})`,
   });
   const confirmBuyMessage = (
     <>
-      <p>{t("multiMatrix.filters.confirmBuy", "Are you sure?")}</p>
+      <p>{t("neoMatrix.filters.confirmBuy", "Are you sure?")}</p>
       <p>
-        {t("multiMatrix.filters.profileLabel", "Profile")}: <strong>{currentProfile?.login ?? ""}</strong>
+        {t("neoMatrix.filters.profileLabel", "Profile")}: <strong>{currentProfile?.login ?? ""}</strong>
       </p>
     </>
   );
@@ -75,42 +82,28 @@ export default function MultiMatrixFilters() {
     setBuyStatus(null);
 
     try {
-      if (selectedMatrix === 1) {
-        const program = await getProfilePrograms(currentProfile.address);
-        if (!program?.multi || program.multi.confirmed !== 1) {
-          setBuyStatus({
-            type: "error",
-            message: t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."),
-          });
-          return;
-        }
+      const program = await getProfilePrograms(currentProfile.address);
+      if (!program?.neo || program.neo.confirmed !== 1) {
+        setBuyStatus({
+          type: "error",
+          message: t("neoMatrix.filters.programNotConfirmed", "You need to choose an inviter first."),
+        });
+        return;
       }
 
-      if (selectedMatrix > 1) {
-        const prevCount = await getPlacesCount(selectedMatrix - 1, currentProfile.address);
-        if (prevCount <= 0) {
-          setBuyStatus({
-            type: "error",
-            message: t(
-              "multiMatrix.filters.prevMatrixRequired",
-              "You need a place in the previous matrix before buying here."
-            ),
-          });
-          return;
-        }
-      }
-
-      const result = await buyPlace(tonConnectUI, selectedMatrix, currentProfile.address, null);
+      const result = jettonMarketing
+        ? await buyPlaceByJetton(tonConnectUI, marketingAddr, selectedMatrix, currentProfile.address, wallet, null)
+        : await buyPlaceByTon(tonConnectUI, marketingAddr, selectedMatrix, currentProfile.address, null);
       if (result.success) {
         setBuyStatus({
           type: "success",
-          message: t("multiMatrix.filters.buySuccess", "New place will appear on places list soon."),
+          message: t("neoMatrix.filters.buySuccess", "New place will appear on places list soon."),
         });
       } else {
         const code = result.error_code;
         setBuyStatus({
           type: "error",
-          message: code ? translateError(t, code) : t("multiMatrix.filters.buyFail", "Fail"),
+          message: code ? translateError(t, code) : t("neoMatrix.filters.buyFail", "Fail"),
         });
       }
     } finally {
@@ -122,7 +115,7 @@ export default function MultiMatrixFilters() {
     <div className="matrix-row matrix-row--filters">
       <div className="filters-toggle-bar">
         <span className="filters-toggle-label">
-          {t("multiMatrix.filters.title", "Filters")}
+          {t("neoMatrix.filters.title", "Filters")}
         </span>
         <button
           type="button"
@@ -132,8 +125,8 @@ export default function MultiMatrixFilters() {
           aria-controls="filters-body"
         >
           {isCollapsed
-            ? t("multiMatrix.filters.show", "Show")
-            : t("multiMatrix.filters.hide", "Hide")}
+            ? t("neoMatrix.filters.show", "Show")
+            : t("neoMatrix.filters.hide", "Hide")}
         </button>
       </div>
 
@@ -144,7 +137,7 @@ export default function MultiMatrixFilters() {
         <div className="filters-grid">
         <label className="filter-field">
           <span className="filter-label">
-            {t("multiMatrix.filters.matrixes", "Matrixes")}
+            {t("neoMatrix.filters.matrixes", "Matrixes")}
           </span>
           <select
             className="filter-select"
@@ -155,19 +148,19 @@ export default function MultiMatrixFilters() {
               e.currentTarget.blur();
             }}
           >
-            {[1, 2, 3, 4, 5, 6].map((value) => (
-              <option key={value} value={value}>
-                {value}
+            {matrixOptions.map((matrix) => (
+              <option key={matrix.value} value={matrix.value}>
+                {matrix.label}
               </option>
             ))}
           </select>
         </label>
 
-        <MultiMatrixFilterPlaces />
+        <MatrixFilterPlaces />
 
-        <MultiMatrixFilterSearch />
+        <MatrixFilterSearch />
 
-        <MultiMatrixFilterLocks />
+        <MatrixFilterLocks />
         </div>
 
         <div className="filter-actions">
@@ -181,13 +174,13 @@ export default function MultiMatrixFilters() {
           >
             {buyLoading ? t("home.loading") : buyPlaceLabel}
           </button>
-          <NextPosButton />
+          <MatrixNextPos />
           <button
             type="button"
             className="filter-button secondary next-pos-style"
             onClick={refreshMatrixPage}
           >
-            {t("multiMatrix.filters.updatePage", "Update page")}
+            {t("neoMatrix.filters.updatePage", "Update page")}
           </button>
           {buyStatus && (
             <div className="buy-status-row">
@@ -201,9 +194,9 @@ export default function MultiMatrixFilters() {
 
       <ConfirmDialog
         open={showBuyConfirm}
-        title={t("multiMatrix.filters.confirmTitle", "Confirm purchase")}
+        title={t("neoMatrix.filters.confirmTitle", "Confirm purchase")}
         message={confirmBuyMessage}
-        confirmLabel={t("multiMatrix.filters.buyPlace", { defaultValue: "Buy", price: matrixPrice })}
+        confirmLabel={buyPlaceLabel}
         cancelLabel={t("common.cancel", "Cancel")}
         onCancel={() => setShowBuyConfirm(false)}
         onConfirm={() => {

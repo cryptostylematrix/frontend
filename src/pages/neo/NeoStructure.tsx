@@ -1,7 +1,7 @@
 import "./neo-structure.css";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import NeoStructureTree from "../../components/neo/structure/NeoStructureTree";
+import NeoStructureTree from "../../components/marketing/structure/NeoStructureTree";
 import { useProfileContext } from "../../context/ProfileContext";
 
 export default function NeoStructure() {

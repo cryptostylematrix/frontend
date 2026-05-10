@@ -1,16 +1,17 @@
 
 import { useContext } from "react";
-import NeoMatrixFilters from "../../components/neo/matrixes/filters/NeoMatrixFilters";
-import NeoMatrixBreadCrumbs from "../../components/neo/matrixes/NeoMatrixBreadCrumbs";
-import NeoMatrixTree from "../../components/neo/matrixes/tree/NeoMatrixTree";
-import TaskQueueBlock from "../../components/neo/matrixes/TaskQueueBlock";
+import MatrixFilters from "../../components/marketing/matrixes/filters/MatrixFilters";
+import MatrixBreadCrumbs from "../../components/marketing/matrixes/MatrixBreadCrumbs";
+import MatrixTree from "../../components/marketing/matrixes/tree/MatrixTree";
+import TaskQueueBlock from "../../components/marketing/matrixes/TaskQueueBlock";
 import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { WalletContext } from "../../App";
 import { useProfileContext } from "../../context/ProfileContext";
-import { MatrixProvider } from "../../context/MatrixContext";
+import { MarketingProvider } from "../../context/MarketingContext";
 import { getProfilePrograms } from "../../services/contractsApi";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { appConfig } from "../../config";
 
 export default function NeoMatrixes() {
   const { wallet } = useContext(WalletContext)!;
@@ -61,13 +62,13 @@ export default function NeoMatrixes() {
   }
 
   return (
-    <MatrixProvider>
+    <MarketingProvider marketingAddr={appConfig.neo.marketingAddr}>
       <section className="neo-matrixes">
-        <NeoMatrixFilters />
+        <MatrixFilters />
         <TaskQueueBlock />
-        <NeoMatrixBreadCrumbs />
-        <NeoMatrixTree />
+        <MatrixBreadCrumbs />
+        <MatrixTree />
       </section>
-    </MatrixProvider>
+    </MarketingProvider>
   );
 }

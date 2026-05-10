@@ -109,9 +109,6 @@ export async function loadRootByLogin(login: string, program: StructureProgram =
 }
 
 export async function loadChildren(node: StructureNode, from_ref_no: number, to_ref_no: number): Promise<StructureChildrenResult> {
-  console.log(from_ref_no);
-  console.log(to_ref_no);
-
   const parent_addr = node.addr.trim();
   if (!parent_addr) return { success: false, children: [] };
 

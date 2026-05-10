@@ -13,7 +13,7 @@ export default function Neo() {
       {/* Neo subpage content */}
       <nav className="neo-submenu"  aria-label={t("neo.submenu_label")}>
         <ul>
-          <li hidden>
+          <li>
             <NavLink
               to="/neo/inviter"
               className={({ isActive }) => (isActive ? "active" : "")}
@@ -28,7 +28,7 @@ export default function Neo() {
                 {t("neo.structure_link")}
               </NavLink>
           </li>
-          <li hidden>
+          <li>
             <NavLink
               to="/neo/matrixes"
               className={({ isActive }) => (isActive ? "active" : "")}>
@@ -42,7 +42,7 @@ export default function Neo() {
                 {t("neo.marketing_link")}
               </NavLink>
           </li>
-          <li hidden>
+          <li>
             <NavLink
               to="/neo/stat"
               className={({ isActive }) => (isActive ? "active" : "")}>
