@@ -12,6 +12,7 @@ export default function AvailablePrograms() {
       image: "cs-big.png",
       creatorLink: "https://t.me/cryptostylematrix",
       creatorHandle: "@cryptostylematrix",
+      features: ["platforms", "reinvest", "clones", "structure"],
     },
     {
       key: "neo",
@@ -19,6 +20,7 @@ export default function AvailablePrograms() {
       image: "neoclub.png",
       creatorLink: "https://t.me/cryptostylematrix",
       creatorHandle: "@cryptostylematrix",
+      features: ["platforms", "reinvest", "linear", "tetra", "clones", "structure"],
     },
   ] as const;
 
@@ -61,10 +63,11 @@ export default function AvailablePrograms() {
 
             <div className="program-card__content">
               <div className="program-card__tags">
-                <span className="program-card__tag">{t(`home.programs.${program.key}.features.platforms`)}</span>
-                <span className="program-card__tag">{t(`home.programs.${program.key}.features.reinvest`)}</span>
-                <span className="program-card__tag">{t(`home.programs.${program.key}.features.clones`)}</span>
-                <span className="program-card__tag">{t(`home.programs.${program.key}.features.structure`)}</span>
+                {program.features.map((feature) => (
+                  <span className="program-card__tag" key={feature}>
+                    {t(`home.programs.${program.key}.features.${feature}`)}
+                  </span>
+                ))}
               </div>
 
               <div className="program-card__footer">

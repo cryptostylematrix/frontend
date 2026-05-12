@@ -135,9 +135,35 @@ export type ProgramDataResponse = {
   confirmed: number;
 };
 
-export type ProfileProgramsResponse = {
+type ProfileProgramsApiResponse = Array<Record<string, ProgramDataResponse>>;
+
+export type ProfileProgramsResponse = Record<string, ProgramDataResponse | null | undefined> & {
   multi?: ProgramDataResponse | null;
   neo?: ProgramDataResponse | null;
+};
+
+const profileProgramKeys = {
+  multi: "1CE8C484",
+  neo: "435ACABF",
+} as const;
+
+const normalizeProfileProgramKey = (key: string) => key.trim().replace(/^0x/i, "").toUpperCase();
+
+const normalizeProfilePrograms = (programs: ProfileProgramsApiResponse | null): ProfileProgramsResponse | null => {
+  if (!programs) return null;
+
+  const normalized: ProfileProgramsResponse = {};
+
+  for (const programMap of programs) {
+    for (const [key, value] of Object.entries(programMap)) {
+      normalized[normalizeProfileProgramKey(key)] = value;
+    }
+  }
+
+  normalized.multi = normalized[profileProgramKeys.multi] ?? null;
+  normalized.neo = normalized[profileProgramKeys.neo] ?? null;
+
+  return normalized;
 };
 
 export type BuildChooseInviterBodyRequest = {
@@ -503,7 +529,8 @@ export async function getProfilePrograms(addr: string): Promise<ProfileProgramsR
   if (!normalizedAddr) return null;
 
   const url = buildUrl(`/contracts/profile-item/${normalizedAddr}/programs`);
-  return safeGet<ProfileProgramsResponse>(url);
+  const programs = await safeGet<ProfileProgramsApiResponse>(url);
+  return normalizeProfilePrograms(programs);
 }
 
 export async function getContractBalance(addr: string): Promise<ContractBalanceResponse | null> {

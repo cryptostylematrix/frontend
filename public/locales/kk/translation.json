@@ -103,13 +103,15 @@
         "imageAlt": "NEO Matrix бағдарламасы",
         "pricing": {
           "entryLabel": "Кіру",
-          "entryAmount": "$150",
+          "entryAmount": "$155",
           "exitLabel": "Шығу",
           "exitAmount": "$72 100"
         },
         "features": {
           "platforms": "8 платформа",
           "reinvest": "Қайта инвестиция",
+          "linear": "Сызықтық",
+          "tetra": "Тетра",
           "clones": "Клондар",
           "structure": "Құрылымды басқару"
         }

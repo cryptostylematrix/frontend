@@ -21,7 +21,7 @@ export default function NeoMarketing() {
   const pdfLang: SupportedLang = SUPPORTED_LANGS.includes(lang as SupportedLang) ? (lang as SupportedLang) : "en";
 
   const base = import.meta.env.BASE_URL || "/";
-  const pdfHref = `${base}marketing-neo-${pdfLang}.pdf`;
+  const pdfHref = `${base}Neo-Club_${pdfLang}.pdf`;
   const videoHref = videoLinks[pdfLang] || videoLinks.en;
 
   return (

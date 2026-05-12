@@ -103,13 +103,15 @@
         "imageAlt": "Програма NEO Matrix",
         "pricing": {
           "entryLabel": "Вхід",
-          "entryAmount": "$150",
+          "entryAmount": "$155",
           "exitLabel": "Вихід від",
           "exitAmount": "$72 100"
         },
         "features": {
           "platforms": "8 платформ",
           "reinvest": "Реінвест",
+          "linear": "Лінійка",
+          "tetra": "Тетра",
           "clones": "Клони",
           "structure": "Керування структурою"
         }
