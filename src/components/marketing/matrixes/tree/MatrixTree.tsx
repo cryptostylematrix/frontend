@@ -6,29 +6,37 @@ import { useMarketingContext } from "../../../../context/MarketingContext";
 import { useProfileContext } from "../../../../context/ProfileContext";
 import { getTree, type MarketingTreeNode } from "../../../../services/marketingApi";
 
-const UNLIMITED_PAGE_SIZE = 8;
+const UNLIMITED_PAGE_SIZE = 4;
+const INITIAL_FROM_POS = 1;
 
 export default function MatrixTree() {
-  const { marketingAddr, refreshKey, selectedPlaceAddress } = useMarketingContext();
+  const { marketingAddr, refreshKey, selectedMatrixConfig, selectedPlaceAddress } = useMarketingContext();
   const { currentProfile } = useProfileContext();
   const [loadedNode, setLoadedNode] = useState<MarketingTreeNode | null>(null);
   const [selectedNode, setSelectedNode] = useState<MarketingTreeNode | null>(null);
-  const [fromPos, setFromPos] = useState(0);
+  const [fromPos, setFromPos] = useState(INITIAL_FROM_POS);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const unlimitedWidth = loadedNode?.width === 0;
-  const toPos = useMemo(() => fromPos + UNLIMITED_PAGE_SIZE - 1, [fromPos]);
+  const matrixWidth = selectedMatrixConfig?.width;
+  const unlimitedWidth = matrixWidth === 0;
+  const toPos = useMemo(() => {
+    if (matrixWidth !== undefined && matrixWidth !== 0) return matrixWidth;
+    return fromPos + UNLIMITED_PAGE_SIZE - 1;
+  }, [fromPos, matrixWidth]);
 
   useEffect(() => {
-    setFromPos(0);
-  }, [selectedPlaceAddress, currentProfile?.address]);
+    setFromPos(INITIAL_FROM_POS);
+  }, [selectedMatrixConfig, selectedPlaceAddress, currentProfile?.address]);
 
   useEffect(() => {
     let isCancelled = false;
     setLoadedNode(null);
     setSelectedNode(null);
+    setIsLoading(false);
 
     const load = async () => {
-      if (!marketingAddr || !selectedPlaceAddress || !currentProfile) return;
+      if (!marketingAddr || !selectedPlaceAddress || !currentProfile || !selectedMatrixConfig) return;
+      setIsLoading(true);
       const fetched = await getTree(
         marketingAddr,
         currentProfile.address,
@@ -39,24 +47,25 @@ export default function MatrixTree() {
       if (isCancelled) return;
       setLoadedNode(fetched);
       setSelectedNode(fetched);
+      setIsLoading(false);
     };
 
     load();
     return () => {
       isCancelled = true;
     };
-  }, [marketingAddr, selectedPlaceAddress, currentProfile, refreshKey, fromPos, toPos]);
+  }, [marketingAddr, selectedPlaceAddress, currentProfile, refreshKey, fromPos, toPos, selectedMatrixConfig]);
 
   return (
     <div className="matrix-row matrix-row--layout">
       <div>
-        {unlimitedWidth && (
+        {unlimitedWidth && selectedPlaceAddress && (
           <div className="tree-range-controls">
             <button
               type="button"
               className="tree-range-button"
-              onClick={() => setFromPos((value) => Math.max(0, value - UNLIMITED_PAGE_SIZE))}
-              disabled={fromPos === 0}
+              onClick={() => setFromPos((value) => Math.max(INITIAL_FROM_POS, value - UNLIMITED_PAGE_SIZE))}
+              disabled={fromPos === INITIAL_FROM_POS}
             >
               Left
             </button>
@@ -73,7 +82,9 @@ export default function MatrixTree() {
           </div>
         )}
         <MatrixTreeGrid
-          node={loadedNode}
+          isLoading={isLoading || !selectedMatrixConfig}
+          node={selectedPlaceAddress ? loadedNode : null}
+          placeholderConfig={selectedPlaceAddress ? undefined : selectedMatrixConfig}
           onSelect={(node) => {
             setSelectedNode(node);
           }}

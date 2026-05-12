@@ -1,6 +1,7 @@
 import { createContext, useCallback, useEffect, useContext, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import { getMarketingData } from "../services/contractsApi";
+import type { MatrixConfigResponse } from "../services/contractsApi";
 import { getRawBuyAmount } from "../services/marketingService";
 import { useProfileContext } from "./ProfileContext";
 
@@ -9,6 +10,7 @@ type MarketingContextType = {
   selectedMatrix: number;
   setSelectedMatrix: (m: number) => void;
   matrixOptions: Array<{ value: number; label: string }>;
+  selectedMatrixConfig: MatrixConfigResponse | undefined;
   matrixPrice: number;
   matrixCurrency: "TON" | "USDT";
   jettonMarketing: boolean;
@@ -33,6 +35,7 @@ export function MarketingProvider({ children, marketingAddr }: { children: React
   const [refreshKey, setRefreshKey] = useState(0);
   const [jettonMarketing, setJettonMarketing] = useState(false);
   const [matrixOptions, setMatrixOptions] = useState<Array<{ value: number; label: string }>>([]);
+  const [matrixConfigs, setMatrixConfigs] = useState<Record<string, MatrixConfigResponse>>({});
   const [rawBuyAmount, setRawBuyAmount] = useState<bigint | null>(null);
 
   useEffect(() => {
@@ -40,6 +43,7 @@ export function MarketingProvider({ children, marketingAddr }: { children: React
     if (!normalizedMarketingAddr) {
       setJettonMarketing(false);
       setMatrixOptions([]);
+      setMatrixConfigs({});
       return;
     }
 
@@ -51,6 +55,7 @@ export function MarketingProvider({ children, marketingAddr }: { children: React
         .filter((matrix) => Number.isFinite(matrix.value))
         .sort((a, b) => a.value - b.value);
       setJettonMarketing(Boolean(data?.jetton_wallet_addr?.trim()));
+      setMatrixConfigs(data?.matrixes ?? {});
       setMatrixOptions(nextMatrixOptions);
       if (nextMatrixOptions.length > 0 && !nextMatrixOptions.some((matrix) => matrix.value === selectedMatrix)) {
         setSelectedMatrix(nextMatrixOptions[0].value);
@@ -62,6 +67,11 @@ export function MarketingProvider({ children, marketingAddr }: { children: React
       cancelled = true;
     };
   }, [normalizedMarketingAddr, selectedMatrix]);
+
+  const selectedMatrixConfig = useMemo(
+    () => matrixConfigs[String(selectedMatrix)],
+    [matrixConfigs, selectedMatrix]
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -116,6 +126,7 @@ export function MarketingProvider({ children, marketingAddr }: { children: React
         selectedMatrix,
         setSelectedMatrix,
         matrixOptions,
+        selectedMatrixConfig,
         matrixPrice,
         matrixCurrency,
         jettonMarketing,

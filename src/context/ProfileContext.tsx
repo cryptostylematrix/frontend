@@ -22,6 +22,7 @@ import { ErrorCode } from "../errors/ErrorCodes";
 import { TonConnectUI } from "@tonconnect/ui-react";
 import { Address } from "@ton/core";
 import { toLower } from "../services/nftContentHelper";
+import { appConfig } from "../config";
 
 interface ProfileContextType {
   profiles: Profile[];
@@ -48,7 +49,11 @@ interface ProfileContextType {
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
-const fetchProfile = async (wallet: string, login: string): Promise<ProfileResult> => {
+const fetchProfile = async (
+  wallet: string,
+  login: string,
+  options: { validateOwner?: boolean } = {},
+): Promise<ProfileResult> => {
   if (!wallet) {
     return { success: false, errors: [ErrorCode.WALLET_NOT_CONNECTED] };
   }
@@ -65,7 +70,7 @@ const fetchProfile = async (wallet: string, login: string): Promise<ProfileResul
     const apiData = await getProfileNftData(address);
     if (!apiData?.content) return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
 
-    if (apiData.owner_addr) {
+    if (options.validateOwner !== false && apiData.owner_addr) {
       const walletRaw = Address.parse(wallet).toRawString();
       const ownerRaw = Address.parse(apiData.owner_addr).toRawString();
       if (walletRaw !== ownerRaw) {
@@ -107,6 +112,15 @@ export const ProfileProvider: React.FC<{
     if (!wallet) {
       setProfiles([]);
       setCurrentProfile(null);
+      return;
+    }
+
+    const forcedLogin = appConfig.profile.forcedLogin.trim();
+    if (forcedLogin) {
+      setIsChecking(true);
+      const result = await fetchProfile(wallet, forcedLogin, { validateOwner: false });
+      setCurrentProfile(result.success ? { ...result.data, wallet, valid: true } : null);
+      setIsChecking(false);
       return;
     }
 

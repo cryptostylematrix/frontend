@@ -3,6 +3,8 @@ const defaultMatrixApiHost = "https://cs.apihub160.cc";
 const defaultContractsApiHost = defaultMatrixApiHost;
 const defaultMarketingApiHost = defaultMatrixApiHost;
 const defaultNeoMarketingAddr = "EQAc4cKpE4yQpsadUsem6r30HHjjrmmtT13pPsRpvtLSEUHi";
+const defaultForcedProfileLogin = "";
+//const defaultForcedProfileLogin = "neoclub";
 
 export const appConfig = {
   matrixApi: {
@@ -19,5 +21,8 @@ export const appConfig = {
   },
   neo: {
     marketingAddr: (import.meta.env.VITE_NEO_MARKETING_ADDR as string | undefined) ?? defaultNeoMarketingAddr,
+  },
+  profile: {
+    forcedLogin: (import.meta.env.VITE_FORCED_PROFILE_LOGIN as string | undefined) ?? defaultForcedProfileLogin,
   },
 } as const;

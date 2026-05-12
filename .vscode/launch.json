@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Debug Vite App",
+      "url": "http://localhost:5173/frontend/",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMaps": true,
+      "preLaunchTask": "npm: dev"
+    },
+    {
+      "type": "msedge",
+      "request": "launch",
+      "name": "Debug Vite App (Edge)",
+      "url": "http://localhost:5173/frontend/",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMaps": true,
+      "preLaunchTask": "npm: dev"
+    }
+  ]
+}
