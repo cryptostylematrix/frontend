@@ -18,9 +18,9 @@ export default function AvailablePrograms() {
       key: "neo",
       href: "/neo",
       image: "neoclub.png",
-      creatorLink: "https://t.me/cryptostylematrix",
-      creatorHandle: "@cryptostylematrix",
-      features: ["platforms", "reinvest", "linear", "tetra", "clones", "structure"],
+      creatorLink: "https://t.me/neoclubmatrix",
+      creatorHandle: "@neoclubmatrix",
+      features: ["platforms", "linear", "tetra", "clones", "structure"],
     },
   ] as const;
 
