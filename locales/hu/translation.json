@@ -103,13 +103,15 @@
         "imageAlt": "NEO Matrix program",
         "pricing": {
           "entryLabel": "Belépés",
-          "entryAmount": "$150",
+          "entryAmount": "$155",
           "exitLabel": "Kimenet",
           "exitAmount": "$72 100"
         },
         "features": {
           "platforms": "8 platforms",
           "reinvest": "Újrabefektetés",
+          "linear": "Lineáris",
+          "tetra": "Tetra",
           "clones": "Klónok",
           "structure": "Struktúra kezelése"
         }

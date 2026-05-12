@@ -103,13 +103,15 @@
         "imageAlt": "Programma NEO Matrix",
         "pricing": {
           "entryLabel": "Ingresso",
-          "entryAmount": "$150",
+          "entryAmount": "$155",
           "exitLabel": "Uscita da",
           "exitAmount": "$72 100"
         },
         "features": {
           "platforms": "8 platforms",
           "reinvest": "Reinvestimento",
+          "linear": "Lineare",
+          "tetra": "Tetra",
           "clones": "Cloni",
           "structure": "Gestione della struttura"
         }
