@@ -66,7 +66,9 @@
     "home_page": "Home",
     "profile_page": "Profilo",
     "finance_page": "Finanza",
-    "multi_page": "Multi"
+    "multi_page": "Multi",
+    "programs_page": "Programmi",
+    "neo_page": "Neo"
   },
   "home": {
     "loading": "Caricamento...",
@@ -150,6 +152,17 @@
       "choose_inviter": "Selezione curatore",
       "transfer": "Trasferimento NFT"
     }
+  },
+  "inviter": {
+    "title": "Scegli un referente",
+    "loginLabel": "Login referente",
+    "loginPlaceholder": "Inserisci il login del referente",
+    "submit": "Scegli referente",
+    "success": "Referente scelto. Gli aggiornamenti appariranno presto, aggiorna la pagina più tardi.",
+    "alreadySelected": "Inviter already selected.",
+    "systemPlaceDescription": "Registrazione sotto un posto di sistema per la costruzione autonoma del team",
+    "confirmChooseTitle": "Conferma selezione referente",
+    "confirmChoosePopular": "Sei sicuro di voler scegliere questo referente?"
   },
   "multi": {
     "title": "Multi",
@@ -314,37 +327,9 @@
       "videoDescription": "Guarda l'overview marketing su YouTube.",
       "watch": "Guarda il video"
     },
-    "structure": {
-      "breadcrumbsTitle": "Breadcrumb",
-      "breadcrumbsPlaceholder": "I breadcrumb appariranno qui.",
-      "searchTitle": "Cerca per login",
-      "searchPlaceholder": "Inserisci login",
-      "searchButton": "Cerca",
-      "treeTitle": "Struttura",
-      "treePlaceholder": "La vista ad albero apparirà qui.",
-      "created": "Creato",
-      "curator": "Curatore",
-      "referrals": "Referenze",
-      "loadMore": "Carica altro",
-      "notFound": "Invito per il login non trovato.",
-      "loading": "Caricamento...",
-      "expand": "Espandi",
-      "collapse": "Comprimi"
-    },
-    "inviter": {
-      "title": "Scegli un referente",
-      "loginLabel": "Login referente",
-      "loginPlaceholder": "Inserisci il login del referente",
-      "submit": "Scegli referente",
-      "success": "Referente scelto. Gli aggiornamenti appariranno presto, aggiorna la pagina più tardi.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Registrazione sotto un posto di sistema per la costruzione autonoma del team",
-      "confirmChooseTitle": "Conferma selezione referente",
-      "confirmChoosePopular": "Sei sicuro di voler scegliere questo referente?"
-    },
     "submenu_label": "Sottomenu Neo"
   },
-  "neoMatrix": {
+  "matrix": {
     "filters": {
       "title": "Filtri",
       "show": "Mostra",
@@ -408,5 +393,22 @@
       "breadcrumbEmpty": "I breadcrumb appariranno dopo aver selezionato un posto.",
       "breadcrumbs": "Breadcrumb"
     }
+  },
+  "structure": {
+    "breadcrumbsTitle": "Breadcrumb",
+    "breadcrumbsPlaceholder": "I breadcrumb appariranno qui.",
+    "searchTitle": "Cerca per login",
+    "searchPlaceholder": "Inserisci login",
+    "searchButton": "Cerca",
+    "treeTitle": "Struttura",
+    "treePlaceholder": "La vista ad albero apparirà qui.",
+    "created": "Creato",
+    "curator": "Curatore",
+    "referrals": "Referenze",
+    "loadMore": "Carica altro",
+    "notFound": "Invito per il login non trovato.",
+    "loading": "Caricamento...",
+    "expand": "Espandi",
+    "collapse": "Comprimi"
   }
 }

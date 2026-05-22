@@ -66,7 +66,9 @@
     "home_page": "Home",
     "profile_page": "Profile",
     "finance_page": "Finance",
-    "multi_page": "Multi"
+    "multi_page": "Multi",
+    "programs_page": "Programs",
+    "neo_page": "Neo"
   },
   "home": {
     "loading": "Loading...",
@@ -150,6 +152,17 @@
       "choose_inviter": "Curator selected",
       "transfer": "NFT transfer"
     }
+  },
+  "inviter": {
+    "title": "Choose inviter",
+    "loginLabel": "Inviter login",
+    "loginPlaceholder": "Enter inviter login",
+    "submit": "Choose inviter",
+    "success": "Inviter chosen. Updates will appear soon, please refresh the page later.",
+    "alreadySelected": "Inviter already selected.",
+    "systemPlaceDescription": "Registration under a system place for independent team building",
+    "confirmChooseTitle": "Confirm inviter selection",
+    "confirmChoosePopular": "Are you sure you want to choose this inviter?"
   },
   "multi": {
     "title": "Multi",
@@ -314,37 +327,9 @@
       "videoDescription": "Watch the marketing overview on YouTube.",
       "watch": "Watch video"
     },
-    "structure": {
-      "breadcrumbsTitle": "Breadcrumbs",
-      "breadcrumbsPlaceholder": "Breadcrumbs will appear here.",
-      "searchTitle": "Search by login",
-      "searchPlaceholder": "Enter login",
-      "searchButton": "Search",
-      "treeTitle": "Structure",
-      "treePlaceholder": "Tree view will appear here.",
-      "created": "Created",
-      "curator": "Curator",
-      "referrals": "Referrals",
-      "loadMore": "Load more",
-      "notFound": "Login invite not found.",
-      "loading": "Loading...",
-      "expand": "Expand",
-      "collapse": "Collapse"
-    },
-    "inviter": {
-      "title": "Choose inviter",
-      "loginLabel": "Inviter login",
-      "loginPlaceholder": "Enter inviter login",
-      "submit": "Choose inviter",
-      "success": "Inviter chosen. Updates will appear soon, please refresh the page later.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Registration under a system place for independent team building",
-      "confirmChooseTitle": "Confirm inviter selection",
-      "confirmChoosePopular": "Are you sure you want to choose this inviter?"
-    },
     "submenu_label": "Neo submenu"
   },
-  "neoMatrix": {
+  "matrix": {
     "filters": {
       "title": "Filters",
       "show": "Show",
@@ -408,5 +393,22 @@
       "breadcrumbEmpty": "Breadcrumbs will appear here once a place is selected.",
       "breadcrumbs": "Breadcrumb"
     }
+  },
+  "structure": {
+    "breadcrumbsTitle": "Breadcrumbs",
+    "breadcrumbsPlaceholder": "Breadcrumbs will appear here.",
+    "searchTitle": "Search by login",
+    "searchPlaceholder": "Enter login",
+    "searchButton": "Search",
+    "treeTitle": "Structure",
+    "treePlaceholder": "Tree view will appear here.",
+    "created": "Created",
+    "curator": "Curator",
+    "referrals": "Referrals",
+    "loadMore": "Load more",
+    "notFound": "Login invite not found.",
+    "loading": "Loading...",
+    "expand": "Expand",
+    "collapse": "Collapse"
   }
 }

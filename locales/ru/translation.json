@@ -66,7 +66,9 @@
     "home_page": "Главная",
     "profile_page": "Профиль",
     "finance_page": "Финансы",
-    "multi_page": "Мульти"
+    "multi_page": "Мульти",
+    "programs_page": "Программы",
+    "neo_page": "Neo"
   },
   "home": {
     "loading": "Загрузка...",
@@ -150,6 +152,17 @@
       "choose_inviter": "Выбор куратора",
       "transfer": "Передача NFT"
     }
+  },
+  "inviter": {
+    "title": "Выбор куратора",
+    "loginLabel": "Логин куратора",
+    "loginPlaceholder": "Введите логин куратора",
+    "submit": "Выбрать куратора",
+    "success": "Куратор выбран. Обновление появится скоро, пожалуйста, обновите страницу позже.",
+    "alreadySelected": "Inviter already selected.",
+    "systemPlaceDescription": "Регистрация под системное место для самостоятельного построения команды",
+    "confirmChooseTitle": "Подтверждение выбора куратора",
+    "confirmChoosePopular": "Вы уверены, что хотите выбрать этого куратора?"
   },
   "multi": {
     "title": "Мульти",
@@ -316,37 +329,9 @@
       "videoDescription": "Посмотрите маркетинговый обзор на YouTube.",
       "watch": "Смотреть видео"
     },
-    "structure": {
-      "breadcrumbsTitle": "Хлебные крошки",
-      "breadcrumbsPlaceholder": "Здесь появятся хлебные крошки.",
-      "searchTitle": "Поиск по логину",
-      "searchPlaceholder": "Введите логин",
-      "searchButton": "Поиск",
-      "treeTitle": "Структура",
-      "treePlaceholder": "Здесь будет отображаться дерево.",
-      "created": "Создано",
-      "curator": "Куратор",
-      "referrals": "Рефералы",
-      "loadMore": "Загрузить еще",
-      "notFound": "Приглашение с таким логином не найдено.",
-      "loading": "Загрузка...",
-      "expand": "Развернуть",
-      "collapse": "Свернуть"
-    },
-    "inviter": {
-      "title": "Выбор куратора",
-      "loginLabel": "Логин куратора",
-      "loginPlaceholder": "Введите логин куратора",
-      "submit": "Выбрать куратора",
-      "success": "Куратор выбран. Обновление появится скоро, пожалуйста, обновите страницу позже.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Регистрация под системное место для самостоятельного построения команды",
-      "confirmChooseTitle": "Подтверждение выбора куратора",
-      "confirmChoosePopular": "Вы уверены, что хотите выбрать этого куратора?"
-    },
     "submenu_label": "Подменю Neo"
   },
-  "neoMatrix": {
+  "matrix": {
     "filters": {
       "title": "Фильтры",
       "show": "Показать",
@@ -412,5 +397,22 @@
       "breadcrumbEmpty": "Путь появится после выбора места.",
       "breadcrumbs": "Хлебные крошки"
     }
+  },
+  "structure": {
+    "breadcrumbsTitle": "Хлебные крошки",
+    "breadcrumbsPlaceholder": "Здесь появятся хлебные крошки.",
+    "searchTitle": "Поиск по логину",
+    "searchPlaceholder": "Введите логин",
+    "searchButton": "Поиск",
+    "treeTitle": "Структура",
+    "treePlaceholder": "Здесь будет отображаться дерево.",
+    "created": "Создано",
+    "curator": "Куратор",
+    "referrals": "Рефералы",
+    "loadMore": "Загрузить еще",
+    "notFound": "Приглашение с таким логином не найдено.",
+    "loading": "Загрузка...",
+    "expand": "Развернуть",
+    "collapse": "Свернуть"
   }
 }

@@ -66,7 +66,9 @@
     "home_page": "Inicio",
     "profile_page": "Perfil",
     "finance_page": "Finanzas",
-    "multi_page": "Multi"
+    "multi_page": "Multi",
+    "programs_page": "Programas",
+    "neo_page": "Neo"
   },
   "home": {
     "loading": "Cargando...",
@@ -150,6 +152,17 @@
       "choose_inviter": "Curador seleccionado",
       "transfer": "Transferencia de NFT"
     }
+  },
+  "inviter": {
+    "title": "Elegir invitador",
+    "loginLabel": "Login del invitador",
+    "loginPlaceholder": "Introduce el login del invitador",
+    "submit": "Elegir invitador",
+    "success": "Invitador elegido. Las actualizaciones aparecerán pronto; por favor, recarga la página más tarde.",
+    "alreadySelected": "El invitador ya fue seleccionado.",
+    "systemPlaceDescription": "Registro bajo un lugar del sistema para construir un equipo de forma independiente",
+    "confirmChooseTitle": "Confirmar selección del invitador",
+    "confirmChoosePopular": "¿Seguro que quieres elegir a este invitador?"
   },
   "multi": {
     "title": "Multi",
@@ -314,37 +327,9 @@
       "videoDescription": "Mira el resumen de marketing en YouTube.",
       "watch": "Ver video"
     },
-    "structure": {
-      "breadcrumbsTitle": "Ruta de navegación",
-      "breadcrumbsPlaceholder": "La ruta de navegación aparecerá aquí.",
-      "searchTitle": "Buscar por login",
-      "searchPlaceholder": "Introduce el login",
-      "searchButton": "Buscar",
-      "treeTitle": "Estructura",
-      "treePlaceholder": "La vista de árbol aparecerá aquí.",
-      "created": "Creado",
-      "curator": "Curador",
-      "referrals": "Referidos",
-      "loadMore": "Cargar más",
-      "notFound": "No se encontró el login de invitación.",
-      "loading": "Cargando...",
-      "expand": "Expandir",
-      "collapse": "Contraer"
-    },
-    "inviter": {
-      "title": "Elegir invitador",
-      "loginLabel": "Login del invitador",
-      "loginPlaceholder": "Introduce el login del invitador",
-      "submit": "Elegir invitador",
-      "success": "Invitador elegido. Las actualizaciones aparecerán pronto; por favor, recarga la página más tarde.",
-      "alreadySelected": "El invitador ya fue seleccionado.",
-      "systemPlaceDescription": "Registro bajo un lugar del sistema para construir un equipo de forma independiente",
-      "confirmChooseTitle": "Confirmar selección del invitador",
-      "confirmChoosePopular": "¿Seguro que quieres elegir a este invitador?"
-    },
     "submenu_label": "Submenú Neo"
   },
-  "neoMatrix": {
+  "matrix": {
     "filters": {
       "title": "Filtros",
       "show": "Mostrar",
@@ -408,5 +393,22 @@
       "breadcrumbEmpty": "La ruta de navegación aparecerá aquí una vez que se seleccione un lugar.",
       "breadcrumbs": "Ruta de navegación"
     }
+  },
+  "structure": {
+    "breadcrumbsTitle": "Ruta de navegación",
+    "breadcrumbsPlaceholder": "La ruta de navegación aparecerá aquí.",
+    "searchTitle": "Buscar por login",
+    "searchPlaceholder": "Introduce el login",
+    "searchButton": "Buscar",
+    "treeTitle": "Estructura",
+    "treePlaceholder": "La vista de árbol aparecerá aquí.",
+    "created": "Creado",
+    "curator": "Curador",
+    "referrals": "Referidos",
+    "loadMore": "Cargar más",
+    "notFound": "No se encontró el login de invitación.",
+    "loading": "Cargando...",
+    "expand": "Expandir",
+    "collapse": "Contraer"
   }
 }
