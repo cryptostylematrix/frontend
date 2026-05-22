@@ -135,35 +135,13 @@ export type ProgramDataResponse = {
   confirmed: number;
 };
 
-type ProfileProgramsApiResponse = Array<Record<string, ProgramDataResponse>>;
-
-export type ProfileProgramsResponse = Record<string, ProgramDataResponse | null | undefined> & {
-  multi?: ProgramDataResponse | null;
-  neo?: ProgramDataResponse | null;
-};
-
-const profileProgramKeys = {
-  multi: "1CE8C484",
-  neo: "435ACABF",
-} as const;
+export type ProfileProgramsResponse = Array<Record<string, ProgramDataResponse>>;
 
 const normalizeProfileProgramKey = (key: string) => key.trim().replace(/^0x/i, "").toUpperCase();
 
-const normalizeProfilePrograms = (programs: ProfileProgramsApiResponse | null): ProfileProgramsResponse | null => {
-  if (!programs) return null;
-
-  const normalized: ProfileProgramsResponse = {};
-
-  for (const programMap of programs) {
-    for (const [key, value] of Object.entries(programMap)) {
-      normalized[normalizeProfileProgramKey(key)] = value;
-    }
-  }
-
-  normalized.multi = normalized[profileProgramKeys.multi] ?? null;
-  normalized.neo = normalized[profileProgramKeys.neo] ?? null;
-
-  return normalized;
+const normalizeProgramValue = (program: number | string) => {
+  if (typeof program === "number") return program.toString(16).toUpperCase();
+  return normalizeProfileProgramKey(program);
 };
 
 export type BuildChooseInviterBodyRequest = {
@@ -294,6 +272,30 @@ export type RewardResponse = {
   amount?: number | string | null;
 };
 
+export type ProgramSubscriptionResponse = Record<string, never>;
+
+export type ProgramFeaturesResponse = {
+  version?: number | null;
+  admin_locks?: boolean | null;
+  subscription?: ProgramSubscriptionResponse | null;
+};
+
+export type MatrixFeaturesResponse = {
+  version?: number | null;
+  distribution?: string | null;
+  management?: string | null;
+  cut_factor?: number | null;
+  prev_required?: boolean | null;
+};
+
+export type MarketingParamsResponse = {
+  version?: number | null;
+  program_id?: number | null;
+  metadata_uri?: string | null;
+  program_features?: ProgramFeaturesResponse | null;
+  matrix_features?: Record<string, MatrixFeaturesResponse> | null;
+};
+
 export type MatrixConfigResponse = {
   price: number | string;
   owner_addr: string;
@@ -304,8 +306,6 @@ export type MatrixConfigResponse = {
   rewards: Record<string, RewardResponse[]>;
   name: string;
 };
-
-export type MarketingParamsResponse = Record<string, never>;
 
 export type MarketingDataResponse = {
   admin_addr: string;
@@ -318,7 +318,7 @@ export type MarketingDataResponse = {
   initial_fee: number | string;
   queue: Record<string, MarketingTaskResponse>;
   matrixes: Record<string, MatrixConfigResponse>;
-  fees: Record<string, number>;
+  fees: Record<string, number | string>;
   params: MarketingParamsResponse;
 };
 
@@ -399,6 +399,7 @@ export interface ContractsApi {
   getProfileNftData: (addr: string) => Promise<ProfileDataResponse | null>;
   refreshProfileNftData: (addr: string) => Promise<ProfileDataResponse | null>;
   getProfilePrograms: (addr: string) => Promise<ProfileProgramsResponse | null>;
+  getProfileProgram: (addr: string, program: number | string) => Promise<ProgramDataResponse | null>;
   getContractBalance: (addr: string) => Promise<ContractBalanceResponse | null>;
   getCollectionData: () => Promise<CollectionDataResponse | null>;
   getWalletHistory: (addr: string, request?: WalletHistoryRequest) => Promise<TransactionHistoryResponse | null>;
@@ -529,8 +530,23 @@ export async function getProfilePrograms(addr: string): Promise<ProfileProgramsR
   if (!normalizedAddr) return null;
 
   const url = buildUrl(`/contracts/profile-item/${normalizedAddr}/programs`);
-  const programs = await safeGet<ProfileProgramsApiResponse>(url);
-  return normalizeProfilePrograms(programs);
+  return safeGet<ProfileProgramsResponse>(url);
+}
+
+export async function getProfileProgram(addr: string, program: number | string): Promise<ProgramDataResponse | null> {
+  const programs = await getProfilePrograms(addr);
+  if (!programs) return null;
+
+  const targetKey = normalizeProgramValue(program);
+  for (const programMap of programs) {
+    for (const [key, value] of Object.entries(programMap)) {
+      if (normalizeProfileProgramKey(key) === targetKey) {
+        return value;
+      }
+    }
+  }
+
+  return null;
 }
 
 export async function getContractBalance(addr: string): Promise<ContractBalanceResponse | null> {
@@ -781,6 +797,7 @@ export const contractsApi: ContractsApi = {
   getProfileNftData,
   refreshProfileNftData,
   getProfilePrograms,
+  getProfileProgram,
   getContractBalance,
   getCollectionData,
   getWalletHistory,

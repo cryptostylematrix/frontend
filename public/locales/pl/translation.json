@@ -66,7 +66,9 @@
     "home_page": "Strona główna",
     "profile_page": "Profil",
     "finance_page": "Finanse",
-    "multi_page": "Multi"
+    "multi_page": "Multi",
+    "programs_page": "Programy",
+    "neo_page": "Neo"
   },
   "home": {
     "loading": "Ładowanie...",
@@ -150,6 +152,17 @@
       "choose_inviter": "Wybór kuratora",
       "transfer": "Transfer NFT"
     }
+  },
+  "inviter": {
+    "title": "Wybierz opiekuna",
+    "loginLabel": "Login opiekuna",
+    "loginPlaceholder": "Wpisz login opiekuna",
+    "submit": "Wybierz opiekuna",
+    "success": "Opiekun wybrany. Aktualizacje pojawią się wkrótce, odśwież stronę później.",
+    "alreadySelected": "Inviter already selected.",
+    "systemPlaceDescription": "Rejestracja pod systemowym miejscem do samodzielnego budowania zespołu",
+    "confirmChooseTitle": "Potwierdź wybór opiekuna",
+    "confirmChoosePopular": "Czy na pewno chcesz wybrać tego opiekuna?"
   },
   "multi": {
     "title": "Multi",
@@ -314,37 +327,9 @@
       "videoDescription": "Obejrzyj przegląd marketingowy na YouTube.",
       "watch": "Obejrzyj wideo"
     },
-    "structure": {
-      "breadcrumbsTitle": "Nawigacja okruszkowa",
-      "breadcrumbsPlaceholder": "Breadcrumby pojawią się tutaj.",
-      "searchTitle": "Szukaj po loginie",
-      "searchPlaceholder": "Wpisz login",
-      "searchButton": "Szukaj",
-      "treeTitle": "Struktura",
-      "treePlaceholder": "Widok drzewa pojawi się tutaj.",
-      "created": "Utworzono",
-      "curator": "Kurator",
-      "referrals": "Polecenia",
-      "loadMore": "Załaduj więcej",
-      "notFound": "Zaproszenie dla podanego loginu nie zostało znalezione.",
-      "loading": "Ładowanie...",
-      "expand": "Rozwiń",
-      "collapse": "Zwiń"
-    },
-    "inviter": {
-      "title": "Wybierz opiekuna",
-      "loginLabel": "Login opiekuna",
-      "loginPlaceholder": "Wpisz login opiekuna",
-      "submit": "Wybierz opiekuna",
-      "success": "Opiekun wybrany. Aktualizacje pojawią się wkrótce, odśwież stronę później.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Rejestracja pod systemowym miejscem do samodzielnego budowania zespołu",
-      "confirmChooseTitle": "Potwierdź wybór opiekuna",
-      "confirmChoosePopular": "Czy na pewno chcesz wybrać tego opiekuna?"
-    },
     "submenu_label": "Podmenu Neo"
   },
-  "neoMatrix": {
+  "matrix": {
     "filters": {
       "title": "Filtry",
       "show": "Pokaż",
@@ -408,5 +393,22 @@
       "breadcrumbEmpty": "Okruszki pojawią się po wybraniu miejsca.",
       "breadcrumbs": "Okruszki"
     }
+  },
+  "structure": {
+    "breadcrumbsTitle": "Nawigacja okruszkowa",
+    "breadcrumbsPlaceholder": "Breadcrumby pojawią się tutaj.",
+    "searchTitle": "Szukaj po loginie",
+    "searchPlaceholder": "Wpisz login",
+    "searchButton": "Szukaj",
+    "treeTitle": "Struktura",
+    "treePlaceholder": "Widok drzewa pojawi się tutaj.",
+    "created": "Utworzono",
+    "curator": "Kurator",
+    "referrals": "Polecenia",
+    "loadMore": "Załaduj więcej",
+    "notFound": "Zaproszenie dla podanego loginu nie zostało znalezione.",
+    "loading": "Ładowanie...",
+    "expand": "Rozwiń",
+    "collapse": "Zwiń"
   }
 }

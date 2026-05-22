@@ -3,21 +3,28 @@ import { useTranslation } from "react-i18next";
 import { Save } from "lucide-react";
 import { ErrorCode } from "../../../errors/ErrorCodes";
 import { translateError } from "../../../errors/errorUtils";
-import { chooseInviter } from "../../../services/profileService";
-import { getInviteAddrBySeqNo, getInviteData, getNftAddrByLogin, getProfileNftData, getProfilePrograms } from "../../../services/contractsApi";
+import { chooseInviter, type ProfileProgram } from "../../../services/profileService";
+import { getInviteAddrBySeqNo, getInviteData, getNftAddrByLogin, getProfileNftData, getProfileProgram } from "../../../services/contractsApi";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { useProfileContext } from "../../../context/ProfileContext";
-import { getPlacesCount } from "../../../services/matrixApi";
 import { loadRootByLogin } from "../../../services/structureService";
 import ConfirmDialog from "../../common/ConfirmDialog";
-import "./multi-inviter-inviter-data.css";
-import "./multi-inviter-choose-inviter.css";
+import "./inviter-data.css";
+import "./choose-inviter.css";
 
 type Props = {
   onInviterChosen: () => void;
+  program: ProfileProgram;
+  popularCuratorLogin: string;
+  getInviterPlacesCount: (profileAddress: string) => Promise<number>;
 };
 
-export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
+export default function ChooseInviter({
+  onInviterChosen,
+  program,
+  popularCuratorLogin,
+  getInviterPlacesCount,
+}: Props) {
   const { t } = useTranslation();
   const [tonConnectUI] = useTonConnectUI();
   const { currentProfile } = useProfileContext();
@@ -43,13 +50,14 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
       setIsPopularCuratorLoading(true);
       setPopularCurator(null);
 
-      const rootResult = await loadRootByLogin("admin");
+      const rootResult = await loadRootByLogin(popularCuratorLogin, program);
+
       if (!rootResult.success || !rootResult.node) {
         if (!cancelled) setIsPopularCuratorLoading(false);
         return;
       }
 
-      const adminNftAddr = await getNftAddrByLogin("admin");
+      const adminNftAddr = await getNftAddrByLogin(popularCuratorLogin);
       const adminNft = adminNftAddr?.addr ? await getProfileNftData(adminNftAddr.addr) : null;
 
       if (cancelled) return;
@@ -69,7 +77,7 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [popularCuratorLogin, program]);
 
   const chooseInviterByLogin = async (login: string) => {
     setErrorCodes(null);
@@ -89,10 +97,9 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
     setIsSubmitting(true);
 
     // get current program
-    const currentProgram = await getProfilePrograms(currentProfileAddress);
-    const currentMulti = currentProgram?.multi;
+    const currentProgram = await getProfileProgram(currentProfileAddress, program);
     // if inviter is already chosen
-    if (currentMulti?.confirmed === 1) {
+    if (currentProgram?.confirmed === 1) {
       setIsSubmitting(false);
       onInviterChosen();
       return;
@@ -107,16 +114,15 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
     }
 
     // get inviter's program data
-    const programResult = await getProfilePrograms(inviterProfileResult.addr);
-    if (!programResult) {
+    const inviterProgram = await getProfileProgram(inviterProfileResult.addr, program);
+    if (!inviterProgram) {
       setIsSubmitting(false);
       setErrorCodes([ErrorCode.PROFILE_NOT_FOUND]);
       return;
     }
 
-    const inviterProgram = programResult.multi;
     // if inviter participated to the program
-    if (!inviterProgram || inviterProgram.confirmed !== 1) {
+    if (inviterProgram.confirmed !== 1) {
       setIsSubmitting(false);
       setErrorCodes([ErrorCode.INVITER_NOT_IN_PROGRAM]);
       return;
@@ -138,7 +144,7 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
       return;
     }
 
-    const placesCount = await getPlacesCount(1, inviterOwnerAddress);
+    const placesCount = await getInviterPlacesCount(inviterOwnerAddress);
     if (placesCount === 0) {
       setIsSubmitting(false);
       setErrorCodes([ErrorCode.INVITER_HAS_NO_PLACES]);
@@ -154,7 +160,14 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
     }
 
     // choose inviter
-    const chooseResult = await chooseInviter(tonConnectUI, currentProfileAddress, inviterAddr, inviterData.next_ref_no, inviteAddrResult.addr);
+    const chooseResult = await chooseInviter(
+      tonConnectUI,
+      currentProfileAddress,
+      inviterAddr,
+      inviterData.next_ref_no,
+      inviteAddrResult.addr,
+      program,
+    );
 
     setIsSubmitting(false);
 
@@ -164,7 +177,7 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
     }
 
     setErrorCodes(null);
-    setSuccessMsg(t("multi.inviter.success", "Inviter chosen. Updates will appear soon, please refresh the page later."));
+    setSuccessMsg(t("inviter.success", "Inviter chosen. Updates will appear soon, please refresh the page later."));
     onInviterChosen();
   };
 
@@ -182,7 +195,43 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
   const cleanedTgUsername = popularCurator?.tgUsername?.replace(/^@+/, "");
 
   return (
-    <div className="multi-inviter-choose-wrap">
+    <div className="choose-inviter-wrap">
+      <form onSubmit={handleSubmit} className="fields">
+        <label className="field">
+          <span className="label-text">{t("inviter.loginLabel", "Inviter login")}</span>
+          <input
+            type="text"
+            maxLength={40}
+            placeholder={t("inviter.loginPlaceholder", "Enter inviter login")}
+            value={inviterLogin}
+            onChange={(e) => setInviterLogin(e.target.value)}
+            required
+            disabled={isFormDisabled}
+          />
+        </label>
+
+        {errorCodes && errorCodes.length > 0 && (
+          <div className="error-message">
+            {errorCodes.map((code) => (
+              <div key={code}>{translateError(t, code)}</div>
+            ))}
+          </div>
+        )}
+        {successMsg && <div className="success-message">{successMsg}</div>}
+
+        <div className="actions">
+          <button type="submit" className="btn submit" disabled={isFormDisabled}>
+            {isSubmitting ? (
+              <span className="spinner" />
+            ) : (
+              <>
+                <Save className="btn-icon" /> {t("inviter.submit", "Choose inviter")}
+              </>
+            )}
+          </button>
+        </div>
+      </form>
+
       {isPopularCuratorLoading ? (
         <div className="inviter-loading">
           <span className="spinner" />
@@ -206,7 +255,7 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
               </a>
             )}
             <div className="popular-curator-description">
-              {t("multi.inviter.systemPlaceDescription", "Registration under a system place for independent team building")}
+              {t("inviter.systemPlaceDescription", "Registration under a system place for independent team building")}
             </div>
             <button
               type="button"
@@ -214,53 +263,17 @@ export default function MultiInviterChooseInviter({ onInviterChosen }: Props) {
               onClick={handleChoosePopularCurator}
               disabled={isFormDisabled}
             >
-              <Save className="btn-icon" /> {t("multi.inviter.submit", "Choose inviter")}
+              <Save className="btn-icon" /> {t("inviter.submit", "Choose inviter")}
             </button>
           </div>
         </div>
       ) : null}
 
-      <form onSubmit={handleSubmit} className="fields">
-        <label className="field">
-          <span className="label-text">{t("multi.inviter.loginLabel", "Inviter login")}</span>
-          <input
-            type="text"
-            maxLength={40}
-            placeholder={t("multi.inviter.loginPlaceholder", "Enter inviter login")}
-            value={inviterLogin}
-            onChange={(e) => setInviterLogin(e.target.value)}
-            required
-            disabled={isFormDisabled}
-          />
-        </label>
-
-        {errorCodes && errorCodes.length > 0 && (
-          <div className="error-message">
-            {errorCodes.map((code) => (
-              <div key={code}>{translateError(t, code)}</div>
-            ))}
-          </div>
-        )}
-        {successMsg && <div className="success-message">{successMsg}</div>}
-
-        <div className="actions">
-          <button type="submit" className="btn submit" disabled={isFormDisabled}>
-            {isSubmitting ? (
-              <span className="spinner" />
-            ) : (
-              <>
-                <Save className="btn-icon" /> {t("multi.inviter.submit", "Choose inviter")}
-              </>
-            )}
-          </button>
-        </div>
-      </form>
-
       <ConfirmDialog
         open={showPopularConfirm}
-        title={t("multi.inviter.confirmChooseTitle", "Confirm inviter selection")}
-        message={t("multi.inviter.confirmChoosePopular", "Are you sure you want to choose this inviter?")}
-        confirmLabel={t("multi.inviter.submit", "Choose inviter")}
+        title={t("inviter.confirmChooseTitle", "Confirm inviter selection")}
+        message={t("inviter.confirmChoosePopular", "Are you sure you want to choose this inviter?")}
+        confirmLabel={t("inviter.submit", "Choose inviter")}
         cancelLabel={t("common.cancel", "Cancel")}
         onCancel={() => setShowPopularConfirm(false)}
         onConfirm={() => {

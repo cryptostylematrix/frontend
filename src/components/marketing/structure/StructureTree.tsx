@@ -1,11 +1,13 @@
-import "./multi-structure-tree.css";
+import "./structure-tree.css";
 import { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { loadRootByLogin, loadChildren, type StructureNode } from "../../../services/structureService";
 import { ErrorCode } from "../../../errors/ErrorCodes";
+import type { ProfileProgram } from "../../../services/profileService";
 
 type Props = {
   rootLogin: string;
+  program: ProfileProgram;
   onCuratorSelect?: (login: string) => void;
 };
 
@@ -20,7 +22,7 @@ function updateNode(tree: StructureNode, targetId: string, updater: (node: Struc
   };
 }
 
-function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
+function StructureTree({ rootLogin, program, onCuratorSelect }: Props) {
   const { t } = useTranslation();
   const [root, setRoot] = useState<StructureNode | null>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
@@ -43,7 +45,7 @@ function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
       setRoot(null);
       setExpanded({});
       setErrorKey(null);
-      const result = await loadRootByLogin(login);
+      const result = await loadRootByLogin(login, program);
       if (cancelled) return;
       if (!result.success || !result.node) {
         setErrorKey({ code: ErrorCode.STRUCTURE_ROOT_NOT_FOUND, login });
@@ -61,7 +63,7 @@ function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [rootLogin]);
+  }, [program, rootLogin]);
 
   const getLastChildIndex = (node: StructureNode): number => {
     if (!node.children?.length) return 0;
@@ -169,7 +171,7 @@ function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
               type="button"
               className="structure-tree-toggle"
               aria-label={
-                isOpen ? t("multi.structure.collapse", "Collapse") : t("multi.structure.expand", "Expand")
+                isOpen ? t("structure.collapse", "Collapse") : t("structure.expand", "Expand")
               }
               onClick={() => handleToggle(node)}
               disabled={!!loadingNodes[node.addr]}
@@ -182,7 +184,7 @@ function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
           <span className="structure-tree-index">{displayIndex}.</span>
           <span className="structure-tree-login">{node.login}</span>
           <span className="structure-tree-meta">
-            {t("multi.structure.created", "Created")}: {created}
+            {t("structure.created", "Created")}: {created}
             {displayName && (
               <>
                 <br />
@@ -205,7 +207,7 @@ function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
           </span>
           {node.parent_login ? (
             <span className="structure-tree-meta">
-              {t("multi.structure.curator", "Curator")}:{" "}
+              {t("structure.curator", "Curator")}:{" "}
               {onCuratorSelect ? (
                 <button
                   type="button"
@@ -220,7 +222,7 @@ function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
             </span>
           ) : null}
           <span className="structure-tree-meta">
-            {t("multi.structure.referrals", "Referrals")}: {node.referals}
+            {t("structure.referrals", "Referrals")}: {node.referals}
           </span>
         </div>
 
@@ -235,8 +237,8 @@ function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
               disabled={!!loadingNodes[node.addr]}
             >
               {loadingNodes[node.addr]
-                ? t("multi.structure.loading", "Loading...")
-                : t("multi.structure.loadMore", "Load more")}
+                ? t("structure.loading", "Loading...")
+                : t("structure.loadMore", "Load more")}
             </button>
           </div>
         )}
@@ -247,7 +249,7 @@ function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
   if (loading) {
     return (
       <div className="structure-card__body structure-placeholder">
-        {t("multi.structure.loading", "Loading...")}
+        {t("structure.loading", "Loading...")}
       </div>
     );
   }
@@ -263,7 +265,7 @@ function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
   if (!root) {
     return (
       <div className="structure-card__body structure-placeholder">
-        {t("multi.structure.treePlaceholder", "Tree view will appear here.")}
+        {t("structure.treePlaceholder", "Tree view will appear here.")}
       </div>
     );
   }
@@ -275,4 +277,4 @@ function MultiStructureTree({ rootLogin, onCuratorSelect }: Props) {
   );
 }
 
-export default memo(MultiStructureTree);
+export default memo(StructureTree);

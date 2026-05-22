@@ -66,7 +66,9 @@
     "home_page": "Início",
     "profile_page": "Perfil",
     "finance_page": "Finanças",
-    "multi_page": "Multi"
+    "multi_page": "Multi",
+    "programs_page": "Programas",
+    "neo_page": "Neo"
   },
   "home": {
     "loading": "Carregando...",
@@ -150,6 +152,17 @@
       "choose_inviter": "Curador selecionado",
       "transfer": "Transferência de NFT"
     }
+  },
+  "inviter": {
+    "title": "Escolher convidador",
+    "loginLabel": "Login do convidador",
+    "loginPlaceholder": "Digite o login do convidador",
+    "submit": "Escolher convidador",
+    "success": "Convidador escolhido. As atualizações aparecerão em breve; atualize a página mais tarde.",
+    "alreadySelected": "O convidador já foi escolhido.",
+    "systemPlaceDescription": "Registro sob uma vaga do sistema para construção independente de equipe",
+    "confirmChooseTitle": "Confirmar seleção do convidador",
+    "confirmChoosePopular": "Tem certeza de que deseja escolher este convidador?"
   },
   "multi": {
     "title": "Multi",
@@ -314,37 +327,9 @@
       "videoDescription": "Assista à visão geral de marketing no YouTube.",
       "watch": "Assistir vídeo"
     },
-    "structure": {
-      "breadcrumbsTitle": "Navegação",
-      "breadcrumbsPlaceholder": "A navegação aparecerá aqui.",
-      "searchTitle": "Buscar por login",
-      "searchPlaceholder": "Digite o login",
-      "searchButton": "Buscar",
-      "treeTitle": "Estrutura",
-      "treePlaceholder": "A visualização em árvore aparecerá aqui.",
-      "created": "Criado",
-      "curator": "Curador",
-      "referrals": "Indicados",
-      "loadMore": "Carregar mais",
-      "notFound": "Login de convite não encontrado.",
-      "loading": "Carregando...",
-      "expand": "Expandir",
-      "collapse": "Recolher"
-    },
-    "inviter": {
-      "title": "Escolher convidador",
-      "loginLabel": "Login do convidador",
-      "loginPlaceholder": "Digite o login do convidador",
-      "submit": "Escolher convidador",
-      "success": "Convidador escolhido. As atualizações aparecerão em breve; atualize a página mais tarde.",
-      "alreadySelected": "O convidador já foi escolhido.",
-      "systemPlaceDescription": "Registro sob uma vaga do sistema para construção independente de equipe",
-      "confirmChooseTitle": "Confirmar seleção do convidador",
-      "confirmChoosePopular": "Tem certeza de que deseja escolher este convidador?"
-    },
     "submenu_label": "Submenu Neo"
   },
-  "neoMatrix": {
+  "matrix": {
     "filters": {
       "title": "Filtros",
       "show": "Mostrar",
@@ -408,5 +393,22 @@
       "breadcrumbEmpty": "A navegação aparecerá aqui assim que uma vaga for selecionada.",
       "breadcrumbs": "Navegação"
     }
+  },
+  "structure": {
+    "breadcrumbsTitle": "Navegação",
+    "breadcrumbsPlaceholder": "A navegação aparecerá aqui.",
+    "searchTitle": "Buscar por login",
+    "searchPlaceholder": "Digite o login",
+    "searchButton": "Buscar",
+    "treeTitle": "Estrutura",
+    "treePlaceholder": "A visualização em árvore aparecerá aqui.",
+    "created": "Criado",
+    "curator": "Curador",
+    "referrals": "Indicados",
+    "loadMore": "Carregar mais",
+    "notFound": "Login de convite não encontrado.",
+    "loading": "Carregando...",
+    "expand": "Expandir",
+    "collapse": "Recolher"
   }
 }

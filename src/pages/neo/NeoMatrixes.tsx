@@ -8,10 +8,11 @@ import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { WalletContext } from "../../App";
 import { useProfileContext } from "../../context/ProfileContext";
 import { MarketingProvider } from "../../context/MarketingContext";
-import { getProfilePrograms } from "../../services/contractsApi";
+import { getProfileProgram } from "../../services/contractsApi";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { appConfig } from "../../config";
+import { ProfilePrograms } from "../../services/profileService";
 
 export default function NeoMatrixes() {
   const { wallet } = useContext(WalletContext)!;
@@ -26,9 +27,9 @@ export default function NeoMatrixes() {
     if (!currentProfile) return () => { cancelled = true; };
 
     const run = async () => {
-      const program = await getProfilePrograms(currentProfile.address);
+      const program = await getProfileProgram(currentProfile.address, ProfilePrograms.neo);
       if (cancelled) return;
-      if (!program?.neo || program.neo.confirmed !== 1) {
+      if (!program || program.confirmed !== 1) {
         setProgramAllowed(false);
       } else {
         setProgramAllowed(true);
@@ -54,7 +55,7 @@ export default function NeoMatrixes() {
       <section className="neo-matrixes">
         <div className="profile-status-block wallet">
           <div className="status-text">
-            <strong>{t("neoMatrix.filters.programNotConfirmed", "You need to choose an inviter first.")}</strong>
+            <strong>{t("matrix.filters.programNotConfirmed", "You need to choose an inviter first.")}</strong>
           </div>
         </div>
       </section>
@@ -62,7 +63,7 @@ export default function NeoMatrixes() {
   }
 
   return (
-    <MarketingProvider marketingAddr={appConfig.neo.marketingAddr}>
+    <MarketingProvider marketingAddr={appConfig.neo.marketingAddr} program={ProfilePrograms.neo}>
       <section className="neo-matrixes">
         <MatrixFilters />
         <TaskQueueBlock />

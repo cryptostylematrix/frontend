@@ -11,7 +11,8 @@ import { translateError } from "../../../../errors/errorUtils";
 import "../../../../pages/profile/update-profile.css";
 import { useMatrixContext } from "../../../../context/MatrixContext";
 import { getRootPlace, getPlacesCount } from "../../../../services/matrixApi";
-import { getProfilePrograms } from "../../../../services/contractsApi";
+import { getProfileProgram } from "../../../../services/contractsApi";
+import { ProfilePrograms } from "../../../../services/profileService";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import ConfirmDialog from "../../../common/ConfirmDialog";
 
@@ -76,8 +77,8 @@ export default function MultiMatrixFilters() {
 
     try {
       if (selectedMatrix === 1) {
-        const program = await getProfilePrograms(currentProfile.address);
-        if (!program?.multi || program.multi.confirmed !== 1) {
+        const program = await getProfileProgram(currentProfile.address, ProfilePrograms.multi);
+        if (!program || program.confirmed !== 1) {
           setBuyStatus({
             type: "error",
             message: t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."),

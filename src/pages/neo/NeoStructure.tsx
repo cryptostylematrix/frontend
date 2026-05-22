@@ -1,8 +1,9 @@
 import "./neo-structure.css";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import NeoStructureTree from "../../components/marketing/structure/NeoStructureTree";
+import StructureTree from "../../components/marketing/structure/StructureTree";
 import { useProfileContext } from "../../context/ProfileContext";
+import { ProfilePrograms } from "../../services/profileService";
 
 export default function NeoStructure() {
   const { t } = useTranslation();
@@ -31,25 +32,25 @@ export default function NeoStructure() {
     <section className="neo-structure">
 
       <div className="structure-card">
-        <div className="structure-card__header">{t("neo.structure.searchTitle", "Search by login")}</div>
+        <div className="structure-card__header">{t("structure.searchTitle", "Search by login")}</div>
         <div className="structure-search">
           <input
             type="text"
-            placeholder={t("neo.structure.searchPlaceholder", "Enter login")}
-            aria-label={t("neo.structure.searchTitle", "Search by login")}
+            placeholder={t("structure.searchPlaceholder", "Enter login")}
+            aria-label={t("structure.searchTitle", "Search by login")}
             value={searchLogin}
             onChange={(event) => setSearchLogin(event.target.value)}
             onKeyDown={(event) => event.key === "Enter" && handleSearch()}
           />
           <button type="button" className="btn structure-search__btn" onClick={handleSearch}>
-            {t("neo.structure.searchButton", "Search")}
+            {t("structure.searchButton", "Search")}
           </button>
         </div>
       </div>
 
       <div className="structure-card">
-        <div className="structure-card__header">{t("neo.structure.treeTitle", "Structure")}</div>
-        <NeoStructureTree rootLogin={rootLogin} onCuratorSelect={handleCuratorSelect} />
+        <div className="structure-card__header">{t("structure.treeTitle", "Structure")}</div>
+        <StructureTree rootLogin={rootLogin} program={ProfilePrograms.neo} onCuratorSelect={handleCuratorSelect} />
       </div>
     </section>
   );

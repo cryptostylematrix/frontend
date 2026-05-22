@@ -8,9 +8,11 @@ import { useProfileContext } from "../../context/ProfileContext";
 import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { ErrorCode } from "../../errors/ErrorCodes";
 import { translateError } from "../../errors/errorUtils";
-import { getProfilePrograms } from "../../services/contractsApi";
-import MultiInviterInviterData from "../../components/multi/inviter/MultiInviterInviterData";
-import MultiInviterChooseInviter from "../../components/multi/inviter/MultiInviterChooseInviter";
+import { getProfileProgram } from "../../services/contractsApi";
+import { ProfilePrograms } from "../../services/profileService";
+import InviterData from "../../components/marketing/inviter/InviterData";
+import ChooseInviter from "../../components/marketing/inviter/ChooseInviter";
+import { getPlacesCount } from "../../services/matrixApi";
 
 type ProgramInfo = {
   confirmed: boolean;
@@ -39,10 +41,9 @@ export default function MultiInviter() {
     };
 
     const loadProgramStatus = async () => {
-      const program = await getProfilePrograms(currentProfile.address);
+      const multi = await getProfileProgram(currentProfile.address, ProfilePrograms.multi);
       if (cancelled) return;
 
-      const multi = program?.multi;
       if (!multi || multi.confirmed !== 1) {
         //setProgramErrors([ErrorCode.UNEXPECTED]);
         setProgramData(null);
@@ -85,9 +86,14 @@ export default function MultiInviter() {
             <span className="spinner" />
           </div>
         ) : programData?.confirmed ? (
-          <MultiInviterInviterData inviterAddress={programData.inviter_addr} />
+          <InviterData inviterAddress={programData.inviter_addr} />
         ) : (
-          <MultiInviterChooseInviter onInviterChosen={handleInviterChosen} />
+          <ChooseInviter
+            onInviterChosen={handleInviterChosen}
+            program={ProfilePrograms.multi}
+            popularCuratorLogin="admin"
+            getInviterPlacesCount={(profileAddress) => getPlacesCount(1, profileAddress)}
+          />
         )}
       </div>
     </section>

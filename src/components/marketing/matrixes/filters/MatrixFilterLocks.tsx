@@ -53,7 +53,7 @@ export default function MatrixFilterLocks() {
   return (
     <label className="filter-field">
       <span className="filter-label">
-        {t("neoMatrix.filters.locks", "Locks")}
+        {t("matrix.filters.locks", "Locks")}
       </span>
       <div className="custom-select" tabIndex={0} onBlur={() => setIsOpen(false)}>
         <button
@@ -68,7 +68,7 @@ export default function MatrixFilterLocks() {
             ? t("home.loading")
             : locks.length > 0
                 ? "..."
-                : t("neoMatrix.filters.noLocks", "No locks")}
+                : t("matrix.filters.noLocks", "No locks")}
           <span className={`custom-select__arrow ${isOpen ? "up" : ""}`} />
         </button>
 
@@ -78,15 +78,15 @@ export default function MatrixFilterLocks() {
               <div className="custom-select__loading">{t("home.loading")}</div>
             ) : locks.length === 0 ? (
               <div className="custom-select__empty">
-                {t("neoMatrix.filters.noLocks", "No locks")}
+                {t("matrix.filters.noLocks", "No locks")}
               </div>
             ) : (
               <>
                 {locks.map((lock) => {
                   const lockSide =
                     lock.locked_pos == 0
-                      ? t("neoMatrix.filters.left", "left")
-                      : t("neoMatrix.filters.right", "right");
+                      ? t("matrix.filters.left", "left")
+                      : t("matrix.filters.right", "right");
                   const label = `[${lock.place_number}] ${lock.place_profile_login} (${lockSide})`;
                   const isSelected = lock.place_addr === selectedPlaceAddress;
                 
@@ -127,7 +127,7 @@ export default function MatrixFilterLocks() {
                     }}
                     disabled={loadingMore}
                   >
-                    {loadingMore ? t("home.loading") : t("neoMatrix.filters.loadMore", "Load more")}
+                    {loadingMore ? t("home.loading") : t("matrix.filters.loadMore", "Load more")}
                   </button>
                 )}
               </>

@@ -45,13 +45,13 @@ export default function MatrixBreadCrumbs() {
   return (
     <div className="matrix-row matrix-row--breadcrumbs">
       {loading ? (
-        <p className="placeholder-text">{t("multiMatrix.tree.loadingPath", "Loading path...")}</p>
+        <p className="placeholder-text">{t("matrix.tree.loadingPath", "Loading path...")}</p>
       ) : !items.length ? (
         <p className="breadcrumbs-placeholder">
-          {t("multiMatrix.tree.breadcrumbEmpty", "Breadcrumbs will appear here once a place is selected.")}
+          {t("matrix.tree.breadcrumbEmpty", "Breadcrumbs will appear here once a place is selected.")}
         </p>
       ) : (
-        <nav aria-label={t("multiMatrix.tree.breadcrumbs", "Breadcrumb")}>
+        <nav aria-label={t("matrix.tree.breadcrumbs", "Breadcrumb")}>
           <ol className="breadcrumbs">
             {items.map((item, index) => {
               const label = `#${item.place_number} ${item.login}`;

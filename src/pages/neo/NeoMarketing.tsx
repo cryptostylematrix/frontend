@@ -1,17 +1,21 @@
 import "./neo-marketing.css";
 import { useTranslation } from "react-i18next";
 
-const SUPPORTED_LANGS = ["en", "hu", "it", "kk", "pl", "ru", "uk"] as const;
+const SUPPORTED_LANGS = ["de", "en", "es", "fr", "hu", "it", "kk", "pl", "pt", "ru", "uk"] as const;
 type SupportedLang = (typeof SUPPORTED_LANGS)[number];
 
 const videoLinks: Record<SupportedLang, string> = {
-  ru: "https://youtu.be/AcHttS57cGo",
-  hu: "https://youtu.be/FJQsnZ2vgIQ",
-  en: "https://youtu.be/plxxqhkToJY",
-  it: "https://youtu.be/5kjwWmcLu6U",
-  pl: "https://youtu.be/ONQ4o_b09uY",
-  kk: "https://youtu.be/plxxqhkToJY",
-  uk: "https://youtu.be/plxxqhkToJY",
+  de: "https://youtu.be/au6XJvQKjtk",
+  en: "https://youtu.be/atDC1yaX3FE",
+  es: "https://youtu.be/JJVDfH4xmSk",
+  fr: "https://youtu.be/92bcDgHHxl4",
+  hu: "https://youtu.be/ngQFdv2bBEI",
+  it: "https://youtu.be/weTpAF-uB-Y",
+  kk: "https://youtu.be/SRANvbu9Xlw",
+  pl: "https://youtu.be/JxPTfBQ1Thg",
+  pt: "https://youtu.be/NrThOrOo8-I",
+  ru: "https://youtu.be/SRANvbu9Xlw",
+  uk: "https://youtu.be/J4USmRWQ6QE",
 };
 
 export default function NeoMarketing() {

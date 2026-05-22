@@ -25,7 +25,13 @@ const toOptionalPos = (pos: PlacePosData | null) => ({
 
 const toRawBigInt = (value: number | string | undefined | null): bigint => {
   if (value === undefined || value === null) return 0n;
-  return BigInt(Math.trunc(Number(value)));
+  if (typeof value === "number") return BigInt(Math.trunc(value));
+  return BigInt(value);
+};
+
+const toNanoBigInt = (value: number | string | undefined | null): bigint => {
+  if (value === undefined || value === null) return 0n;
+  return toNano(String(value));
 };
 
 export const getRawBuyAmount = async (marketingAddr: string, m: number, profileAddr: string): Promise<bigint | null> => {
@@ -111,7 +117,7 @@ export async function buyPlaceByJetton(
   if (rawFee === undefined || rawFee === null) {
     return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
   }
-  const fee = toRawBigInt(rawFee);
+  const fee = toNanoBigInt(rawFee);
   const bodyResponse = await buildMarketingBuyPlaceByJettonBody({
     marketingAddr: marketingAddress,
     m,
@@ -166,7 +172,7 @@ export async function lockPos(
   const bocHex = bodyResponse?.boc_hex;
   if (!bocHex) return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
 
-  return submitMarketingTx(tonConnectUI, marketingAddress, Cell.fromHex(bocHex), toRawBigInt(rawFee));
+  return submitMarketingTx(tonConnectUI, marketingAddress, Cell.fromHex(bocHex), toNanoBigInt(rawFee));
 }
 
 export async function unlockPos(
@@ -198,5 +204,5 @@ export async function unlockPos(
   const bocHex = bodyResponse?.boc_hex;
   if (!bocHex) return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
 
-  return submitMarketingTx(tonConnectUI, marketingAddress, Cell.fromHex(bocHex), toRawBigInt(rawFee));
+  return submitMarketingTx(tonConnectUI, marketingAddress, Cell.fromHex(bocHex), toNanoBigInt(rawFee));
 }

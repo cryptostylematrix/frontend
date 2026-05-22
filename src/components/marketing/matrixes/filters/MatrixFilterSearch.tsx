@@ -45,14 +45,14 @@ export default function MatrixFilterSearch() {
   return (
     <label className="filter-field">
       <span className="filter-label">
-        {t("neoMatrix.filters.searchByLogin", "Search")}
+        {t("matrix.filters.searchByLogin", "Search")}
       </span>
       <div className="filter-combobox">
         <input
           className="combobox-input"
           type="text"
           name="searchLogin"
-          placeholder={t("neoMatrix.filters.searchPlaceholder", "login")}
+          placeholder={t("matrix.filters.searchPlaceholder", "login")}
           value={searchLogin}
           onChange={(e) => {
             const value = e.target.value;

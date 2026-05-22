@@ -12,7 +12,7 @@ import { translateError } from "../../../../errors/errorUtils";
 import "../../../../pages/profile/update-profile.css";
 import { useMarketingContext } from "../../../../context/MarketingContext";
 import { getRootPlace } from "../../../../services/marketingApi";
-import { getProfilePrograms } from "../../../../services/contractsApi";
+import { getProfileProgram } from "../../../../services/contractsApi";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import ConfirmDialog from "../../../common/ConfirmDialog";
 
@@ -34,6 +34,7 @@ export default function MatrixFilters() {
     matrixPrice,
     matrixCurrency,
     jettonMarketing,
+    program,
   } = useMarketingContext();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [buyStatus, setBuyStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
@@ -61,16 +62,16 @@ export default function MatrixFilters() {
 
   }, [marketingAddr, selectedMatrix, currentProfile, refreshKey, setRootPlace]);
 
-  const buyPlaceLabel = t("neoMatrix.filters.buyPlace", {
+  const buyPlaceLabel = t("matrix.filters.buyPlace", {
     price: matrixPrice,
     currency: matrixCurrency,
     defaultValue: `Buy new place (${matrixPrice} ${matrixCurrency})`,
   });
   const confirmBuyMessage = (
     <>
-      <p>{t("neoMatrix.filters.confirmBuy", "Are you sure?")}</p>
+      <p>{t("matrix.filters.confirmBuy", "Are you sure?")}</p>
       <p>
-        {t("neoMatrix.filters.profileLabel", "Profile")}: <strong>{currentProfile?.login ?? ""}</strong>
+        {t("matrix.filters.profileLabel", "Profile")}: <strong>{currentProfile?.login ?? ""}</strong>
       </p>
     </>
   );
@@ -82,11 +83,11 @@ export default function MatrixFilters() {
     setBuyStatus(null);
 
     try {
-      const program = await getProfilePrograms(currentProfile.address);
-      if (!program?.neo || program.neo.confirmed !== 1) {
+      const programData = await getProfileProgram(currentProfile.address, program);
+      if (!programData || programData.confirmed !== 1) {
         setBuyStatus({
           type: "error",
-          message: t("neoMatrix.filters.programNotConfirmed", "You need to choose an inviter first."),
+          message: t("matrix.filters.programNotConfirmed", "You need to choose an inviter first."),
         });
         return;
       }
@@ -97,13 +98,13 @@ export default function MatrixFilters() {
       if (result.success) {
         setBuyStatus({
           type: "success",
-          message: t("neoMatrix.filters.buySuccess", "New place will appear on places list soon."),
+          message: t("matrix.filters.buySuccess", "New place will appear on places list soon."),
         });
       } else {
         const code = result.error_code;
         setBuyStatus({
           type: "error",
-          message: code ? translateError(t, code) : t("neoMatrix.filters.buyFail", "Fail"),
+          message: code ? translateError(t, code) : t("matrix.filters.buyFail", "Fail"),
         });
       }
     } finally {
@@ -115,7 +116,7 @@ export default function MatrixFilters() {
     <div className="matrix-row matrix-row--filters">
       <div className="filters-toggle-bar">
         <span className="filters-toggle-label">
-          {t("neoMatrix.filters.title", "Filters")}
+          {t("matrix.filters.title", "Filters")}
         </span>
         <button
           type="button"
@@ -125,8 +126,8 @@ export default function MatrixFilters() {
           aria-controls="filters-body"
         >
           {isCollapsed
-            ? t("neoMatrix.filters.show", "Show")
-            : t("neoMatrix.filters.hide", "Hide")}
+            ? t("matrix.filters.show", "Show")
+            : t("matrix.filters.hide", "Hide")}
         </button>
       </div>
 
@@ -137,7 +138,7 @@ export default function MatrixFilters() {
         <div className="filters-grid">
         <label className="filter-field">
           <span className="filter-label">
-            {t("neoMatrix.filters.matrixes", "Matrixes")}
+            {t("matrix.filters.matrixes", "Matrixes")}
           </span>
           <select
             className="filter-select"
@@ -180,7 +181,7 @@ export default function MatrixFilters() {
             className="filter-button secondary next-pos-style"
             onClick={refreshMatrixPage}
           >
-            {t("neoMatrix.filters.updatePage", "Update page")}
+            {t("matrix.filters.updatePage", "Update page")}
           </button>
           {buyStatus && (
             <div className="buy-status-row">
@@ -194,7 +195,7 @@ export default function MatrixFilters() {
 
       <ConfirmDialog
         open={showBuyConfirm}
-        title={t("neoMatrix.filters.confirmTitle", "Confirm purchase")}
+        title={t("matrix.filters.confirmTitle", "Confirm purchase")}
         message={confirmBuyMessage}
         confirmLabel={buyPlaceLabel}
         cancelLabel={t("common.cancel", "Cancel")}

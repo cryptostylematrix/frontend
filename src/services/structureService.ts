@@ -1,6 +1,6 @@
-import { getInviteAddrBySeqNo, getInviteData, getNftAddrByLogin, getProfileNftData, getProfilePrograms } from "./contractsApi";
+import { getInviteAddrBySeqNo, getInviteData, getNftAddrByLogin, getProfileNftData, getProfileProgram } from "./contractsApi";
 
-export type StructureProgram = "multi" | "neo";
+export type StructureProgram = number | string;
 
 export type StructureNode = {
   addr: string; // invite_addr analogue
@@ -25,7 +25,7 @@ export type StructureChildrenResult = {
 };
 
 export interface StructureService {
-  loadRootByLogin: (login: string, program?: StructureProgram) => Promise<StructureRootResult>;
+  loadRootByLogin: (login: string, program: StructureProgram) => Promise<StructureRootResult>;
   loadChildren: (node: StructureNode, from_ref_no: number, to_ref_no: number) => Promise<StructureChildrenResult>;
 }
 
@@ -50,7 +50,7 @@ export async function loadInviteLogin(inviteAddr: string) : Promise<string | nul
   return profileContentResult.content.login;
 }
 
-export async function loadRootByLogin(login: string, program: StructureProgram = "multi"): Promise<StructureRootResult> {
+export async function loadRootByLogin(login: string, program: StructureProgram): Promise<StructureRootResult> {
   const normalized = login.trim().toLowerCase();
   if (!normalized) return { success: false };
 
@@ -59,8 +59,7 @@ export async function loadRootByLogin(login: string, program: StructureProgram =
     if (!profile?.addr) return { success: false };
     const profileData = await getProfileNftData(profile.addr);
 
-    const programs = await getProfilePrograms(profile.addr);
-    const programData = programs?.[program];
+    const programData = await getProfileProgram(profile.addr, program);
     if (!programData || programData.confirmed !== 1) return { success: false };
 
     const inviteAddress = programData.invite_addr;

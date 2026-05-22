@@ -66,7 +66,9 @@
     "home_page": "Головна",
     "profile_page": "Профіль",
     "finance_page": "Фінанси",
-    "multi_page": "Мульти"
+    "multi_page": "Мульти",
+    "programs_page": "Програми",
+    "neo_page": "Neo"
   },
   "home": {
     "loading": "Завантаження...",
@@ -150,6 +152,17 @@
       "choose_inviter": "Вибір куратора",
       "transfer": "Передача NFT"
     }
+  },
+  "inviter": {
+    "title": "Вибір куратора",
+    "loginLabel": "Логін куратора",
+    "loginPlaceholder": "Введіть логін куратора",
+    "submit": "Обрати куратора",
+    "success": "Куратора обрано. Оновлення з'явиться скоро, будь ласка, оновіть сторінку пізніше.",
+    "alreadySelected": "Inviter already selected.",
+    "systemPlaceDescription": "Реєстрація під системне місце для самостійного побудування команди",
+    "confirmChooseTitle": "Підтвердження вибору куратора",
+    "confirmChoosePopular": "Ви впевнені, що хочете обрати цього куратора?"
   },
   "multi": {
     "title": "Мульти",
@@ -314,37 +327,9 @@
       "videoDescription": "Подивіться маркетинговий огляд на YouTube.",
       "watch": "Дивитися відео"
     },
-    "structure": {
-      "breadcrumbsTitle": "Хлібні крихти",
-      "breadcrumbsPlaceholder": "Тут з’являться хлібні крихти.",
-      "searchTitle": "Пошук за логіном",
-      "searchPlaceholder": "Введіть логін",
-      "searchButton": "Пошук",
-      "treeTitle": "Структура",
-      "treePlaceholder": "Тут буде відображено дерево.",
-      "created": "Створено",
-      "curator": "Куратор",
-      "referrals": "Реферали",
-      "loadMore": "Завантажити ще",
-      "notFound": "Запрошення з таким логіном не знайдено.",
-      "loading": "Завантаження...",
-      "expand": "Розгорнути",
-      "collapse": "Згорнути"
-    },
-    "inviter": {
-      "title": "Вибір куратора",
-      "loginLabel": "Логін куратора",
-      "loginPlaceholder": "Введіть логін куратора",
-      "submit": "Обрати куратора",
-      "success": "Куратора обрано. Оновлення з'явиться скоро, будь ласка, оновіть сторінку пізніше.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Реєстрація під системне місце для самостійного побудування команди",
-      "confirmChooseTitle": "Підтвердження вибору куратора",
-      "confirmChoosePopular": "Ви впевнені, що хочете обрати цього куратора?"
-    },
     "submenu_label": "Підменю Neo"
   },
-  "neoMatrix": {
+  "matrix": {
     "filters": {
       "title": "Фільтри",
       "show": "Показати",
@@ -408,5 +393,22 @@
       "breadcrumbEmpty": "Хлібні крихти з'являться після вибору місця.",
       "breadcrumbs": "Хлібні крихти"
     }
+  },
+  "structure": {
+    "breadcrumbsTitle": "Хлібні крихти",
+    "breadcrumbsPlaceholder": "Тут з’являться хлібні крихти.",
+    "searchTitle": "Пошук за логіном",
+    "searchPlaceholder": "Введіть логін",
+    "searchButton": "Пошук",
+    "treeTitle": "Структура",
+    "treePlaceholder": "Тут буде відображено дерево.",
+    "created": "Створено",
+    "curator": "Куратор",
+    "referrals": "Реферали",
+    "loadMore": "Завантажити ще",
+    "notFound": "Запрошення з таким логіном не знайдено.",
+    "loading": "Завантаження...",
+    "expand": "Розгорнути",
+    "collapse": "Згорнути"
   }
 }

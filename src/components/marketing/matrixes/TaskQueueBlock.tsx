@@ -102,7 +102,7 @@ export default function TaskQueueBlock() {
     <div className="matrix-row task-queue">
       <div className="task-queue-toggle">
         <span className="task-queue-title">
-          {t("multiMatrix.queue.title", "Task queue")}
+          {t("matrix.queue.title", "Task queue")}
         </span>
         <button
           type="button"
@@ -112,8 +112,8 @@ export default function TaskQueueBlock() {
           aria-controls="task-queue-body"
         >
           {isCollapsed
-            ? t("multiMatrix.filters.show", "Show")
-            : t("multiMatrix.filters.hide", "Hide")}
+            ? t("matrix.filters.show", "Show")
+            : t("matrix.filters.hide", "Hide")}
         </button>
       </div>
 
@@ -123,9 +123,9 @@ export default function TaskQueueBlock() {
       >
         <div className="task-queue-refresh-row">
           <p className="task-queue-refresh">
-            {t("multiMatrix.queue.refreshIn", "The data will refresh in")}{" "}
+            {t("matrix.queue.refreshIn", "The data will refresh in")}{" "}
             <strong>{secondsLeft}</strong>{" "}
-            {t("multiMatrix.queue.seconds", "seconds")}
+            {t("matrix.queue.seconds", "seconds")}
           </p>
           <button
             type="button"
@@ -133,25 +133,25 @@ export default function TaskQueueBlock() {
             onClick={() => void refreshNow()}
             disabled={isCollapsed}
           >
-            {t("multiMatrix.queue.refreshNow", "Refresh now")}
+            {t("matrix.queue.refreshNow", "Refresh now")}
           </button>
         </div>
         <p className="task-queue-summary">
-          {t("multiMatrix.queue.summaryPrefix", "There are")}{" "}
+          {t("matrix.queue.summaryPrefix", "There are")}{" "}
           <strong>{totalTasks}</strong>{" "}
-          {t("multiMatrix.queue.summarySuffix", "tasks associated with the profile")}{" "}
+          {t("matrix.queue.summarySuffix", "tasks associated with the profile")}{" "}
           <strong className="task-queue-profile">{currentProfile.login}</strong>
         </p>
         <div className="task-queue-table">
           <div className="task-queue-table__row task-queue-table__header">
-            <span>{t("multiMatrix.queue.task", "Task")}</span>
-            <span>{t("multiMatrix.queue.count", "Count")}</span>
-            <span>{t("multiMatrix.queue.orderIndex", "Order index")}</span>
+            <span>{t("matrix.queue.task", "Task")}</span>
+            <span>{t("matrix.queue.count", "Count")}</span>
+            <span>{t("matrix.queue.orderIndex", "Order index")}</span>
           </div>
           {taskRows.length === 0 ? (
             <div className="task-queue-table__row">
-              <span>{t("multiMatrix.queue.noTasks", "No tasks")}</span>
-              <span>{t("multiMatrix.queue.tasksCount", { count: 0, defaultValue: "{{count}} tasks" })}</span>
+              <span>{t("matrix.queue.noTasks", "No tasks")}</span>
+              <span>{t("matrix.queue.tasksCount", { count: 0, defaultValue: "{{count}} tasks" })}</span>
               <span>—</span>
             </div>
           ) : (
@@ -162,9 +162,9 @@ export default function TaskQueueBlock() {
               };
               return (
                 <div className="task-queue-table__row" key={row.tag}>
-                  <span>{t(`multiMatrix.queue.${label.key}`, label.defaultValue)}</span>
+                  <span>{t(`matrix.queue.${label.key}`, label.defaultValue)}</span>
                   <span>
-                    {t("multiMatrix.queue.tasksCount", {
+                    {t("matrix.queue.tasksCount", {
                       count: row.indexes.length,
                       defaultValue: "{{count}} tasks",
                     })}

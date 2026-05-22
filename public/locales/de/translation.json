@@ -66,7 +66,9 @@
     "home_page": "Startseite",
     "profile_page": "Profil",
     "finance_page": "Finanzen",
-    "multi_page": "Multi"
+    "multi_page": "Multi",
+    "programs_page": "Programme",
+    "neo_page": "Neo"
   },
   "home": {
     "loading": "Wird geladen...",
@@ -150,6 +152,17 @@
       "choose_inviter": "Kurator ausgewählt",
       "transfer": "NFT-Transfer"
     }
+  },
+  "inviter": {
+    "title": "Einlader wählen",
+    "loginLabel": "Einlader-Login",
+    "loginPlaceholder": "Einlader-Login eingeben",
+    "submit": "Einlader wählen",
+    "success": "Einlader ausgewählt. Aktualisierungen erscheinen bald, bitte laden Sie die Seite später neu.",
+    "alreadySelected": "Einlader wurde bereits ausgewählt.",
+    "systemPlaceDescription": "Registrierung unter einem Systemplatz für unabhängigen Teamaufbau",
+    "confirmChooseTitle": "Auswahl des Einladers bestätigen",
+    "confirmChoosePopular": "Möchten Sie diesen Einlader wirklich auswählen?"
   },
   "multi": {
     "title": "Multi",
@@ -314,37 +327,9 @@
       "videoDescription": "Sehen Sie sich den Marketingüberblick auf YouTube an.",
       "watch": "Video ansehen"
     },
-    "structure": {
-      "breadcrumbsTitle": "Navigationspfad",
-      "breadcrumbsPlaceholder": "Der Navigationspfad wird hier angezeigt.",
-      "searchTitle": "Nach Login suchen",
-      "searchPlaceholder": "Login eingeben",
-      "searchButton": "Suchen",
-      "treeTitle": "Struktur",
-      "treePlaceholder": "Die Baumansicht wird hier angezeigt.",
-      "created": "Erstellt",
-      "curator": "Kurator",
-      "referrals": "Empfehlungen",
-      "loadMore": "Mehr laden",
-      "notFound": "Einladungs-Login nicht gefunden.",
-      "loading": "Wird geladen...",
-      "expand": "Erweitern",
-      "collapse": "Einklappen"
-    },
-    "inviter": {
-      "title": "Einlader wählen",
-      "loginLabel": "Einlader-Login",
-      "loginPlaceholder": "Einlader-Login eingeben",
-      "submit": "Einlader wählen",
-      "success": "Einlader ausgewählt. Aktualisierungen erscheinen bald, bitte laden Sie die Seite später neu.",
-      "alreadySelected": "Einlader wurde bereits ausgewählt.",
-      "systemPlaceDescription": "Registrierung unter einem Systemplatz für unabhängigen Teamaufbau",
-      "confirmChooseTitle": "Auswahl des Einladers bestätigen",
-      "confirmChoosePopular": "Möchten Sie diesen Einlader wirklich auswählen?"
-    },
     "submenu_label": "Neo-Untermenü"
   },
-  "neoMatrix": {
+  "matrix": {
     "filters": {
       "title": "Filter",
       "show": "Anzeigen",
@@ -408,5 +393,22 @@
       "breadcrumbEmpty": "Der Navigationspfad wird hier angezeigt, sobald ein Platz ausgewählt wurde.",
       "breadcrumbs": "Navigationspfad"
     }
+  },
+  "structure": {
+    "breadcrumbsTitle": "Navigationspfad",
+    "breadcrumbsPlaceholder": "Der Navigationspfad wird hier angezeigt.",
+    "searchTitle": "Nach Login suchen",
+    "searchPlaceholder": "Login eingeben",
+    "searchButton": "Suchen",
+    "treeTitle": "Struktur",
+    "treePlaceholder": "Die Baumansicht wird hier angezeigt.",
+    "created": "Erstellt",
+    "curator": "Kurator",
+    "referrals": "Empfehlungen",
+    "loadMore": "Mehr laden",
+    "notFound": "Einladungs-Login nicht gefunden.",
+    "loading": "Wird geladen...",
+    "expand": "Erweitern",
+    "collapse": "Einklappen"
   }
 }

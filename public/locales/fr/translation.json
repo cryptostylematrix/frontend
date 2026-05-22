@@ -66,7 +66,9 @@
     "home_page": "Accueil",
     "profile_page": "Profil",
     "finance_page": "Finance",
-    "multi_page": "Multi"
+    "multi_page": "Multi",
+    "programs_page": "Programmes",
+    "neo_page": "Neo"
   },
   "home": {
     "loading": "Chargement...",
@@ -150,6 +152,17 @@
       "choose_inviter": "Curateur sélectionné",
       "transfer": "Transfert de NFT"
     }
+  },
+  "inviter": {
+    "title": "Choisir un inviteur",
+    "loginLabel": "Identifiant de l'inviteur",
+    "loginPlaceholder": "Saisissez l'identifiant de l'inviteur",
+    "submit": "Choisir l'inviteur",
+    "success": "Inviteur choisi. Les mises à jour apparaîtront bientôt, veuillez actualiser la page plus tard.",
+    "alreadySelected": "L'inviteur a déjà été sélectionné.",
+    "systemPlaceDescription": "Inscription sous une place système pour construire une équipe de manière indépendante",
+    "confirmChooseTitle": "Confirmer la sélection de l'inviteur",
+    "confirmChoosePopular": "Voulez-vous vraiment choisir cet inviteur ?"
   },
   "multi": {
     "title": "Multi",
@@ -314,37 +327,9 @@
       "videoDescription": "Regardez la présentation marketing sur YouTube.",
       "watch": "Voir la vidéo"
     },
-    "structure": {
-      "breadcrumbsTitle": "Fil d'Ariane",
-      "breadcrumbsPlaceholder": "Le fil d'Ariane apparaîtra ici.",
-      "searchTitle": "Rechercher par identifiant",
-      "searchPlaceholder": "Saisissez l'identifiant",
-      "searchButton": "Rechercher",
-      "treeTitle": "Structure",
-      "treePlaceholder": "La vue arborescente apparaîtra ici.",
-      "created": "Créé",
-      "curator": "Curateur",
-      "referrals": "Filleuls",
-      "loadMore": "Charger plus",
-      "notFound": "Identifiant d'invitation introuvable.",
-      "loading": "Chargement...",
-      "expand": "Développer",
-      "collapse": "Réduire"
-    },
-    "inviter": {
-      "title": "Choisir un inviteur",
-      "loginLabel": "Identifiant de l'inviteur",
-      "loginPlaceholder": "Saisissez l'identifiant de l'inviteur",
-      "submit": "Choisir l'inviteur",
-      "success": "Inviteur choisi. Les mises à jour apparaîtront bientôt, veuillez actualiser la page plus tard.",
-      "alreadySelected": "L'inviteur a déjà été sélectionné.",
-      "systemPlaceDescription": "Inscription sous une place système pour construire une équipe de manière indépendante",
-      "confirmChooseTitle": "Confirmer la sélection de l'inviteur",
-      "confirmChoosePopular": "Voulez-vous vraiment choisir cet inviteur ?"
-    },
     "submenu_label": "Sous-menu Neo"
   },
-  "neoMatrix": {
+  "matrix": {
     "filters": {
       "title": "Filtres",
       "show": "Afficher",
@@ -408,5 +393,22 @@
       "breadcrumbEmpty": "Le fil d'Ariane apparaîtra ici lorsqu'une place sera sélectionnée.",
       "breadcrumbs": "Fil d'Ariane"
     }
+  },
+  "structure": {
+    "breadcrumbsTitle": "Fil d'Ariane",
+    "breadcrumbsPlaceholder": "Le fil d'Ariane apparaîtra ici.",
+    "searchTitle": "Rechercher par identifiant",
+    "searchPlaceholder": "Saisissez l'identifiant",
+    "searchButton": "Rechercher",
+    "treeTitle": "Structure",
+    "treePlaceholder": "La vue arborescente apparaîtra ici.",
+    "created": "Créé",
+    "curator": "Curateur",
+    "referrals": "Filleuls",
+    "loadMore": "Charger plus",
+    "notFound": "Identifiant d'invitation introuvable.",
+    "loading": "Chargement...",
+    "expand": "Développer",
+    "collapse": "Réduire"
   }
 }

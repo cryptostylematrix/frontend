@@ -8,9 +8,12 @@ import { useProfileContext } from "../../context/ProfileContext";
 import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { ErrorCode } from "../../errors/ErrorCodes";
 import { translateError } from "../../errors/errorUtils";
-import { getProfilePrograms } from "../../services/contractsApi";
-import NeoInviterInviterData from "../../components/marketing/inviter/NeoInviterInviterData";
-import NeoInviterChooseInviter from "../../components/marketing/inviter/NeoInviterChooseInviter";
+import { getProfileProgram } from "../../services/contractsApi";
+import { ProfilePrograms } from "../../services/profileService";
+import InviterData from "../../components/marketing/inviter/InviterData";
+import ChooseInviter from "../../components/marketing/inviter/ChooseInviter";
+import { appConfig } from "../../config";
+import { getTotalPlaceCount } from "../../services/marketingApi";
 
 type ProgramInfo = {
   confirmed: boolean;
@@ -39,12 +42,9 @@ export default function NeoInviter() {
     };
 
     const loadProgramStatus = async () => {
-      const program = await getProfilePrograms(currentProfile.address);
-      console.log(program);
-      
+      const neo = await getProfileProgram(currentProfile.address, ProfilePrograms.neo);
       if (cancelled) return;
 
-      const neo = program?.neo;
       if (!neo || neo.confirmed !== 1) {
         //setProgramErrors([ErrorCode.UNEXPECTED]);
         setProgramData(null);
@@ -87,9 +87,16 @@ export default function NeoInviter() {
             <span className="spinner" />
           </div>
         ) : programData?.confirmed ? (
-          <NeoInviterInviterData inviterAddress={programData.inviter_addr} />
+          <InviterData inviterAddress={programData.inviter_addr} />
         ) : (
-          <NeoInviterChooseInviter onInviterChosen={handleInviterChosen} />
+          <ChooseInviter
+            onInviterChosen={handleInviterChosen}
+            program={ProfilePrograms.neo}
+            popularCuratorLogin="neoclub"
+            getInviterPlacesCount={(profileAddress) =>
+              getTotalPlaceCount(appConfig.neo.marketingAddr, profileAddress)
+            }
+          />
         )}
       </div>
     </section>

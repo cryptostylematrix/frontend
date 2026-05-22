@@ -4,13 +4,13 @@ import { ErrorCode } from "../../../errors/ErrorCodes";
 import { translateError } from "../../../errors/errorUtils";
 import { getInviteData } from "../../../services/contractsApi";
 import { getProfileNftData } from "../../../services/contractsApi";
-import "./neo-inviter-inviter-data.css";
+import "./inviter-data.css";
 
 type Props = {
   inviterAddress: string;
 };
 
-export default function MultiInviterInviterData({ inviterAddress }: Props) {
+export default function InviterData({ inviterAddress }: Props) {
   const { t } = useTranslation();
   const [inviterProfile, setInviterProfile] = useState<{
     address: string;

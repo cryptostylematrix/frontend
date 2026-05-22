@@ -66,7 +66,9 @@
     "home_page": "Басты бет",
     "profile_page": "Профиль",
     "finance_page": "Қаржы",
-    "multi_page": "Мульти"
+    "multi_page": "Мульти",
+    "programs_page": "Бағдарламалар",
+    "neo_page": "Neo"
   },
   "home": {
     "loading": "Жүктелуде...",
@@ -150,6 +152,17 @@
       "choose_inviter": "Кураторды таңдау",
       "transfer": "NFT беру"
     }
+  },
+  "inviter": {
+    "title": "Шақырушыны таңдау",
+    "loginLabel": "Шақырушының логині",
+    "loginPlaceholder": "Шақырушы логинін енгізіңіз",
+    "submit": "Шақырушыны таңдау",
+    "success": "Шақырушы таңдалды. Жаңартулар жақында шығады, бетті кейінірек жаңартыңыз.",
+    "alreadySelected": "Inviter already selected.",
+    "systemPlaceDescription": "Команданы өз бетінше құру үшін жүйелік орынның астында тіркелу",
+    "confirmChooseTitle": "Шақырушыны таңдауды растау",
+    "confirmChoosePopular": "Осы шақырушыны таңдағыңыз келетініне сенімдісіз бе?"
   },
   "multi": {
     "title": "Мульти",
@@ -314,37 +327,9 @@
       "videoDescription": "YouTube-тен маркетингке шолуды қараңыз.",
       "watch": "Бейнені қарау"
     },
-    "structure": {
-      "breadcrumbsTitle": "Навигация",
-      "breadcrumbsPlaceholder": "Мұнда навигация көрсетіледі.",
-      "searchTitle": "Логин бойынша іздеу",
-      "searchPlaceholder": "Логинді енгізіңіз",
-      "searchButton": "Іздеу",
-      "treeTitle": "Құрылым",
-      "treePlaceholder": "Ағаш көрінісі мұнда көрсетіледі.",
-      "created": "Жасалған",
-      "curator": "Куратор",
-      "referrals": "Ұсыныстар",
-      "loadMore": "Тағы жүктеу",
-      "notFound": "Логинге шақыру табылмады.",
-      "loading": "Жүктелуде...",
-      "expand": "Ашу",
-      "collapse": "Жабу"
-    },
-    "inviter": {
-      "title": "Шақырушыны таңдау",
-      "loginLabel": "Шақырушының логині",
-      "loginPlaceholder": "Шақырушы логинін енгізіңіз",
-      "submit": "Шақырушыны таңдау",
-      "success": "Шақырушы таңдалды. Жаңартулар жақында шығады, бетті кейінірек жаңартыңыз.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Команданы өз бетінше құру үшін жүйелік орынның астында тіркелу",
-      "confirmChooseTitle": "Шақырушыны таңдауды растау",
-      "confirmChoosePopular": "Осы шақырушыны таңдағыңыз келетініне сенімдісіз бе?"
-    },
     "submenu_label": "Neo ішкі мәзірі"
   },
-  "neoMatrix": {
+  "matrix": {
     "filters": {
       "title": "Сүзгілер",
       "show": "Көрсету",
@@ -408,5 +393,22 @@
       "breadcrumbEmpty": "Навигациялық жол орын таңдалғанда пайда болады.",
       "breadcrumbs": "Навигациялық жол"
     }
+  },
+  "structure": {
+    "breadcrumbsTitle": "Навигация",
+    "breadcrumbsPlaceholder": "Мұнда навигация көрсетіледі.",
+    "searchTitle": "Логин бойынша іздеу",
+    "searchPlaceholder": "Логинді енгізіңіз",
+    "searchButton": "Іздеу",
+    "treeTitle": "Құрылым",
+    "treePlaceholder": "Ағаш көрінісі мұнда көрсетіледі.",
+    "created": "Жасалған",
+    "curator": "Куратор",
+    "referrals": "Ұсыныстар",
+    "loadMore": "Тағы жүктеу",
+    "notFound": "Логинге шақыру табылмады.",
+    "loading": "Жүктелуде...",
+    "expand": "Ашу",
+    "collapse": "Жабу"
   }
 }

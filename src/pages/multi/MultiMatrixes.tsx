@@ -8,9 +8,10 @@ import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { WalletContext } from "../../App";
 import { useProfileContext } from "../../context/ProfileContext";
 import { MatrixProvider } from "../../context/MatrixContext";
-import { getProfilePrograms } from "../../services/contractsApi";
+import { getProfileProgram } from "../../services/contractsApi";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ProfilePrograms } from "../../services/profileService";
 
 export default function MultiMatrixes() {
   const { wallet } = useContext(WalletContext)!;
@@ -25,9 +26,9 @@ export default function MultiMatrixes() {
     if (!currentProfile) return () => { cancelled = true; };
 
     const run = async () => {
-      const program = await getProfilePrograms(currentProfile.address);
+      const program = await getProfileProgram(currentProfile.address, ProfilePrograms.multi);
       if (cancelled) return;
-      if (!program?.multi || program.multi.confirmed !== 1) {
+      if (!program || program.confirmed !== 1) {
         setProgramAllowed(false);
       } else {
         setProgramAllowed(true);

@@ -125,7 +125,7 @@ export default function MatrixFilterPlaces() {
     if (loading) return t("home.loading");
     const found = places.find((p) => p.addr === selectedPlaceAddress);
     if (!found) {
-      return places.length > 0 ? "..." : t("neoMatrix.filters.noPlaces", "No places");
+      return places.length > 0 ? "..." : t("matrix.filters.noPlaces", "No places");
     }
     const { label } = formatPlaceLabel(found);
     return label;
@@ -133,7 +133,7 @@ export default function MatrixFilterPlaces() {
 
   const placesLabel = useMemo(() => {
     const formattedTotal = new Intl.NumberFormat(i18n.language).format(placesCount);
-    return t("neoMatrix.filters.placesWithTotal", { total: formattedTotal });
+    return t("matrix.filters.placesWithTotal", { total: formattedTotal });
   }, [i18n.language, placesCount, t]);
 
   return (
@@ -161,7 +161,7 @@ export default function MatrixFilterPlaces() {
               <div className="custom-select__loading">{t("home.loading")}</div>
             ) : places.length === 0 ? (
               <div className="custom-select__empty">
-                {t("neoMatrix.filters.noPlaces", "No places")}
+                {t("matrix.filters.noPlaces", "No places")}
               </div>
             ) : (
               groupedPlaces.map(({ date, items }, idx) => (
@@ -213,7 +213,7 @@ export default function MatrixFilterPlaces() {
                 }}
                 disabled={loadingMore}
               >
-                {loadingMore ? t("home.loading") : t("neoMatrix.filters.loadMore", "Load more")}
+                {loadingMore ? t("home.loading") : t("matrix.filters.loadMore", "Load more")}
               </button>
             )}
           </div>

@@ -8,7 +8,8 @@ import { buyPlace, lockPos, unlockPos } from "../../../../services/multiService"
 import { translateError } from "../../../../errors/errorUtils";
 import { useEffect, useState } from "react";
 import { getPlacesCount } from "../../../../services/matrixApi";
-import { getProfileNftData, getProfilePrograms } from "../../../../services/contractsApi";
+import { getProfileNftData, getProfileProgram } from "../../../../services/contractsApi";
+import { ProfilePrograms } from "../../../../services/profileService";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { Address } from "@ton/core";
 import type { PlacePosData } from "../../../../types/multi";
@@ -114,8 +115,8 @@ export function MultiMatrixTreeDetails({ selectedNode }: Props) {
 
     try {
       if (selectedMatrix === 1) {
-        const program = await getProfilePrograms(currentProfile.address);
-        if (!program?.multi || program.multi.confirmed !== 1) {
+        const program = await getProfileProgram(currentProfile.address, ProfilePrograms.multi);
+        if (!program || program.confirmed !== 1) {
           setDetailsStatus({
             type: "error",
             text: t("multiMatrix.filters.programNotConfirmed", "You need to choose an inviter first."),

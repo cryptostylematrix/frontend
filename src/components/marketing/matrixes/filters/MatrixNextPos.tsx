@@ -35,7 +35,7 @@ export default function MatrixNextPos() {
       }}
       disabled={!nextPos || loading}
     >
-      {loading ? t("home.loading") : t("neoMatrix.filters.nextPos", "Next pos")}
+      {loading ? t("home.loading") : t("matrix.filters.nextPos", "Next pos")}
     </button>
   );
 }

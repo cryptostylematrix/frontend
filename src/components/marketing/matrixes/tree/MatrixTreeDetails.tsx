@@ -8,7 +8,7 @@ import { useProfileContext } from "../../../../context/ProfileContext";
 import { buyPlaceByJetton, buyPlaceByTon, lockPos, unlockPos } from "../../../../services/marketingService";
 import { translateError } from "../../../../errors/errorUtils";
 import { useContext, useEffect, useState } from "react";
-import { getProfileNftData, getProfilePrograms } from "../../../../services/contractsApi";
+import { getProfileNftData, getProfileProgram } from "../../../../services/contractsApi";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { Address } from "@ton/core";
 import type { PlacePosData } from "../../../../types/multi";
@@ -32,12 +32,13 @@ export function MatrixTreeDetails({ selectedNode }: Props) {
     selectedMatrix,
     selectedPlaceAddress,
     setSelectedPlace,
+    program,
   } = useMarketingContext();
   const { currentProfile } = useProfileContext();
   const { wallet } = useContext(WalletContext)!;
   const [tonConnectUI] = useTonConnectUI();
   const { t } = useTranslation();
-  const upLabel = t("neoMatrix.tree.up", { defaultValue: "Up ▲" });
+  const upLabel = t("matrix.tree.up", { defaultValue: "Up ▲" });
   const [buyLoading, setBuyLoading] = useState(false);
   const [lockLoading, setLockLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -91,24 +92,24 @@ export function MatrixTreeDetails({ selectedNode }: Props) {
   const canBuy = !isFilled && selectedNode.can_buy;
   const confirmBuyMessage = (
     <>
-      <p>{t("neoMatrix.filters.confirmBuy", "Are you sure?")}</p>
+      <p>{t("matrix.filters.confirmBuy", "Are you sure?")}</p>
       <p>
-        {t("neoMatrix.filters.profileLabel", "Profile")}: <strong>{currentProfile?.login ?? ""}</strong>
+        {t("matrix.filters.profileLabel", "Profile")}: <strong>{currentProfile?.login ?? ""}</strong>
       </p>
     </>
   );
   const confirmTitle =
     confirmAction === "lock"
-      ? t("neoMatrix.filters.confirmLockTitle", "Confirm locking")
+      ? t("matrix.filters.confirmLockTitle", "Confirm locking")
       : confirmAction === "unlock"
-        ? t("neoMatrix.filters.confirmUnlockTitle", "Confirm unlocking")
-        : t("neoMatrix.filters.confirmTitle", "Confirm purchase");
+        ? t("matrix.filters.confirmUnlockTitle", "Confirm unlocking")
+        : t("matrix.filters.confirmTitle", "Confirm purchase");
   const confirmLabel =
     confirmAction === "lock"
-      ? t("neoMatrix.tree.lock", { defaultValue: "Lock" })
+      ? t("matrix.tree.lock", { defaultValue: "Lock" })
       : confirmAction === "unlock"
-        ? t("neoMatrix.tree.unlock", { defaultValue: "Unlock" })
-        : t("neoMatrix.tree.buy", { defaultValue: "Buy", price: matrixPrice });
+        ? t("matrix.tree.unlock", { defaultValue: "Unlock" })
+        : t("matrix.tree.buy", { defaultValue: "Buy", price: matrixPrice });
 
   const fixedpos: PlacePosData | undefined = selectedNode.parent_addr
     ? { parent: Address.parse(selectedNode.parent_addr), pos: selectedNode.pos }
@@ -121,11 +122,11 @@ export function MatrixTreeDetails({ selectedNode }: Props) {
     setBuyLoading(true);
 
     try {
-      const program = await getProfilePrograms(currentProfile.address);
-      if (!program?.neo || program.neo.confirmed !== 1) {
+      const programData = await getProfileProgram(currentProfile.address, program);
+      if (!programData || programData.confirmed !== 1) {
         setDetailsStatus({
           type: "error",
-          text: t("neoMatrix.filters.programNotConfirmed", "You need to choose an inviter first."),
+          text: t("matrix.filters.programNotConfirmed", "You need to choose an inviter first."),
         });
         return;
       }
@@ -136,13 +137,13 @@ export function MatrixTreeDetails({ selectedNode }: Props) {
       if (result.success) {
         setDetailsStatus({
           type: "success",
-          text: t("neoMatrix.filters.buySuccess", "New place will appear on places list soon."),
+          text: t("matrix.filters.buySuccess", "New place will appear on places list soon."),
         });
       } else {
         const code = result.error_code;
         setDetailsStatus({
           type: "error",
-          text: code ? translateError(t, code) : t("neoMatrix.filters.buyFail", "Fail"),
+          text: code ? translateError(t, code) : t("matrix.filters.buyFail", "Fail"),
         });
       }
     } finally {
@@ -162,7 +163,7 @@ export function MatrixTreeDetails({ selectedNode }: Props) {
         setDetailsStatus({
           type: "error",
           text: t(
-            "neoMatrix.filters.noPlacesInMatrix",
+            "matrix.filters.noPlacesInMatrix",
             "You need a place in this matrix to perform this action."
           ),
         });
@@ -174,11 +175,11 @@ export function MatrixTreeDetails({ selectedNode }: Props) {
         setDetailsStatus({
           type: "success",
           text: isLock
-            ? t("neoMatrix.tree.unlockSuccess", {
+            ? t("matrix.tree.unlockSuccess", {
                 defaultValue:
                   "Unlock request sent. The unlock will appear soon; update the page in a while to see it.",
               })
-            : t("neoMatrix.tree.lockSuccess", {
+            : t("matrix.tree.lockSuccess", {
                 defaultValue:
                   "Lock request sent. The lock will appear soon; update the page in a while to see it.",
               }),
@@ -187,7 +188,7 @@ export function MatrixTreeDetails({ selectedNode }: Props) {
         const code = result.error_code;
         setDetailsStatus({
           type: "error",
-          text: code ? translateError(t, code) : t("neoMatrix.filters.buyFail", "Fail"),
+          text: code ? translateError(t, code) : t("matrix.filters.buyFail", "Fail"),
         });
       }
     } finally {
@@ -233,12 +234,12 @@ export function MatrixTreeDetails({ selectedNode }: Props) {
                   href={tonViewerUrl}
                   target="_blank"
                   rel="noreferrer"
-                  aria-label={t("neoMatrix.tree.viewInTonViewer", {
+                  aria-label={t("matrix.tree.viewInTonViewer", {
                     defaultValue: "Open in TonViewer",
                   })}
                 >
                   <span className="details-meta__tonviewer-label">
-                    {t("neoMatrix.tree.toViewer", { defaultValue: "tonviewer" })}
+                    {t("matrix.tree.toViewer", { defaultValue: "tonviewer" })}
                     <span className="details-meta__tonviewer-arrow">➤</span>
                   </span>
                 </a>
@@ -250,7 +251,7 @@ export function MatrixTreeDetails({ selectedNode }: Props) {
 
               <div className="details-meta__login">{selectedNode.profile_login}</div>
               <div className="details-meta__desc">
-                {t("neoMatrix.tree.placesBelow", {
+                {t("matrix.tree.placesBelow", {
                   count: selectedNode.descendants,
                   formattedCount: formatter.format(selectedNode.descendants),
                   defaultValue: "{{formattedCount}} place below",
@@ -267,7 +268,7 @@ export function MatrixTreeDetails({ selectedNode }: Props) {
                 className="details-action details-action--ghost"
                 onClick={() => setSelectedPlace(selectedNode.addr)}
               >
-                {t("neoMatrix.tree.select", { defaultValue: "Select ▼" })}
+                {t("matrix.tree.select", { defaultValue: "Select ▼" })}
               </button>
             </div>
           )}
@@ -285,7 +286,7 @@ export function MatrixTreeDetails({ selectedNode }: Props) {
         >
           {buyLoading
             ? t("home.loading", "Loading...")
-            : t("neoMatrix.tree.buy", {
+            : t("matrix.tree.buy", {
                 defaultValue: "Buy ({{price}} {{currency}})",
                 price: matrixPrice,
                 currency: matrixCurrency,
@@ -303,8 +304,8 @@ export function MatrixTreeDetails({ selectedNode }: Props) {
           {lockLoading
             ? t("home.loading", "Loading...")
             : isLock
-              ? t("neoMatrix.tree.unlock", { defaultValue: "Unlock" })
-              : t("neoMatrix.tree.lock", { defaultValue: "Lock" })}
+              ? t("matrix.tree.unlock", { defaultValue: "Unlock" })
+              : t("matrix.tree.lock", { defaultValue: "Lock" })}
         </button>
       )}
 

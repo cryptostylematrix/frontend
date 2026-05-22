@@ -4,9 +4,11 @@ import { getMarketingData } from "../services/contractsApi";
 import type { MatrixConfigResponse } from "../services/contractsApi";
 import { getRawBuyAmount } from "../services/marketingService";
 import { useProfileContext } from "./ProfileContext";
+import type { ProfileProgram } from "../services/profileService";
 
 type MarketingContextType = {
   marketingAddr: string;
+  program: ProfileProgram;
   selectedMatrix: number;
   setSelectedMatrix: (m: number) => void;
   matrixOptions: Array<{ value: number; label: string }>;
@@ -26,7 +28,15 @@ type MarketingContextType = {
 
 const MarketingContext = createContext<MarketingContextType | undefined>(undefined);
 
-export function MarketingProvider({ children, marketingAddr }: { children: ReactNode; marketingAddr: string }) {
+export function MarketingProvider({
+  children,
+  marketingAddr,
+  program,
+}: {
+  children: ReactNode;
+  marketingAddr: string;
+  program: ProfileProgram;
+}) {
   const { currentProfile } = useProfileContext();
   const normalizedMarketingAddr = useMemo(() => marketingAddr.trim(), [marketingAddr]);
   const [selectedMatrix, setSelectedMatrix] = useState<number>(1);
@@ -123,6 +133,7 @@ export function MarketingProvider({ children, marketingAddr }: { children: React
     <MarketingContext.Provider
       value={{
         marketingAddr: normalizedMarketingAddr,
+        program,
         selectedMatrix,
         setSelectedMatrix,
         matrixOptions,
