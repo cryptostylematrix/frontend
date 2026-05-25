@@ -130,5 +130,7 @@
   .lang-list {
     width: 100%;
     left: 0;
+    max-height: min(320px, 60vh);
+    overflow-y: auto;
   }
 }

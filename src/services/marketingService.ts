@@ -117,7 +117,9 @@ export async function buyPlaceByJetton(
   if (rawFee === undefined || rawFee === null) {
     return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
   }
-  const fee = toNanoBigInt(rawFee);
+
+  const fee = toRawBigInt(rawFee);
+
   const bodyResponse = await buildMarketingBuyPlaceByJettonBody({
     marketingAddr: marketingAddress,
     m,

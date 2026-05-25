@@ -30,6 +30,7 @@ const Lang: React.FC = () => {
   const currentLangCode = i18n.language?.split(/[-_]/)[0] ?? "en";
   const currentLang =
     LANGUAGES.find((lang) => lang.code === currentLangCode) || LANGUAGES.find((l) => l.code === "en")!;
+  const availableLanguages = LANGUAGES.filter((lang) => lang.code !== currentLang.code);
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
@@ -65,7 +66,7 @@ const Lang: React.FC = () => {
 
         {isOpen && (
           <ul className="lang-list" role="listbox">
-            {LANGUAGES.map((lang) => (
+            {availableLanguages.map((lang) => (
               <li key={lang.code}>
                 <button
                   type="button"
