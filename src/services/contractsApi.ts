@@ -722,8 +722,8 @@ export async function buildMarketingLockPosBody(request: BuildMarketingLockPosBo
 
   const url = new URL("/contracts/marketing/body/lock-pos", normalizedBase || defaultOrigin);
   url.searchParams.set("m", String(request.m));
-  url.searchParams.set("profileAddr", profileAddr);
-  url.searchParams.set("parentAddr", parentAddr);
+  url.searchParams.set("profile_addr", profileAddr);
+  url.searchParams.set("parent_addr", parentAddr);
   url.searchParams.set("pos", String(pos));
 
   return safeGet<LockPosBodyResponse>(url.toString());
@@ -738,8 +738,8 @@ export async function buildMarketingUnlockPosBody(request: BuildMarketingUnlockP
 
   const url = new URL("/contracts/marketing/body/unlock-pos", normalizedBase || defaultOrigin);
   url.searchParams.set("m", String(request.m));
-  url.searchParams.set("profileAddr", profileAddr);
-  url.searchParams.set("parentAddr", parentAddr);
+  url.searchParams.set("profile_addr", profileAddr);
+  url.searchParams.set("parent_addr", parentAddr);
   url.searchParams.set("pos", String(pos));
 
   return safeGet<UnlockPosBodyResponse>(url.toString());
