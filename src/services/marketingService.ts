@@ -29,11 +29,6 @@ const toRawBigInt = (value: number | string | undefined | null): bigint => {
   return BigInt(value);
 };
 
-const toNanoBigInt = (value: number | string | undefined | null): bigint => {
-  if (value === undefined || value === null) return 0n;
-  return toNano(String(value));
-};
-
 export const getRawBuyAmount = async (marketingAddr: string, m: number, profileAddr: string): Promise<bigint | null> => {
   const data = await getMarketingData(marketingAddr);
   const price = data?.matrixes?.[String(m)]?.price;
@@ -174,7 +169,7 @@ export async function lockPos(
   const bocHex = bodyResponse?.boc_hex;
   if (!bocHex) return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
 
-  return submitMarketingTx(tonConnectUI, marketingAddress, Cell.fromHex(bocHex), toNanoBigInt(rawFee));
+  return submitMarketingTx(tonConnectUI, marketingAddress, Cell.fromHex(bocHex), toRawBigInt(rawFee));
 }
 
 export async function unlockPos(
@@ -206,5 +201,5 @@ export async function unlockPos(
   const bocHex = bodyResponse?.boc_hex;
   if (!bocHex) return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
 
-  return submitMarketingTx(tonConnectUI, marketingAddress, Cell.fromHex(bocHex), toNanoBigInt(rawFee));
+  return submitMarketingTx(tonConnectUI, marketingAddress, Cell.fromHex(bocHex), toRawBigInt(rawFee));
 }
