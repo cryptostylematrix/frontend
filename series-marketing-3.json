@@ -1,3 +1,39 @@
 {
-  "name": "CryptoCash"
+  "name": "CryptoCash",
+  "image": "",
+  "creator": {
+    "tg": ""
+  },
+  "features": [
+    "compression",
+    "activation"
+  ],
+  "presentations": {
+    "pdf": {
+      "de": "",
+      "en": "",
+      "es": "",
+      "fr": "",
+      "hu": "",
+      "it": "",
+      "kk": "",
+      "pl": "",
+      "pt": "",
+      "ru": "",
+      "uk": ""
+    },
+    "video": {
+      "de": "",
+      "en": "",
+      "es": "",
+      "fr": "",
+      "hu": "",
+      "it": "",
+      "kk": "",
+      "pl": "",
+      "pt": "",
+      "ru": "",
+      "uk": ""
+    }
+  }
 }
