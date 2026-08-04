@@ -322,6 +322,128 @@ export type MarketingDataResponse = {
   params: MarketingParamsResponse;
 };
 
+export type MarketingV3BasicDataResponse = {
+  init: number;
+  admin_addr: string;
+  index: number;
+  series_tag: number;
+  metadata_uri: string | null;
+};
+
+export type MarketingV3MessageBodyResponse = {
+  boc_hex: string;
+};
+
+export type BuildMarketingV3ExecMessageBodyRequest = {
+  queryId: number | string | bigint;
+  structure: number;
+  profileAddr: string;
+  commandTag: number;
+  payloadBocHex?: string | null;
+};
+
+export type MarketingV3PlaceRefResponse = {
+  struct: number;
+  profile_addr: string | null;
+  place_number: number;
+};
+
+export type MarketingV3RelativePlaceRefResponse = {
+  source: MarketingV3PlaceRefResponse;
+  level: number;
+};
+
+export type MarketingV3PlaceInfoResponse = {
+  place_number: number;
+  profile_login: string | null;
+};
+
+export type MarketingV3TaskCommandResponse = {
+  tag: number;
+  struct: number | null;
+  command_struct: number | null;
+  command_tag: number;
+  profile_addr: string | null;
+  source_addr: string | null;
+  amount: number | null;
+  sender_jetton_wallet: string | null;
+  relative: MarketingV3RelativePlaceRefResponse | null;
+};
+
+export type MarketingV3TaskQueryResponse = {
+  tag: number;
+  struct: number | null;
+  bonus_type_tag: number;
+  relative: MarketingV3RelativePlaceRefResponse | null;
+  reason: MarketingV3PlaceInfoResponse | null;
+  recipient_profile_addr: string | null;
+  amount: number;
+  sender_jetton_wallet: string | null;
+  bonus_title: string;
+};
+
+export type MarketingV3TaskResponse = {
+  query_id: number;
+  command: MarketingV3TaskCommandResponse | null;
+  query: MarketingV3TaskQueryResponse | null;
+  payload_boc_hex: string | null;
+};
+
+export type MarketingV3CommandConfigResponse = {
+  price: number;
+  sender_jetton_wallet: string | null;
+  gram_fee: number;
+};
+
+export type MarketingV3RewardResponse = {
+  tag: number;
+  from_level: number | null;
+  to_level: number | null;
+  count: number | null;
+  struct: number | null;
+  command_struct: number | null;
+  command_tag: number | null;
+  bonus_type_tag: number | null;
+  profile_addr: string | null;
+  recipient: string | null;
+  amount: number | null;
+  sender_jetton_wallet: string | null;
+  forward_ton_amount: number | null;
+  title: string | null;
+  payload_boc_hex: string | null;
+};
+
+export type MarketingV3RewardConfigResponse = {
+  sets: Record<string, MarketingV3RewardResponse[]>;
+};
+
+export type MarketingV3RoyaltyConfigResponse = {
+  numerator: number;
+  denominator: number;
+  recipient: string | null;
+};
+
+export type MarketingV3StructureConfigResponse = {
+  commands: Record<string, MarketingV3CommandConfigResponse>;
+  rewards: Record<string, MarketingV3RewardConfigResponse>;
+  royalties: Record<string, MarketingV3RoyaltyConfigResponse>;
+  name: string;
+};
+
+export type MarketingV3DataResponse = {
+  admin_addr: string;
+  index: number;
+  series_tag: number;
+  metadata_uri: string;
+  max_tasks: number;
+  queue_size: number;
+  seq_no: number;
+  processor_addr: string;
+  queue: Record<string, MarketingV3TaskResponse>;
+  structures: Record<string, MarketingV3StructureConfigResponse>;
+  prefix_boc_hex: string;
+};
+
 export type PlaceInfoResponse = {
   kind: number;
   profile_addr: string;
@@ -353,6 +475,20 @@ export type JettonWalletDataResponse = {
   balance: number | string;
   owner_addr: string;
   minter_addr: string;
+};
+
+export type BuildJettonTransferMsgBodyRequest = {
+  queryId: QueryNumber;
+  amount: QueryNumber;
+  destinationAddr: string;
+  responseDestinationAddr?: string | null;
+  customPayloadBocHex?: string | null;
+  forwardTonAmount: QueryNumber;
+  forwardPayloadBocHex?: string | null;
+};
+
+export type JettonTransferMsgBodyResponse = {
+  boc_hex: string;
 };
 
 export type ContractBalanceResponse = {
@@ -415,9 +551,17 @@ export interface ContractsApi {
   buildMarketingUnlockPosBody: (request: BuildMarketingUnlockPosBodyRequest) => Promise<UnlockPosBodyResponse | null>;
   getMarketingFirstTask: (addr: string) => Promise<FirstTaskResponse | null>;
   getMarketingData: (addr: string) => Promise<MarketingDataResponse | null>;
+  getMarketingV3BasicData: (addr: string) => Promise<MarketingV3BasicDataResponse | null>;
+  getMarketingV3Data: (addr: string) => Promise<MarketingV3DataResponse | null>;
+  buildMarketingV3ExecMessageBody: (
+    request: BuildMarketingV3ExecMessageBodyRequest,
+  ) => Promise<MarketingV3MessageBodyResponse | null>;
   getMatrixPlaceData: (addr: string) => Promise<MatrixPlaceDataResponse | null>;
   getJettonWalletAddress: (addr: string, ownerAddr: string) => Promise<JettonWalletAddressResponse | null>;
   getJettonWalletData: (addr: string) => Promise<JettonWalletDataResponse | null>;
+  buildJettonTransferMsgBody: (
+    request: BuildJettonTransferMsgBodyRequest,
+  ) => Promise<JettonTransferMsgBodyResponse | null>;
 }
 
 const trimTrailingSlash = (value: string) => value.replace(/\/+$/, "");
@@ -761,6 +905,57 @@ export async function getMarketingData(addr: string): Promise<MarketingDataRespo
   return safeGet<MarketingDataResponse>(url);
 }
 
+export async function getMarketingV3BasicData(
+  addr: string,
+): Promise<MarketingV3BasicDataResponse | null> {
+  const normalizedAddr = addr?.trim();
+  if (!normalizedAddr) return null;
+
+  const url = buildUrl(
+    `/contracts/marketing-v3/${encodeURIComponent(normalizedAddr)}/basic-data`,
+  );
+  return safeGet<MarketingV3BasicDataResponse>(url);
+}
+
+export async function getMarketingV3Data(
+  addr: string,
+): Promise<MarketingV3DataResponse | null> {
+  const normalizedAddr = addr?.trim();
+  if (!normalizedAddr) return null;
+
+  const url = buildUrl(
+    `/contracts/marketing-v3/${encodeURIComponent(normalizedAddr)}/data`,
+  );
+  return safeGet<MarketingV3DataResponse>(url);
+}
+
+export async function buildMarketingV3ExecMessageBody(
+  request: BuildMarketingV3ExecMessageBodyRequest,
+): Promise<MarketingV3MessageBodyResponse | null> {
+  const profileAddr = request.profileAddr?.trim();
+  if (
+    !profileAddr ||
+    !Number.isInteger(request.structure) ||
+    !Number.isInteger(request.commandTag)
+  ) {
+    return null;
+  }
+
+  const url = new URL(
+    "/contracts/marketing-v3/body/exec",
+    normalizedBase || defaultOrigin,
+  );
+  url.searchParams.set("query_id", String(request.queryId));
+  url.searchParams.set("structure", String(request.structure));
+  url.searchParams.set("profile_addr", profileAddr);
+  url.searchParams.set("command_tag", String(request.commandTag));
+  if (request.payloadBocHex) {
+    url.searchParams.set("payload_boc_hex", request.payloadBocHex);
+  }
+
+  return safeGet<MarketingV3MessageBodyResponse>(url.toString());
+}
+
 export async function getMatrixPlaceData(addr: string): Promise<MatrixPlaceDataResponse | null> {
   const normalizedAddr = addr?.trim();
   if (!normalizedAddr) return null;
@@ -785,6 +980,38 @@ export async function getJettonWalletData(addr: string): Promise<JettonWalletDat
 
   const url = buildUrl(`/contracts/jetton-wallet/${normalizedAddr}/data`);
   return safeGet<JettonWalletDataResponse>(url);
+}
+
+export async function buildJettonTransferMsgBody(
+  request: BuildJettonTransferMsgBodyRequest,
+): Promise<JettonTransferMsgBodyResponse | null> {
+  const destinationAddr = request.destinationAddr?.trim();
+  if (!destinationAddr) return null;
+
+  const url = new URL(
+    "/contracts/jetton-wallet/body/transfer",
+    normalizedBase || defaultOrigin,
+  );
+  url.searchParams.set("query_id", String(request.queryId));
+  url.searchParams.set("amount", String(request.amount));
+  url.searchParams.set("destination_addr", destinationAddr);
+  url.searchParams.set("forward_ton_amount", String(request.forwardTonAmount));
+
+  const responseDestinationAddr = request.responseDestinationAddr?.trim();
+  if (responseDestinationAddr) {
+    url.searchParams.set("response_destination_addr", responseDestinationAddr);
+  }
+  if (request.customPayloadBocHex) {
+    url.searchParams.set("custom_payload_boc_hex", request.customPayloadBocHex);
+  }
+  if (request.forwardPayloadBocHex) {
+    url.searchParams.set(
+      "forward_payload_boc_hex",
+      request.forwardPayloadBocHex,
+    );
+  }
+
+  return safeGet<JettonTransferMsgBodyResponse>(url.toString());
 }
 
 export const contractsApi: ContractsApi = {
@@ -813,7 +1040,11 @@ export const contractsApi: ContractsApi = {
   buildMarketingUnlockPosBody,
   getMarketingFirstTask,
   getMarketingData,
+  getMarketingV3BasicData,
+  getMarketingV3Data,
+  buildMarketingV3ExecMessageBody,
   getMatrixPlaceData,
   getJettonWalletAddress,
   getJettonWalletData,
+  buildJettonTransferMsgBody,
 };

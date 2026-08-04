@@ -4,12 +4,14 @@ import { User, Send, Wallet } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import ProfileStatusBlock from "../components/ProfileStatusBlock";
 import AvailablePrograms from "../components/AvailablePrograms";
+import AvailableTestPrograms from "../components/AvailableTestPrograms";
 import { WalletContext } from "../App";
 import { useProfileContext } from "../context/ProfileContext";
 import { getContractBalance } from "../services/contractsApi";
 import { useTranslation } from "react-i18next";
 import { translateError } from "../errors/errorUtils";
 import { ErrorCode } from "../errors/ErrorCodes";
+import { appConfig } from "../config";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -50,6 +52,10 @@ export default function Home() {
   if (!currentProfile) {
     return <ProfileStatusBlock type="profile" />;
   }
+
+  const canViewTestPrograms = appConfig.availableTestPrograms.logins.some(
+    (login) => login.toLowerCase() === currentProfile.login.toLowerCase(),
+  );
 
   // 🧠 Main content
   return (
@@ -96,6 +102,7 @@ export default function Home() {
       </div>
 
       <AvailablePrograms />
+      {canViewTestPrograms && <AvailableTestPrograms />}
     </>
   );
 }

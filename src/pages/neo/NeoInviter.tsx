@@ -94,7 +94,7 @@ export default function NeoInviter() {
             program={ProfilePrograms.neo}
             popularCuratorLogin="neoclub"
             getInviterPlacesCount={(profileAddress) =>
-              getTotalPlaceCount(appConfig.neo.marketingAddr, profileAddress)
+              getTotalPlaceCount(appConfig.ton.neo.marketingAddr, profileAddress)
             }
           />
         )}

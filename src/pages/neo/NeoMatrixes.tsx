@@ -63,7 +63,7 @@ export default function NeoMatrixes() {
   }
 
   return (
-    <MarketingProvider marketingAddr={appConfig.neo.marketingAddr} program={ProfilePrograms.neo}>
+    <MarketingProvider marketingAddr={appConfig.ton.neo.marketingAddr} program={ProfilePrograms.neo}>
       <section className="neo-matrixes">
         <MatrixFilters />
         <TaskQueueBlock />

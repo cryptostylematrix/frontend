@@ -27,6 +27,12 @@ import NeoStructure from "./pages/neo/NeoStructure";
 import NeoMatrixes from "./pages/neo/NeoMatrixes";
 import NeoMarketing from "./pages/neo/NeoMarketing";
 import NeoStat from "./pages/neo/NeoStat";
+import Programs from "./pages/programs/Programs";
+import ProgramReferrals from "./pages/programs/ProgramReferrals";
+import ProgramInviter from "./pages/programs/ProgramInviter";
+import ProgramStat from "./pages/programs/ProgramStat";
+import ProgramStructures from "./pages/programs/ProgramStructures";
+import ProgramMarketing from "./pages/programs/ProgramMarketing";
 
 /**
  * Wallet context shared globally
@@ -63,6 +69,15 @@ function App() {
                 </Route>
 
                 <Route path="/finance" element={<Finance />} />
+
+                <Route path="/programs/:marketingAddress" element={<Programs />}>
+                  <Route index element={<Navigate to="marketing" replace />} />
+                  <Route path="referrals" element={<ProgramReferrals />} />
+                  <Route path="inviter" element={<ProgramInviter />} />
+                  <Route path="stat" element={<ProgramStat />} />
+                  <Route path="structures" element={<ProgramStructures />} />
+                  <Route path="marketing" element={<ProgramMarketing />} />
+                </Route>
                 
                 <Route path="/multi" element={<Multi />}>
                   <Route index element={<Navigate to="inviter" replace />} />

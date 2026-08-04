@@ -1,0 +1,67 @@
+.programs-submenu {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 1.5rem auto;
+  padding: 1rem 1.5rem;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fffefa 0%, #fff9f0 100%);
+  font-family: "Poppins", sans-serif;
+}
+
+.programs-submenu ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.programs-submenu a {
+  position: relative;
+  padding: 0.25rem 0;
+  color: #3a2e0e;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.programs-submenu a::after {
+  display: block;
+  width: 0;
+  height: 2px;
+  margin-top: 4px;
+  background-color: #d4af37;
+  content: "";
+  transition: width 0.2s ease;
+}
+
+.programs-submenu a:hover::after,
+.programs-submenu a.active::after {
+  width: 100%;
+}
+
+.programs-submenu a.active {
+  color: #d4af37;
+  font-weight: 600;
+}
+
+@media (max-width: 700px) {
+  .programs-submenu {
+    padding: 1.2rem 1rem;
+  }
+
+  .programs-submenu ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .programs-submenu a {
+    font-size: 1.15rem;
+  }
+}

@@ -1,0 +1,15 @@
+.program-structures {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  color: #3a2e0e;
+  font-family: "Poppins", sans-serif;
+}
+
+.program-structures .matrix-row {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(212, 175, 55, 0.12);
+}

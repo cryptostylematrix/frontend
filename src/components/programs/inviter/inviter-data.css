@@ -1,0 +1,53 @@
+.inviter-info {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  max-width: 420px;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fffefa 0%, #fff8ec 100%);
+  box-shadow: 0 12px 28px rgba(212, 175, 55, 0.15);
+}
+
+.inviter-avatar {
+  width: 68px;
+  height: 68px;
+  border: 2px solid rgba(212, 175, 55, 0.7);
+  border-radius: 50%;
+  background: #fffefa;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  object-fit: cover;
+}
+
+.inviter-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.inviter-login {
+  color: #3a2e0e;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.inviter-name {
+  color: #5c4a1b;
+  font-size: 0.95rem;
+}
+
+.inviter-tg {
+  color: #b4881d;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.inviter-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.75rem;
+}
