@@ -399,15 +399,42 @@
     }
   },
   "programs": {
-    "availableTestPrograms": "Доступные тестовые программы",
+    "availableTestPrograms": "Программы на стадии тестирования",
     "open": "Открыть",
     "marketing": "Маркетинг",
     "referrals": "Рефералы",
-    "inviter": "Пригласитель",
+    "inviter": "Куратор",
     "structures": "Структуры",
     "statistics": "Статистика",
     "navigation": "Навигация программы",
-    "commandProcessing": "Ваша команда обрабатывается..."
+    "commandProcessing": "Ваша команда обрабатывается...",
+    "presentation": {
+      "pdfTitle": "Презентация PDF",
+      "pdfDescription": "Посмотрите материалы на вашем языке.",
+      "view": "Открыть PDF",
+      "videoTitle": "Видео-обзор",
+      "videoDescription": "Посмотрите маркетинговый обзор на YouTube.",
+      "watch": "Смотреть видео"
+    },
+    "metadata": {
+      "imageAlt": "Программа {{name}}",
+      "platforms_one": "{{count}} уровень",
+      "platforms_few": "{{count}} уровня",
+      "platforms_many": "{{count}} уровней",
+      "platforms_other": "{{count}} уровня",
+      "features": {
+        "compression": "Компрессия",
+        "system_places": "Системные клоны",
+        "cycles": "Циклы",
+        "full_distribution": "100% распределение",
+        "activation": "Активация"
+      },
+      "entry": "Вход",
+      "entryAmount": "от {{amount}}{{currency}}",
+      "exit": "Выход",
+      "exitAmount": "до {{amount}}{{currency}} за {{period}}",
+      "periods": { "cycle": "цикл" }
+    }
   },
   "programQueue": {
     "unknownTask": "Задача #{{tag}}",
@@ -430,7 +457,7 @@
     "buyFirstPlace": "Купить первое место",
     "buySysPlace": "Купить системное место",
     "buyTopPlace": "Купить верхнее место",
-    "chooseInviter": "Выбрать пригласителя"
+    "chooseInviter": "Выбрать куратора"
   },
   "structure": {
     "filtersTitle": "Фильтры",
@@ -452,7 +479,7 @@
     "buySuccess": "Новое место скоро появится в списке.",
     "nextPos": "Следующая позиция",
     "updatePage": "Обновить страницу",
-    "programNotConfirmed": "Сначала необходимо выбрать пригласителя.",
+    "programNotConfirmed": "Сначала необходимо выбрать куратора.",
     "up": "Вверх ▲",
     "placesBelow_one": "{{formattedCount}} место ниже",
     "placesBelow_other": "{{formattedCount}} мест ниже",

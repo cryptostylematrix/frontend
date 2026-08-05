@@ -395,7 +395,7 @@
     }
   },
   "programs": {
-    "availableTestPrograms": "Available Test Programs",
+    "availableTestPrograms": "Programs in Testing",
     "open": "Open",
     "marketing": "Marketing",
     "referrals": "Referrals",
@@ -403,7 +403,32 @@
     "structures": "Structures",
     "statistics": "Statistics",
     "navigation": "Program navigation",
-    "commandProcessing": "Your command is processing..."
+    "commandProcessing": "Your command is processing...",
+    "presentation": {
+      "pdfTitle": "Presentation PDF",
+      "pdfDescription": "Preview the deck in your language.",
+      "view": "View PDF",
+      "videoTitle": "Video overview",
+      "videoDescription": "Watch the marketing overview on YouTube.",
+      "watch": "Watch video"
+    },
+    "metadata": {
+      "imageAlt": "{{name}} program",
+      "platforms_one": "{{count}} level",
+      "platforms_other": "{{count}} levels",
+      "features": {
+        "compression": "Compression",
+        "system_places": "System clones",
+        "cycles": "Cycles",
+        "full_distribution": "100% distribution",
+        "activation": "Activation"
+      },
+      "entry": "Entry",
+      "entryAmount": "from {{currency}}{{amount}}",
+      "exit": "Exit",
+      "exitAmount": "up to {{currency}}{{amount}} per {{period}}",
+      "periods": { "cycle": "cycle" }
+    }
   },
   "programQueue": {
     "unknownTask": "Task #{{tag}}",

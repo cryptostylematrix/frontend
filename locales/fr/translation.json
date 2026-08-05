@@ -395,7 +395,7 @@
     }
   },
   "programs": {
-    "availableTestPrograms": "Programmes de test disponibles",
+    "availableTestPrograms": "Programmes en phase de test",
     "open": "Ouvrir",
     "marketing": "Marketing",
     "referrals": "Parrainages",
@@ -403,7 +403,32 @@
     "structures": "Structures",
     "statistics": "Statistiques",
     "navigation": "Navigation du programme",
-    "commandProcessing": "Votre commande est en cours de traitement..."
+    "commandProcessing": "Votre commande est en cours de traitement...",
+    "presentation": {
+      "pdfTitle": "Présentation PDF",
+      "pdfDescription": "Consultez la présentation dans votre langue.",
+      "view": "Voir le PDF",
+      "videoTitle": "Présentation vidéo",
+      "videoDescription": "Regardez la présentation marketing sur YouTube.",
+      "watch": "Voir la vidéo"
+    },
+    "metadata": {
+      "imageAlt": "Programme {{name}}",
+      "platforms_one": "{{count}} niveau",
+      "platforms_other": "{{count}} niveaux",
+      "features": {
+        "compression": "Compression",
+        "system_places": "Clones système",
+        "cycles": "Cycles",
+        "full_distribution": "Distribution à 100%",
+        "activation": "Activation"
+      },
+      "entry": "Entrée",
+      "entryAmount": "à partir de {{amount}} {{currency}}",
+      "exit": "Sortie",
+      "exitAmount": "jusqu’à {{amount}} {{currency}} par {{period}}",
+      "periods": { "cycle": "cycle" }
+    }
   },
   "programQueue": {
     "unknownTask": "Tâche #{{tag}}",

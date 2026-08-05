@@ -395,7 +395,7 @@
     }
   },
   "programs": {
-    "availableTestPrograms": "Dostępne programy testowe",
+    "availableTestPrograms": "Programy w fazie testów",
     "open": "Otwórz",
     "marketing": "Marketing",
     "referrals": "Polecenia",
@@ -403,7 +403,34 @@
     "structures": "Struktury",
     "statistics": "Statystyki",
     "navigation": "Nawigacja programu",
-    "commandProcessing": "Twoje polecenie jest przetwarzane..."
+    "commandProcessing": "Twoje polecenie jest przetwarzane...",
+    "presentation": {
+      "pdfTitle": "Prezentacja PDF",
+      "pdfDescription": "Zobacz materiały w swoim języku.",
+      "view": "Otwórz PDF",
+      "videoTitle": "Wideo przegląd",
+      "videoDescription": "Obejrzyj przegląd marketingowy na YouTube.",
+      "watch": "Obejrzyj wideo"
+    },
+    "metadata": {
+      "imageAlt": "Program {{name}}",
+      "platforms_one": "{{count}} poziom",
+      "platforms_few": "{{count}} poziomy",
+      "platforms_many": "{{count}} poziomów",
+      "platforms_other": "{{count}} poziomu",
+      "features": {
+        "compression": "Kompresja",
+        "system_places": "Klony systemowe",
+        "cycles": "Cykle",
+        "full_distribution": "100% dystrybucji",
+        "activation": "Aktywacja"
+      },
+      "entry": "Wejście",
+      "entryAmount": "od {{amount}}{{currency}}",
+      "exit": "Wyjście",
+      "exitAmount": "do {{amount}}{{currency}} na {{period}}",
+      "periods": { "cycle": "cykl" }
+    }
   },
   "programQueue": {
     "unknownTask": "Zadanie #{{tag}}",

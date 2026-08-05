@@ -395,7 +395,7 @@
     }
   },
   "programs": {
-    "availableTestPrograms": "Elérhető tesztprogramok",
+    "availableTestPrograms": "Tesztelési fázisban lévő programok",
     "open": "Megnyitás",
     "marketing": "Marketing",
     "referrals": "Ajánlások",
@@ -403,7 +403,32 @@
     "structures": "Struktúrák",
     "statistics": "Statisztika",
     "navigation": "Programnavigáció",
-    "commandProcessing": "A parancs feldolgozás alatt..."
+    "commandProcessing": "A parancs feldolgozás alatt...",
+    "presentation": {
+      "pdfTitle": "Prezentáció PDF",
+      "pdfDescription": "Nézd meg a bemutatót a saját nyelveden.",
+      "view": "PDF megnyitása",
+      "videoTitle": "Videós összefoglaló",
+      "videoDescription": "Nézd meg a marketing áttekintést a YouTube-on.",
+      "watch": "Videó megtekintése"
+    },
+    "metadata": {
+      "imageAlt": "{{name}} program",
+      "platforms_one": "{{count}} szint",
+      "platforms_other": "{{count}} szint",
+      "features": {
+        "compression": "Tömörítés",
+        "system_places": "Rendszerklónok",
+        "cycles": "Ciklusok",
+        "full_distribution": "100%-os elosztás",
+        "activation": "Aktiválás"
+      },
+      "entry": "Belépés",
+      "entryAmount": "{{amount}}{{currency}}-tól",
+      "exit": "Kilépés",
+      "exitAmount": "akár {{amount}}{{currency}} {{period}}onként",
+      "periods": { "cycle": "ciklus" }
+    }
   },
   "programQueue": {
     "unknownTask": "Feladat #{{tag}}",
