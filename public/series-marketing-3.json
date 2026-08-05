@@ -1,39 +1,51 @@
 {
   "name": "CryptoCash",
-  "image": "",
+  "image": "https://cryptostylematrix.github.io/frontend/cryptocash.png",
   "creator": {
-    "tg": ""
+    "tg": "cryptostylematrix"
   },
   "features": [
     "compression",
-    "activation"
+    "system places",
+    "cycles",
+    "full-distribution"
   ],
+  "platforms": 4,
+  "entry": {
+    "price": 10,
+    "currency": "USDT"
+  },
+  "incomes": [{
+    "preiod": "cycle",
+    "value": 80000,
+    "currency": "USDT"
+  }],
   "presentations": {
     "pdf": {
-      "de": "",
-      "en": "",
-      "es": "",
-      "fr": "",
-      "hu": "",
-      "it": "",
-      "kk": "",
-      "pl": "",
-      "pt": "",
-      "ru": "",
-      "uk": ""
+      "de": "https://crypto-style.org/crypto-cash",
+      "en": "https://crypto-style.org/crypto-cash",
+      "es": "https://crypto-style.org/crypto-cash",
+      "fr": "https://crypto-style.org/crypto-cash",
+      "hu": "https://crypto-style.org/crypto-cash",
+      "it": "https://crypto-style.org/crypto-cash",
+      "kk": "https://crypto-style.org/crypto-cash",
+      "pl": "https://crypto-style.org/crypto-cash",
+      "pt": "https://crypto-style.org/crypto-cash",
+      "ru": "https://crypto-style.org/crypto-cash",
+      "uk": "https://crypto-style.org/crypto-cash"
     },
     "video": {
       "de": "",
       "en": "",
       "es": "",
       "fr": "",
-      "hu": "",
+      "hu": "https://youtu.be/rwC5lZc5dv0?si=yntrLzFrUTSElyaz",
       "it": "",
       "kk": "",
       "pl": "",
       "pt": "",
-      "ru": "",
-      "uk": ""
+      "ru": "https://youtu.be/ZEv0GZBAtfQ?si=UuVKLwN_FBaMKC4l",
+      "uk": "https://youtu.be/vvdwj_2TE9E?si=z_kkCv5eulHI5ckE"
     }
   }
 }

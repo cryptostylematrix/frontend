@@ -8,9 +8,11 @@ import { useProfileContext } from "../../../context/ProfileContext";
 import { useProgramContext } from "../../../context/ProgramContext";
 import { useStructuresContext } from "../../../context/StructuresContext";
 import { translateError } from "../../../errors/errorUtils";
+import { useJettonMetadata } from "../../../hooks/useJettonMetadata";
 import { getProfileNftData } from "../../../services/contractsApi";
 import {
   getLocks,
+  getPlacesCount,
   type ProgramStructure,
   type ProgramTreeNode,
 } from "../../../services/programApi";
@@ -18,8 +20,10 @@ import {
   buyPlaceByJetton,
   buyPlaceByTon,
   executePositionCommand,
+  selectBuyCommand,
   type PlacePosData,
 } from "../../../services/programStructuresService";
+import { formatJettonAmount } from "../../../services/jettonMetadataService";
 import "../../../pages/profile/update-profile.css";
 import "./details.css";
 
@@ -46,6 +50,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
   const [buyLoading, setBuyLoading] = useState(false);
   const [lockLoading, setLockLoading] = useState(false);
   const [positionLocked, setPositionLocked] = useState<boolean | null>(null);
+  const [placesCount, setPlacesCount] = useState<number | null>(null);
   const [imageUrl, setImageUrl] = useState("");
   const [imageFailed, setImageFailed] = useState(false);
   const [detailsStatus, setDetailsStatus] = useState<{
@@ -57,19 +62,46 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
   >(null);
 
   const isFilled = selectedNode?.node_type === "filled";
-  const buyFirstPlaceCommand = commands[String(UserCommandTag.buyFirstPlace)];
-  const buyPlaceCommand = commands[String(UserCommandTag.buyPlace)];
-  const buyCommand =
-    buyFirstPlaceCommand && !buyPlaceCommand
-      ? buyFirstPlaceCommand
-      : buyPlaceCommand;
+  const selectedBuyCommand = selectBuyCommand(
+    commands,
+    placesCount,
+    structure?.max_places_per_profile ?? null,
+  );
+  const buyCommand = selectedBuyCommand?.config;
   const lockCommand = commands[String(UserCommandTag.lockPos)];
   const unlockCommand = commands[String(UserCommandTag.unlockPos)];
+  const supportsLocks = Boolean(lockCommand || unlockCommand);
   const usesJetton = Boolean(buyCommand?.sender_jetton_wallet?.trim());
+  const { metadata: jettonMetadata, isLoading: jettonMetadataLoading } =
+    useJettonMetadata(buyCommand?.sender_jetton_wallet);
   const rawPrice = buyCommand?.price ?? 0;
-  const displayedPrice = usesJetton ? rawPrice / 1_000_000 : rawPrice;
-  const currency = usesJetton ? "USDT" : "TON";
+  const displayedPrice = usesJetton
+    ? jettonMetadata
+      ? formatJettonAmount(rawPrice, jettonMetadata.decimals)
+      : "—"
+    : rawPrice;
+  const currency = usesJetton ? jettonMetadata?.symbol ?? "JETTON" : "TON";
   const ownerRootPositioning = structure?.pos_algo.root === "owner";
+
+  useEffect(() => {
+    let cancelled = false;
+    setPlacesCount(null);
+
+    const profileAddress = currentProfile?.address;
+    if (!profileAddress || !marketingAddress) return;
+
+    void getPlacesCount(
+      marketingAddress,
+      selectedStructure,
+      profileAddress,
+    ).then((response) => {
+      if (!cancelled) setPlacesCount(response?.count ?? null);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [currentProfile, marketingAddress, refreshKey, selectedStructure]);
 
   useEffect(() => {
     let cancelled = false;
@@ -118,7 +150,9 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     setPositionLocked(null);
 
     const profileAddress = currentProfile?.address;
-    if (!profileAddress || !marketingAddress || !fixedPos) return;
+    if (!profileAddress || !marketingAddress || !fixedPos || !supportsLocks) {
+      return;
+    }
 
     const loadLockState = async () => {
       const pageSize = 100;
@@ -167,6 +201,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     marketingAddress,
     refreshKey,
     selectedStructure,
+    supportsLocks,
   ]);
 
   if (!selectedNode) return <div className="details-panel" />;
@@ -197,6 +232,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
   const buyPosition = ownerRootPositioning ? null : fixedPos;
   const canBuy =
     selectedNode.node_type === "empty" &&
+    selectedNode.can_buy &&
     buyCommand &&
     (ownerRootPositioning || fixedPos);
   const lockAction =
@@ -308,7 +344,9 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
   return (
     <div
       className={`details-panel ${
-        selectedNode.node_type === "empty" ? "details-panel--next" : ""
+        selectedNode.node_type === "empty" && selectedNode.is_next_pos
+          ? "details-panel--next"
+          : ""
       }`}
     >
       {isFilled &&
@@ -419,9 +457,11 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
           type="button"
           className="details-action details-action--primary"
           onClick={() => setConfirmAction("buy")}
-          disabled={buyLoading}
+          disabled={buyLoading || jettonMetadataLoading}
         >
-          {buyLoading ? t("home.loading", "Loading...") : buyLabel}
+          {buyLoading || jettonMetadataLoading
+            ? t("home.loading", "Loading...")
+            : buyLabel}
         </button>
       )}
 

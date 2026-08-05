@@ -41,27 +41,27 @@ export default function TaskQueueBlock() {
 
   const profileTasks = currentProfile?.address
     ? Object.entries(marketingData?.queue ?? {})
-        .filter(([, task]) => {
+        .sort(([left], [right]) => Number(left) - Number(right))
+        .map(([, task], index) => ({ task, queueNumber: index + 1 }))
+        .filter(({ task }) => {
           const command = task.command;
           return (
             command?.tag === MarketingTaskCommandTag.userCommand &&
             addressesEqual(command.profile_addr, currentProfile.address)
           );
         })
-        .sort(([left], [right]) => Number(left) - Number(right))
     : [];
 
-  const taskRows = profileTasks.reduce<TaskRow[]>((rows, [index, task]) => {
+  const taskRows = profileTasks.reduce<TaskRow[]>((rows, { task, queueNumber }) => {
     const command = task.command;
     if (command?.tag !== MarketingTaskCommandTag.userCommand) return rows;
 
     const tag = command.command_tag;
-    const numericIndex = Number(index);
     const existing = rows.find((row) => row.tag === tag);
     if (existing) {
-      existing.indexes.push(numericIndex);
+      existing.indexes.push(queueNumber);
     } else {
-      rows.push({ tag, indexes: [numericIndex] });
+      rows.push({ tag, indexes: [queueNumber] });
     }
     return rows;
   }, []);

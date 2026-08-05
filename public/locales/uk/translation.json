@@ -395,7 +395,7 @@
     }
   },
   "programs": {
-    "availableTestPrograms": "Доступні тестові програми",
+    "availableTestPrograms": "Програми на етапі тестування",
     "open": "Відкрити",
     "marketing": "Маркетинг",
     "referrals": "Реферали",
@@ -403,7 +403,34 @@
     "structures": "Структури",
     "statistics": "Статистика",
     "navigation": "Навігація програми",
-    "commandProcessing": "Ваша команда обробляється..."
+    "commandProcessing": "Ваша команда обробляється...",
+    "presentation": {
+      "pdfTitle": "Презентація PDF",
+      "pdfDescription": "Перегляньте матеріали вашою мовою.",
+      "view": "Відкрити PDF",
+      "videoTitle": "Відео-огляд",
+      "videoDescription": "Подивіться маркетинговий огляд на YouTube.",
+      "watch": "Дивитися відео"
+    },
+    "metadata": {
+      "imageAlt": "Програма {{name}}",
+      "platforms_one": "{{count}} рівень",
+      "platforms_few": "{{count}} рівні",
+      "platforms_many": "{{count}} рівнів",
+      "platforms_other": "{{count}} рівня",
+      "features": {
+        "compression": "Компресія",
+        "system_places": "Системні клони",
+        "cycles": "Цикли",
+        "full_distribution": "100% розподіл",
+        "activation": "Активація"
+      },
+      "entry": "Вхід",
+      "entryAmount": "від {{amount}}{{currency}}",
+      "exit": "Вихід",
+      "exitAmount": "до {{amount}}{{currency}} за {{period}}",
+      "periods": { "cycle": "цикл" }
+    }
   },
   "programQueue": {
     "unknownTask": "Завдання #{{tag}}",

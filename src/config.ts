@@ -6,10 +6,6 @@ const defaultProgramApiHost = defaultMatrixApiHost;
 const defaultNeoMarketingAddr = "EQAc4cKpE4yQpsadUsem6r30HHjjrmmtT13pPsRpvtLSEUHi";
 const defaultTonEndpoint = "https://toncenter.com/api/v2/jsonRPC";
 const seriesItemBaseCodeHex = "b5ee9c724101060100a3000114ff00f4a413f4bcf2c80b01020162020300ded020c700915be001d0d3030171b0915be0fa4030ed44d0fa40d31fd31fd15b02d31f0101d33f011230208210a11cdbe3ba8e1e3002c705f2e191d307d4d1218020b0f2d190821005f5e10072fb0201fb00e0821053c57870ba9e02c705f2e191d4d4d101fb04ed54e05f03840ff2f00201200405000bbe0c838b81040021bf16d76a2687d20698fe98fe8b82a9036c7dd92240";
-const availableTestProgramsLogins: readonly string[] = [
-  "andrey", "admin", "cryptocash"
-];
-
 const defaultForcedProfileLogin = "";
 //const defaultForcedProfileLogin = "cryptocash";
 
@@ -55,8 +51,5 @@ export const appConfig = {
         depth: 1,
       },
     },
-  },
-  availableTestPrograms: {
-    logins: availableTestProgramsLogins,
   },
 } as const;

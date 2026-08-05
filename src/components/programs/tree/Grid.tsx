@@ -111,7 +111,9 @@ export default function Grid({
                   const isSelected = selectedPos === pos;
                   const nodeKind = filled ? "filled" : "empty";
                   const nextClass =
-                    itemNode?.node_type === "empty" ? "node-next" : "";
+                    itemNode?.node_type === "empty" && itemNode.is_next_pos
+                      ? "node-next"
+                      : "";
                   const login =
                     itemNode?.node_type === "filled"
                       ? itemNode.profile_login ?? "-"

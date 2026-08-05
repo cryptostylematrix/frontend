@@ -395,7 +395,7 @@
     }
   },
   "programs": {
-    "availableTestPrograms": "Verfügbare Testprogramme",
+    "availableTestPrograms": "Programme in der Testphase",
     "open": "Öffnen",
     "marketing": "Marketing",
     "referrals": "Empfehlungen",
@@ -403,7 +403,32 @@
     "structures": "Strukturen",
     "statistics": "Statistik",
     "navigation": "Programmnavigation",
-    "commandProcessing": "Ihr Befehl wird verarbeitet..."
+    "commandProcessing": "Ihr Befehl wird verarbeitet...",
+    "presentation": {
+      "pdfTitle": "Präsentation als PDF",
+      "pdfDescription": "Sehen Sie sich die Präsentation in Ihrer Sprache an.",
+      "view": "PDF ansehen",
+      "videoTitle": "Videoüberblick",
+      "videoDescription": "Sehen Sie sich den Marketingüberblick auf YouTube an.",
+      "watch": "Video ansehen"
+    },
+    "metadata": {
+      "imageAlt": "Programm {{name}}",
+      "platforms_one": "{{count}} Ebene",
+      "platforms_other": "{{count}} Ebenen",
+      "features": {
+        "compression": "Kompression",
+        "system_places": "Systemklone",
+        "cycles": "Zyklen",
+        "full_distribution": "100% Verteilung",
+        "activation": "Aktivierung"
+      },
+      "entry": "Einstieg",
+      "entryAmount": "ab {{amount}} {{currency}}",
+      "exit": "Auszahlung",
+      "exitAmount": "bis zu {{amount}} {{currency}} pro {{period}}",
+      "periods": { "cycle": "Zyklus" }
+    }
   },
   "programQueue": {
     "unknownTask": "Aufgabe #{{tag}}",

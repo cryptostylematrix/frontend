@@ -11,6 +11,7 @@ import {
   type MarketingV3CommandConfigResponse,
 } from "./contractsApi";
 import type { ProgramPlace } from "./programApi";
+import { getPlacesCount, getStructure } from "./programApi";
 import { sendTransaction } from "./tonConnectService";
 
 export type PlacePosData = {
@@ -22,13 +23,48 @@ export type ProgramContractResult =
   | { success: true }
   | { success: false; error_code: ErrorCode };
 
-type BuyCommand = {
+export type BuyCommand = {
   tag: typeof UserCommandTag.buyFirstPlace | typeof UserCommandTag.buyPlace;
   config: MarketingV3CommandConfigResponse;
 };
 
+export function selectBuyCommand(
+  commands: Record<string, MarketingV3CommandConfigResponse>,
+  placesCount: number | null,
+  maxPlacesPerProfile: number | null,
+): BuyCommand | null {
+  if (
+    placesCount === null ||
+    maxPlacesPerProfile === null ||
+    placesCount >= maxPlacesPerProfile
+  ) {
+    return null;
+  }
+
+  const buyFirstPlace = commands[String(UserCommandTag.buyFirstPlace)];
+  if (placesCount === 0 && buyFirstPlace) {
+    return { tag: UserCommandTag.buyFirstPlace, config: buyFirstPlace };
+  }
+
+  const buyPlace = commands[String(UserCommandTag.buyPlace)];
+  return buyPlace
+    ? { tag: UserCommandTag.buyPlace, config: buyPlace }
+    : null;
+}
+
 const toBigInt = (value: number | string | bigint) =>
   typeof value === "bigint" ? value : BigInt(value);
+
+const hasSufficientJettonBalance = async (
+  walletAddress: string,
+  requiredAmount: number | string | bigint,
+) => {
+  const walletData = await getJettonWalletData(walletAddress);
+  return (
+    walletData !== null &&
+    toBigInt(walletData.balance) >= toBigInt(requiredAmount)
+  );
+};
 
 const createQueryId = (): bigint => {
   const random = new Uint32Array(1);
@@ -54,18 +90,20 @@ const positionPayload = (position: PlacePosData | null): Cell | null => {
 async function getBuyCommand(
   marketingAddress: string,
   structure: number,
+  profileAddress: string,
 ): Promise<BuyCommand | null> {
-  const marketingData = await getMarketingV3Data(marketingAddress);
-  const commands = marketingData?.structures[String(structure)]?.commands;
-  const buyFirstPlace = commands?.[String(UserCommandTag.buyFirstPlace)];
-  const buyPlace = commands?.[String(UserCommandTag.buyPlace)];
-  const useBuyFirstPlace = Boolean(buyFirstPlace && !buyPlace);
-  const tag = useBuyFirstPlace
-    ? UserCommandTag.buyFirstPlace
-    : UserCommandTag.buyPlace;
-  const config = useBuyFirstPlace ? buyFirstPlace : buyPlace;
+  const [marketingData, placesCount, structureConfig] = await Promise.all([
+    getMarketingV3Data(marketingAddress),
+    getPlacesCount(marketingAddress, structure, profileAddress),
+    getStructure(marketingAddress, structure),
+  ]);
+  const commands = marketingData?.structures[String(structure)]?.commands ?? {};
 
-  return config ? { tag, config } : null;
+  return selectBuyCommand(
+    commands,
+    placesCount?.count ?? null,
+    structureConfig?.max_places_per_profile ?? null,
+  );
 }
 
 async function buildExecBody(
@@ -157,6 +195,15 @@ export async function executePositionCommand(
       return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
     }
 
+    if (
+      !(await hasSufficientJettonBalance(
+        senderJettonWallet.wallet_addr,
+        command.price,
+      ))
+    ) {
+      return { success: false, error_code: ErrorCode.INSUFFICIENT_FUNDS };
+    }
+
     const transferBody = await buildJettonTransferMsgBody({
       queryId: createQueryId(),
       amount: command.price,
@@ -204,6 +251,7 @@ export async function buyPlaceByTon(
     const command = await getBuyCommand(
       marketingAddress,
       structure,
+      profileAddress,
     );
     if (!command || command.config.sender_jetton_wallet) {
       return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
@@ -261,6 +309,7 @@ export async function buyPlaceByJetton(
     const command = await getBuyCommand(
       marketingAddress,
       structure,
+      profileAddress,
     );
     const marketingJettonWallet = command?.config.sender_jetton_wallet?.trim();
     if (!command || !marketingJettonWallet) {
@@ -289,6 +338,15 @@ export async function buyPlaceByJetton(
     );
     if (!senderJettonWallet?.wallet_addr) {
       return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
+    }
+
+    if (
+      !(await hasSufficientJettonBalance(
+        senderJettonWallet.wallet_addr,
+        command.config.price,
+      ))
+    ) {
+      return { success: false, error_code: ErrorCode.INSUFFICIENT_FUNDS };
     }
 
     const transferBody = await buildJettonTransferMsgBody({

@@ -395,7 +395,7 @@
     }
   },
   "programs": {
-    "availableTestPrograms": "Қолжетімді сынақ бағдарламалары",
+    "availableTestPrograms": "Тестілеу кезеңіндегі бағдарламалар",
     "open": "Ашу",
     "marketing": "Маркетинг",
     "referrals": "Рефералдар",
@@ -403,7 +403,32 @@
     "structures": "Құрылымдар",
     "statistics": "Статистика",
     "navigation": "Бағдарлама навигациясы",
-    "commandProcessing": "Пәрменіңіз өңделуде..."
+    "commandProcessing": "Пәрменіңіз өңделуде...",
+    "presentation": {
+      "pdfTitle": "Презентация PDF",
+      "pdfDescription": "Презентацияны өз тіліңізде қараңыз.",
+      "view": "PDF қарау",
+      "videoTitle": "Бейне шолу",
+      "videoDescription": "YouTube-тен маркетингке шолуды қараңыз.",
+      "watch": "Бейнені қарау"
+    },
+    "metadata": {
+      "imageAlt": "{{name}} бағдарламасы",
+      "platforms_one": "{{count}} деңгей",
+      "platforms_other": "{{count}} деңгей",
+      "features": {
+        "compression": "Сығымдау",
+        "system_places": "Жүйелік клондар",
+        "cycles": "Циклдер",
+        "full_distribution": "100% үлестіру",
+        "activation": "Белсендіру"
+      },
+      "entry": "Кіру",
+      "entryAmount": "{{amount}}{{currency}}-дан бастап",
+      "exit": "Шығу",
+      "exitAmount": "{{period}} үшін {{amount}}{{currency}}-ға дейін",
+      "periods": { "cycle": "цикл" }
+    }
   },
   "programQueue": {
     "unknownTask": "Тапсырма #{{tag}}",

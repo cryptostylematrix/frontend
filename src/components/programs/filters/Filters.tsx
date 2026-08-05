@@ -8,6 +8,7 @@ import { useProfileContext } from "../../../context/ProfileContext";
 import { useProgramContext } from "../../../context/ProgramContext";
 import { useStructuresContext } from "../../../context/StructuresContext";
 import { translateError } from "../../../errors/errorUtils";
+import { useJettonMetadata } from "../../../hooks/useJettonMetadata";
 import {
   getFirstPlace,
   getPlacesCount,
@@ -16,7 +17,10 @@ import {
 import {
   buyPlaceByJetton,
   buyPlaceByTon,
+  selectBuyCommand,
 } from "../../../services/programStructuresService";
+import type { ProgramStructure } from "../../../services/programApi";
+import { formatJettonAmount } from "../../../services/jettonMetadataService";
 import Locks from "./Locks";
 import NextPos from "./NextPos";
 import PlaceSearch from "./PlaceSearch";
@@ -48,7 +52,9 @@ export default function Filters() {
   } | null>(null);
   const [buyLoading, setBuyLoading] = useState(false);
   const [showBuyConfirm, setShowBuyConfirm] = useState(false);
-  const [isPlaceLimitReached, setIsPlaceLimitReached] = useState(false);
+  const [placesCount, setPlacesCount] = useState<number | null>(null);
+  const [structureConfig, setStructureConfig] =
+    useState<ProgramStructure | null>(null);
 
   useEffect(() => {
     resetAll();
@@ -87,7 +93,9 @@ export default function Filters() {
 
   useEffect(() => {
     let cancelled = false;
-    setIsPlaceLimitReached(false);
+    setPlacesCount(null);
+    setStructureConfig(null);
+    setShowBuyConfirm(false);
 
     if (!currentProfile || !marketingAddress) return;
 
@@ -101,10 +109,11 @@ export default function Filters() {
     ]).then(([structure, placesCount]) => {
       if (cancelled || !structure || !placesCount) return;
 
-      const limitReached =
-        placesCount.count >= structure.max_places_per_profile;
-      setIsPlaceLimitReached(limitReached);
-      if (limitReached) setShowBuyConfirm(false);
+      setPlacesCount(placesCount.count);
+      setStructureConfig(structure);
+      if (placesCount.count >= structure.max_places_per_profile) {
+        setShowBuyConfirm(false);
+      }
     });
 
     return () => {
@@ -112,18 +121,28 @@ export default function Filters() {
     };
   }, [currentProfile, marketingAddress, refreshKey, selectedStructure]);
 
-  const buyFirstPlaceCommand = commands[String(UserCommandTag.buyFirstPlace)];
-  const buyPlaceCommand = commands[String(UserCommandTag.buyPlace)];
-  const buyCommand =
-    buyFirstPlaceCommand && !buyPlaceCommand
-      ? buyFirstPlaceCommand
-      : buyPlaceCommand;
+  const selectedBuyCommand = selectBuyCommand(
+    commands,
+    placesCount,
+    structureConfig?.max_places_per_profile ?? null,
+  );
+  const buyCommand = selectedBuyCommand?.config;
+  const supportsLocks = Boolean(
+    commands[String(UserCommandTag.lockPos)] ||
+      commands[String(UserCommandTag.unlockPos)],
+  );
   const usesJetton = Boolean(buyCommand?.sender_jetton_wallet?.trim());
+  const { metadata: jettonMetadata, isLoading: jettonMetadataLoading } =
+    useJettonMetadata(buyCommand?.sender_jetton_wallet);
   const commandPrice = buyCommand?.price ?? 0;
   const displayedCommandPrice = usesJetton
-    ? commandPrice / 1_000_000
+    ? jettonMetadata
+      ? formatJettonAmount(commandPrice, jettonMetadata.decimals)
+      : "—"
     : commandPrice;
-  const commandCurrency = usesJetton ? "USDT" : "TON";
+  const commandCurrency = usesJetton
+    ? jettonMetadata?.symbol ?? "JETTON"
+    : "TON";
 
   const buyPlaceLabel = t("structure.buyPlace", {
     price: displayedCommandPrice,
@@ -132,13 +151,11 @@ export default function Filters() {
   });
 
   const handleBuy = async () => {
-    if (!currentProfile || isPlaceLimitReached) return;
+    if (!currentProfile || !buyCommand) return;
 
     setBuyLoading(true);
     setBuyStatus(null);
     try {
-      if (!buyCommand) return;
-
       const result = usesJetton
         ? await buyPlaceByJetton(
             tonConnectUI,
@@ -222,18 +239,20 @@ export default function Filters() {
 
           <Places />
           <PlaceSearch />
-          <Locks />
+          {supportsLocks && <Locks />}
         </div>
 
         <div className="filter-actions">
-          {!isPlaceLimitReached && (
+          {buyCommand && (
             <button
               type="button"
               className="filter-button primary"
               onClick={() => currentProfile && setShowBuyConfirm(true)}
-              disabled={buyLoading || !buyCommand}
+              disabled={buyLoading || jettonMetadataLoading}
             >
-              {buyLoading ? t("home.loading") : buyPlaceLabel}
+              {buyLoading || jettonMetadataLoading
+                ? t("home.loading")
+                : buyPlaceLabel}
             </button>
           )}
           <NextPos />

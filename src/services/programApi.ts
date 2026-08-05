@@ -87,6 +87,8 @@ type ProgramTreeNodeBase = {
 
 export type ProgramTreeEmptyNode = ProgramTreeNodeBase & {
   node_type: "empty";
+  is_next_pos: boolean;
+  can_buy: boolean;
 };
 
 export type ProgramTreeFilledNode = ProgramTreeNodeBase & {
