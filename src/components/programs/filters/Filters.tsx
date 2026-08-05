@@ -218,7 +218,7 @@ export default function Filters() {
         <div className="filters-grid">
           <label className="filter-field">
             <span className="filter-label">
-              {t("structure.structures", "Structures")}
+              {t("structure.structures", "Levels")}
             </span>
             <select
               className="filter-select"

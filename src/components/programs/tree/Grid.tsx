@@ -116,7 +116,9 @@ export default function Grid({
                       : "";
                   const login =
                     itemNode?.node_type === "filled"
-                      ? itemNode.profile_login ?? "-"
+                      ? itemNode.profile_addr?.trim()
+                        ? itemNode.profile_login ?? "-"
+                        : "SC"
                       : "-";
 
                   return (

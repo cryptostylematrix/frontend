@@ -208,10 +208,14 @@ const defaultOrigin = typeof window !== "undefined" ? window.location.origin : "
 const buildUrl = (
   marketingAddress: string,
   path: string,
-  query: Record<string, string | number>,
+  query: Record<string, string | number | null | undefined>,
 ) => {
   const url = new URL(`/api/program/${encodeURIComponent(marketingAddress)}/${path}`, normalizedBase || defaultOrigin);
-  Object.entries(query).forEach(([key, value]) => url.searchParams.set(key, String(value)));
+  Object.entries(query).forEach(([key, value]) => {
+    if (value !== null && value !== undefined) {
+      url.searchParams.set(key, String(value));
+    }
+  });
   return url.toString();
 };
 
@@ -526,7 +530,7 @@ export async function getTree(
   toPos: number,
 ): Promise<ProgramTreeNode | null> {
   const normalizedMarketingAddress = marketingAddress.trim();
-  const normalizedProfileAddress = profileAddress?.trim() ?? "";
+  const normalizedProfileAddress = profileAddress?.trim() || null;
   const isUint32 = (value: number) =>
     Number.isInteger(value) && value >= 0 && value <= 0xffff_ffff;
 

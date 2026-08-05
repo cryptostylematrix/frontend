@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { useTranslation } from "react-i18next";
 import { WalletContext } from "../../../App";
+import noAvatar from "../../../assets/no-avatar.jpg";
 import ConfirmDialog from "../../common/ConfirmDialog";
 import { UserCommandTag } from "../../../contracts/schemes/UserCommand";
 import { useProfileContext } from "../../../context/ProfileContext";
@@ -62,6 +63,15 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
   >(null);
 
   const isFilled = selectedNode?.node_type === "filled";
+  const isSystemClone = Boolean(
+    isFilled && !selectedNode.profile_addr?.trim(),
+  );
+  const displayedLogin = isSystemClone
+    ? t("structure.systemClones", "System Clones")
+    : isFilled
+      ? selectedNode.profile_login ?? ""
+      : "";
+  const displayedImageUrl = isSystemClone ? noAvatar : imageUrl;
   const selectedBuyCommand = selectBuyCommand(
     commands,
     placesCount,
@@ -372,10 +382,10 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
         <>
           <div className="details-card-row">
             <div className="details-avatar details-avatar--inline">
-              {imageUrl && !imageFailed ? (
+              {displayedImageUrl && !imageFailed ? (
                 <img
-                  src={imageUrl}
-                  alt={selectedNode.profile_login ?? ""}
+                  src={displayedImageUrl}
+                  alt={displayedLogin}
                   onError={() => setImageFailed(true)}
                 />
               ) : (
@@ -393,7 +403,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
                 {createdAtDate} {createdAtTime}
               </div>
               <div className="details-meta__login">
-                {selectedNode.profile_login ?? ""}
+                {displayedLogin}
               </div>
               <div className="details-meta__desc">
                 {t("structure.placesBelow", {

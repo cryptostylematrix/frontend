@@ -4,10 +4,10 @@ import { ProgramProvider } from "../../context/ProgramContext";
 import "./programs.css";
 
 const pages = [
-  { path: "marketing", labelKey: "marketing" },
-  { path: "referrals", labelKey: "referrals" },
   { path: "inviter", labelKey: "inviter" },
+  { path: "referrals", labelKey: "referrals" },
   { path: "structures", labelKey: "structures" },
+  { path: "marketing", labelKey: "marketing" },
   { path: "stat", labelKey: "statistics" },
 ] as const;
 
