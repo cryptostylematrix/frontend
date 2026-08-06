@@ -71,7 +71,7 @@ function App() {
                 <Route path="/finance" element={<Finance />} />
 
                 <Route path="/programs/:marketingAddress" element={<Programs />}>
-                  <Route index element={<Navigate to="marketing" replace />} />
+                  <Route index element={<Navigate to="inviter" replace />} />
                   <Route path="referrals" element={<ProgramReferrals />} />
                   <Route path="inviter" element={<ProgramInviter />} />
                   <Route path="stat" element={<ProgramStat />} />

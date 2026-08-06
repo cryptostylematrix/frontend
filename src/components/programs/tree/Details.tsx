@@ -418,7 +418,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
 
           <div className="details-line">
             <span className="details-label">
-              {t("structure.level", "Level")}
+              {t("structure.line", "Line")}
             </span>
             <span>{selectedNode.level}</span>
           </div>

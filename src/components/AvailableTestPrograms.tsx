@@ -163,7 +163,7 @@ export default function AvailableTestPrograms() {
                   )}
                   <Link
                     className="program-card__button"
-                    to={`/programs/${encodeURIComponent(program.address)}/marketing`}
+                    to={`/programs/${encodeURIComponent(program.address)}/inviter`}
                   >
                     {t("programs.open", "Open")}
                   </Link>
