@@ -8,6 +8,7 @@ export interface Profile {
   wallet: string;
   login: string;
   valid: boolean;
+  mode: "owner" | "preview";
   imageUrl?: string;
   firstName?: string;
   lastName?: string;
@@ -25,7 +26,12 @@ function safeParseProfiles(data: string | null): Profile[] {
   try {
     const parsed = JSON.parse(data);
     if (Array.isArray(parsed)) {
-      return parsed.filter((p) => typeof p.login === "string" && !!p.login);
+      return parsed
+        .filter((p) => typeof p.login === "string" && !!p.login)
+        .map((p) => ({
+          ...p,
+          mode: p.mode === "preview" ? "preview" : "owner",
+        }));
     }
     return [];
   } catch {

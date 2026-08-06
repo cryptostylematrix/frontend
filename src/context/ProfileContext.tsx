@@ -22,7 +22,6 @@ import { ErrorCode } from "../errors/ErrorCodes";
 import { TonConnectUI } from "@tonconnect/ui-react";
 import { Address } from "@ton/core";
 import { toLower } from "../services/nftContentHelper";
-import { appConfig } from "../config";
 
 interface ProfileContextType {
   profiles: Profile[];
@@ -38,7 +37,11 @@ interface ProfileContextType {
     tgUsername?: string
   ) => Promise<ProfileResult>;
 
-  addProfile: (wallet: string, login: string) => Promise<ProfileResult>;
+  addProfile: (
+    wallet: string,
+    login: string,
+    options?: { allowPreview?: boolean },
+  ) => Promise<AddProfileResult>;
   updateCurrentProfile: (
     wallet: string,
     updates: Partial<Profile>
@@ -49,11 +52,25 @@ interface ProfileContextType {
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
+export type AddProfileResult =
+  | ProfileResult
+  | {
+      success: false;
+      errors: ErrorCode[];
+      previewAvailable: true;
+    };
+
+type FetchedProfileResult =
+  | {
+      success: true;
+      data: Omit<Profile, "valid">;
+    }
+  | { success: false; errors: ErrorCode[] };
+
 const fetchProfile = async (
   wallet: string,
   login: string,
-  options: { validateOwner?: boolean } = {},
-): Promise<ProfileResult> => {
+): Promise<FetchedProfileResult> => {
   if (!wallet) {
     return { success: false, errors: [ErrorCode.WALLET_NOT_CONNECTED] };
   }
@@ -70,12 +87,11 @@ const fetchProfile = async (
     const apiData = await getProfileNftData(address);
     if (!apiData?.content) return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
 
-    if (options.validateOwner !== false && apiData.owner_addr) {
+    let mode: Profile["mode"] = "preview";
+    if (apiData.owner_addr) {
       const walletRaw = Address.parse(wallet).toRawString();
       const ownerRaw = Address.parse(apiData.owner_addr).toRawString();
-      if (walletRaw !== ownerRaw) {
-        return { success: false, errors: [ErrorCode.CONTRACT_DOES_NOT_BELONG] };
-      }
+      if (walletRaw === ownerRaw) mode = "owner";
     }
 
     return {
@@ -83,6 +99,7 @@ const fetchProfile = async (
       data: {
         address,
         wallet: wallet.trim(),
+        mode,
         login: toLower(login)!, // apiData.content.login,
         imageUrl: apiData.content.image_url ?? "",
         firstName: apiData.content.first_name ?? undefined,
@@ -112,15 +129,6 @@ export const ProfileProvider: React.FC<{
     if (!wallet) {
       setProfiles([]);
       setCurrentProfile(null);
-      return;
-    }
-
-    const forcedLogin = appConfig.profile.forcedLogin.trim();
-    if (forcedLogin) {
-      setIsChecking(true);
-      const result = await fetchProfile(wallet, forcedLogin, { validateOwner: false });
-      setCurrentProfile(result.success ? { ...result.data, wallet, valid: true } : null);
-      setIsChecking(false);
       return;
     }
 
@@ -157,10 +165,21 @@ export const ProfileProvider: React.FC<{
    * Add an existing profile
    */
   const addProfile = useCallback(
-    async (wallet: string, login: string): Promise<ProfileResult> => {
+    async (
+      wallet: string,
+      login: string,
+      options: { allowPreview?: boolean } = {},
+    ): Promise<AddProfileResult> => {
       const result = await fetchProfile(wallet, login);
 
       if (!result.success) return result;
+      if (result.data.mode === "preview" && !options.allowPreview) {
+        return {
+          success: false,
+          errors: [ErrorCode.CONTRACT_DOES_NOT_BELONG],
+          previewAvailable: true,
+        };
+      }
 
       const profile: Profile = { ...result.data, wallet, valid: true };
       const updated = [
@@ -172,7 +191,7 @@ export const ProfileProvider: React.FC<{
       setCurrentProfile(profile);
       saveCurrentProfileLogin(wallet, profile.login);
 
-      return result;
+      return { success: true, data: result.data };
     },
     [profiles]
   );
@@ -200,7 +219,12 @@ export const ProfileProvider: React.FC<{
       );
       if (!result.success) return result;
 
-      const profile: Profile = { ...result.data, wallet, valid: true };
+      const profile: Profile = {
+        ...result.data,
+        wallet,
+        valid: true,
+        mode: "owner",
+      };
       const updated = [
         ...profiles.filter((p) => p.login !== profile.login),
         profile,

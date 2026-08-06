@@ -8,6 +8,7 @@ import { Save, X } from "lucide-react";
 import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { translateError } from "../../errors/errorUtils";
 import { ErrorCode } from "../../errors/ErrorCodes";
+import ConfirmDialog from "../../components/common/ConfirmDialog";
 
 export default function AddProfile() {
   const { t } = useTranslation();
@@ -16,6 +17,7 @@ export default function AddProfile() {
   const [login, setLogin] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorCodes, setErrorCodes] = useState<ErrorCode[] | null>(null);
+  const [previewLogin, setPreviewLogin] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -44,7 +46,11 @@ export default function AddProfile() {
     const result = await addProfile(wallet, trimmed);
 
     if (result?.success === false) {
-      setErrorCodes(result.errors);
+      if ("previewAvailable" in result && result.previewAvailable) {
+        setPreviewLogin(trimmed);
+      } else {
+        setErrorCodes(result.errors);
+      }
     } else if (result?.success === true) {
       navigate("/"); // redirect after success
     }
@@ -97,6 +103,32 @@ export default function AddProfile() {
           </button>
         </div>
       </form>
+
+      <ConfirmDialog
+        open={previewLogin !== null}
+        title={t("profile.preview_confirm_title", "Profile belongs to another wallet")}
+        message={t(
+          "profile.preview_confirm_message",
+          "This profile belongs to another wallet. Would you like to add it in preview mode?",
+        )}
+        confirmLabel={t("profile.preview_add_btn", "Add in preview mode")}
+        cancelLabel={t("profile.cancel_btn", "Cancel")}
+        onCancel={() => setPreviewLogin(null)}
+        onConfirm={() => {
+          const confirmedLogin = previewLogin;
+          setPreviewLogin(null);
+          if (!confirmedLogin) return;
+
+          setIsSubmitting(true);
+          setErrorCodes(null);
+          void addProfile(wallet, confirmedLogin, { allowPreview: true })
+            .then((result) => {
+              if (result.success) navigate("/");
+              else setErrorCodes(result.errors);
+            })
+            .finally(() => setIsSubmitting(false));
+        }}
+      />
     </div>
   );
 }
