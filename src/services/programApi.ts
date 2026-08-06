@@ -151,6 +151,10 @@ export interface ProgramApi {
     structureNumber: number,
     profileAddress?: string | null,
   ) => Promise<ProgramPlace | null>;
+  getTopPlace: (
+    marketingAddress: string,
+    structureNumber: number,
+  ) => Promise<ProgramPlace | null>;
   getPlaces: (
     marketingAddress: string,
     structureNumber: number,
@@ -350,6 +354,29 @@ export async function getLastPlace(
       normalizedProfileAddress
         ? { profile_addr: normalizedProfileAddress }
         : {},
+    ),
+  );
+}
+
+export async function getTopPlace(
+  marketingAddress: string,
+  structureNumber: number,
+): Promise<ProgramPlace | null> {
+  const normalizedMarketingAddress = marketingAddress.trim();
+  if (
+    !normalizedMarketingAddress ||
+    !Number.isInteger(structureNumber) ||
+    structureNumber < 0 ||
+    structureNumber > 255
+  ) {
+    return null;
+  }
+
+  return safeGet<ProgramPlace>(
+    buildUrl(
+      normalizedMarketingAddress,
+      `structures/${structureNumber}/top-place`,
+      {},
     ),
   );
 }
@@ -614,6 +641,7 @@ export const programApi: ProgramApi = {
   getStructure,
   getFirstPlace,
   getLastPlace,
+  getTopPlace,
   getPlaces,
   getPlacesCount,
   searchPlaces,

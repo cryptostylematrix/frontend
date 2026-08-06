@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useProfileContext } from "../../../context/ProfileContext";
 import { useProgramContext } from "../../../context/ProgramContext";
 import { useStructuresContext } from "../../../context/StructuresContext";
 import {
@@ -9,9 +8,12 @@ import {
 } from "../../../services/programApi";
 import "./place-search.css";
 
-export default function PlaceSearch() {
+type Props = {
+  rootProfileAddress: string | null;
+};
+
+export default function PlaceSearch({ rootProfileAddress }: Props) {
   const { t } = useTranslation();
-  const { currentProfile } = useProfileContext();
   const { marketingAddress } = useProgramContext();
   const { selectedStructure, setSelectedPlace } = useStructuresContext();
   const [searchLogin, setSearchLogin] = useState("");
@@ -23,7 +25,7 @@ export default function PlaceSearch() {
   useEffect(() => {
     let cancelled = false;
     const query = searchLogin.trim();
-    const profileAddress = currentProfile?.address;
+    const profileAddress = rootProfileAddress;
 
     if (!query || !profileAddress || !marketingAddress) {
       setResults([]);
@@ -46,7 +48,7 @@ export default function PlaceSearch() {
     return () => {
       cancelled = true;
     };
-  }, [currentProfile, marketingAddress, searchLogin, selectedStructure]);
+  }, [marketingAddress, rootProfileAddress, searchLogin, selectedStructure]);
 
   const selectLogin = (place: ProgramPlace) => {
     setSelectedPlace(place);
@@ -75,7 +77,7 @@ export default function PlaceSearch() {
           <ul className="combobox-list" role="listbox">
             {results.map((place) => (
               <li
-                key={place.place_number}
+                key={`${place.profile_addr ?? "system"}:${place.place_number}`}
                 className="combobox-item"
                 role="option"
                 onMouseDown={(event) => {

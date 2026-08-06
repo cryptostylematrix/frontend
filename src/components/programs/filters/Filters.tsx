@@ -11,6 +11,7 @@ import { translateError } from "../../../errors/errorUtils";
 import { useJettonMetadata } from "../../../hooks/useJettonMetadata";
 import {
   getFirstPlace,
+  getTopPlace,
   getPlacesCount,
   getStructure,
 } from "../../../services/programApi";
@@ -55,6 +56,9 @@ export default function Filters() {
   const [placesCount, setPlacesCount] = useState<number | null>(null);
   const [structureConfig, setStructureConfig] =
     useState<ProgramStructure | null>(null);
+  const [placeSearchProfileAddress, setPlaceSearchProfileAddress] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     resetAll();
@@ -95,26 +99,43 @@ export default function Filters() {
     let cancelled = false;
     setPlacesCount(null);
     setStructureConfig(null);
+    setPlaceSearchProfileAddress(null);
     setShowBuyConfirm(false);
 
     if (!currentProfile || !marketingAddress) return;
 
-    void Promise.all([
-      getStructure(marketingAddress, selectedStructure),
-      getPlacesCount(
-        marketingAddress,
-        selectedStructure,
-        currentProfile.address,
-      ),
-    ]).then(([structure, placesCount]) => {
-      if (cancelled || !structure || !placesCount) return;
+    const loadFilterData = async () => {
+      const [structure, placesCount] = await Promise.all([
+        getStructure(marketingAddress, selectedStructure),
+        getPlacesCount(
+          marketingAddress,
+          selectedStructure,
+          currentProfile.address,
+        ),
+      ]);
+      if (cancelled) return;
 
-      setPlacesCount(placesCount.count);
+      if (placesCount) setPlacesCount(placesCount.count);
+      if (!structure) return;
+
       setStructureConfig(structure);
-      if (placesCount.count >= structure.max_places_per_profile) {
+      if (structure.pos_algo.root === "owner") {
+        const topPlace = await getTopPlace(marketingAddress, selectedStructure);
+        if (cancelled) return;
+        setPlaceSearchProfileAddress(topPlace?.profile_addr ?? null);
+      } else {
+        setPlaceSearchProfileAddress(currentProfile.address);
+      }
+
+      if (
+        placesCount &&
+        placesCount.count >= structure.max_places_per_profile
+      ) {
         setShowBuyConfirm(false);
       }
-    });
+    };
+
+    void loadFilterData();
 
     return () => {
       cancelled = true;
@@ -238,7 +259,7 @@ export default function Filters() {
           </label>
 
           <Places />
-          <PlaceSearch />
+          <PlaceSearch rootProfileAddress={placeSearchProfileAddress} />
           {supportsLocks && <Locks />}
         </div>
 
