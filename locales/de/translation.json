@@ -9,6 +9,8 @@
     "add": "+ Profil hinzufügen",
     "select": "Profil auswählen",
     "title": "Profil",
+    "submenu_label": "Profilnavigation",
+    "logout_title": "Abmelden",
     "update_link": "Bearbeiten",
     "add_link": "Hinzufügen",
     "create_link": "Erstellen",
@@ -280,6 +282,7 @@
     }
   },
   "common": {
+    "cancel": "Abbrechen",
     "warning": {
       "title": "Die Website befindet sich in Entwicklung",
       "description": "Einige Funktionen sind möglicherweise noch nicht verfügbar."

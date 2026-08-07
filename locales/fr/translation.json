@@ -9,6 +9,8 @@
     "add": "+ Ajouter un profil",
     "select": "Sélectionner un profil",
     "title": "Profil",
+    "submenu_label": "Navigation du profil",
+    "logout_title": "Se déconnecter",
     "update_link": "Modifier",
     "add_link": "Ajouter",
     "create_link": "Créer",
@@ -280,6 +282,7 @@
     }
   },
   "common": {
+    "cancel": "Annuler",
     "warning": {
       "title": "Le site est en cours de développement",
       "description": "Certaines fonctionnalités peuvent ne pas encore être disponibles."
@@ -462,7 +465,7 @@
     "show": "Afficher",
     "hide": "Masquer",
     "structures": "Niveaux",
-    "placesWithTotal": "Places (total {{total}})",
+    "placesWithTotal": "Places (total : {{total}})",
     "noPlaces": "Aucune place",
     "systemClones": "Clones système",
     "locks": "Blocages",

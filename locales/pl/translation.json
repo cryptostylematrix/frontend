@@ -9,6 +9,8 @@
     "add": "+ Dodaj profil",
     "select": "Wybierz profil",
     "title": "Profil",
+    "submenu_label": "Nawigacja profilu",
+    "logout_title": "Wyloguj się",
     "update_link": "Aktualizuj",
     "add_link": "Dodaj",
     "create_link": "Utwórz",
@@ -280,6 +282,7 @@
     }
   },
   "common": {
+    "cancel": "Anuluj",
     "warning": {
       "title": "Strona jest w budowie",
       "description": "Niektóre funkcje mogą być jeszcze niedostępne."
