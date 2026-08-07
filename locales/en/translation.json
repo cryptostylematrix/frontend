@@ -404,6 +404,7 @@
   "programs": {
     "availableTestPrograms": "Programs in Testing",
     "open": "Open",
+    "contractExplorer": "Open contract in explorer",
     "marketing": "Marketing",
     "referrals": "Structure",
     "inviter": "Inviter",

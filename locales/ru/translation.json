@@ -408,6 +408,7 @@
   "programs": {
     "availableTestPrograms": "Программы на стадии тестирования",
     "open": "Открыть",
+    "contractExplorer": "Открыть контракт в обозревателе",
     "marketing": "Маркетинг",
     "referrals": "Структура",
     "inviter": "Куратор",
