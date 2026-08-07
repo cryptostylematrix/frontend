@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -25,6 +26,7 @@ import { useProfileContext } from "./ProfileContext";
 import { useProgramContext } from "./ProgramContext";
 
 const QUEUE_REFRESH_INTERVAL_MS = 5_000;
+const PLACE_CHANGE_MAX_POLLS = 24;
 const PLACE_PURCHASE_COMMANDS = new Set<number>([
   UserCommandTag.buyFirstPlace,
   UserCommandTag.buyPlace,
@@ -39,7 +41,9 @@ type StructuresContextValue = {
   firstPlace: ProgramPlace | null;
   selectedPlace: ProgramPlaceRef | null;
   refreshKey: number;
+  taskQueueRefreshKey: number;
   refreshStructuresPage: () => void;
+  notifyPlacePurchaseSubmitted: () => void;
   setFirstPlace: (place: ProgramPlace | null) => void;
   setSelectedPlace: (place: ProgramPlaceRef | null) => void;
   resetFirstPlaceAndSelectedPlace: () => void;
@@ -62,6 +66,8 @@ export function StructuresProvider({ children }: { children: ReactNode }) {
     null,
   );
   const [refreshKey, setRefreshKey] = useState(0);
+  const [purchaseWatchKey, setPurchaseWatchKey] = useState(0);
+  const handledPurchaseWatchKeyRef = useRef(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -111,12 +117,22 @@ export function StructuresProvider({ children }: { children: ReactNode }) {
     setRefreshKey((value) => value + 1);
   }, []);
 
+  const notifyPlacePurchaseSubmitted = useCallback(() => {
+    setPurchaseWatchKey((value) => value + 1);
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     let refreshTimer: number | undefined;
     let initialized = false;
     let previousTaskIds = new Set<string>();
     let previousLastPlaceKey: string | null = null;
+    let placeChangePollsLeft = 0;
+
+    if (purchaseWatchKey > handledPurchaseWatchKeyRef.current) {
+      handledPurchaseWatchKeyRef.current = purchaseWatchKey;
+      placeChangePollsLeft = PLACE_CHANGE_MAX_POLLS;
+    }
 
     if (!currentProfile || !marketingAddress.trim()) {
       return () => {
@@ -153,6 +169,10 @@ export function StructuresProvider({ children }: { children: ReactNode }) {
           );
 
           if (purchaseTaskDisappeared) {
+            placeChangePollsLeft = PLACE_CHANGE_MAX_POLLS;
+          }
+
+          if (placeChangePollsLeft > 0) {
             const latestPlace = await getLastPlace(
               marketingAddress,
               selectedStructure,
@@ -168,6 +188,9 @@ export function StructuresProvider({ children }: { children: ReactNode }) {
                 place_number: latestPlace.place_number,
               });
               refreshStructuresPage();
+              placeChangePollsLeft = 0;
+            } else {
+              placeChangePollsLeft -= 1;
             }
           }
         }
@@ -198,6 +221,7 @@ export function StructuresProvider({ children }: { children: ReactNode }) {
   }, [
     currentProfile,
     marketingAddress,
+    purchaseWatchKey,
     refreshStructuresPage,
     selectedStructure,
   ]);
@@ -221,7 +245,9 @@ export function StructuresProvider({ children }: { children: ReactNode }) {
       firstPlace,
       selectedPlace,
       refreshKey,
+      taskQueueRefreshKey: purchaseWatchKey,
       refreshStructuresPage,
+      notifyPlacePurchaseSubmitted,
       setFirstPlace,
       setSelectedPlace,
       resetFirstPlaceAndSelectedPlace,
@@ -234,7 +260,9 @@ export function StructuresProvider({ children }: { children: ReactNode }) {
       firstPlace,
       selectedPlace,
       refreshKey,
+      purchaseWatchKey,
       refreshStructuresPage,
+      notifyPlacePurchaseSubmitted,
       resetFirstPlaceAndSelectedPlace,
       resetAll,
     ],
@@ -253,6 +281,10 @@ export function useStructuresContext() {
     throw new Error("useStructuresContext must be used within StructuresProvider");
   }
   return context;
+}
+
+export function useOptionalStructuresContext() {
+  return useContext(StructuresContext);
 }
 
 function isPlacePurchaseTask(

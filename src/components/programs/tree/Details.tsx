@@ -44,6 +44,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
   const {
     commands,
     refreshKey,
+    notifyPlacePurchaseSubmitted,
     selectedPlace,
     selectedStructure,
     setSelectedPlace,
@@ -135,6 +136,10 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     setDetailsStatus(null);
     setConfirmAction(null);
   }, [selectedNode]);
+
+  useEffect(() => {
+    setDetailsStatus(null);
+  }, [refreshKey]);
 
   const fixedPos = useMemo<PlacePosData | null>(() => {
     if (
@@ -300,6 +305,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
               text: translateError(t, result.error_code),
             },
       );
+      if (result.success) notifyPlacePurchaseSubmitted();
     } finally {
       setBuyLoading(false);
     }

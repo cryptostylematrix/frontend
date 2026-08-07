@@ -39,6 +39,7 @@ export default function Filters() {
     resetFirstPlaceAndSelectedPlace,
     resetAll,
     setFirstPlace,
+    notifyPlacePurchaseSubmitted,
     refreshKey,
     refreshStructuresPage,
     selectedStructure,
@@ -71,6 +72,10 @@ export default function Filters() {
     resetFirstPlaceAndSelectedPlace,
     selectedStructure,
   ]);
+
+  useEffect(() => {
+    setBuyStatus(null);
+  }, [refreshKey]);
 
   useEffect(() => {
     let cancelled = false;
@@ -208,6 +213,7 @@ export default function Filters() {
               message: translateError(t, result.error_code),
             },
       );
+      if (result.success) notifyPlacePurchaseSubmitted();
     } finally {
       setBuyLoading(false);
     }

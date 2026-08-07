@@ -5,6 +5,7 @@ import { MarketingTaskCommandTag } from "../../contracts/schemes/MarketingTaskCo
 import { UserCommandTag } from "../../contracts/schemes/UserCommand";
 import { useProfileContext } from "../../context/ProfileContext";
 import { useProgramContext } from "../../context/ProgramContext";
+import { useOptionalStructuresContext } from "../../context/StructuresContext";
 import {
   getMarketingV3Data,
   type MarketingV3DataResponse,
@@ -33,6 +34,8 @@ export default function TaskQueueBlock() {
   const { t } = useTranslation();
   const { currentProfile } = useProfileContext();
   const { marketingAddress } = useProgramContext();
+  const structuresContext = useOptionalStructuresContext();
+  const taskQueueRefreshKey = structuresContext?.taskQueueRefreshKey ?? 0;
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [secondsLeft, setSecondsLeft] = useState(REFRESH_INTERVAL_SECONDS);
   const [marketingData, setMarketingData] = useState<MarketingV3DataResponse | null>(null);
@@ -103,6 +106,10 @@ export default function TaskQueueBlock() {
     setMarketingData(null);
     setSecondsLeft(REFRESH_INTERVAL_SECONDS);
   }, [isCollapsed, marketingAddress]);
+
+  useEffect(() => {
+    if (taskQueueRefreshKey > 0) void refreshNow();
+  }, [refreshNow, taskQueueRefreshKey]);
 
   if (!currentProfile) return null;
 
