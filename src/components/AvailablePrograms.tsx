@@ -2,8 +2,16 @@ import "./available-programs.css";
 import { PenTool } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import ProgramBlock from "./ProgramBlock";
 
-export default function AvailablePrograms() {
+const CRYPTOCASH_MARKETING_PROGRAM_ADDRESS =
+  "EQAba1dNyAbxm4t_dv5T1ARQXaQAAYcfJ4jcAWcw1PQ7q10b";
+
+type Props = {
+  showCryptoCash?: boolean;
+};
+
+export default function AvailablePrograms({ showCryptoCash = true }: Props) {
   const { t } = useTranslation();
   const programs = [
     {
@@ -89,6 +97,11 @@ export default function AvailablePrograms() {
             </div>
           </article>
         ))}
+        {showCryptoCash && (
+          <ProgramBlock
+            marketingAddress={CRYPTOCASH_MARKETING_PROGRAM_ADDRESS}
+          />
+        )}
       </div>
     </section>
   );

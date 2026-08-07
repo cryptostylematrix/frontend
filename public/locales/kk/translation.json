@@ -404,6 +404,7 @@
   "programs": {
     "availableTestPrograms": "Тестілеу кезеңіндегі бағдарламалар",
     "open": "Ашу",
+    "contractExplorer": "Контрактты шолғышта ашу",
     "marketing": "Маркетинг",
     "referrals": "Құрылым",
     "inviter": "Шақырушы",

@@ -17,12 +17,3 @@
   font-family: "Poppins", sans-serif;
   text-align: center;
 }
-
-.program-card__image--placeholder {
-  background: linear-gradient(135deg, #f1e5c6, #fbf8ec);
-}
-
-.program-card__creator-link--metadata {
-  align-items: center;
-  gap: 6px;
-}

@@ -404,6 +404,7 @@
   "programs": {
     "availableTestPrograms": "Програми на етапі тестування",
     "open": "Відкрити",
+    "contractExplorer": "Відкрити контракт в оглядачі",
     "marketing": "Маркетинг",
     "referrals": "Структура",
     "inviter": "Запрошувач",

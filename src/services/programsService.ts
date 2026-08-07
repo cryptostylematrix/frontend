@@ -210,3 +210,10 @@ export async function loadPrograms(admin: string): Promise<Program[]> {
     return [];
   }
 }
+
+export async function loadAvailableProgramAddresses(
+  admin: string,
+): Promise<string[]> {
+  const programs = await loadPrograms(admin);
+  return programs.map((program) => program.address);
+}

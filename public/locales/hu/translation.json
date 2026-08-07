@@ -404,6 +404,7 @@
   "programs": {
     "availableTestPrograms": "Tesztelési fázisban lévő programok",
     "open": "Megnyitás",
+    "contractExplorer": "Szerződés megnyitása a böngészőben",
     "marketing": "Marketing",
     "referrals": "Struktúra",
     "inviter": "Meghívó",

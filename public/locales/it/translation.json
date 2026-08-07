@@ -404,6 +404,7 @@
   "programs": {
     "availableTestPrograms": "Programmi in fase di test",
     "open": "Apri",
+    "contractExplorer": "Apri il contratto nell’explorer",
     "marketing": "Marketing",
     "referrals": "Struttura",
     "inviter": "Invitante",

@@ -1,0 +1,32 @@
+.program-card__image--placeholder {
+  background: linear-gradient(135deg, #f1e5c6, #fbf8ec);
+}
+
+.program-card__creator-link--metadata {
+  align-items: center;
+  gap: 6px;
+}
+
+.program-card__title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.program-card__explorer-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #8f6710;
+}
+
+.program-card__explorer-link:hover {
+  color: #c89a1d;
+}
+
+.program-card__explorer-link svg {
+  width: 17px;
+  height: 17px;
+}

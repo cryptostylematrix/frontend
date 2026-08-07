@@ -12,6 +12,8 @@ import { useTranslation } from "react-i18next";
 import { translateError } from "../errors/errorUtils";
 import { ErrorCode } from "../errors/ErrorCodes";
 
+const CRYPTOCASH_RELEASE_AT = Date.parse("2026-08-07T13:40:00+03:00");
+
 export default function Home() {
   const { t } = useTranslation();
   const { wallet } = useContext(WalletContext)!;
@@ -20,6 +22,23 @@ export default function Home() {
   const [balance, setBalance] = useState<string | null>(null);
   const [error, setError] = useState<ErrorCode[] | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isCryptoCashReleased, setIsCryptoCashReleased] = useState(
+    () => Date.now() >= CRYPTOCASH_RELEASE_AT,
+  );
+
+  useEffect(() => {
+    const millisecondsUntilRelease = CRYPTOCASH_RELEASE_AT - Date.now();
+    if (millisecondsUntilRelease <= 0) {
+      setIsCryptoCashReleased(true);
+      return;
+    }
+
+    const timer = window.setTimeout(
+      () => setIsCryptoCashReleased(true),
+      millisecondsUntilRelease,
+    );
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (!wallet) return;
@@ -96,8 +115,8 @@ export default function Home() {
         </div>
       </div>
 
-      <AvailablePrograms />
-      <AvailableTestPrograms />
+      <AvailablePrograms showCryptoCash={isCryptoCashReleased} />
+      {!isCryptoCashReleased && <AvailableTestPrograms />}
     </>
   );
 }
