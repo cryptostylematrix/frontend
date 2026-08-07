@@ -9,6 +9,8 @@
     "add": "+ Adicionar perfil",
     "select": "Selecionar perfil",
     "title": "Perfil",
+    "submenu_label": "Navegação do perfil",
+    "logout_title": "Sair",
     "update_link": "Editar",
     "add_link": "Adicionar",
     "create_link": "Criar",
@@ -280,6 +282,7 @@
     }
   },
   "common": {
+    "cancel": "Cancelar",
     "warning": {
       "title": "O site está em desenvolvimento",
       "description": "Alguns recursos podem ainda não estar disponíveis."

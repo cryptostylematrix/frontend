@@ -9,6 +9,8 @@
     "add": "+ Aggiungi profilo",
     "select": "Seleziona profilo",
     "title": "Profilo",
+    "submenu_label": "Navigazione del profilo",
+    "logout_title": "Disconnetti",
     "update_link": "Aggiorna",
     "add_link": "Aggiungi",
     "create_link": "Crea",
@@ -280,6 +282,7 @@
     }
   },
   "common": {
+    "cancel": "Annulla",
     "warning": {
       "title": "Sito in fase di sviluppo",
       "description": "Alcune funzionalità potrebbero non essere ancora disponibili."

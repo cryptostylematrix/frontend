@@ -9,6 +9,8 @@
     "add": "+ Profil hozzáadása",
     "select": "Profil kiválasztása",
     "title": "Profil",
+    "submenu_label": "Profilnavigáció",
+    "logout_title": "Kijelentkezés",
     "update_link": "Frissítés",
     "add_link": "Hozzáadás",
     "create_link": "Létrehozás",
@@ -280,6 +282,7 @@
     }
   },
   "common": {
+    "cancel": "Mégse",
     "warning": {
       "title": "Az oldal fejlesztés alatt áll",
       "description": "Egyes funkciók még nem elérhetők."

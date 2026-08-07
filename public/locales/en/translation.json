@@ -9,6 +9,8 @@
     "add": "+ Add a Profile",
     "select": "Select Profile",
     "title": "Profile",
+    "submenu_label": "Profile navigation",
+    "logout_title": "Log out",
     "update_link": "Update",
     "add_link": "Add",
     "create_link": "Create",
@@ -280,6 +282,7 @@
     }
   },
   "common": {
+    "cancel": "Cancel",
     "warning": {
       "title": "Site is under development",
       "description": "Some features may not be available yet."

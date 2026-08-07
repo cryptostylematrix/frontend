@@ -51,7 +51,12 @@ const Profiles: React.FC = () => {
   return (
     <div className={`profile-block ${isOpen ? "active" : ""}`} ref={ref}>
       <button className="profile-btn" onClick={() => setIsOpen((prev) => !prev)}>
-        {currentProfile?.login || t("profile.select")}
+        <span
+          className="profile-login"
+          title={currentProfile?.login || t("profile.select")}
+        >
+          {currentProfile?.login || t("profile.select")}
+        </span>
         {currentProfile?.mode === "preview" && (
           <span className="profile-preview-badge">
             {t("profile.preview_badge", "Preview")}
@@ -72,7 +77,9 @@ const Profiles: React.FC = () => {
                   }}
                   className={currentProfile?.login === p.login ? "active-profile" : ""}
                 >
-                  <span>{p.login}</span>
+                  <span className="profile-login" title={p.login}>
+                    {p.login}
+                  </span>
                   {p.mode === "preview" && (
                     <span className="profile-preview-badge">
                       {t("profile.preview_badge", "Preview")}
@@ -81,7 +88,10 @@ const Profiles: React.FC = () => {
                 </button>
               ) : (
                 <button className="invalid-profile" disabled>
-                  {p.login} ⚠️
+                  <span className="profile-login" title={p.login}>
+                    {p.login}
+                  </span>
+                  <span aria-hidden="true">⚠️</span>
                 </button>
               )}
             </li>
