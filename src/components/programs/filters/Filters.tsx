@@ -282,7 +282,7 @@ export default function Filters() {
                 : buyPlaceLabel}
             </button>
           )}
-          {structureConfig?.pos_algo.root === "profile" && <NextPos />}
+          <NextPos />
           <button
             type="button"
             className="filter-button secondary next-pos-style"
