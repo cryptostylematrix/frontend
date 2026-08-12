@@ -1,0 +1,53 @@
+{
+  "name": "NEO Matrix",
+  "image": "https://cryptostylematrix.github.io/frontend/neoclub.png",
+  "creator": {
+    "tg": "neoclubmatrix"
+  },
+  "features": [
+    "linear",
+    "tetra",
+    "clones",
+    "structure management"
+  ],
+  "platforms": 8,
+  "entry": {
+    "price": 155,
+    "currency": "USD"
+  },
+  "incomes": [
+    {
+      "period": "program",
+      "value": 72100,
+      "currency": "USD"
+    }
+  ],
+  "presentations": {
+    "pdf": {
+      "de": "https://cryptostylematrix.github.io/frontend/Neo-Club_de.pdf",
+      "en": "https://cryptostylematrix.github.io/frontend/Neo-Club_en.pdf",
+      "es": "https://cryptostylematrix.github.io/frontend/Neo-Club_es.pdf",
+      "fr": "https://cryptostylematrix.github.io/frontend/Neo-Club_fr.pdf",
+      "hu": "https://cryptostylematrix.github.io/frontend/Neo-Club_hu.pdf",
+      "it": "https://cryptostylematrix.github.io/frontend/Neo-Club_it.pdf",
+      "kk": "https://cryptostylematrix.github.io/frontend/Neo-Club_kk.pdf",
+      "pl": "https://cryptostylematrix.github.io/frontend/Neo-Club_pl.pdf",
+      "pt": "https://cryptostylematrix.github.io/frontend/Neo-Club_pt.pdf",
+      "ru": "https://cryptostylematrix.github.io/frontend/Neo-Club_ru.pdf",
+      "uk": "https://cryptostylematrix.github.io/frontend/Neo-Club_uk.pdf"
+    },
+    "video": {
+      "de": "https://youtu.be/au6XJvQKjtk",
+      "en": "https://youtu.be/atDC1yaX3FE",
+      "es": "https://youtu.be/JJVDfH4xmSk",
+      "fr": "https://youtu.be/92bcDgHHxl4",
+      "hu": "https://youtu.be/ngQFdv2bBEI",
+      "it": "https://youtu.be/weTpAF-uB-Y",
+      "kk": "https://youtu.be/SRANvbu9Xlw",
+      "pl": "https://youtu.be/JxPTfBQ1Thg",
+      "pt": "https://youtu.be/NrThOrOo8-I",
+      "ru": "https://youtu.be/SRANvbu9Xlw",
+      "uk": "https://youtu.be/J4USmRWQ6QE"
+    }
+  }
+}
