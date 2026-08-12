@@ -1,0 +1,52 @@
+{
+  "name": "MULTI Matrix",
+  "image": "https://cryptostylematrix.github.io/frontend/cs-big.png",
+  "creator": {
+    "tg": "cryptostylematrix"
+  },
+  "features": [
+    "reinvest",
+    "clones",
+    "structure management"
+  ],
+  "platforms": 6,
+  "entry": {
+    "price": 15,
+    "currency": "TON"
+  },
+  "incomes": [
+    {
+      "period": "program",
+      "value": 3500,
+      "currency": "TON"
+    }
+  ],
+  "presentations": {
+    "pdf": {
+      "de": "https://cryptostylematrix.github.io/frontend/marketing-en.pdf",
+      "en": "https://cryptostylematrix.github.io/frontend/marketing-en.pdf",
+      "es": "https://cryptostylematrix.github.io/frontend/marketing-en.pdf",
+      "fr": "https://cryptostylematrix.github.io/frontend/marketing-en.pdf",
+      "hu": "https://cryptostylematrix.github.io/frontend/marketing-hu.pdf",
+      "it": "https://cryptostylematrix.github.io/frontend/marketing-it.pdf",
+      "kk": "https://cryptostylematrix.github.io/frontend/marketing-kk.pdf",
+      "pl": "https://cryptostylematrix.github.io/frontend/marketing-pl.pdf",
+      "pt": "https://cryptostylematrix.github.io/frontend/marketing-en.pdf",
+      "ru": "https://cryptostylematrix.github.io/frontend/marketing-ru.pdf",
+      "uk": "https://cryptostylematrix.github.io/frontend/marketing-uk.pdf"
+    },
+    "video": {
+      "de": "https://youtu.be/plxxqhkToJY",
+      "en": "https://youtu.be/plxxqhkToJY",
+      "es": "https://youtu.be/plxxqhkToJY",
+      "fr": "https://youtu.be/plxxqhkToJY",
+      "hu": "https://youtu.be/FJQsnZ2vgIQ",
+      "it": "https://youtu.be/5kjwWmcLu6U",
+      "kk": "https://youtu.be/plxxqhkToJY",
+      "pl": "https://youtu.be/ONQ4o_b09uY",
+      "pt": "https://youtu.be/plxxqhkToJY",
+      "ru": "https://youtu.be/AcHttS57cGo",
+      "uk": "https://youtu.be/plxxqhkToJY"
+    }
+  }
+}
