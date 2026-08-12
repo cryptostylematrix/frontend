@@ -8,6 +8,12 @@ import { Save, X } from "lucide-react";
 import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { translateError } from "../../errors/errorUtils";
 import { ErrorCode } from "../../errors/ErrorCodes";
+import {
+  isValidProfileLogin,
+  PROFILE_LOGIN_MAX_LENGTH,
+  PROFILE_LOGIN_MIN_LENGTH,
+  PROFILE_LOGIN_PATTERN,
+} from "../../utils/profileLogin";
 
 export default function CreateProfile() {
   const { t } = useTranslation();
@@ -40,8 +46,8 @@ export default function CreateProfile() {
     }
 
     const trimmedLogin = login.trim();
-    if (!trimmedLogin) {
-      setErrorCodes([ErrorCode.PROFILE_NOT_FOUND]); // or define ErrInvalidLogin
+    if (!isValidProfileLogin(trimmedLogin)) {
+      setErrorCodes([ErrorCode.INVALID_PROFILE_LOGIN_FORMAT]);
       return;
     }
 
@@ -75,13 +81,21 @@ export default function CreateProfile() {
           </span>
           <input
             type="text"
-            maxLength={30}
+            minLength={PROFILE_LOGIN_MIN_LENGTH}
+            maxLength={PROFILE_LOGIN_MAX_LENGTH}
+            pattern={PROFILE_LOGIN_PATTERN}
             placeholder={t("profile.create_login_placeholder")}
             value={login}
-            onChange={(e) => setLogin(e.target.value)}
+            onChange={(e) => setLogin(e.target.value.toLowerCase())}
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
             required
             disabled={isSubmitting}
           />
+          <span className="field-hint">
+            {t("profile.create_login_hint")}
+          </span>
         </label>
 
         {/* First name */}

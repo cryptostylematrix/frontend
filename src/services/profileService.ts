@@ -5,6 +5,7 @@ import { Address, Cell, toNano } from "@ton/core";
 import { contractsApi, getCollectionData, getNftAddrByLogin } from "./contractsApi";
 import { sendTransaction } from "./tonConnectService";
 import { capitalize, normalizeImage, toLower } from "./nftContentHelper";
+import { isValidProfileLogin } from "../utils/profileLogin";
 
 export const ProfilePrograms = {
   multi: 0x1ce8c484,
@@ -82,10 +83,16 @@ export async function createProfile(
   // Validate base inputs
   if (!wallet) return { success: false, errors: [ErrorCode.WALLET_NOT_CONNECTED] };
 
-  if (!login.trim()) return { success: false, errors: [ErrorCode.INVALID_LOGIN] };
+  const trimmedLogin = login.trim();
+  if (!isValidProfileLogin(trimmedLogin)) {
+    return {
+      success: false,
+      errors: [ErrorCode.INVALID_PROFILE_LOGIN_FORMAT],
+    };
+  }
 
   // ---- Normalize all fields ----
-  const normalizedLogin = toLower(login)!;
+  const normalizedLogin = toLower(trimmedLogin)!;
   const normalizedImageUrl = normalizeImage(imageUrl);
   const normalizedFirstName = capitalize(firstName);
   const normalizedLastName = capitalize(lastName);

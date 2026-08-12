@@ -4,6 +4,7 @@ export const ErrorCode = {
     PROFILE_EXISTS: "err_profile_exists",
     PROFILE_NOT_FOUND: "err_profile_not_found",
     INVALID_LOGIN: "err_invalid_login",
+    INVALID_PROFILE_LOGIN_FORMAT: "err_invalid_profile_login_format",
     NETWORK_ERROR: "err_network",
     UNEXPECTED: "err_unexpected",
 
