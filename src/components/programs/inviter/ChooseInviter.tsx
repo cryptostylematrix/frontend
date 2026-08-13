@@ -33,7 +33,10 @@ export default function ChooseInviter({ onInviterChosen }: Props) {
   const [errorCodes, setErrorCodes] = useState<ErrorCode[] | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isPopularInviterLoading, setIsPopularInviterLoading] = useState(false);
-  const [showPopularConfirm, setShowPopularConfirm] = useState(false);
+  const [pendingInviter, setPendingInviter] = useState<{
+    profileAddress: string;
+    login: string;
+  } | null>(null);
   const [popularInviter, setPopularInviter] = useState<{
     profileAddress: string;
     login: string;
@@ -165,7 +168,10 @@ export default function ChooseInviter({ onInviterChosen }: Props) {
       return;
     }
 
-    await chooseInviterByProfileAddress(inviter.node.addr);
+    setPendingInviter({
+      profileAddress: inviter.node.addr,
+      login: inviter.node.login,
+    });
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -254,7 +260,12 @@ export default function ChooseInviter({ onInviterChosen }: Props) {
             <button
               type="button"
               className="btn submit popular-curator-action"
-              onClick={() => setShowPopularConfirm(true)}
+              onClick={() =>
+                setPendingInviter({
+                  profileAddress: popularInviter.profileAddress,
+                  login: popularInviter.login,
+                })
+              }
               disabled={isSubmitting}
             >
               <Save className="btn-icon" /> {t("inviter.submit", "Choose inviter")}
@@ -264,19 +275,41 @@ export default function ChooseInviter({ onInviterChosen }: Props) {
       ) : null}
 
       <ConfirmDialog
-        open={showPopularConfirm}
+        open={pendingInviter !== null}
         title={t("inviter.confirmChooseTitle", "Confirm inviter selection")}
-        message={t(
-          "inviter.confirmChoosePopular",
-          "Are you sure you want to choose this inviter?",
-        )}
+        message={
+          <>
+            <p>
+              {t(
+                "inviter.confirmChoosePopular",
+                "Are you sure you want to choose this inviter?",
+              )}
+            </p>
+            {pendingInviter && (
+              <p>
+                {t("inviter.loginLabel", "Inviter login")}: {" "}
+                <strong>{pendingInviter.login}</strong>
+              </p>
+            )}
+            {currentProfile?.mode === "preview" && (
+              <p className="confirm-modal__warning">
+                {t("structure.previewCommandWarning", {
+                  login: currentProfile.login,
+                  defaultValue:
+                    "Attention: this profile belongs to another wallet. This command will be executed for the foreign profile {{login}}.",
+                })}
+              </p>
+            )}
+          </>
+        }
         confirmLabel={t("inviter.submit", "Choose inviter")}
         cancelLabel={t("common.cancel", "Cancel")}
-        onCancel={() => setShowPopularConfirm(false)}
+        onCancel={() => setPendingInviter(null)}
         onConfirm={() => {
-          setShowPopularConfirm(false);
-          if (popularInviter) {
-            void chooseInviterByProfileAddress(popularInviter.profileAddress);
+          const inviter = pendingInviter;
+          setPendingInviter(null);
+          if (inviter) {
+            void chooseInviterByProfileAddress(inviter.profileAddress);
           }
         }}
       />

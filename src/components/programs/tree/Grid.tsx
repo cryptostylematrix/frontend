@@ -114,6 +114,7 @@ export default function Grid({
                     itemNode?.node_type === "empty" && itemNode.is_next_pos
                       ? "node-next"
                       : "";
+                  const lockedClass = itemNode?.locked ? "node-locked" : "";
                   const login =
                     itemNode?.node_type === "filled"
                       ? itemNode.profile_addr?.trim()
@@ -134,7 +135,7 @@ export default function Grid({
                       }}
                     >
                       <div
-                        className={`tree-node node-${nodeKind} ${nextClass} ${
+                        className={`tree-node node-${nodeKind} ${nextClass} ${lockedClass} ${
                           isSelected ? "is-selected" : ""
                         }`}
                       >

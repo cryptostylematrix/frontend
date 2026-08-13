@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useProfileContext } from "../../../context/ProfileContext";
 import { useProgramContext } from "../../../context/ProgramContext";
 import { useStructuresContext } from "../../../context/StructuresContext";
 import {
@@ -8,12 +9,9 @@ import {
 } from "../../../services/programApi";
 import "./place-search.css";
 
-type Props = {
-  rootProfileAddress: string | null;
-};
-
-export default function PlaceSearch({ rootProfileAddress }: Props) {
+export default function PlaceSearch() {
   const { t } = useTranslation();
+  const { currentProfile } = useProfileContext();
   const { marketingAddress } = useProgramContext();
   const { selectedStructure, setSelectedPlace } = useStructuresContext();
   const [searchLogin, setSearchLogin] = useState("");
@@ -25,7 +23,7 @@ export default function PlaceSearch({ rootProfileAddress }: Props) {
   useEffect(() => {
     let cancelled = false;
     const query = searchLogin.trim();
-    const profileAddress = rootProfileAddress;
+    const profileAddress = currentProfile?.address;
 
     if (!query || !profileAddress || !marketingAddress) {
       setResults([]);
@@ -48,7 +46,7 @@ export default function PlaceSearch({ rootProfileAddress }: Props) {
     return () => {
       cancelled = true;
     };
-  }, [marketingAddress, rootProfileAddress, searchLogin, selectedStructure]);
+  }, [currentProfile, marketingAddress, searchLogin, selectedStructure]);
 
   const selectLogin = (place: ProgramPlace) => {
     setSelectedPlace(place);

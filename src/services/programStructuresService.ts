@@ -11,7 +11,7 @@ import {
   type MarketingV3CommandConfigResponse,
 } from "./contractsApi";
 import type { ProgramPlace } from "./programApi";
-import { getPlacesCount, getStructure } from "./programApi";
+import { getPurchaseOption } from "./programApi";
 import { sendTransaction } from "./tonConnectService";
 
 export type PlacePosData = {
@@ -24,33 +24,13 @@ export type ProgramContractResult =
   | { success: false; error_code: ErrorCode };
 
 export type BuyCommand = {
-  tag: typeof UserCommandTag.buyFirstPlace | typeof UserCommandTag.buyPlace;
+  tag:
+    | typeof UserCommandTag.buyFirstPlace
+    | typeof UserCommandTag.buyPlace
+    | typeof UserCommandTag.buyTopPlace;
   config: MarketingV3CommandConfigResponse;
+  position: PlacePosData | null;
 };
-
-export function selectBuyCommand(
-  commands: Record<string, MarketingV3CommandConfigResponse>,
-  placesCount: number | null,
-  maxPlacesPerProfile: number | null,
-): BuyCommand | null {
-  if (
-    placesCount === null ||
-    maxPlacesPerProfile === null ||
-    placesCount >= maxPlacesPerProfile
-  ) {
-    return null;
-  }
-
-  const buyFirstPlace = commands[String(UserCommandTag.buyFirstPlace)];
-  if (placesCount === 0 && buyFirstPlace) {
-    return { tag: UserCommandTag.buyFirstPlace, config: buyFirstPlace };
-  }
-
-  const buyPlace = commands[String(UserCommandTag.buyPlace)];
-  return buyPlace
-    ? { tag: UserCommandTag.buyPlace, config: buyPlace }
-    : null;
-}
 
 const toBigInt = (value: number | string | bigint) =>
   typeof value === "bigint" ? value : BigInt(value);
@@ -91,19 +71,45 @@ async function getBuyCommand(
   marketingAddress: string,
   structure: number,
   profileAddress: string,
+  position: PlacePosData | null,
 ): Promise<BuyCommand | null> {
-  const [marketingData, placesCount, structureConfig] = await Promise.all([
+  const [marketingData, option] = await Promise.all([
     getMarketingV3Data(marketingAddress),
-    getPlacesCount(marketingAddress, structure, profileAddress),
-    getStructure(marketingAddress, structure),
+    getPurchaseOption(
+      marketingAddress,
+      structure,
+      profileAddress,
+      position
+        ? {
+            parentProfileAddress: position.parent.profile_addr,
+            parentPlaceNumber: position.parent.place_number,
+            position: position.pos,
+          }
+        : null,
+    ),
   ]);
   const commands = marketingData?.structures[String(structure)]?.commands ?? {};
+  if (!option?.can_buy || option.command_tag === null || !option.position) {
+    return null;
+  }
 
-  return selectBuyCommand(
-    commands,
-    placesCount?.count ?? null,
-    structureConfig?.max_places_per_profile ?? null,
-  );
+  const config = commands[String(option.command_tag)];
+  if (!config) return null;
+
+  return {
+    tag: option.command_tag as BuyCommand["tag"],
+    config,
+    position: option.include_position
+      ? {
+          parent: {
+            struct: structure,
+            profile_addr: option.position.profile_addr,
+            place_number: option.position.place_number,
+          },
+          pos: option.position.pos,
+        }
+      : null,
+  };
 }
 
 async function buildExecBody(
@@ -252,6 +258,7 @@ export async function buyPlaceByTon(
       marketingAddress,
       structure,
       profileAddress,
+      pos,
     );
     if (!command || command.config.sender_jetton_wallet) {
       return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
@@ -261,7 +268,7 @@ export async function buyPlaceByTon(
       structure,
       profileAddress,
       command.tag,
-      pos,
+      command.position,
     );
     if (!body?.boc_hex) {
       return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
@@ -310,6 +317,7 @@ export async function buyPlaceByJetton(
       marketingAddress,
       structure,
       profileAddress,
+      pos,
     );
     const marketingJettonWallet = command?.config.sender_jetton_wallet?.trim();
     if (!command || !marketingJettonWallet) {
@@ -320,7 +328,7 @@ export async function buyPlaceByJetton(
       structure,
       profileAddress,
       command.tag,
-      pos,
+      command.position,
     );
     if (!execBody?.boc_hex) {
       return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };

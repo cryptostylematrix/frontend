@@ -42,6 +42,16 @@
   margin-top: 0.4rem;
 }
 
+.confirm-modal__message .confirm-modal__warning {
+  margin-top: 0.75rem;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid rgba(180, 80, 30, 0.45);
+  border-radius: 8px;
+  background: rgba(255, 230, 205, 0.75);
+  color: #8a310f;
+  font-weight: 700;
+}
+
 .confirm-actions {
   display: flex;
   justify-content: flex-end;

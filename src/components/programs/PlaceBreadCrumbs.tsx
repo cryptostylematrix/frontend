@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useProfileContext } from "../../context/ProfileContext";
 import { useProgramContext } from "../../context/ProgramContext";
 import { useStructuresContext } from "../../context/StructuresContext";
 import { getPath, type ProgramPlace } from "../../services/programApi";
@@ -7,9 +8,9 @@ import "./place-bread-crumbs.css";
 
 export default function PlaceBreadCrumbs() {
   const { t } = useTranslation();
+  const { currentProfile } = useProfileContext();
   const { marketingAddress } = useProgramContext();
   const {
-    firstPlace,
     refreshKey,
     selectedPlace,
     selectedStructure,
@@ -21,7 +22,7 @@ export default function PlaceBreadCrumbs() {
   useEffect(() => {
     let cancelled = false;
 
-    if (!marketingAddress || !firstPlace || !selectedPlace) {
+    if (!marketingAddress || !currentProfile || !selectedPlace) {
       setPath(null);
       setLoading(false);
       return;
@@ -32,8 +33,7 @@ export default function PlaceBreadCrumbs() {
     void getPath(
       marketingAddress,
       selectedStructure,
-      firstPlace.profile_addr,
-      firstPlace.place_number,
+      currentProfile.address,
       selectedPlace.profile_addr,
       selectedPlace.place_number,
     )
@@ -48,7 +48,7 @@ export default function PlaceBreadCrumbs() {
       cancelled = true;
     };
   }, [
-    firstPlace,
+    currentProfile,
     marketingAddress,
     refreshKey,
     selectedPlace,

@@ -98,11 +98,7 @@ export default function Locks() {
             ) : (
               <>
                 {locks.map((lock) => {
-                  const lockSide =
-                    lock.locked_pos === 0
-                      ? t("structure.left", "left")
-                      : t("structure.right", "right");
-                  const label = `[${lock.place_number}] ${lock.place_profile_login} (${lockSide})`;
+                  const label = `[${lock.place_number}] ${lock.place_profile_login} (${lock.locked_pos})`;
                   const isSelected =
                     lock.place_profile_addr === selectedPlace?.profile_addr &&
                     lock.place_number === selectedPlace?.place_number;

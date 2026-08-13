@@ -77,6 +77,10 @@ export type ProgramStructure = {
 };
 
 type ProgramTreeNodeBase = {
+  locked: boolean;
+  is_lock: boolean;
+  can_lock: boolean;
+  can_unlock: boolean;
   parent_profile_addr: string | null;
   parent_place_number: number | null;
   pos: number;
@@ -89,6 +93,8 @@ export type ProgramTreeEmptyNode = ProgramTreeNodeBase & {
   node_type: "empty";
   is_next_pos: boolean;
   can_buy: boolean;
+  buy_command_tag: number | null;
+  include_position: boolean;
 };
 
 export type ProgramTreeFilledNode = ProgramTreeNodeBase & {
@@ -98,6 +104,8 @@ export type ProgramTreeFilledNode = ProgramTreeNodeBase & {
   profile_login: string | null;
   kind: number;
   filling: number;
+  matrix_places_count: number;
+  descendants: number;
   level: number;
   is_active: boolean;
   created_at: number;
@@ -123,6 +131,14 @@ export type NextPosResponse = {
   profile_addr: string | null;
   place_number: number;
   pos: number;
+};
+
+export type PurchaseOption = {
+  can_buy: boolean;
+  command_tag: number | null;
+  include_position: boolean;
+  position: NextPosResponse | null;
+  reason: string | null;
 };
 
 export interface ProgramApi {
@@ -187,19 +203,30 @@ export interface ProgramApi {
     structureNumber: number,
     profileAddress: string,
   ) => Promise<NextPosResponse | null>;
+  getPurchaseOption: (
+    marketingAddress: string,
+    structureNumber: number,
+    profileAddress: string,
+    position?: {
+      parentProfileAddress: string | null;
+      parentPlaceNumber: number;
+      position: number;
+    } | null,
+  ) => Promise<PurchaseOption | null>;
   getPath: (
     marketingAddress: string,
     structureNumber: number,
-    fromProfileAddress: string | null,
-    fromPlaceNumber: number,
-    toProfileAddress: string | null,
-    toPlaceNumber: number,
+    viewerProfileAddress: string,
+    targetProfileAddress: string | null,
+    targetPlaceNumber: number,
   ) => Promise<ProgramPlace[] | null>;
   getTree: (
     marketingAddress: string,
     structureNumber: number,
     profileAddress: string | null,
     placeNumber: number,
+    viewerProfileAddress: string,
+    viewerWalletAddress: string | null,
     fromPos: number,
     toPos: number,
   ) => Promise<ProgramTreeNode | null>;
@@ -474,7 +501,7 @@ export async function searchPlaces(
       normalizedMarketingAddress,
       `structures/${structureNumber}/places/search`,
       {
-        profile_addr: normalizedProfileAddress,
+        viewer_profile_addr: normalizedProfileAddress,
         query: normalizedQuery,
         page,
         page_size: pageSize,
@@ -545,37 +572,71 @@ export async function getNextPos(
   );
 }
 
+export async function getPurchaseOption(
+  marketingAddress: string,
+  structureNumber: number,
+  profileAddress: string,
+  position?: {
+    parentProfileAddress: string | null;
+    parentPlaceNumber: number;
+    position: number;
+  } | null,
+): Promise<PurchaseOption | null> {
+  const normalizedMarketingAddress = marketingAddress.trim();
+  const normalizedProfileAddress = profileAddress.trim();
+  if (
+    !normalizedMarketingAddress ||
+    !normalizedProfileAddress ||
+    !Number.isInteger(structureNumber) ||
+    structureNumber < 0 ||
+    structureNumber > 255
+  ) {
+    return null;
+  }
+
+  return safeGet<PurchaseOption>(
+    buildUrl(
+      normalizedMarketingAddress,
+      `structures/${structureNumber}/purchase-option`,
+      {
+        profile_addr: normalizedProfileAddress,
+        parent_profile_addr: position?.parentProfileAddress,
+        parent_place_number: position?.parentPlaceNumber,
+        position: position?.position,
+      },
+    ),
+  );
+}
+
 export async function getPath(
   marketingAddress: string,
   structureNumber: number,
-  fromProfileAddress: string | null,
-  fromPlaceNumber: number,
-  toProfileAddress: string | null,
-  toPlaceNumber: number,
+  viewerProfileAddress: string,
+  targetProfileAddress: string | null,
+  targetPlaceNumber: number,
 ): Promise<ProgramPlace[] | null> {
   const normalizedMarketingAddress = marketingAddress.trim();
-  const normalizedFromProfileAddress = fromProfileAddress?.trim() ?? "";
-  const normalizedToProfileAddress = toProfileAddress?.trim() ?? "";
+  const normalizedViewerProfileAddress = viewerProfileAddress.trim();
+  const normalizedTargetProfileAddress = targetProfileAddress?.trim() ?? "";
   const isValidPlaceNumber = (value: number) =>
     Number.isInteger(value) && value >= 0 && value <= 0xffff_ffff;
 
   if (
     !normalizedMarketingAddress ||
+    !normalizedViewerProfileAddress ||
     !Number.isInteger(structureNumber) ||
     structureNumber < 0 ||
     structureNumber > 255 ||
-    !isValidPlaceNumber(fromPlaceNumber) ||
-    !isValidPlaceNumber(toPlaceNumber)
+    !isValidPlaceNumber(targetPlaceNumber)
   ) {
     return null;
   }
 
   return safeGet<ProgramPlace[]>(
     buildUrl(normalizedMarketingAddress, `structures/${structureNumber}/path`, {
-      from_profile_addr: normalizedFromProfileAddress,
-      from_place_number: fromPlaceNumber,
-      to_profile_addr: normalizedToProfileAddress,
-      to_place_number: toPlaceNumber,
+      viewer_profile_addr: normalizedViewerProfileAddress,
+      target_profile_addr: normalizedTargetProfileAddress,
+      target_place_number: targetPlaceNumber,
     }),
   );
 }
@@ -585,16 +646,20 @@ export async function getTree(
   structureNumber: number,
   profileAddress: string | null,
   placeNumber: number,
+  viewerProfileAddress: string,
+  viewerWalletAddress: string | null,
   fromPos: number,
   toPos: number,
 ): Promise<ProgramTreeNode | null> {
   const normalizedMarketingAddress = marketingAddress.trim();
   const normalizedProfileAddress = profileAddress?.trim() || null;
+  const normalizedViewerProfileAddress = viewerProfileAddress.trim();
   const isUint32 = (value: number) =>
     Number.isInteger(value) && value >= 0 && value <= 0xffff_ffff;
 
   if (
     !normalizedMarketingAddress ||
+    !normalizedViewerProfileAddress ||
     !Number.isInteger(structureNumber) ||
     structureNumber < 0 ||
     structureNumber > 255 ||
@@ -609,6 +674,8 @@ export async function getTree(
     buildUrl(normalizedMarketingAddress, `structures/${structureNumber}/tree`, {
       profile_addr: normalizedProfileAddress,
       place_number: placeNumber,
+      viewer_profile_addr: normalizedViewerProfileAddress,
+      viewer_wallet_addr: viewerWalletAddress?.trim() || undefined,
       from_pos: fromPos,
       to_pos: toPos,
     }),
@@ -647,6 +714,7 @@ export const programApi: ProgramApi = {
   searchPlaces,
   getLocks,
   getNextPos,
+  getPurchaseOption,
   getPath,
   getTree,
   getReferrals,

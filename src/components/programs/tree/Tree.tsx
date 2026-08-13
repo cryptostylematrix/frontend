@@ -1,5 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { WalletContext } from "../../../App";
+import { useProfileContext } from "../../../context/ProfileContext";
 import { useProgramContext } from "../../../context/ProgramContext";
 import { useStructuresContext } from "../../../context/StructuresContext";
 import {
@@ -17,6 +19,8 @@ const INITIAL_FROM_POS = 1;
 
 export default function Tree() {
   const { t } = useTranslation();
+  const { currentProfile } = useProfileContext();
+  const { wallet } = useContext(WalletContext)!;
   const { marketingAddress } = useProgramContext();
   const {
     refreshKey,
@@ -72,7 +76,7 @@ export default function Tree() {
     setSelectedNode(null);
     setIsTreeLoading(false);
 
-    if (!marketingAddress || !selectedPlace || !structure) return;
+    if (!marketingAddress || !currentProfile || !selectedPlace || !structure) return;
 
     setIsTreeLoading(true);
     void getTree(
@@ -80,6 +84,8 @@ export default function Tree() {
       selectedStructure,
       selectedPlace.profile_addr,
       selectedPlace.place_number,
+      currentProfile.address,
+      wallet || null,
       fromPos,
       toPos,
     )
@@ -97,12 +103,14 @@ export default function Tree() {
     };
   }, [
     fromPos,
+    currentProfile,
     marketingAddress,
     refreshKey,
     selectedPlace,
     selectedStructure,
     structure,
     toPos,
+    wallet,
   ]);
 
   return (
@@ -143,7 +151,7 @@ export default function Tree() {
           onSelect={setSelectedNode}
         />
       </div>
-      <Details selectedNode={selectedNode} structure={structure} />
+      <Details selectedNode={selectedNode} />
     </div>
   );
 }

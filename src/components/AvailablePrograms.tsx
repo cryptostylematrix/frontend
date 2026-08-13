@@ -7,11 +7,7 @@ import ProgramBlock from "./ProgramBlock";
 const CRYPTOCASH_MARKETING_PROGRAM_ADDRESS =
   "EQAba1dNyAbxm4t_dv5T1ARQXaQAAYcfJ4jcAWcw1PQ7q10b";
 
-type Props = {
-  showCryptoCash?: boolean;
-};
-
-export default function AvailablePrograms({ showCryptoCash = true }: Props) {
+export default function AvailablePrograms() {
   const { t } = useTranslation();
   const programs = [
     {
@@ -97,11 +93,9 @@ export default function AvailablePrograms({ showCryptoCash = true }: Props) {
             </div>
           </article>
         ))}
-        {showCryptoCash && (
-          <ProgramBlock
-            marketingAddress={CRYPTOCASH_MARKETING_PROGRAM_ADDRESS}
-          />
-        )}
+        <ProgramBlock
+          marketingAddress={CRYPTOCASH_MARKETING_PROGRAM_ADDRESS}
+        />
       </div>
     </section>
   );

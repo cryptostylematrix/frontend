@@ -1,5 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useTonConnectUI } from "@tonconnect/ui-react";
+import { fromNano } from "@ton/core";
 import { useTranslation } from "react-i18next";
 import { WalletContext } from "../../../App";
 import noAvatar from "../../../assets/no-avatar.jpg";
@@ -12,16 +13,12 @@ import { translateError } from "../../../errors/errorUtils";
 import { useJettonMetadata } from "../../../hooks/useJettonMetadata";
 import { getProfileNftData } from "../../../services/contractsApi";
 import {
-  getLocks,
-  getPlacesCount,
-  type ProgramStructure,
   type ProgramTreeNode,
 } from "../../../services/programApi";
 import {
   buyPlaceByJetton,
   buyPlaceByTon,
   executePositionCommand,
-  selectBuyCommand,
   type PlacePosData,
 } from "../../../services/programStructuresService";
 import { formatJettonAmount } from "../../../services/jettonMetadataService";
@@ -32,10 +29,9 @@ const formatter = new Intl.NumberFormat("en-US");
 
 type DetailsProps = {
   selectedNode: ProgramTreeNode | null;
-  structure: ProgramStructure | null;
 };
 
-export default function Details({ selectedNode, structure }: DetailsProps) {
+export default function Details({ selectedNode }: DetailsProps) {
   const { currentProfile } = useProfileContext();
   const { wallet } = useContext(WalletContext)!;
   const [tonConnectUI] = useTonConnectUI();
@@ -51,8 +47,6 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
   } = useStructuresContext();
   const [buyLoading, setBuyLoading] = useState(false);
   const [lockLoading, setLockLoading] = useState(false);
-  const [positionLocked, setPositionLocked] = useState<boolean | null>(null);
-  const [placesCount, setPlacesCount] = useState<number | null>(null);
   const [imageUrl, setImageUrl] = useState("");
   const [imageFailed, setImageFailed] = useState(false);
   const [detailsStatus, setDetailsStatus] = useState<{
@@ -67,21 +61,40 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
   const isSystemClone = Boolean(
     isFilled && !selectedNode.profile_addr?.trim(),
   );
+  const fixedPos = useMemo<PlacePosData | null>(() => {
+    if (
+      !selectedNode ||
+      selectedNode.node_type !== "empty" ||
+      selectedNode.parent_place_number === null
+    ) {
+      return null;
+    }
+
+    return {
+      parent: {
+        struct: selectedStructure,
+        profile_addr: selectedNode.parent_profile_addr,
+        place_number: selectedNode.parent_place_number,
+      },
+      pos: selectedNode.pos,
+    };
+  }, [selectedNode, selectedStructure]);
+  const buyPosition =
+    selectedNode?.node_type === "empty" && selectedNode.include_position
+      ? fixedPos
+      : null;
   const displayedLogin = isSystemClone
     ? t("structure.systemClones", "System Clones")
     : isFilled
       ? selectedNode.profile_login ?? ""
       : "";
   const displayedImageUrl = isSystemClone ? noAvatar : imageUrl;
-  const selectedBuyCommand = selectBuyCommand(
-    commands,
-    placesCount,
-    structure?.max_places_per_profile ?? null,
-  );
-  const buyCommand = selectedBuyCommand?.config;
+  const buyCommand =
+    selectedNode?.node_type === "empty" && selectedNode.buy_command_tag !== null
+      ? commands[String(selectedNode.buy_command_tag)]
+      : undefined;
   const lockCommand = commands[String(UserCommandTag.lockPos)];
   const unlockCommand = commands[String(UserCommandTag.unlockPos)];
-  const supportsLocks = Boolean(lockCommand || unlockCommand);
   const usesJetton = Boolean(buyCommand?.sender_jetton_wallet?.trim());
   const { metadata: jettonMetadata, isLoading: jettonMetadataLoading } =
     useJettonMetadata(buyCommand?.sender_jetton_wallet);
@@ -90,29 +103,8 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     ? jettonMetadata
       ? formatJettonAmount(rawPrice, jettonMetadata.decimals)
       : "—"
-    : rawPrice;
+    : fromNano(rawPrice);
   const currency = usesJetton ? jettonMetadata?.symbol ?? "JETTON" : "TON";
-  const ownerRootPositioning = structure?.pos_algo.root === "owner";
-
-  useEffect(() => {
-    let cancelled = false;
-    setPlacesCount(null);
-
-    const profileAddress = currentProfile?.address;
-    if (!profileAddress || !marketingAddress) return;
-
-    void getPlacesCount(
-      marketingAddress,
-      selectedStructure,
-      profileAddress,
-    ).then((response) => {
-      if (!cancelled) setPlacesCount(response?.count ?? null);
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [currentProfile, marketingAddress, refreshKey, selectedStructure]);
 
   useEffect(() => {
     let cancelled = false;
@@ -141,84 +133,6 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     setDetailsStatus(null);
   }, [refreshKey]);
 
-  const fixedPos = useMemo<PlacePosData | null>(() => {
-    if (
-      !selectedNode ||
-      selectedNode.node_type !== "empty" ||
-      selectedNode.parent_place_number === null
-    ) {
-      return null;
-    }
-
-    return {
-      parent: {
-        struct: selectedStructure,
-        profile_addr: selectedNode.parent_profile_addr,
-        place_number: selectedNode.parent_place_number,
-      },
-      pos: selectedNode.pos,
-    };
-  }, [selectedNode, selectedStructure]);
-
-  useEffect(() => {
-    let cancelled = false;
-    setPositionLocked(null);
-
-    const profileAddress = currentProfile?.address;
-    if (!profileAddress || !marketingAddress || !fixedPos || !supportsLocks) {
-      return;
-    }
-
-    const loadLockState = async () => {
-      const pageSize = 100;
-      let page = 1;
-      let totalPages = 1;
-
-      while (page <= totalPages) {
-        const response = await getLocks(
-          marketingAddress,
-          selectedStructure,
-          profileAddress,
-          page,
-          pageSize,
-        );
-        if (cancelled) return;
-        if (!response) {
-          setPositionLocked(false);
-          return;
-        }
-
-        const found = response.items.some(
-          (lock) =>
-            lock.place_profile_addr === fixedPos.parent.profile_addr &&
-            lock.place_number === fixedPos.parent.place_number &&
-            lock.locked_pos === fixedPos.pos,
-        );
-        if (found) {
-          setPositionLocked(true);
-          return;
-        }
-
-        totalPages = response.total_pages;
-        page += 1;
-      }
-
-      setPositionLocked(false);
-    };
-
-    void loadLockState();
-    return () => {
-      cancelled = true;
-    };
-  }, [
-    currentProfile,
-    fixedPos,
-    marketingAddress,
-    refreshKey,
-    selectedStructure,
-    supportsLocks,
-  ]);
-
   if (!selectedNode) return <div className="details-panel" />;
 
   const isCurrentPlace =
@@ -244,16 +158,17 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     minute: "2-digit",
     hour12: false,
   });
-  const buyPosition = ownerRootPositioning ? null : fixedPos;
   const canBuy =
     selectedNode.node_type === "empty" &&
     selectedNode.can_buy &&
     buyCommand &&
-    (ownerRootPositioning || fixedPos);
+    (!selectedNode.include_position || fixedPos);
   const lockAction =
-    fixedPos && positionLocked === true && unlockCommand
+    fixedPos && selectedNode.can_unlock && unlockCommand
       ? "unlock"
-      : fixedPos && positionLocked === false && lockCommand
+      : fixedPos &&
+          selectedNode.can_lock &&
+          lockCommand
         ? "lock"
         : null;
   const buyLabel = t("structure.buy", {
@@ -266,7 +181,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     if (
       !currentProfile ||
       !buyCommand ||
-      (!ownerRootPositioning && !fixedPos)
+      (selectedNode.node_type === "empty" && selectedNode.include_position && !fixedPos)
     ) {
       return;
     }
@@ -359,7 +274,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
 
   return (
     <div
-      className={`details-panel ${
+      className={`details-panel ${selectedNode.locked ? "details-panel--locked" : ""} ${
         selectedNode.node_type === "empty" && selectedNode.is_next_pos
           ? "details-panel--next"
           : ""
@@ -412,9 +327,17 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
                 {displayedLogin}
               </div>
               <div className="details-meta__desc">
+                {t("structure.matrixPlacesCount", {
+                  count: selectedNode.matrix_places_count,
+                  formattedCount: formatter.format(selectedNode.matrix_places_count),
+                  defaultValue: "{{formattedCount}} matrix place",
+                  defaultValue_plural: "{{formattedCount}} matrix places",
+                })}
+              </div>
+              <div className="details-meta__desc">
                 {t("structure.placesBelow", {
-                  count: selectedNode.filling,
-                  formattedCount: formatter.format(selectedNode.filling),
+                  count: selectedNode.descendants,
+                  formattedCount: formatter.format(selectedNode.descendants),
                   defaultValue: "{{formattedCount}} place below",
                   defaultValue_plural: "{{formattedCount}} places below",
                 })}
@@ -522,6 +445,15 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
               {t("structure.profileLabel", "Profile")}: {" "}
               <strong>{currentProfile?.login ?? ""}</strong>
             </p>
+            {currentProfile?.mode === "preview" && (
+              <p className="confirm-modal__warning">
+                {t("structure.previewCommandWarning", {
+                  login: currentProfile.login,
+                  defaultValue:
+                    "Attention: this profile belongs to another wallet. This command will be executed for the foreign profile {{login}}.",
+                })}
+              </p>
+            )}
           </>
         }
         confirmLabel={

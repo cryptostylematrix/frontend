@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useTonConnectUI } from "@tonconnect/ui-react";
+import { fromNano } from "@ton/core";
 import { useTranslation } from "react-i18next";
 import { WalletContext } from "../../../App";
 import { UserCommandTag } from "../../../contracts/schemes/UserCommand";
@@ -11,16 +12,13 @@ import { translateError } from "../../../errors/errorUtils";
 import { useJettonMetadata } from "../../../hooks/useJettonMetadata";
 import {
   getFirstPlace,
-  getTopPlace,
-  getPlacesCount,
-  getStructure,
+  getPurchaseOption,
+  type PurchaseOption,
 } from "../../../services/programApi";
 import {
   buyPlaceByJetton,
   buyPlaceByTon,
-  selectBuyCommand,
 } from "../../../services/programStructuresService";
-import type { ProgramStructure } from "../../../services/programApi";
 import { formatJettonAmount } from "../../../services/jettonMetadataService";
 import Locks from "./Locks";
 import NextPos from "./NextPos";
@@ -54,12 +52,8 @@ export default function Filters() {
   } | null>(null);
   const [buyLoading, setBuyLoading] = useState(false);
   const [showBuyConfirm, setShowBuyConfirm] = useState(false);
-  const [placesCount, setPlacesCount] = useState<number | null>(null);
-  const [structureConfig, setStructureConfig] =
-    useState<ProgramStructure | null>(null);
-  const [placeSearchProfileAddress, setPlaceSearchProfileAddress] = useState<
-    string | null
-  >(null);
+  const [purchaseOption, setPurchaseOption] =
+    useState<PurchaseOption | null>(null);
 
   useEffect(() => {
     resetAll();
@@ -102,57 +96,28 @@ export default function Filters() {
 
   useEffect(() => {
     let cancelled = false;
-    setPlacesCount(null);
-    setStructureConfig(null);
-    setPlaceSearchProfileAddress(null);
+    setPurchaseOption(null);
     setShowBuyConfirm(false);
 
     if (!currentProfile || !marketingAddress) return;
 
-    const loadFilterData = async () => {
-      const [structure, placesCount] = await Promise.all([
-        getStructure(marketingAddress, selectedStructure),
-        getPlacesCount(
-          marketingAddress,
-          selectedStructure,
-          currentProfile.address,
-        ),
-      ]);
-      if (cancelled) return;
-
-      if (placesCount) setPlacesCount(placesCount.count);
-      if (!structure) return;
-
-      setStructureConfig(structure);
-      if (structure.pos_algo.root === "owner") {
-        const topPlace = await getTopPlace(marketingAddress, selectedStructure);
-        if (cancelled) return;
-        setPlaceSearchProfileAddress(topPlace?.profile_addr ?? null);
-      } else {
-        setPlaceSearchProfileAddress(currentProfile.address);
-      }
-
-      if (
-        placesCount &&
-        placesCount.count >= structure.max_places_per_profile
-      ) {
-        setShowBuyConfirm(false);
-      }
-    };
-
-    void loadFilterData();
+    void getPurchaseOption(
+      marketingAddress,
+      selectedStructure,
+      currentProfile.address,
+    ).then((option) => {
+      if (!cancelled) setPurchaseOption(option);
+    });
 
     return () => {
       cancelled = true;
     };
   }, [currentProfile, marketingAddress, refreshKey, selectedStructure]);
 
-  const selectedBuyCommand = selectBuyCommand(
-    commands,
-    placesCount,
-    structureConfig?.max_places_per_profile ?? null,
-  );
-  const buyCommand = selectedBuyCommand?.config;
+  const buyCommand =
+    purchaseOption?.can_buy && purchaseOption.command_tag !== null
+      ? commands[String(purchaseOption.command_tag)]
+      : undefined;
   const supportsLocks = Boolean(
     commands[String(UserCommandTag.lockPos)] ||
       commands[String(UserCommandTag.unlockPos)],
@@ -165,7 +130,7 @@ export default function Filters() {
     ? jettonMetadata
       ? formatJettonAmount(commandPrice, jettonMetadata.decimals)
       : "—"
-    : commandPrice;
+    : fromNano(commandPrice);
   const commandCurrency = usesJetton
     ? jettonMetadata?.symbol ?? "JETTON"
     : "TON";
@@ -265,7 +230,7 @@ export default function Filters() {
           </label>
 
           <Places />
-          <PlaceSearch rootProfileAddress={placeSearchProfileAddress} />
+          <PlaceSearch />
           {supportsLocks && <Locks />}
         </div>
 
@@ -310,6 +275,15 @@ export default function Filters() {
               {t("structure.profileLabel", "Profile")}: {" "}
               <strong>{currentProfile?.login ?? ""}</strong>
             </p>
+            {currentProfile?.mode === "preview" && (
+              <p className="confirm-modal__warning">
+                {t("structure.previewPurchaseWarning", {
+                  login: currentProfile.login,
+                  defaultValue:
+                    "Attention: this profile belongs to another wallet. You are buying a place for the foreign profile {{login}}.",
+                })}
+              </p>
+            )}
           </>
         }
         confirmLabel={buyPlaceLabel}
