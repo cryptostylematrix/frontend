@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import ProgramBlock from "./ProgramBlock";
 
-const CRYPTOCASH_MARKETING_PROGRAM_ADDRESS =
+export const CRYPTOCASH_MARKETING_PROGRAM_ADDRESS =
   "EQAba1dNyAbxm4t_dv5T1ARQXaQAAYcfJ4jcAWcw1PQ7q10b";
 
 export default function AvailablePrograms() {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { appConfig } from "../config";
-import { loadAvailableProgramAddresses } from "../services/programsService";
+import { loadPrograms } from "../services/programsService";
 import ProgramBlock from "./ProgramBlock";
 import "./available-test-programs.css";
 
@@ -14,9 +14,19 @@ export default function AvailableTestPrograms() {
     let active = true;
 
     setIsLoading(true);
-    void loadAvailableProgramAddresses(appConfig.ton.admin.dev)
-      .then((addresses) => {
-        if (active) setProgramAddresses(addresses);
+    void loadPrograms(appConfig.ton.admin.dev)
+      .then((programs) => {
+        if (active) {
+          setProgramAddresses(
+            programs
+              .filter(
+                (program) =>
+                  program.name.replace(/\s+/g, "").toLowerCase() !==
+                  "cryptocash",
+              )
+              .map((program) => program.address),
+          );
+        }
       })
       .finally(() => {
         if (active) setIsLoading(false);
