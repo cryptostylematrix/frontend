@@ -30,7 +30,6 @@ const PLACE_CHANGE_MAX_POLLS = 24;
 const PLACE_PURCHASE_COMMANDS = new Set<number>([
   UserCommandTag.buyFirstPlace,
   UserCommandTag.buyPlace,
-  UserCommandTag.buyTopPlace,
 ]);
 
 type StructuresContextValue = {

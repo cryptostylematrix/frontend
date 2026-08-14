@@ -19,7 +19,6 @@ const TASK_LABELS: Record<number, { key: string; defaultValue: string }> = {
   [UserCommandTag.buyFirstPlace]: { key: "buyFirstPlace", defaultValue: "Buy first place" },
   [UserCommandTag.buyPlace]: { key: "buyPlace", defaultValue: "Buy a place" },
   [UserCommandTag.buySysPlace]: { key: "buySysPlace", defaultValue: "Buy a system place" },
-  [UserCommandTag.buyTopPlace]: { key: "buyTopPlace", defaultValue: "Buy a top place" },
   [UserCommandTag.chooseInviter]: { key: "chooseInviter", defaultValue: "Choose inviter" },
   [UserCommandTag.lockPos]: { key: "lockPos", defaultValue: "Lock pos" },
   [UserCommandTag.unlockPos]: { key: "unlockPos", defaultValue: "Unlock pos" },

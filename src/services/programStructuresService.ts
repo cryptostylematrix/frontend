@@ -26,8 +26,7 @@ export type ProgramContractResult =
 export type BuyCommand = {
   tag:
     | typeof UserCommandTag.buyFirstPlace
-    | typeof UserCommandTag.buyPlace
-    | typeof UserCommandTag.buyTopPlace;
+    | typeof UserCommandTag.buyPlace;
   config: MarketingV3CommandConfigResponse;
   position: PlacePosData | null;
 };
