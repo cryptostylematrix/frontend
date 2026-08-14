@@ -64,7 +64,6 @@ export default function Details({ selectedNode }: DetailsProps) {
   const fixedPos = useMemo<PlacePosData | null>(() => {
     if (
       !selectedNode ||
-      selectedNode.node_type !== "empty" ||
       selectedNode.parent_place_number === null
     ) {
       return null;
@@ -164,11 +163,9 @@ export default function Details({ selectedNode }: DetailsProps) {
     buyCommand &&
     (!selectedNode.include_position || fixedPos);
   const lockAction =
-    fixedPos && selectedNode.can_unlock && unlockCommand
+    selectedNode.can_unlock
       ? "unlock"
-      : fixedPos &&
-          selectedNode.can_lock &&
-          lockCommand
+      : selectedNode.can_lock
         ? "lock"
         : null;
   const buyLabel = t("structure.buy", {
