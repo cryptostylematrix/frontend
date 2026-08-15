@@ -2,6 +2,7 @@
   "wallet": {
     "connect": "Әмиянды қосу",
     "copyAddress": "Мекенжайды көшіру",
+    "addressCopied": "Мекенжай көшірілді",
     "disconnect": "Ажырату"
   },
   "profile": {

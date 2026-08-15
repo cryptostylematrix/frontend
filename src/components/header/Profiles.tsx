@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useProfileContext } from "../../context/ProfileContext";
 import { useTranslation } from "react-i18next";
 import { Copy } from "lucide-react";
+import { copyText } from "../../utils/clipboard";
 
 const Profiles: React.FC = () => {
   const { t } = useTranslation();
@@ -18,16 +19,7 @@ const Profiles: React.FC = () => {
     if (!address) return;
 
     try {
-      if (navigator.clipboard?.writeText) {
-        try {
-          await navigator.clipboard.writeText(address);
-          setIsOpen(false);
-          return;
-        } catch {
-          // Fall through for browsers that expose but block the Clipboard API.
-        }
-      }
-      copyTextFallback(address);
+      await copyText(address);
       setIsOpen(false);
     } catch (error) {
       console.error("Failed to copy profile address", error);
@@ -147,17 +139,5 @@ const Profiles: React.FC = () => {
     </div>
   );
 };
-
-function copyTextFallback(value: string) {
-  const textArea = document.createElement("textarea");
-  textArea.value = value;
-  textArea.style.position = "fixed";
-  textArea.style.opacity = "0";
-  document.body.appendChild(textArea);
-  textArea.select();
-  const copied = document.execCommand("copy");
-  textArea.remove();
-  if (!copied) throw new Error("Clipboard copy command was rejected");
-}
 
 export default Profiles;

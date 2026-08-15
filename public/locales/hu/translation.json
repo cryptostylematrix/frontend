@@ -2,6 +2,7 @@
   "wallet": {
     "connect": "Pénztárca csatlakoztatása",
     "copyAddress": "Cím másolása",
+    "addressCopied": "Cím másolva",
     "disconnect": "Leválasztás"
   },
   "profile": {

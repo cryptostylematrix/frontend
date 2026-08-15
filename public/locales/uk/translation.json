@@ -2,6 +2,7 @@
   "wallet": {
     "connect": "Підключити гаманець",
     "copyAddress": "Скопіювати адресу",
+    "addressCopied": "Адресу скопійовано",
     "disconnect": "Відключити"
   },
   "profile": {

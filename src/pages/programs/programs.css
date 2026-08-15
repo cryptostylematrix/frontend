@@ -1,9 +1,81 @@
+.programs-contract-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0.5rem auto 0;
+  color: #3a2e0e;
+  font-family: "Poppins", sans-serif;
+}
+
+.content-container .programs-contract-title {
+  min-width: 0;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.35rem;
+  line-height: 1.3;
+}
+
+.content-container .programs-contract-title::after {
+  content: none;
+}
+
+.programs-contract-copy,
+.programs-contract-explorer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #9a7613;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.programs-contract-copy:hover,
+.programs-contract-copy:focus,
+.programs-contract-copy:active,
+.programs-contract-explorer:hover,
+.programs-contract-explorer:focus,
+.programs-contract-explorer:active {
+  background: transparent;
+  color: #735506;
+}
+
+.programs-contract-copy svg,
+.programs-contract-explorer svg {
+  width: 17px;
+  height: 17px;
+}
+
+.programs-contract-copy.is-copied {
+  color: #2e8b57;
+  animation: program-copy-confirm 0.35s ease;
+}
+
+@keyframes program-copy-confirm {
+  0% {
+    transform: scale(0.75);
+  }
+  60% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .programs-submenu {
   display: flex;
   justify-content: center;
   width: 100%;
   max-width: 900px;
-  margin: 1.5rem auto;
+  margin: 0.75rem auto 1.5rem;
   padding: 1rem 1.5rem;
   border: 1px solid rgba(212, 175, 55, 0.35);
   border-radius: 14px;
@@ -51,6 +123,10 @@
 }
 
 @media (max-width: 700px) {
+  .programs-contract-title {
+    font-size: 1.15rem;
+  }
+
   .programs-submenu {
     padding: 1.2rem 1rem;
   }

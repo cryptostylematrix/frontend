@@ -2,6 +2,7 @@
   "wallet": {
     "connect": "Подключить кошелек",
     "copyAddress": "Скопировать адрес",
+    "addressCopied": "Адрес скопирован",
     "disconnect": "Отключить"
   },
   "profile": {
