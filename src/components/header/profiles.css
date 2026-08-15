@@ -139,6 +139,12 @@
   flex: 1;
 }
 
+.profile-action-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 .profile-dropdown .profile-preview-badge {
   margin-left: auto;
 }
