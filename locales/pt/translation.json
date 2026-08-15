@@ -2,6 +2,7 @@
   "wallet": {
     "connect": "Conectar carteira",
     "copyAddress": "Copiar endereço",
+    "addressCopied": "Endereço copiado",
     "disconnect": "Desconectar"
   },
   "profile": {
