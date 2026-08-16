@@ -11,6 +11,7 @@ export const MULTI_MARKETING_PROGRAM_ADDRESS =
 export const NEO_MARKETING_PROGRAM_ADDRESS =
   "EQCQUF6o3Z_SzFD5m9aR6uGbIgaujaUcHTPX9oghh8O4lMYh";
 const SHOW_LEGACY_PROGRAMS = false;
+const SHOW_MULTI_AND_NEO = false;
 
 export default function AvailablePrograms() {
   const { t } = useTranslation();
@@ -43,8 +44,12 @@ export default function AvailablePrograms() {
         </div>
 
         <div className="programs-grid">
-          <ProgramBlock marketingAddress={MULTI_MARKETING_PROGRAM_ADDRESS} />
-          <ProgramBlock marketingAddress={NEO_MARKETING_PROGRAM_ADDRESS} />
+          {SHOW_MULTI_AND_NEO && (
+            <>
+              <ProgramBlock marketingAddress={MULTI_MARKETING_PROGRAM_ADDRESS} />
+              <ProgramBlock marketingAddress={NEO_MARKETING_PROGRAM_ADDRESS} />
+            </>
+          )}
           <ProgramBlock
             marketingAddress={CRYPTOCASH_MARKETING_PROGRAM_ADDRESS}
           />
