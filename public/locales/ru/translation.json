@@ -86,6 +86,7 @@
     "no_avatar_alt": "Без аватара",
     "programs": {
       "title": "Доступные программы",
+      "legacyTitle": "Архивные программы",
       "programLabel": "Программа",
       "creatorLabel": "Создатель",
       "descriptionLabel": "Описание",

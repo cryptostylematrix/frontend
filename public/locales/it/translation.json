@@ -86,6 +86,7 @@
     "no_avatar_alt": "Nessun avatar",
     "programs": {
       "title": "Programmi disponibili",
+      "legacyTitle": "Programmi precedenti",
       "programLabel": "Programma",
       "creatorLabel": "Creatore",
       "descriptionLabel": "Descrizione",
