@@ -4,7 +4,6 @@ import { User, Send, Wallet } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import ProfileStatusBlock from "../components/ProfileStatusBlock";
 import AvailablePrograms from "../components/AvailablePrograms";
-import AvailableTestPrograms from "../components/AvailableTestPrograms";
 import { WalletContext } from "../App";
 import { useProfileContext } from "../context/ProfileContext";
 import { getContractBalance } from "../services/contractsApi";
@@ -97,7 +96,6 @@ export default function Home() {
       </div>
 
       <AvailablePrograms />
-      <AvailableTestPrograms />
     </>
   );
 }

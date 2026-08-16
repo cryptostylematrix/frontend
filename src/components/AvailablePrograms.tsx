@@ -7,6 +7,8 @@ import ProgramBlock from "./ProgramBlock";
 export const CRYPTOCASH_MARKETING_PROGRAM_ADDRESS =
   "EQAba1dNyAbxm4t_dv5T1ARQXaQAAYcfJ4jcAWcw1PQ7q10b";
 
+const SHOW_MULTI_AND_NEO = false;
+
 export default function AvailablePrograms() {
   const { t } = useTranslation();
   const programs = [
@@ -37,7 +39,7 @@ export default function AvailablePrograms() {
       </div>
 
       <div className="programs-grid">
-        {programs.map((program) => (
+        {SHOW_MULTI_AND_NEO && programs.map((program) => (
           <article className="program-card" key={program.key}>
             <div className="program-card__top">
               <img
