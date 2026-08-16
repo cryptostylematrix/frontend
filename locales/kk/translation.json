@@ -86,6 +86,7 @@
     "no_avatar_alt": "Аватар жоқ",
     "programs": {
       "title": "Қолжетімді бағдарламалар",
+      "legacyTitle": "Бұрынғы бағдарламалар",
       "programLabel": "Бағдарлама",
       "creatorLabel": "Жасаушы",
       "descriptionLabel": "Сипаттама",

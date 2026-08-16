@@ -86,6 +86,7 @@
     "no_avatar_alt": "Nincs avatar",
     "programs": {
       "title": "Elérhető programok",
+      "legacyTitle": "Korábbi programok",
       "programLabel": "Program",
       "creatorLabel": "Létrehozó",
       "descriptionLabel": "Leírás",
