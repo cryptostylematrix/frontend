@@ -104,6 +104,7 @@ export type ProgramTreeFilledNode = ProgramTreeNodeBase & {
   profile_login: string | null;
   kind: number;
   filling: number;
+  rank: string | null;
   matrix_places_count: number;
   descendants: number;
   level: number;

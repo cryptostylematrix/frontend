@@ -151,7 +151,7 @@ export default function Tree() {
           onSelect={setSelectedNode}
         />
       </div>
-      <Details selectedNode={selectedNode} />
+      <Details selectedNode={selectedNode} structure={structure} />
     </div>
   );
 }

@@ -500,6 +500,8 @@
     "matrixPlacesCount_other": "Матрицада {{formattedCount}} орын",
     "placesBelow_one": "Төменде барлығы {{formattedCount}} орын",
     "placesBelow_other": "Төменде барлығы {{formattedCount}} орын",
+    "rank": "Дәреже",
+    "ranks": { "bronze": "Қола", "silver": "Күміс", "gold": "Алтын", "platinum": "Платина", "sapphire": "Сапфир", "emerald": "Изумруд", "diamond": "Алмас" },
     "unlock": "Бұғаттан шығару",
     "lock": "Бұғаттау",
     "unlockSuccess": "Бұғаттан шығару сұранысы жіберілді. Бұғаттан шығару жақында пайда болады; оны көру үшін бетті біраздан кейін жаңартыңыз.",

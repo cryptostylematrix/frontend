@@ -500,6 +500,8 @@
     "matrixPlacesCount_other": "{{formattedCount}} posti nella matrice",
     "placesBelow_one": "{{formattedCount}} posto totale sotto",
     "placesBelow_other": "{{formattedCount}} posti totali sotto",
+    "rank": "Grado",
+    "ranks": { "bronze": "Bronzo", "silver": "Argento", "gold": "Oro", "platinum": "Platino", "sapphire": "Zaffiro", "emerald": "Smeraldo", "diamond": "Diamante" },
     "unlock": "Sblocca",
     "lock": "Blocca",
     "unlockSuccess": "Richiesta di sblocco inviata. Lo sblocco apparirà presto; aggiorna la pagina tra poco per vederlo.",

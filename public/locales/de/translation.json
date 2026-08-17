@@ -500,6 +500,8 @@
     "matrixPlacesCount_other": "{{formattedCount}} Plätze in der Matrix",
     "placesBelow_one": "{{formattedCount}} Platz insgesamt darunter",
     "placesBelow_other": "{{formattedCount}} Plätze insgesamt darunter",
+    "rank": "Rang",
+    "ranks": { "bronze": "Bronze", "silver": "Silber", "gold": "Gold", "platinum": "Platin", "sapphire": "Saphir", "emerald": "Smaragd", "diamond": "Diamant" },
     "unlock": "Entsperren",
     "lock": "Sperren",
     "unlockSuccess": "Anfrage zum Entsperren gesendet. Die Entsperrung wird bald angezeigt; aktualisieren Sie die Seite später.",

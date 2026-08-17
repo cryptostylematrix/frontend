@@ -13,6 +13,7 @@ import { translateError } from "../../../errors/errorUtils";
 import { useJettonMetadata } from "../../../hooks/useJettonMetadata";
 import { getProfileNftData } from "../../../services/contractsApi";
 import {
+  type ProgramStructure,
   type ProgramTreeNode,
 } from "../../../services/programApi";
 import {
@@ -26,12 +27,23 @@ import "../../../pages/profile/update-profile.css";
 import "./details.css";
 
 const formatter = new Intl.NumberFormat("en-US");
+const RANK_KEYS = [
+  "bronze",
+  "silver",
+  "gold",
+  "platinum",
+  "sapphire",
+  "emerald",
+  "diamond",
+] as const;
+type RankKey = (typeof RANK_KEYS)[number];
 
 type DetailsProps = {
   selectedNode: ProgramTreeNode | null;
+  structure: ProgramStructure | null;
 };
 
-export default function Details({ selectedNode }: DetailsProps) {
+export default function Details({ selectedNode, structure }: DetailsProps) {
   const { currentProfile } = useProfileContext();
   const { wallet } = useContext(WalletContext)!;
   const [tonConnectUI] = useTonConnectUI();
@@ -157,6 +169,12 @@ export default function Details({ selectedNode }: DetailsProps) {
     minute: "2-digit",
     hour12: false,
   });
+  const rank =
+    selectedNode.node_type === "filled" ? selectedNode.rank?.trim() : null;
+  const normalizedRank = rank?.toLowerCase() ?? "";
+  const rankKey = RANK_KEYS.includes(normalizedRank as RankKey)
+    ? (normalizedRank as RankKey)
+    : null;
   const canBuy =
     selectedNode.node_type === "empty" &&
     selectedNode.can_buy &&
@@ -323,14 +341,18 @@ export default function Details({ selectedNode }: DetailsProps) {
               <div className="details-meta__login">
                 {displayedLogin}
               </div>
-              <div className="details-meta__desc">
-                {t("structure.matrixPlacesCount", {
-                  count: selectedNode.matrix_places_count,
-                  formattedCount: formatter.format(selectedNode.matrix_places_count),
-                  defaultValue: "{{formattedCount}} matrix place",
-                  defaultValue_plural: "{{formattedCount}} matrix places",
-                })}
-              </div>
+              {structure !== null && structure.height > 0 && (
+                <div className="details-meta__desc">
+                  {t("structure.matrixPlacesCount", {
+                    count: selectedNode.matrix_places_count,
+                    formattedCount: formatter.format(
+                      selectedNode.matrix_places_count,
+                    ),
+                    defaultValue: "{{formattedCount}} matrix place",
+                    defaultValue_plural: "{{formattedCount}} matrix places",
+                  })}
+                </div>
+              )}
               <div className="details-meta__desc">
                 {t("structure.placesBelow", {
                   count: selectedNode.descendants,
@@ -339,6 +361,24 @@ export default function Details({ selectedNode }: DetailsProps) {
                   defaultValue_plural: "{{formattedCount}} places below",
                 })}
               </div>
+              {rank && (
+                <div
+                  className={`details-rank ${
+                    rankKey ? `details-rank--${rankKey}` : ""
+                  }`}
+                >
+                  <span className="details-rank__label">
+                    {t("structure.rank", "Rank")}
+                  </span>
+                  <strong>
+                    {rankKey
+                      ? t(`structure.ranks.${rankKey}`, {
+                          defaultValue: rank,
+                        })
+                      : rank}
+                  </strong>
+                </div>
+              )}
             </div>
           </div>
 
