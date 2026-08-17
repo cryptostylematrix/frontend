@@ -413,6 +413,7 @@
     "referrals": "Struktúra",
     "inviter": "Meghívó",
     "structures": "Szintek",
+    "matrixes": "Mátrixok",
     "statistics": "Statisztika",
     "navigation": "Programnavigáció",
     "commandProcessing": "A parancs feldolgozás alatt...",
@@ -433,13 +434,18 @@
         "system_places": "Rendszerklónok",
         "cycles": "Ciklusok",
         "full_distribution": "100%-os elosztás",
-        "activation": "Aktiválás"
+        "activation": "Aktiválás",
+        "reinvest": "Újrabefektetés",
+        "clones": "Klónok",
+        "structure_management": "Struktúra kezelése",
+        "linear": "Lineáris",
+        "tetra": "Tetra"
       },
       "entry": "Belépés",
       "entryAmount": "{{amount}}{{currency}}-tól",
       "exit": "Kilépés",
       "exitAmount": "akár {{amount}}{{currency}} {{period}}onként",
-      "periods": { "cycle": "ciklus" }
+      "periods": { "cycle": "ciklus", "program": "program" }
     }
   },
   "programQueue": {
@@ -469,6 +475,7 @@
     "show": "Mutat",
     "hide": "Elrejt",
     "structures": "Szintek",
+    "matrixes": "Mátrixok",
     "placesWithTotal": "Helyek (összesen {{total}})",
     "noPlaces": "Nincsenek helyek",
     "systemClones": "Rendszerklónok",

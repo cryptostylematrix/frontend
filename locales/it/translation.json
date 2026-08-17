@@ -413,6 +413,7 @@
     "referrals": "Struttura",
     "inviter": "Invitante",
     "structures": "Livelli",
+    "matrixes": "Matrici",
     "statistics": "Statistiche",
     "navigation": "Navigazione del programma",
     "commandProcessing": "Il comando è in elaborazione...",
@@ -433,13 +434,18 @@
         "system_places": "Cloni di sistema",
         "cycles": "Cicli",
         "full_distribution": "Distribuzione al 100%",
-        "activation": "Attivazione"
+        "activation": "Attivazione",
+        "reinvest": "Reinvestimento",
+        "clones": "Cloni",
+        "structure_management": "Gestione della struttura",
+        "linear": "Lineare",
+        "tetra": "Tetra"
       },
       "entry": "Ingresso",
       "entryAmount": "da {{currency}}{{amount}}",
       "exit": "Uscita",
       "exitAmount": "fino a {{currency}}{{amount}} per {{period}}",
-      "periods": { "cycle": "ciclo" }
+      "periods": { "cycle": "ciclo", "program": "programma" }
     }
   },
   "programQueue": {
@@ -469,6 +475,7 @@
     "show": "Mostra",
     "hide": "Nascondi",
     "structures": "Livelli",
+    "matrixes": "Matrici",
     "placesWithTotal": "Posti (totale {{total}})",
     "noPlaces": "Nessun posto",
     "systemClones": "Cloni di sistema",
