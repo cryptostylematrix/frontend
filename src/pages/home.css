@@ -81,6 +81,64 @@
   color: #b4881d;
 }
 
+.profile-selected-login {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-address-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  flex-shrink: 0;
+}
+
+.profile-address-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #9a7613;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.profile-address-action:hover,
+.profile-address-action:focus,
+.profile-address-action:active {
+  background: transparent;
+  color: #735506;
+}
+
+.profile-address-action svg {
+  width: 17px;
+  height: 17px;
+}
+
+.profile-address-action.is-copied {
+  color: #2e8b57;
+  animation: profile-copy-confirm 0.35s ease;
+}
+
+@keyframes profile-copy-confirm {
+  0% {
+    transform: scale(0.75);
+  }
+  60% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 /* ---------- Balance Card ---------- */
 
 .balance-card {

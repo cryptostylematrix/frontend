@@ -1,4 +1,6 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
+import { getYoutubeChannel } from "../../utils/youtube";
 import "./socials.css";
 
 type Social = {
@@ -19,11 +21,6 @@ const socials: Social[] = [
     icon: "telegramCommunity",
   },
   {
-    href: "https://www.youtube.com/@CryptoStyleOfficial",
-    label: "YouTube",
-    icon: "youtube",
-  },
-  {
     href: "https://x.com/CryptoStyleTON",
     label: "X (Twitter)",
     icon: "twitter",
@@ -31,6 +28,17 @@ const socials: Social[] = [
 ];
 
 const Socials: React.FC = () => {
+  const { i18n } = useTranslation();
+  const localizedSocials: Social[] = [
+    ...socials.slice(0, 2),
+    {
+      href: getYoutubeChannel(i18n.resolvedLanguage ?? i18n.language),
+      label: "YouTube",
+      icon: "youtube",
+    },
+    ...socials.slice(2),
+  ];
+
   const renderIcon = (icon: Social["icon"]) => {
     if (icon === "youtube") {
       return (
@@ -91,7 +99,7 @@ const Socials: React.FC = () => {
 
   return (
     <div className="socials">
-      {socials.map(({ href, label, icon }) => (
+      {localizedSocials.map(({ href, label, icon }) => (
         <a
           key={href}
           className="social-block"

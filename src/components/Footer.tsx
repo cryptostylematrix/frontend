@@ -1,5 +1,6 @@
 import "./footer.css";
 import { useTranslation } from "react-i18next";
+import { getYoutubeChannel } from "../utils/youtube";
 
 export default function Footer() {
   const { t, i18n } = useTranslation();
@@ -11,6 +12,7 @@ export default function Footer() {
   const baseUrl = import.meta.env.BASE_URL || "/";
   const privacyHref = `${baseUrl}privacy-policy_crypto-style_${resolvedLang}.pdf`;
   const agreementHref = `${baseUrl}user-agreement_crypto-style_${resolvedLang}.pdf`;
+  const youtubeHref = getYoutubeChannel(i18n.resolvedLanguage ?? i18n.language);
 
   return (
     <footer className="footer">
@@ -33,7 +35,7 @@ export default function Footer() {
             {t("footer.group", { defaultValue: "Community" })}
           </a>
           <a
-            href="https://www.youtube.com/@CryptoStyleOfficial"
+            href={youtubeHref}
             target="_blank"
             rel="noopener noreferrer"
             className="footer-link"
