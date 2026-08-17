@@ -142,6 +142,31 @@ export type PurchaseOption = {
   reason: string | null;
 };
 
+export type ReferralCountStatistics = {
+  total: number;
+  active: number;
+  inactive: number;
+};
+
+export type StructureReferralStatistics = ReferralCountStatistics & {
+  total_places: number;
+  active_places: number;
+};
+
+export type StructureStatistics = {
+  structure_number: number;
+  total_places: number;
+  active_places: number;
+  referrals: StructureReferralStatistics;
+};
+
+export type ProgramStatistics = {
+  marketing_addr: string;
+  profile_addr: string;
+  referrals: ReferralCountStatistics;
+  structures: StructureStatistics[];
+};
+
 export interface ProgramApi {
   getInviterData: (
     marketingAddress: string,
@@ -237,6 +262,10 @@ export interface ProgramApi {
     pageNumber: number,
     pageSize: number,
   ) => Promise<ProgramPaginated<InviteData> | null>;
+  getProgramStatistics: (
+    marketingAddress: string,
+    profileAddress: string,
+  ) => Promise<ProgramStatistics | null>;
 }
 
 const normalizedBase = appConfig.programApi.host.replace(/\/+$/, "");
@@ -702,6 +731,28 @@ export async function getReferrals(
   );
 }
 
+export async function getProgramStatistics(
+  marketingAddress: string,
+  profileAddress: string,
+): Promise<ProgramStatistics | null> {
+  const normalizedMarketingAddress = marketingAddress.trim();
+  const normalizedProfileAddress = profileAddress.trim();
+  if (!normalizedMarketingAddress || !normalizedProfileAddress) return null;
+
+  const response = await fetch(
+    buildUrl(normalizedMarketingAddress, "statistics", {
+      profile_addr: normalizedProfileAddress,
+    }),
+  );
+
+  if (response.status === 404) return null;
+  if (!response.ok) {
+    throw new Error(`Request failed with status ${response.status}`);
+  }
+
+  return (await response.json()) as ProgramStatistics;
+}
+
 export const programApi: ProgramApi = {
   getInviterData,
   getInviteInfo,
@@ -719,4 +770,5 @@ export const programApi: ProgramApi = {
   getPath,
   getTree,
   getReferrals,
+  getProgramStatistics,
 };
