@@ -6,6 +6,7 @@ import {
   loadProgramMetadata,
   type Program,
 } from "../services/programsService";
+import { getLegacyPricingProgramKey } from "../programs";
 import "./available-programs.css";
 import "./program-block.css";
 
@@ -55,6 +56,7 @@ export default function ProgramBlock({ marketingAddress }: Props) {
   );
   const formatNumber = (value: number) =>
     new Intl.NumberFormat(i18n.resolvedLanguage ?? i18n.language).format(value);
+  const legacyPricingKey = getLegacyPricingProgramKey(marketingAddress);
 
   return (
     <article className="program-card">
@@ -132,7 +134,23 @@ export default function ProgramBlock({ marketingAddress }: Props) {
         </div>
 
         <div className="program-card__footer">
-          {(program.entry || highestIncome) && (
+          {legacyPricingKey ? (
+            <div className="program-card__price">
+              <span>
+                {t(`home.programs.${legacyPricingKey}.pricing.entryLabel`)}
+              </span>{" "}
+              <span className="program-card__price-amount">
+                {t(`home.programs.${legacyPricingKey}.pricing.entryAmount`)}
+              </span>
+              <span className="program-card__price-separator"> · </span>
+              <span>
+                {t(`home.programs.${legacyPricingKey}.pricing.exitLabel`)}
+              </span>{" "}
+              <span className="program-card__price-amount">
+                {t(`home.programs.${legacyPricingKey}.pricing.exitAmount`)}
+              </span>
+            </div>
+          ) : (program.entry || highestIncome) ? (
             <div className="program-card__price">
               {program.entry && (
                 <>
@@ -167,7 +185,7 @@ export default function ProgramBlock({ marketingAddress }: Props) {
                 </>
               )}
             </div>
-          )}
+          ) : null}
           <Link
             className="program-card__button"
             to={`/programs/${encodeURIComponent(marketingAddress)}/inviter`}
