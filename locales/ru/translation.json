@@ -510,6 +510,8 @@
     "placesBelow_few": "{{formattedCount}} места всего снизу",
     "placesBelow_many": "{{formattedCount}} мест всего снизу",
     "placesBelow_other": "{{formattedCount}} мест всего снизу",
+    "rank": "Ранг",
+    "ranks": { "bronze": "Бронза", "silver": "Серебро", "gold": "Золото", "platinum": "Платина", "sapphire": "Сапфир", "emerald": "Изумруд", "diamond": "Бриллиант" },
     "unlock": "Разблокировать",
     "lock": "Заблокировать",
     "unlockSuccess": "Запрос на разблокировку отправлен. Разблокировка появится скоро; обновите страницу через некоторое время, чтобы увидеть её.",

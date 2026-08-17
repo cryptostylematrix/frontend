@@ -506,6 +506,8 @@
     "placesBelow_few": "{{formattedCount}} місця загалом знизу",
     "placesBelow_many": "{{formattedCount}} місць загалом знизу",
     "placesBelow_other": "{{formattedCount}} місць загалом знизу",
+    "rank": "Ранг",
+    "ranks": { "bronze": "Бронза", "silver": "Срібло", "gold": "Золото", "platinum": "Платина", "sapphire": "Сапфір", "emerald": "Смарагд", "diamond": "Діамант" },
     "unlock": "Розблокувати",
     "lock": "Заблокувати",
     "unlockSuccess": "Запит на розблокування надіслано. Розблокування з’явиться незабаром; онови сторінку трохи пізніше, щоб побачити його.",

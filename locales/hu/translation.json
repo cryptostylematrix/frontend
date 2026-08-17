@@ -500,6 +500,8 @@
     "matrixPlacesCount_other": "{{formattedCount}} hely a mátrixban",
     "placesBelow_one": "{{formattedCount}} hely összesen alatta",
     "placesBelow_other": "{{formattedCount}} hely összesen alatta",
+    "rank": "Rang",
+    "ranks": { "bronze": "Bronz", "silver": "Ezüst", "gold": "Arany", "platinum": "Platina", "sapphire": "Zafír", "emerald": "Smaragd", "diamond": "Gyémánt" },
     "unlock": "Feloldás",
     "lock": "Zárolás",
     "unlockSuccess": "Feloldási kérés elküldve. A feloldás hamarosan megjelenik; frissítsd az oldalt egy kis idő múlva, hogy láthasd.",

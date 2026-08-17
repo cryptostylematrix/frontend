@@ -500,6 +500,8 @@
     "matrixPlacesCount_other": "{{formattedCount}} matrix places",
     "placesBelow_one": "{{formattedCount}} total place below",
     "placesBelow_other": "{{formattedCount}} total places below",
+    "rank": "Rank",
+    "ranks": { "bronze": "Bronze", "silver": "Silver", "gold": "Gold", "platinum": "Platinum", "sapphire": "Sapphire", "emerald": "Emerald", "diamond": "Diamond" },
     "unlock": "Unlock",
     "lock": "Lock",
     "unlockSuccess": "Unlock request sent. The unlock will appear soon; update the page in a while to see it.",

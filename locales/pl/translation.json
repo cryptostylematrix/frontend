@@ -506,6 +506,8 @@
     "placesBelow_few": "{{formattedCount}} miejsca łącznie poniżej",
     "placesBelow_many": "{{formattedCount}} miejsc łącznie poniżej",
     "placesBelow_other": "{{formattedCount}} miejsc łącznie poniżej",
+    "rank": "Ranga",
+    "ranks": { "bronze": "Brąz", "silver": "Srebro", "gold": "Złoto", "platinum": "Platyna", "sapphire": "Szafir", "emerald": "Szmaragd", "diamond": "Diament" },
     "unlock": "Odblokuj",
     "lock": "Zablokuj",
     "unlockSuccess": "Wysłano prośbę o odblokowanie. Odblokowanie pojawi się wkrótce; odśwież stronę za chwilę, aby je zobaczyć.",
