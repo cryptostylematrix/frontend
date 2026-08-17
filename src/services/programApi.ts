@@ -157,6 +157,8 @@ export type StructureStatistics = {
   structure_number: number;
   total_places: number;
   active_places: number;
+  total_profiles: number;
+  active_profiles: number;
   referrals: StructureReferralStatistics;
 };
 

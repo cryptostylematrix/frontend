@@ -174,11 +174,11 @@ export default function ProgramStat() {
       <div className="program-stat__metrics program-stat__metrics--places">
         <div className="program-stat__metric">
           <span>{t("programs.statisticsPage.totalPartners")}</span>
-          <strong>{formatter.format(structure.total_places)}</strong>
+          <strong>{formatter.format(structure.total_profiles)}</strong>
         </div>
         <div className="program-stat__metric program-stat__metric--active">
           <span>{t("programs.statisticsPage.activePartners")}</span>
-          <strong>{formatter.format(structure.active_places)}</strong>
+          <strong>{formatter.format(structure.active_profiles)}</strong>
         </div>
       </div>
 
@@ -201,11 +201,15 @@ export default function ProgramStat() {
           <div className="program-stat__metrics program-stat__metrics--places">
             <div className="program-stat__metric">
               <span>{t("programs.statisticsPage.totalRegistrations")}</span>
-              <strong>{formatter.format(referralStructure.total_places)}</strong>
+              <strong>
+                {formatter.format(referralStructure.total_profiles)}
+              </strong>
             </div>
             <div className="program-stat__metric program-stat__metric--active">
               <span>{t("programs.statisticsPage.activatedPartners")}</span>
-              <strong>{formatter.format(referralStructure.active_places)}</strong>
+              <strong>
+                {formatter.format(referralStructure.active_profiles)}
+              </strong>
             </div>
           </div>
           <div className="program-stat__subsection">
