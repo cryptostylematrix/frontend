@@ -413,6 +413,7 @@
     "referrals": "Құрылым",
     "inviter": "Шақырушы",
     "structures": "Деңгейлер",
+    "matrixes": "Матрицалар",
     "statistics": "Статистика",
     "navigation": "Бағдарлама навигациясы",
     "commandProcessing": "Пәрменіңіз өңделуде...",
@@ -433,13 +434,18 @@
         "system_places": "Жүйелік клондар",
         "cycles": "Циклдер",
         "full_distribution": "100% үлестіру",
-        "activation": "Белсендіру"
+        "activation": "Белсендіру",
+        "reinvest": "Қайта инвестиция",
+        "clones": "Клондар",
+        "structure_management": "Құрылымды басқару",
+        "linear": "Сызықтық",
+        "tetra": "Тетра"
       },
       "entry": "Кіру",
       "entryAmount": "{{amount}}{{currency}}-дан бастап",
       "exit": "Шығу",
       "exitAmount": "{{period}} үшін {{amount}}{{currency}}-ға дейін",
-      "periods": { "cycle": "цикл" }
+      "periods": { "cycle": "цикл", "program": "бағдарлама" }
     }
   },
   "programQueue": {
@@ -469,6 +475,7 @@
     "show": "Көрсету",
     "hide": "Жасыру",
     "structures": "Деңгейлер",
+    "matrixes": "Матрицалар",
     "placesWithTotal": "Орындар (барлығы {{total}})",
     "noPlaces": "Орындар жоқ",
     "systemClones": "Жүйелік клондар",

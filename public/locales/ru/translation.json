@@ -417,6 +417,7 @@
     "referrals": "Структура",
     "inviter": "Куратор",
     "structures": "Уровни",
+    "matrixes": "Матрицы",
     "statistics": "Статистика",
     "navigation": "Навигация программы",
     "commandProcessing": "Ваша команда обрабатывается...",
@@ -439,13 +440,18 @@
         "system_places": "Системные клоны",
         "cycles": "Циклы",
         "full_distribution": "100% распределение",
-        "activation": "Активация"
+        "activation": "Активация",
+        "reinvest": "Реинвест",
+        "clones": "Клоны",
+        "structure_management": "Управление структурой",
+        "linear": "Линейка",
+        "tetra": "Тетра"
       },
       "entry": "Вход",
       "entryAmount": "от {{amount}}{{currency}}",
       "exit": "Выход",
       "exitAmount": "до {{amount}}{{currency}} за {{period}}",
-      "periods": { "cycle": "цикл" }
+      "periods": { "cycle": "цикл", "program": "программу" }
     }
   },
   "programQueue": {
@@ -475,6 +481,7 @@
     "show": "Показать",
     "hide": "Скрыть",
     "structures": "Уровни",
+    "matrixes": "Матрицы",
     "placesWithTotal": "Места (всего {{total}})",
     "noPlaces": "Нет мест",
     "systemClones": "Системные клоны",

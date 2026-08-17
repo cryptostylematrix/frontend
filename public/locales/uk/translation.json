@@ -413,6 +413,7 @@
     "referrals": "Структура",
     "inviter": "Запрошувач",
     "structures": "Рівні",
+    "matrixes": "Матриці",
     "statistics": "Статистика",
     "navigation": "Навігація програми",
     "commandProcessing": "Ваша команда обробляється...",
@@ -435,13 +436,18 @@
         "system_places": "Системні клони",
         "cycles": "Цикли",
         "full_distribution": "100% розподіл",
-        "activation": "Активація"
+        "activation": "Активація",
+        "reinvest": "Реінвест",
+        "clones": "Клони",
+        "structure_management": "Керування структурою",
+        "linear": "Лінійка",
+        "tetra": "Тетра"
       },
       "entry": "Вхід",
       "entryAmount": "від {{amount}}{{currency}}",
       "exit": "Вихід",
       "exitAmount": "до {{amount}}{{currency}} за {{period}}",
-      "periods": { "cycle": "цикл" }
+      "periods": { "cycle": "цикл", "program": "програму" }
     }
   },
   "programQueue": {
@@ -471,6 +477,7 @@
     "show": "Показати",
     "hide": "Сховати",
     "structures": "Рівні",
+    "matrixes": "Матриці",
     "placesWithTotal": "Місця (усього {{total}})",
     "noPlaces": "Немає місць",
     "systemClones": "Системні клони",

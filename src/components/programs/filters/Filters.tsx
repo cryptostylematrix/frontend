@@ -13,6 +13,7 @@ import { useJettonMetadata } from "../../../hooks/useJettonMetadata";
 import {
   getFirstPlace,
   getPurchaseOption,
+  getStructure,
   type PurchaseOption,
 } from "../../../services/programApi";
 import {
@@ -54,10 +55,24 @@ export default function Filters() {
   const [showBuyConfirm, setShowBuyConfirm] = useState(false);
   const [purchaseOption, setPurchaseOption] =
     useState<PurchaseOption | null>(null);
+  const [usesMatrixTerminology, setUsesMatrixTerminology] = useState(false);
 
   useEffect(() => {
     resetAll();
   }, [currentProfile, resetAll]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setUsesMatrixTerminology(false);
+
+    void getStructure(marketingAddress, selectedStructure).then((structure) => {
+      if (!cancelled) setUsesMatrixTerminology((structure?.height ?? 0) > 0);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [marketingAddress, selectedStructure]);
 
   useEffect(() => {
     resetFirstPlaceAndSelectedPlace();
@@ -210,7 +225,9 @@ export default function Filters() {
         <div className="filters-grid">
           <label className="filter-field">
             <span className="filter-label">
-              {t("structure.structures", "Levels")}
+              {usesMatrixTerminology
+                ? t("structure.matrixes", "Matrices")
+                : t("structure.structures", "Levels")}
             </span>
             <select
               className="filter-select"

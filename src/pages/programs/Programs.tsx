@@ -11,6 +11,7 @@ import {
   type Program,
 } from "../../services/programsService";
 import { copyText } from "../../utils/clipboard";
+import { getStructure } from "../../services/programApi";
 import "./programs.css";
 
 const pages = [
@@ -35,6 +36,7 @@ function ProgramsContent() {
   const { t } = useTranslation();
   const { marketingAddress } = useProgramContext();
   const [program, setProgram] = useState<Program | null>(null);
+  const [usesMatrixTerminology, setUsesMatrixTerminology] = useState(false);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -43,6 +45,19 @@ function ProgramsContent() {
 
     void loadProgramMetadata(marketingAddress).then((metadata) => {
       if (!cancelled) setProgram(metadata);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [marketingAddress]);
+
+  useEffect(() => {
+    let cancelled = false;
+    setUsesMatrixTerminology(false);
+
+    void getStructure(marketingAddress, 1).then((structure) => {
+      if (!cancelled) setUsesMatrixTerminology((structure?.height ?? 0) > 0);
     });
 
     return () => {
@@ -120,7 +135,9 @@ function ProgramsContent() {
                 to={page.path}
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
-                {t(`programs.${page.labelKey}`)}
+                {page.path === "structures" && usesMatrixTerminology
+                  ? t("programs.matrixes", "Matrices")
+                  : t(`programs.${page.labelKey}`)}
               </NavLink>
             </li>
           ))}

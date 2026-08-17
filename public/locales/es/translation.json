@@ -413,6 +413,7 @@
     "referrals": "Estructura",
     "inviter": "Invitador",
     "structures": "Niveles",
+    "matrixes": "Matrices",
     "statistics": "Estadísticas",
     "navigation": "Navegación del programa",
     "commandProcessing": "Tu comando se está procesando...",
@@ -433,13 +434,18 @@
         "system_places": "Clones del sistema",
         "cycles": "Ciclos",
         "full_distribution": "Distribución del 100%",
-        "activation": "Activación"
+        "activation": "Activación",
+        "reinvest": "Reinversión",
+        "clones": "Clones",
+        "structure_management": "Gestión de estructura",
+        "linear": "Lineal",
+        "tetra": "Tetra"
       },
       "entry": "Entrada",
       "entryAmount": "desde {{currency}}{{amount}}",
       "exit": "Salida",
       "exitAmount": "hasta {{currency}}{{amount}} por {{period}}",
-      "periods": { "cycle": "ciclo" }
+      "periods": { "cycle": "ciclo", "program": "programa" }
     }
   },
   "programQueue": {
@@ -469,6 +475,7 @@
     "show": "Mostrar",
     "hide": "Ocultar",
     "structures": "Niveles",
+    "matrixes": "Matrices",
     "placesWithTotal": "Lugares (total {{total}})",
     "noPlaces": "Sin lugares",
     "systemClones": "Clones del sistema",
