@@ -11,7 +11,7 @@ export const MULTI_MARKETING_PROGRAM_ADDRESS =
 export const NEO_MARKETING_PROGRAM_ADDRESS =
   "EQCQUF6o3Z_SzFD5m9aR6uGbIgaujaUcHTPX9oghh8O4lMYh";
 const SHOW_LEGACY_PROGRAMS = false;
-const SHOW_MULTI_AND_NEO = false;
+const SHOW_MULTI_AND_NEO = true;
 
 export default function AvailablePrograms() {
   const { t } = useTranslation();
