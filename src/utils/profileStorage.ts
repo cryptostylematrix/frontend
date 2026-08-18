@@ -1,7 +1,7 @@
 import { ErrorCode } from "../errors/ErrorCodes";
 
 /**
- * Represents a locally stored user profile tied to a specific wallet.
+ * Represents a wallet profile loaded from the UI profiles API.
  */
 export interface Profile {
   address: string;
@@ -9,71 +9,80 @@ export interface Profile {
   login: string;
   valid: boolean;
   mode: "owner" | "preview";
+  owned: boolean;
   imageUrl?: string;
   firstName?: string;
   lastName?: string;
   tgUsername?: string;
 }
 
-const STORAGE_PREFIX = "profiles_";
+export type LegacyProfileIntent = {
+  login: string;
+  mode: "owner" | "preview";
+};
 
-/**
- * Safely parses a JSON string into a Profile[].
- * Returns [] if data is invalid or parsing fails.
- */
-function safeParseProfiles(data: string | null): Profile[] {
-  if (!data) return [];
-  try {
-    const parsed = JSON.parse(data);
-    if (Array.isArray(parsed)) {
-      return parsed
-        .filter((p) => typeof p.login === "string" && !!p.login)
-        .map((p) => ({
-          ...p,
-          mode: p.mode === "preview" ? "preview" : "owner",
-        }));
-    }
-    return [];
-  } catch {
-    console.warn("⚠️ Corrupted profile storage detected. Clearing entry.");
-    return [];
-  }
-}
+export type LegacyProfileStorage = {
+  exists: boolean;
+  profiles: LegacyProfileIntent[];
+};
 
-/**
- * Retrieves all saved profiles for a specific wallet.
- */
-export const getProfiles = (wallet: string): Profile[] => {
-  if (!wallet) return [];
+const LEGACY_PROFILES_KEY = (wallet: string) => `profiles_${wallet}`;
+
+export const getLegacyProfileStorage = (
+  wallet: string,
+): LegacyProfileStorage => {
+  if (!wallet) return { exists: false, profiles: [] };
+
   try {
-    const stored = localStorage.getItem(STORAGE_PREFIX + wallet);
-    return safeParseProfiles(stored);
-  } catch (err) {
-    console.error(`❌ ${ErrorCode.LOCAL_STORAGE_READ_FAILED}:`, err);
-    return [];
+    const value = localStorage.getItem(LEGACY_PROFILES_KEY(wallet));
+    if (value === null) return { exists: false, profiles: [] };
+
+    const parsed: unknown = JSON.parse(value);
+    if (!Array.isArray(parsed)) return { exists: true, profiles: [] };
+
+    const profiles = Array.from(
+      new Map(
+        parsed
+          .filter(
+            (profile): profile is { login: string; mode?: unknown } =>
+              typeof profile === "object" &&
+              profile !== null &&
+              "login" in profile &&
+              typeof profile.login === "string" &&
+              profile.login.trim().length > 0,
+          )
+          .map((profile) => {
+            const intent: LegacyProfileIntent = {
+              login: profile.login.trim().toLowerCase(),
+              mode: profile.mode === "preview" ? "preview" : "owner",
+            };
+            return [intent.login, intent] as const;
+          }),
+      ).values(),
+    );
+
+    return { exists: true, profiles };
+  } catch (error) {
+    console.error(`❌ ${ErrorCode.LOCAL_STORAGE_READ_FAILED}:`, error);
+    return { exists: true, profiles: [] };
   }
 };
 
-/**
- * Saves the provided list of profiles for the given wallet.
- */
-export const saveProfiles = (wallet: string, profiles: Profile[]): void => {
+export const saveLegacyProfileStorage = (
+  wallet: string,
+  profiles: LegacyProfileIntent[],
+): void => {
   if (!wallet) return;
-  try {
-    localStorage.setItem(STORAGE_PREFIX + wallet, JSON.stringify(profiles));
-  } catch (err) {
-    console.error(`❌ ${ErrorCode.LOCAL_STORAGE_WRITE_FAILED}:`, err);
-  }
-};
 
-/**
- * Clears all profiles associated with a specific wallet.
- */
-export const clearProfiles = (wallet: string): void => {
   try {
-    localStorage.removeItem(STORAGE_PREFIX + wallet);
-  } catch (err) {
-    console.error(`❌ ${ErrorCode.LOCAL_STORAGE_CLEAR_FAILED}:`, err);
+    const key = LEGACY_PROFILES_KEY(wallet);
+    if (profiles.length > 0) {
+      localStorage.setItem(key, JSON.stringify(profiles));
+    } else {
+      localStorage.removeItem(key);
+    }
+  } catch (error) {
+    console.error(`❌ ${ErrorCode.LOCAL_STORAGE_WRITE_FAILED}:`, error);
   }
 };
 

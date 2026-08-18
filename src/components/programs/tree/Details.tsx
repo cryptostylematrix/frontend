@@ -482,7 +482,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
               {t("structure.profileLabel", "Profile")}: {" "}
               <strong>{currentProfile?.login ?? ""}</strong>
             </p>
-            {currentProfile?.mode === "preview" && (
+            {(currentProfile?.mode === "preview" || currentProfile?.owned === false) && (
               <p className="confirm-modal__warning">
                 {t("structure.previewCommandWarning", {
                   login: currentProfile.login,

@@ -292,7 +292,7 @@ export default function Filters() {
               {t("structure.profileLabel", "Profile")}: {" "}
               <strong>{currentProfile?.login ?? ""}</strong>
             </p>
-            {currentProfile?.mode === "preview" && (
+            {(currentProfile?.mode === "preview" || currentProfile?.owned === false) && (
               <p className="confirm-modal__warning">
                 {t("structure.previewPurchaseWarning", {
                   login: currentProfile.login,

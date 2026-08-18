@@ -91,11 +91,19 @@ export default function UpdateProfile() {
     setLoading(false);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     if (!wallet || !currentProfile) return;
 
-    removeProfile(wallet, currentProfile.login);
-    setMessage({ type: "success", text: t("profile.removed") });
+    setLoading(true);
+    setErrorCodes(null);
+    const result = await removeProfile(wallet, currentProfile.login);
+    if (result.success) {
+      setMessage({ type: "success", text: t("profile.removed") });
+    } else {
+      setMessage(null);
+      setErrorCodes(result.errors);
+    }
+    setLoading(false);
   };
 
   return (
@@ -199,7 +207,7 @@ export default function UpdateProfile() {
         onCancel={() => setShowLogoutConfirm(false)}
         onConfirm={() => {
           setShowLogoutConfirm(false);
-          handleLogout();
+          void handleLogout();
         }}
       />
     </div>

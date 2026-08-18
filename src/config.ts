@@ -3,6 +3,7 @@ const defaultMatrixApiHost = "https://cs.apihub160.cc";
 const defaultContractsApiHost = defaultMatrixApiHost;
 const defaultMarketingApiHost = defaultMatrixApiHost;
 const defaultProgramApiHost = defaultMatrixApiHost;
+const defaultUiApiHost = defaultMatrixApiHost;
 const defaultNeoMarketingAddr = "EQAc4cKpE4yQpsadUsem6r30HHjjrmmtT13pPsRpvtLSEUHi";
 const defaultTonEndpoint = "https://toncenter.com/api/v2/jsonRPC";
 const seriesItemBaseCodeHex = "b5ee9c724101060100a3000114ff00f4a413f4bcf2c80b01020162020300ded020c700915be001d0d3030171b0915be0fa4030ed44d0fa40d31fd31fd15b02d31f0101d33f011230208210a11cdbe3ba8e1e3002c705f2e191d307d4d1218020b0f2d190821005f5e10072fb0201fb00e0821053c57870ba9e02c705f2e191d4d4d101fb04ed54e05f03840ff2f00201200405000bbe0c838b81040021bf16d76a2687d20698fe98fe8b82a9036c7dd92240";
@@ -22,6 +23,10 @@ export const appConfig = {
   programApi: {
     host: (import.meta.env.VITE_PROGRAM_API_HOST as string | undefined) ?? defaultProgramApiHost,
     defaultApiHost: defaultProgramApiHost,
+  },
+  uiApi: {
+    host: (import.meta.env.VITE_UI_API_HOST as string | undefined) ?? defaultUiApiHost,
+    defaultApiHost: defaultUiApiHost,
   },
   ton: {
     endpoint: (import.meta.env.VITE_TON_ENDPOINT as string | undefined) ?? defaultTonEndpoint,

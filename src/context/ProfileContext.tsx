@@ -1,14 +1,16 @@
 import React, {
   createContext,
-  useContext,
-  useState,
-  useEffect,
   useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
 } from "react";
+import type { TonConnectUI } from "@tonconnect/ui-react";
 import {
-  getProfiles,
-  saveProfiles,
+  getLegacyProfileStorage,
   getCurrentProfileLogin,
+  saveLegacyProfileStorage,
   saveCurrentProfileLogin,
   type Profile,
 } from "../utils/profileStorage";
@@ -17,26 +19,31 @@ import {
   createProfile as createProfileService,
   type ProfileResult,
 } from "../services/profileService";
-import { getNftAddrByLogin, getProfileNftData } from "../services/contractsApi";
+import {
+  addProfileIntent,
+  checkWalletProfiles,
+  getWalletProfiles,
+  removeProfileIntent,
+  type WalletProfileResponse,
+} from "../services/uiProfileApi";
 import { ErrorCode } from "../errors/ErrorCodes";
-import { TonConnectUI } from "@tonconnect/ui-react";
-import { Address } from "@ton/core";
-import { toLower } from "../services/nftContentHelper";
+
+type ProfileOperationResult =
+  | { success: true }
+  | { success: false; errors: ErrorCode[] };
 
 interface ProfileContextType {
   profiles: Profile[];
   currentProfile: Profile | null;
   isChecking: boolean;
-
   createProfile: (
     wallet: string,
     login: string,
     imageUrl?: string,
     firstName?: string,
     lastName?: string,
-    tgUsername?: string
+    tgUsername?: string,
   ) => Promise<ProfileResult>;
-
   addProfile: (
     wallet: string,
     login: string,
@@ -44,9 +51,12 @@ interface ProfileContextType {
   ) => Promise<AddProfileResult>;
   updateCurrentProfile: (
     wallet: string,
-    updates: Partial<Profile>
+    updates: Partial<Profile>,
   ) => Promise<ProfileResult>;
-  removeProfile: (wallet: string, login: string) => void;
+  removeProfile: (
+    wallet: string,
+    login: string,
+  ) => Promise<ProfileOperationResult>;
   setCurrentProfile: (profile: Profile | null) => void;
 }
 
@@ -60,58 +70,30 @@ export type AddProfileResult =
       previewAvailable: true;
     };
 
-type FetchedProfileResult =
-  | {
-      success: true;
-      data: Omit<Profile, "valid">;
-    }
-  | { success: false; errors: ErrorCode[] };
+const knownErrorCodes = new Set<string>(Object.values(ErrorCode));
 
-const fetchProfile = async (
-  wallet: string,
-  login: string,
-): Promise<FetchedProfileResult> => {
-  if (!wallet) {
-    return { success: false, errors: [ErrorCode.WALLET_NOT_CONNECTED] };
-  }
-  const trimmedLogin = login.trim();
-  if (!trimmedLogin) {
-    return { success: false, errors: [ErrorCode.INVALID_LOGIN] };
-  }
-
-  try {
-    const nftAddr = await getNftAddrByLogin(trimmedLogin.toLowerCase());
-    const address = nftAddr?.addr;
-    if (!address) return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
-
-    const apiData = await getProfileNftData(address);
-    if (!apiData?.content) return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
-
-    let mode: Profile["mode"] = "preview";
-    if (apiData.owner_addr) {
-      const walletRaw = Address.parse(wallet).toRawString();
-      const ownerRaw = Address.parse(apiData.owner_addr).toRawString();
-      if (walletRaw === ownerRaw) mode = "owner";
-    }
-
-    return {
-      success: true,
-      data: {
-        address,
-        wallet: wallet.trim(),
-        mode,
-        login: toLower(login)!, // apiData.content.login,
-        imageUrl: apiData.content.image_url ?? "",
-        firstName: apiData.content.first_name ?? undefined,
-        lastName: apiData.content.last_name ?? undefined,
-        tgUsername: apiData.content.tg_username ?? undefined,
-      },
-    };
-  } catch (err) {
-    console.error("fetchProfile error:", err);
-    return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
-  }
+const normalizeErrors = (errors: string[]): ErrorCode[] => {
+  const normalized = errors.map((error) =>
+    knownErrorCodes.has(error) ? (error as ErrorCode) : ErrorCode.UNEXPECTED,
+  );
+  return normalized.length > 0 ? normalized : [ErrorCode.UNEXPECTED];
 };
+
+const toProfile = (response: WalletProfileResponse): Profile => ({
+  address: response.profile_addr,
+  wallet: response.wallet_addr,
+  login: response.login.trim().toLowerCase(),
+  valid: true,
+  mode: response.mode,
+  owned: response.owned,
+  imageUrl: response.content?.image_url ?? "",
+  firstName: response.content?.first_name ?? undefined,
+  lastName: response.content?.last_name ?? undefined,
+  tgUsername: response.content?.tg_username ?? undefined,
+});
+
+const retryDelay = (milliseconds: number) =>
+  new Promise<void>((resolve) => window.setTimeout(resolve, milliseconds));
 
 export const ProfileProvider: React.FC<{
   wallet: string;
@@ -121,143 +103,271 @@ export const ProfileProvider: React.FC<{
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
   const [isChecking, setIsChecking] = useState(false);
+  const activeWalletRef = useRef(wallet);
+  activeWalletRef.current = wallet;
 
-  /**
-   * Refresh stored profiles and validate via service
-   */
-  const refreshProfiles = useCallback(async (wallet: string) => {
-    if (!wallet) {
-      setProfiles([]);
-      setCurrentProfile(null);
-      return;
-    }
+  const applyServerProfiles = useCallback(
+    (
+      walletAddress: string,
+      responses: WalletProfileResponse[],
+      preferredLogin?: string,
+    ) => {
+      if (activeWalletRef.current !== walletAddress) {
+        return { profiles: [], currentProfile: null };
+      }
 
-    const stored = getProfiles(wallet);
-    if (stored.length === 0) {
-      setProfiles([]);
-      setCurrentProfile(null);
-      return;
-    }
+      const nextProfiles = responses.map(toProfile);
+      const selectedLogin = (
+        preferredLogin ?? getCurrentProfileLogin(walletAddress) ?? ""
+      )
+        .trim()
+        .toLowerCase();
+      const nextCurrent =
+        nextProfiles.find((profile) => profile.login === selectedLogin) ??
+        nextProfiles[0] ??
+        null;
 
-    setIsChecking(true);
+      setProfiles(nextProfiles);
+      setCurrentProfile(nextCurrent);
+      saveCurrentProfileLogin(walletAddress, nextCurrent?.login ?? null);
+      return { profiles: nextProfiles, currentProfile: nextCurrent };
+    },
+    [],
+  );
 
-    const validated = await Promise.all(
-      stored.map(async (p) => {
-        const result = await fetchProfile(wallet, p.login);
-        return result.success ? { ...p, valid: true, ...result.data } : { ...p, valid: false };
-      }),
-    );
+  const refreshProfiles = useCallback(
+    async (walletAddress: string) => {
+      if (!walletAddress.trim()) {
+        setProfiles([]);
+        setCurrentProfile(null);
+        setIsChecking(false);
+        return;
+      }
 
-    saveProfiles(wallet, validated);
-    setProfiles(validated);
+      setIsChecking(true);
 
-    // Try to restore previously selected profile
-    const savedLogin = getCurrentProfileLogin(wallet);
-    const matched = validated.find((p) => p.login === savedLogin && p.valid);
-    const firstValid = validated.find((p) => p.valid);
-    const nextProfile = matched || firstValid || validated[0] || null;
+      try {
+        const legacyStorage = getLegacyProfileStorage(walletAddress);
+        if (legacyStorage.exists) {
+          const failedProfiles = [];
 
-    setCurrentProfile(nextProfile);
-    setIsChecking(false);
-  }, []);
+          for (const legacyProfile of legacyStorage.profiles) {
+            try {
+              let operation = await addProfileIntent(
+                walletAddress,
+                legacyProfile.login,
+                legacyProfile.mode,
+              );
 
-  /**
-   * Add an existing profile
-   */
+              if (
+                !operation.success &&
+                legacyProfile.mode === "owner" &&
+                operation.available_modes.includes("preview")
+              ) {
+                operation = await addProfileIntent(
+                  walletAddress,
+                  legacyProfile.login,
+                  "preview",
+                );
+              }
+
+              if (!operation.success) failedProfiles.push(legacyProfile);
+            } catch (migrationError) {
+              console.error(
+                `Failed to migrate profile ${legacyProfile.login}`,
+                migrationError,
+              );
+              failedProfiles.push(legacyProfile);
+            }
+          }
+
+          saveLegacyProfileStorage(walletAddress, failedProfiles);
+        }
+
+        const checked = await checkWalletProfiles(walletAddress);
+        if (activeWalletRef.current !== walletAddress) return;
+        applyServerProfiles(walletAddress, checked.profiles);
+        if (!checked.success) {
+          console.warn(
+            "Some wallet profiles could not be refreshed",
+            checked.errors,
+          );
+        }
+      } catch (checkError) {
+        console.error("Failed to check wallet profiles", checkError);
+        setProfiles([]);
+        setCurrentProfile(null);
+      } finally {
+        if (activeWalletRef.current === walletAddress) setIsChecking(false);
+      }
+    },
+    [applyServerProfiles],
+  );
+
   const addProfile = useCallback(
     async (
-      wallet: string,
+      walletAddress: string,
       login: string,
       options: { allowPreview?: boolean } = {},
     ): Promise<AddProfileResult> => {
-      const result = await fetchProfile(wallet, login);
-
-      if (!result.success) return result;
-      if (result.data.mode === "preview" && !options.allowPreview) {
+      if (!walletAddress.trim()) {
         return {
           success: false,
-          errors: [ErrorCode.CONTRACT_DOES_NOT_BELONG],
-          previewAvailable: true,
+          errors: [ErrorCode.WALLET_NOT_CONNECTED],
         };
       }
 
-      const profile: Profile = { ...result.data, wallet, valid: true };
-      const updated = [
-        ...profiles.filter((p) => p.login !== profile.login),
-        profile,
-      ];
-      saveProfiles(wallet, updated);
-      setProfiles(updated);
-      setCurrentProfile(profile);
-      saveCurrentProfileLogin(wallet, profile.login);
+      const normalizedLogin = login.trim().toLowerCase();
+      if (!normalizedLogin) {
+        return { success: false, errors: [ErrorCode.INVALID_LOGIN] };
+      }
 
-      return { success: true, data: result.data };
+      try {
+        const operation = await addProfileIntent(
+          walletAddress,
+          normalizedLogin,
+          options.allowPreview ? "preview" : "owner",
+        );
+
+        if (!operation.success) {
+          const errors = normalizeErrors(operation.errors);
+          if (
+            !options.allowPreview &&
+            operation.available_modes.includes("preview")
+          ) {
+            return { success: false, errors, previewAvailable: true };
+          }
+          return { success: false, errors };
+        }
+
+        const serverProfiles = await getWalletProfiles(walletAddress);
+        const { currentProfile: addedProfile } = applyServerProfiles(
+          walletAddress,
+          serverProfiles,
+          normalizedLogin,
+        );
+        if (!addedProfile || addedProfile.login !== normalizedLogin) {
+          return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
+        }
+
+        return {
+          success: true,
+          data: {
+            address: addedProfile.address,
+            wallet: addedProfile.wallet,
+            login: addedProfile.login,
+            imageUrl: addedProfile.imageUrl,
+            firstName: addedProfile.firstName,
+            lastName: addedProfile.lastName,
+            tgUsername: addedProfile.tgUsername,
+          },
+        };
+      } catch (error) {
+        console.error("Failed to add profile intent", error);
+        return { success: false, errors: [ErrorCode.NETWORK_ERROR] };
+      }
     },
-    [profiles]
+    [applyServerProfiles],
   );
 
-  /**
-   * Create a new profile
-   */
+  const persistCreatedProfile = useCallback(
+    async (walletAddress: string, login: string) => {
+      const delays = [0, 2_000, 4_000, 8_000, 16_000, 32_000];
+
+      for (const delay of delays) {
+        if (delay > 0) await retryDelay(delay);
+        try {
+          const operation = await addProfileIntent(
+            walletAddress,
+            login,
+            "owner",
+          );
+          if (operation.success) {
+            const serverProfiles = await getWalletProfiles(walletAddress);
+            applyServerProfiles(walletAddress, serverProfiles, login);
+            return;
+          }
+
+          const retryableErrors = new Set<string>([
+            ErrorCode.PROFILE_NOT_FOUND,
+            ErrorCode.CONTRACT_REQUEST_FAILED,
+            ErrorCode.CONTRACT_DOES_NOT_BELONG,
+          ]);
+          const retryable = operation.errors.some((error) =>
+            retryableErrors.has(error),
+          );
+          if (!retryable) break;
+        } catch (error) {
+          console.error("Failed to persist newly created profile intent", error);
+        }
+      }
+
+      console.error("Newly created profile intent could not be persisted", {
+        walletAddress,
+        login,
+      });
+    },
+    [applyServerProfiles],
+  );
+
   const createProfile = useCallback(
     async (
-      wallet: string,
+      walletAddress: string,
       login: string,
       imageUrl?: string,
       firstName?: string,
       lastName?: string,
-      tgUsername?: string
+      tgUsername?: string,
     ): Promise<ProfileResult> => {
       const result = await createProfileService(
         tonConnectUI,
-        wallet,
+        walletAddress,
         login,
         imageUrl,
         firstName,
         lastName,
-        tgUsername
+        tgUsername,
       );
       if (!result.success) return result;
 
       const profile: Profile = {
         ...result.data,
-        wallet,
+        wallet: walletAddress,
         valid: true,
         mode: "owner",
+        owned: true,
       };
-      const updated = [
-        ...profiles.filter((p) => p.login !== profile.login),
+      setProfiles((previous) => [
+        ...previous.filter((item) => item.login !== profile.login),
         profile,
-      ];
-      saveProfiles(wallet, updated);
-      setProfiles(updated);
+      ]);
       setCurrentProfile(profile);
-      saveCurrentProfileLogin(wallet, profile.login);
+      saveCurrentProfileLogin(walletAddress, profile.login);
 
+      void persistCreatedProfile(walletAddress, profile.login);
       return result;
     },
-    [profiles]
+    [persistCreatedProfile, tonConnectUI],
   );
 
-  /**
-   * Update current profile
-   */
   const updateCurrentProfile = useCallback(
-    async (wallet: string, updates: Partial<Profile>): Promise<ProfileResult> => {
+    async (
+      walletAddress: string,
+      updates: Partial<Profile>,
+    ): Promise<ProfileResult> => {
       if (!currentProfile) {
         return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
       }
 
       const result = await updateProfile(
         tonConnectUI,
-        wallet,
+        walletAddress,
         currentProfile.login,
         updates.imageUrl,
         updates.firstName,
         updates.lastName,
-        updates.tgUsername
+        updates.tgUsername,
       );
-
       if (!result.success) return result;
 
       const updatedProfile: Profile = {
@@ -265,51 +375,56 @@ export const ProfileProvider: React.FC<{
         ...updates,
         valid: true,
       };
-
-      setProfiles((prev) => {
-        const next = prev.map((p) =>
-          p.login === updatedProfile.login ? updatedProfile : p
-        );
-        saveProfiles(wallet, next);
-        return next;
-      });
-
+      setProfiles((previous) =>
+        previous.map((profile) =>
+          profile.login === updatedProfile.login ? updatedProfile : profile,
+        ),
+      );
       setCurrentProfile(updatedProfile);
-      saveCurrentProfileLogin(wallet, updatedProfile.login);
-
+      saveCurrentProfileLogin(walletAddress, updatedProfile.login);
       return result;
     },
-    [currentProfile]
+    [currentProfile, tonConnectUI],
   );
 
-  /**
-   * Remove profile
-   */
-  const removeProfile = useCallback((wallet: string, login: string) => {
-    if (!wallet) return;
+  const removeProfile = useCallback(
+    async (
+      walletAddress: string,
+      login: string,
+    ): Promise<ProfileOperationResult> => {
+      if (!walletAddress.trim()) {
+        return {
+          success: false,
+          errors: [ErrorCode.WALLET_NOT_CONNECTED],
+        };
+      }
 
-    setProfiles((prev) => {
-      const updated = prev.filter((p) => p.login !== login);
-      saveProfiles(wallet, updated);
+      try {
+        const operation = await removeProfileIntent(walletAddress, login);
+        if (!operation.success) {
+          return { success: false, errors: normalizeErrors(operation.errors) };
+        }
 
-      const next = updated.find((p) => p.valid) || updated[0] || null;
-      setCurrentProfile(next);
-      saveCurrentProfileLogin(wallet, next ? next.login : null);
+        const nextProfiles = profiles.filter(
+          (profile) => profile.login !== login.trim().toLowerCase(),
+        );
+        const nextCurrent = nextProfiles[0] ?? null;
+        setProfiles(nextProfiles);
+        setCurrentProfile(nextCurrent);
+        saveCurrentProfileLogin(walletAddress, nextCurrent?.login ?? null);
+        return { success: true };
+      } catch (error) {
+        console.error("Failed to remove profile intent", error);
+        return { success: false, errors: [ErrorCode.NETWORK_ERROR] };
+      }
+    },
+    [profiles],
+  );
 
-      return updated;
-    });
-  }, []);
-
-  /**
-   * Refresh when wallet changes
-   */
   useEffect(() => {
-    refreshProfiles(wallet);
+    void refreshProfiles(wallet);
   }, [wallet, refreshProfiles]);
 
-  /**
-   * Context value
-   */
   const contextValue: ProfileContextType = {
     profiles,
     currentProfile,
@@ -320,7 +435,7 @@ export const ProfileProvider: React.FC<{
     removeProfile,
     setCurrentProfile: (profile) => {
       setCurrentProfile(profile);
-      saveCurrentProfileLogin(wallet, profile ? profile.login : null);
+      saveCurrentProfileLogin(wallet, profile?.login ?? null);
     },
   };
 
@@ -331,13 +446,10 @@ export const ProfileProvider: React.FC<{
   );
 };
 
-/**
- * Safe consumer hook
- */
 export const useProfileContext = (): ProfileContextType => {
-  const ctx = useContext(ProfileContext);
-  if (!ctx) {
+  const context = useContext(ProfileContext);
+  if (!context) {
     throw new Error("useProfileContext must be used within a ProfileProvider");
   }
-  return ctx;
+  return context;
 };

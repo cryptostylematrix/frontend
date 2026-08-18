@@ -71,7 +71,7 @@ const Profiles: React.FC = () => {
         >
           {currentProfile?.login || t("profile.select")}
         </span>
-        {currentProfile?.mode === "preview" && (
+        {(currentProfile?.mode === "preview" || currentProfile?.owned === false) && (
           <span className="profile-preview-badge">
             {t("profile.preview_badge", "Preview")}
           </span>
@@ -94,7 +94,7 @@ const Profiles: React.FC = () => {
                   <span className="profile-login" title={p.login}>
                     {p.login}
                   </span>
-                  {p.mode === "preview" && (
+                  {(p.mode === "preview" || !p.owned) && (
                     <span className="profile-preview-badge">
                       {t("profile.preview_badge", "Preview")}
                     </span>

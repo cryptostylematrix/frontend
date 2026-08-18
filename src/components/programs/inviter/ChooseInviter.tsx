@@ -291,7 +291,7 @@ export default function ChooseInviter({ onInviterChosen }: Props) {
                 <strong>{pendingInviter.login}</strong>
               </p>
             )}
-            {currentProfile?.mode === "preview" && (
+            {(currentProfile?.mode === "preview" || currentProfile?.owned === false) && (
               <p className="confirm-modal__warning">
                 {t("structure.previewCommandWarning", {
                   login: currentProfile.login,
