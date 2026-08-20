@@ -58,12 +58,40 @@ export type ProgramPosGroupV1 = {
   weight: number;
 };
 
+export type ProgramPositionOperation =
+  | "buy_place"
+  | "buy_first_place"
+  | "buy_system_place"
+  | "create_clone"
+  | "create_reinvest";
+
+export type ProgramPositionGroup = ProgramPosGroupV1 & {
+  profiled_places_prioritized?: boolean;
+  depth_spread?: number;
+};
+
+export type ProgramPositionConfig = {
+  root: string;
+  relation: string;
+  groups: ProgramPositionGroup[];
+};
+
 export type ProgramPosAlgoV1 = {
-  v: number;
+  v: 1;
   root: string;
   groups: ProgramPosGroupV1[];
   relation: string;
 };
+
+export type ProgramPosAlgoV2 = {
+  v: 2;
+  default: ProgramPositionConfig;
+  operations?: Partial<
+    Record<ProgramPositionOperation, ProgramPositionConfig>
+  >;
+};
+
+export type ProgramPosAlgo = ProgramPosAlgoV1 | ProgramPosAlgoV2;
 
 export type ProgramStructure = {
   marketing_addr: string;
@@ -73,7 +101,7 @@ export type ProgramStructure = {
   height: number;
   display_height: number;
   prev_required: boolean;
-  pos_algo: ProgramPosAlgoV1;
+  pos_algo: ProgramPosAlgo;
 };
 
 type ProgramTreeNodeBase = {
@@ -230,6 +258,7 @@ export interface ProgramApi {
     marketingAddress: string,
     structureNumber: number,
     profileAddress: string,
+    operation?: ProgramPositionOperation,
   ) => Promise<NextPosResponse | null>;
   getPurchaseOption: (
     marketingAddress: string,
@@ -582,6 +611,7 @@ export async function getNextPos(
   marketingAddress: string,
   structureNumber: number,
   profileAddress: string,
+  operation?: ProgramPositionOperation,
 ): Promise<NextPosResponse | null> {
   const normalizedMarketingAddress = marketingAddress.trim();
   const normalizedProfileAddress = profileAddress.trim();
@@ -599,7 +629,10 @@ export async function getNextPos(
     buildUrl(
       normalizedMarketingAddress,
       `structures/${structureNumber}/next-pos`,
-      { profile_addr: normalizedProfileAddress },
+      {
+        profile_addr: normalizedProfileAddress,
+        operation,
+      },
     ),
   );
 }
