@@ -74,7 +74,6 @@
     "home_page": "Home",
     "profile_page": "Profilo",
     "finance_page": "Finanza",
-    "multi_page": "Multi",
     "programs_page": "Programmi",
     "neo_page": "Neo"
   },
@@ -172,117 +171,6 @@
     "systemPlaceDescription": "Registrazione sotto un posto di sistema per la costruzione autonoma del team",
     "confirmChooseTitle": "Conferma selezione referente",
     "confirmChoosePopular": "Sei sicuro di voler scegliere questo referente?"
-  },
-  "multi": {
-    "title": "Multi",
-    "inviter_link": "Invitatore",
-    "structure_link": "Struttura",
-    "matrixes_link": "Matrici",
-    "marketing_link": "Marketing",
-    "stat_link": "Statistiche",
-    "marketing": {
-      "title": "Marketing",
-      "pdfTitle": "Presentazione PDF",
-      "pdfDescription": "Visualizza il materiale nella tua lingua.",
-      "download": "Scarica PDF",
-      "view": "Apri PDF",
-      "videoTitle": "Video panoramica",
-      "videoDescription": "Guarda l'overview marketing su YouTube.",
-      "watch": "Guarda il video"
-    },
-    "structure": {
-      "breadcrumbsTitle": "Breadcrumb",
-      "breadcrumbsPlaceholder": "I breadcrumb appariranno qui.",
-      "searchTitle": "Cerca per login",
-      "searchPlaceholder": "Inserisci login",
-      "searchButton": "Cerca",
-      "treeTitle": "Struttura",
-      "treePlaceholder": "La vista ad albero apparirà qui.",
-      "created": "Creato",
-      "curator": "Curatore",
-      "referrals": "Referenze",
-      "loadMore": "Carica altro",
-      "notFound": "Invito per il login non trovato.",
-      "loading": "Caricamento...",
-      "expand": "Espandi",
-      "collapse": "Comprimi"
-    },
-    "inviter": {
-      "title": "Scegli un referente",
-      "loginLabel": "Login referente",
-      "loginPlaceholder": "Inserisci il login del referente",
-      "submit": "Scegli referente",
-      "success": "Referente scelto. Gli aggiornamenti appariranno presto, aggiorna la pagina più tardi.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Registrazione sotto un posto di sistema per la costruzione autonoma del team",
-      "confirmChooseTitle": "Conferma selezione referente",
-      "confirmChoosePopular": "Sei sicuro di voler scegliere questo referente?"
-    }
-  },
-  "multiMatrix": {
-    "filters": {
-      "title": "Filtri",
-      "show": "Mostra",
-      "hide": "Nascondi",
-      "matrixes": "Matrici",
-      "places": "Posti",
-      "placesWithTotal": "Posti (totale {{total}})",
-      "noPlaces": "Nessun posto",
-      "placeOption": "{{place}}",
-      "searchByLogin": "Cerca",
-      "searchPlaceholder": "login",
-      "locks": "Bloccaggi",
-      "noLocks": "Nessun bloccaggio",
-      "left": "sinistra",
-      "right": "destra",
-      "lockOption": "{{lock}}",
-      "buyPlace": "Compra un nuovo posto ({{price}} TON)",
-      "confirmTitle": "Conferma acquisto",
-      "confirmLockTitle": "Conferma blocco",
-      "confirmUnlockTitle": "Conferma sblocco",
-      "confirmBuy": "Sei sicuro?",
-      "profileLabel": "Profilo",
-      "buySuccess": "Il nuovo posto apparirà presto nell'elenco.",
-      "buyFail": "Errore",
-      "loadMore": "Carica altro",
-      "nextPos": "Prossima pos",
-      "updatePage": "Aggiorna pagina",
-      "clone": "clone",
-      "prevMatrixRequired": "Serve prima un posto nella matrice precedente per comprare qui.",
-      "noPlacesInMatrix": "Serve un posto in questa matrice per eseguire questa azione.",
-      "programNotConfirmed": "Scegli prima un referente.",
-      "inviterNotInProgram": "Questo referente non partecipa ancora al programma."
-    },
-    "queue": {
-      "title": "Coda attività",
-      "refreshIn": "I dati si aggiorneranno tra",
-      "seconds": "secondi",
-      "refreshNow": "Aggiorna ora",
-      "summaryPrefix": "Ci sono",
-      "summarySuffix": "attività associate al profilo",
-      "task": "Attività",
-      "count": "Numero",
-      "orderIndex": "Numero in coda",
-      "buyPlace": "Compra un posto",
-      "createClone": "Crea un clone",
-      "lockPos": "Blocca posizione",
-      "unlockPos": "Sblocca posizione",
-      "tasksCount": "{{count}} attività"
-    },
-    "tree": {
-      "up": "Su ▲",
-      "placesBelow_one": "{{formattedCount}} posto sotto",
-      "placesBelow_other": "{{formattedCount}} posti sotto",
-      "unlock": "Sblocca",
-      "lock": "Blocca",
-      "unlockSuccess": "Richiesta di sblocco inviata. Lo sblocco apparirà presto; aggiorna la pagina tra poco per vederlo.",
-      "lockSuccess": "Richiesta di blocco inviata. Il blocco apparirà presto; aggiorna la pagina tra poco per vederlo.",
-      "select": "Seleziona ▼",
-      "buy": "Compra ({{price}} TON)",
-      "loadingPath": "Caricamento percorso...",
-      "breadcrumbEmpty": "I breadcrumb appariranno dopo aver selezionato un posto.",
-      "breadcrumbs": "Breadcrumb"
-    }
   },
   "common": {
     "cancel": "Annulla",
@@ -470,7 +358,10 @@
       "entryAmount": "da {{currency}}{{amount}}",
       "exit": "Uscita",
       "exitAmount": "fino a {{currency}}{{amount}} per {{period}}",
-      "periods": { "cycle": "ciclo", "program": "programma" }
+      "periods": {
+        "cycle": "ciclo",
+        "program": "programma"
+      }
     }
   },
   "programQueue": {
@@ -526,7 +417,15 @@
     "placesBelow_one": "{{formattedCount}} posto totale sotto",
     "placesBelow_other": "{{formattedCount}} posti totali sotto",
     "rank": "Grado",
-    "ranks": { "bronze": "Bronzo", "silver": "Argento", "gold": "Oro", "platinum": "Platino", "sapphire": "Zaffiro", "emerald": "Smeraldo", "diamond": "Diamante" },
+    "ranks": {
+      "bronze": "Bronzo",
+      "silver": "Argento",
+      "gold": "Oro",
+      "platinum": "Platino",
+      "sapphire": "Zaffiro",
+      "emerald": "Smeraldo",
+      "diamond": "Diamante"
+    },
     "unlock": "Sblocca",
     "lock": "Blocca",
     "unlockSuccess": "Richiesta di sblocco inviata. Lo sblocco apparirà presto; aggiorna la pagina tra poco per vederlo.",

@@ -23,64 +23,6 @@ export type PlacePosDataResponse = {
   pos: number;
 };
 
-export type MultiTaskPayloadResponse = {
-  tag: number;
-  source_addr?: string | null;
-  pos?: PlacePosDataResponse | null;
-};
-
-export type MultiTaskItemResponse = {
-  query_id: number;
-  m: number;
-  profile_addr: string;
-  payload: MultiTaskPayloadResponse;
-};
-
-export type MinQueueTaskResponse = {
-  key?: number | null;
-  val?: MultiTaskItemResponse | null;
-  flag: number;
-};
-
-export type MultiFeesDataResponse = {
-  m1: number;
-  m2: number;
-  m3: number;
-  m4: number;
-  m5: number;
-  m6: number;
-};
-
-export type MultiPricesDataResponse = {
-  m1: number;
-  m2: number;
-  m3: number;
-  m4: number;
-  m5: number;
-  m6: number;
-};
-
-export type MultiSecurityDataResponse = {
-  admin_addr: string;
-};
-
-export type MultiQueueItemResponse = {
-  key: number;
-  val: MultiTaskItemResponse;
-};
-
-export type MultiDataResponse = {
-  addr: string;
-  processor_addr: string;
-  max_tasks: number;
-  queue_size: number;
-  seq_no: number;
-  fees: MultiFeesDataResponse;
-  prices: MultiPricesDataResponse;
-  security: MultiSecurityDataResponse;
-  tasks: MultiQueueItemResponse[];
-};
-
 export type PlaceProfilesResponse = {
   clone: number;
   profile_addr: string;
@@ -179,33 +121,8 @@ export type DeployItemBodyResponse = {
   boc_hex?: string;
 };
 
-export type BuildBuyPlaceBodyRequest = {
-  m: number;
-  profileAddr: string;
-  parentAddr?: string | null;
-  pos?: number | null;
-};
-
-export type BuyPlaceBodyResponse = {
-  boc_hex?: string;
-};
-
-export type BuildLockPosBodyRequest = {
-  m: number;
-  profileAddr: string;
-  parentAddr: string;
-  pos: number;
-};
-
 export type LockPosBodyResponse = {
   boc_hex?: string;
-};
-
-export type BuildUnlockPosBodyRequest = {
-  m: number;
-  profileAddr: string;
-  parentAddr: string;
-  pos: number;
 };
 
 export type UnlockPosBodyResponse = {
@@ -538,8 +455,6 @@ export type WalletHistoryRequest = {
 export interface ContractsApi {
   getInviteAddrBySeqNo: (addr: string, seqNo: number) => Promise<InviteAddressResponse | null>;
   getInviteData: (addr: string) => Promise<InviteDataResponse | null>;
-  getMinQueueTask: () => Promise<MinQueueTaskResponse | null>;
-  getMultiData: () => Promise<MultiDataResponse | null>;
   getPlaceData: (addr: string) => Promise<PlaceDataResponse | null>;
   getNftAddrByLogin: (login: string) => Promise<NftAddressResponse | null>;
   getProfileNftData: (addr: string) => Promise<ProfileDataResponse | null>;
@@ -552,9 +467,6 @@ export interface ContractsApi {
   buildChooseInviterBody: (request: BuildChooseInviterBodyRequest) => Promise<ChooseInviterBodyResponse | null>;
   buildEditContentBody: (request: BuildEditContentBodyRequest) => Promise<EditContentBodyResponse | null>;
   buildDeployItemBody: (request: BuildDeployItemBodyRequest) => Promise<DeployItemBodyResponse | null>;
-  buildBuyPlaceBody: (request: BuildBuyPlaceBodyRequest) => Promise<BuyPlaceBodyResponse | null>;
-  buildLockPosBody: (request: BuildLockPosBodyRequest) => Promise<LockPosBodyResponse | null>;
-  buildUnlockPosBody: (request: BuildUnlockPosBodyRequest) => Promise<UnlockPosBodyResponse | null>;
   buildMarketingBuyPlaceByTonBody: (request: BuildMarketingBuyPlaceByTonBodyRequest) => Promise<BuyPlaceByTonBodyResponse | null>;
   buildMarketingBuyPlaceByJettonBody: (request: BuildMarketingBuyPlaceByJettonBodyRequest) => Promise<BuyPlaceByJettonBodyResponse | null>;
   buildMarketingLockPosBody: (request: BuildMarketingLockPosBodyRequest) => Promise<LockPosBodyResponse | null>;
@@ -636,16 +548,6 @@ export async function getInviteData(addr: string): Promise<InviteDataResponse | 
 
   const url = buildUrl(`/contracts/invite/${normalizedAddr}/data`);
   return safeGet<InviteDataResponse>(url);
-}
-
-export async function getMinQueueTask(): Promise<MinQueueTaskResponse | null> {
-  const url = buildUrl("/contracts/multi/min-queue-task");
-  return safeGet<MinQueueTaskResponse>(url);
-}
-
-export async function getMultiData(): Promise<MultiDataResponse | null> {
-  const url = buildUrl("/contracts/multi/data");
-  return safeGet<MultiDataResponse>(url);
 }
 
 export async function getPlaceData(addr: string): Promise<PlaceDataResponse | null> {
@@ -774,54 +676,6 @@ export async function buildDeployItemBody(request: BuildDeployItemBodyRequest): 
   if (request.tgUsername) url.searchParams.set("tgUsername", request.tgUsername);
 
   return safeGet<DeployItemBodyResponse>(url.toString());
-}
-
-export async function buildBuyPlaceBody(request: BuildBuyPlaceBodyRequest): Promise<BuyPlaceBodyResponse | null> {
-  if (!Number.isFinite(request.m)) return null;
-  const profileAddr = request.profileAddr?.trim();
-  const parentAddr = request.parentAddr?.trim();
-  const pos = request.pos ?? undefined;
-  if (!profileAddr) return null;
-
-  const url = new URL("/contracts/multi/body/buy-place", normalizedBase || defaultOrigin);
-  url.searchParams.set("m", String(request.m));
-  url.searchParams.set("profileAddr", profileAddr);
-  if (parentAddr) url.searchParams.set("parentAddr", parentAddr);
-  if (pos !== undefined && pos !== null) url.searchParams.set("pos", String(pos));
-
-  return safeGet<BuyPlaceBodyResponse>(url.toString());
-}
-
-export async function buildLockPosBody(request: BuildLockPosBodyRequest): Promise<LockPosBodyResponse | null> {
-  if (!Number.isFinite(request.m)) return null;
-  const profileAddr = request.profileAddr?.trim();
-  const parentAddr = request.parentAddr?.trim();
-  const pos = request.pos;
-  if (!profileAddr || !parentAddr || !Number.isFinite(pos)) return null;
-
-  const url = new URL("/contracts/multi/body/lock-pos", normalizedBase || defaultOrigin);
-  url.searchParams.set("m", String(request.m));
-  url.searchParams.set("profileAddr", profileAddr);
-  url.searchParams.set("parentAddr", parentAddr);
-  url.searchParams.set("pos", String(pos));
-
-  return safeGet<LockPosBodyResponse>(url.toString());
-}
-
-export async function buildUnlockPosBody(request: BuildUnlockPosBodyRequest): Promise<UnlockPosBodyResponse | null> {
-  if (!Number.isFinite(request.m)) return null;
-  const profileAddr = request.profileAddr?.trim();
-  const parentAddr = request.parentAddr?.trim();
-  const pos = request.pos;
-  if (!profileAddr || !parentAddr || !Number.isFinite(pos)) return null;
-
-  const url = new URL("/contracts/multi/body/unlock-pos", normalizedBase || defaultOrigin);
-  url.searchParams.set("m", String(request.m));
-  url.searchParams.set("profileAddr", profileAddr);
-  url.searchParams.set("parentAddr", parentAddr);
-  url.searchParams.set("pos", String(pos));
-
-  return safeGet<UnlockPosBodyResponse>(url.toString());
 }
 
 export async function buildMarketingBuyPlaceByTonBody(
@@ -1040,8 +894,6 @@ export async function buildJettonTransferMsgBody(
 export const contractsApi: ContractsApi = {
   getInviteAddrBySeqNo,
   getInviteData,
-  getMinQueueTask,
-  getMultiData,
   getPlaceData,
   getNftAddrByLogin,
   getProfileNftData,
@@ -1054,9 +906,6 @@ export const contractsApi: ContractsApi = {
   buildChooseInviterBody,
   buildEditContentBody,
   buildDeployItemBody,
-  buildBuyPlaceBody,
-  buildLockPosBody,
-  buildUnlockPosBody,
   buildMarketingBuyPlaceByTonBody,
   buildMarketingBuyPlaceByJettonBody,
   buildMarketingLockPosBody,

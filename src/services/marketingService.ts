@@ -1,6 +1,6 @@
 import type { TonConnectUI } from "@tonconnect/ui-react";
 import { Cell, toNano } from "@ton/core";
-import type { PlacePosData } from "../types/multi";
+import type { PlacePosData } from "../types/marketing";
 import { ErrorCode } from "../errors/ErrorCodes";
 import { sendTransaction } from "./tonConnectService";
 import {

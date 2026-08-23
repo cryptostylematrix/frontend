@@ -74,7 +74,6 @@
     "home_page": "Басты бет",
     "profile_page": "Профиль",
     "finance_page": "Қаржы",
-    "multi_page": "Мульти",
     "programs_page": "Бағдарламалар",
     "neo_page": "Neo"
   },
@@ -172,117 +171,6 @@
     "systemPlaceDescription": "Команданы өз бетінше құру үшін жүйелік орынның астында тіркелу",
     "confirmChooseTitle": "Шақырушыны таңдауды растау",
     "confirmChoosePopular": "Осы шақырушыны таңдағыңыз келетініне сенімдісіз бе?"
-  },
-  "multi": {
-    "title": "Мульти",
-    "inviter_link": "Шақырушы",
-    "structure_link": "Құрылым",
-    "matrixes_link": "Матрицалар",
-    "marketing_link": "Маркетинг",
-    "stat_link": "Статистика",
-    "marketing": {
-      "title": "Маркетинг",
-      "pdfTitle": "Презентация PDF",
-      "pdfDescription": "Презентацияны өз тіліңізде қараңыз.",
-      "download": "PDF жүктеп алу",
-      "view": "PDF қарау",
-      "videoTitle": "Бейне шолу",
-      "videoDescription": "YouTube-тен маркетингке шолуды қараңыз.",
-      "watch": "Бейнені қарау"
-    },
-    "structure": {
-      "breadcrumbsTitle": "Навигация",
-      "breadcrumbsPlaceholder": "Мұнда навигация көрсетіледі.",
-      "searchTitle": "Логин бойынша іздеу",
-      "searchPlaceholder": "Логинді енгізіңіз",
-      "searchButton": "Іздеу",
-      "treeTitle": "Құрылым",
-      "treePlaceholder": "Ағаш көрінісі мұнда көрсетіледі.",
-      "created": "Жасалған",
-      "curator": "Куратор",
-      "referrals": "Ұсыныстар",
-      "loadMore": "Тағы жүктеу",
-      "notFound": "Логинге шақыру табылмады.",
-      "loading": "Жүктелуде...",
-      "expand": "Ашу",
-      "collapse": "Жабу"
-    },
-    "inviter": {
-      "title": "Шақырушыны таңдау",
-      "loginLabel": "Шақырушының логині",
-      "loginPlaceholder": "Шақырушы логинін енгізіңіз",
-      "submit": "Шақырушыны таңдау",
-      "success": "Шақырушы таңдалды. Жаңартулар жақында шығады, бетті кейінірек жаңартыңыз.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Команданы өз бетінше құру үшін жүйелік орынның астында тіркелу",
-      "confirmChooseTitle": "Шақырушыны таңдауды растау",
-      "confirmChoosePopular": "Осы шақырушыны таңдағыңыз келетініне сенімдісіз бе?"
-    }
-  },
-  "multiMatrix": {
-    "filters": {
-      "title": "Сүзгілер",
-      "show": "Көрсету",
-      "hide": "Жасыру",
-      "matrixes": "Матрицалар",
-      "places": "Орындар",
-      "placesWithTotal": "Орындар (барлығы {{total}})",
-      "noPlaces": "Орындар жоқ",
-      "placeOption": "{{place}}",
-      "searchByLogin": "Іздеу",
-      "searchPlaceholder": "логин",
-      "locks": "Блоктаулар",
-      "noLocks": "Блоктаулар жоқ",
-      "left": "сол жақ",
-      "right": "оң жақ",
-      "lockOption": "{{lock}}",
-      "buyPlace": "Жаңа орынды сатып алу ({{price}} TON)",
-      "confirmTitle": "Сатып алуды растау",
-      "confirmLockTitle": "Бұғаттауды растау",
-      "confirmUnlockTitle": "Бұғаттан шығаруды растау",
-      "confirmBuy": "Сіз сенімдісіз бе?",
-      "profileLabel": "Профиль",
-      "buySuccess": "Жаңа орын жақында тізімде пайда болады.",
-      "buyFail": "Сәтсіз",
-      "loadMore": "Көбірек жүктеу",
-      "nextPos": "Келесі позиция",
-      "updatePage": "Бетті жаңарту",
-      "clone": "клон",
-      "prevMatrixRequired": "Бұл матрицада сатып алу үшін алдымен алдыңғы матрицада орын болуы керек.",
-      "noPlacesInMatrix": "Бұл әрекет үшін осы матрицада орын болуы керек.",
-      "programNotConfirmed": "Алдымен шақырушыны таңдаңыз.",
-      "inviterNotInProgram": "Бұл шақырушы бағдарламға әлі қатыспайды."
-    },
-    "queue": {
-      "title": "Тапсырмалар кезегі",
-      "refreshIn": "Деректер келесі уақытта жаңарады",
-      "seconds": "секунд",
-      "refreshNow": "Қазір жаңарту",
-      "summaryPrefix": "Барлығы",
-      "summarySuffix": "профильге байланысты тапсырма",
-      "task": "Тапсырма",
-      "count": "Саны",
-      "orderIndex": "Кезектегі нөмір",
-      "buyPlace": "Орын сатып алу",
-      "createClone": "Клон жасау",
-      "lockPos": "Позицияны бұғаттау",
-      "unlockPos": "Позицияны бұғаттан шығару",
-      "tasksCount": "{{count}} тапсырма"
-    },
-    "tree": {
-      "up": "Жоғары ▲",
-      "placesBelow_one": "{{formattedCount}} орын төменде",
-      "placesBelow_other": "{{formattedCount}} орын төменде",
-      "unlock": "Бұғаттан шығару",
-      "lock": "Бұғаттау",
-      "unlockSuccess": "Бұғаттан шығару сұранысы жіберілді. Бұғаттан шығару жақында пайда болады; оны көру үшін бетті біраздан кейін жаңартыңыз.",
-      "lockSuccess": "Блоктау сұранысы жіберілді. Блоктау жақында пайда болады; оны көру үшін бетті біраздан кейін жаңартыңыз.",
-      "select": "Таңдау ▼",
-      "buy": "Сатып алу ({{price}} TON)",
-      "loadingPath": "Маршрут жүктелуде...",
-      "breadcrumbEmpty": "Навигациялық жол орын таңдалғанда пайда болады.",
-      "breadcrumbs": "Навигациялық жол"
-    }
   },
   "common": {
     "cancel": "Болдырмау",
@@ -470,7 +358,10 @@
       "entryAmount": "{{amount}}{{currency}}-дан бастап",
       "exit": "Шығу",
       "exitAmount": "{{period}} үшін {{amount}}{{currency}}-ға дейін",
-      "periods": { "cycle": "цикл", "program": "бағдарлама" }
+      "periods": {
+        "cycle": "цикл",
+        "program": "бағдарлама"
+      }
     }
   },
   "programQueue": {
@@ -526,7 +417,15 @@
     "placesBelow_one": "Төменде барлығы {{formattedCount}} орын",
     "placesBelow_other": "Төменде барлығы {{formattedCount}} орын",
     "rank": "Дәреже",
-    "ranks": { "bronze": "Қола", "silver": "Күміс", "gold": "Алтын", "platinum": "Платина", "sapphire": "Сапфир", "emerald": "Изумруд", "diamond": "Алмас" },
+    "ranks": {
+      "bronze": "Қола",
+      "silver": "Күміс",
+      "gold": "Алтын",
+      "platinum": "Платина",
+      "sapphire": "Сапфир",
+      "emerald": "Изумруд",
+      "diamond": "Алмас"
+    },
     "unlock": "Бұғаттан шығару",
     "lock": "Бұғаттау",
     "unlockSuccess": "Бұғаттан шығару сұранысы жіберілді. Бұғаттан шығару жақында пайда болады; оны көру үшін бетті біраздан кейін жаңартыңыз.",

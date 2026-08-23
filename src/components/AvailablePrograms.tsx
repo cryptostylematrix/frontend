@@ -15,14 +15,6 @@ export default function AvailablePrograms() {
   const { t } = useTranslation();
   const legacyPrograms = [
     {
-      key: "multi",
-      href: "/multi",
-      image: "cs-big.png",
-      creatorLink: "https://t.me/cryptostylematrix",
-      creatorHandle: "@cryptostylematrix",
-      features: ["platforms", "reinvest", "clones", "structure"],
-    },
-    {
       key: "neo",
       href: "/neo",
       image: "neoclub.png",

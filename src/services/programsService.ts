@@ -58,6 +58,21 @@ const metadataUrl = (uri: string) => {
   return new URL(uri, window.location.href).toString();
 };
 
+const fetchProgramMetadata = async (uri: string, index: number) => {
+  const primaryUrl = metadataUrl(uri);
+  const primaryResponse = await fetch(primaryUrl);
+  if (primaryResponse.ok) return primaryResponse;
+
+  const fallbackUrl = new URL(
+    `${import.meta.env.BASE_URL}series-marketing-${index}.json`,
+    window.location.origin,
+  ).toString();
+  if (fallbackUrl === primaryUrl) return null;
+
+  const fallbackResponse = await fetch(fallbackUrl);
+  return fallbackResponse.ok ? fallbackResponse : null;
+};
+
 const optionalString = (value: unknown) =>
   typeof value === "string" && value.trim() ? value.trim() : null;
 
@@ -127,8 +142,8 @@ const fetchProgram = async (address: string): Promise<Program | null> => {
     const uri = basicData.metadata_uri.trim();
     if (!uri) return null;
 
-    const response = await fetch(metadataUrl(uri));
-    if (!response.ok) return null;
+    const response = await fetchProgramMetadata(uri, basicData.index);
+    if (!response) return null;
 
     const metadata = (await response.json()) as ProgramMetadata;
     if (typeof metadata.name !== "string" || !metadata.name.trim()) return null;

@@ -74,7 +74,6 @@
     "home_page": "Головна",
     "profile_page": "Профіль",
     "finance_page": "Фінанси",
-    "multi_page": "Мульти",
     "programs_page": "Програми",
     "neo_page": "Neo"
   },
@@ -172,117 +171,6 @@
     "systemPlaceDescription": "Реєстрація під системне місце для самостійного побудування команди",
     "confirmChooseTitle": "Підтвердження вибору куратора",
     "confirmChoosePopular": "Ви впевнені, що хочете обрати цього куратора?"
-  },
-  "multi": {
-    "title": "Мульти",
-    "inviter_link": "Запрошувач",
-    "structure_link": "Структура",
-    "matrixes_link": "Матриці",
-    "marketing_link": "Маркетинг",
-    "stat_link": "Статистика",
-    "marketing": {
-      "title": "Маркетинг",
-      "pdfTitle": "Презентація PDF",
-      "pdfDescription": "Перегляньте матеріали вашою мовою.",
-      "download": "Завантажити PDF",
-      "view": "Відкрити PDF",
-      "videoTitle": "Відео-огляд",
-      "videoDescription": "Подивіться маркетинговий огляд на YouTube.",
-      "watch": "Дивитися відео"
-    },
-    "structure": {
-      "breadcrumbsTitle": "Хлібні крихти",
-      "breadcrumbsPlaceholder": "Тут з’являться хлібні крихти.",
-      "searchTitle": "Пошук за логіном",
-      "searchPlaceholder": "Введіть логін",
-      "searchButton": "Пошук",
-      "treeTitle": "Структура",
-      "treePlaceholder": "Тут буде відображено дерево.",
-      "created": "Створено",
-      "curator": "Куратор",
-      "referrals": "Реферали",
-      "loadMore": "Завантажити ще",
-      "notFound": "Запрошення з таким логіном не знайдено.",
-      "loading": "Завантаження...",
-      "expand": "Розгорнути",
-      "collapse": "Згорнути"
-    },
-    "inviter": {
-      "title": "Вибір куратора",
-      "loginLabel": "Логін куратора",
-      "loginPlaceholder": "Введіть логін куратора",
-      "submit": "Обрати куратора",
-      "success": "Куратора обрано. Оновлення з'явиться скоро, будь ласка, оновіть сторінку пізніше.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Реєстрація під системне місце для самостійного побудування команди",
-      "confirmChooseTitle": "Підтвердження вибору куратора",
-      "confirmChoosePopular": "Ви впевнені, що хочете обрати цього куратора?"
-    }
-  },
-  "multiMatrix": {
-    "filters": {
-      "title": "Фільтри",
-      "show": "Показати",
-      "hide": "Сховати",
-      "matrixes": "Матриці",
-      "places": "Місця",
-      "placesWithTotal": "Місця (усього {{total}})",
-      "noPlaces": "Немає місць",
-      "placeOption": "{{place}}",
-      "searchByLogin": "Пошук",
-      "searchPlaceholder": "логін",
-      "locks": "Блокування",
-      "noLocks": "Немає блокувань",
-      "left": "лівий",
-      "right": "правий",
-      "lockOption": "{{lock}}",
-      "buyPlace": "Купити нове місце ({{price}} TON)",
-      "confirmTitle": "Підтвердити покупку",
-      "confirmLockTitle": "Підтвердити блокування",
-      "confirmUnlockTitle": "Підтвердити розблокування",
-      "confirmBuy": "Ви впевнені?",
-      "profileLabel": "Профіль",
-      "buySuccess": "Нове місце скоро з'явиться у списку.",
-      "buyFail": "Помилка",
-      "loadMore": "Завантажити ще",
-      "nextPos": "Наступна позиція",
-      "updatePage": "Оновити сторінку",
-      "clone": "клон",
-      "prevMatrixRequired": "Спочатку потрібне місце в попередній матриці, щоб купувати тут.",
-      "noPlacesInMatrix": "Потрібне місце в цій матриці, щоб виконати дію.",
-      "programNotConfirmed": "Спершу оберіть куратора.",
-      "inviterNotInProgram": "Цей куратор ще не бере участі в програмі."
-    },
-    "queue": {
-      "title": "Черга завдань",
-      "refreshIn": "Дані оновляться через",
-      "seconds": "секунд",
-      "refreshNow": "Оновити зараз",
-      "summaryPrefix": "Є",
-      "summarySuffix": "завдань, пов'язаних із профілем",
-      "task": "Завдання",
-      "count": "Кількість",
-      "orderIndex": "Номер у черзі",
-      "buyPlace": "Купити місце",
-      "createClone": "Створити клон",
-      "lockPos": "Заблокувати позицію",
-      "unlockPos": "Розблокувати позицію",
-      "tasksCount": "{{count}} завдань"
-    },
-    "tree": {
-      "up": "Вгору ▲",
-      "placesBelow_one": "{{formattedCount}} місце нижче",
-      "placesBelow_other": "{{formattedCount}} місць нижче",
-      "unlock": "Розблокувати",
-      "lock": "Заблокувати",
-      "unlockSuccess": "Запит на розблокування надіслано. Розблокування з’явиться незабаром; онови сторінку трохи пізніше, щоб побачити його.",
-      "lockSuccess": "Запит на блокування надіслано. Блокування з’явиться незабаром; онови сторінку трохи пізніше, щоб побачити його.",
-      "select": "Вибрати ▼",
-      "buy": "Купити ({{price}} TON)",
-      "loadingPath": "Завантаження шляху...",
-      "breadcrumbEmpty": "Хлібні крихти з'являться після вибору місця.",
-      "breadcrumbs": "Хлібні крихти"
-    }
   },
   "common": {
     "cancel": "Скасувати",
@@ -472,7 +360,10 @@
       "entryAmount": "від {{amount}}{{currency}}",
       "exit": "Вихід",
       "exitAmount": "до {{amount}}{{currency}} за {{period}}",
-      "periods": { "cycle": "цикл", "program": "програму" }
+      "periods": {
+        "cycle": "цикл",
+        "program": "програму"
+      }
     }
   },
   "programQueue": {
@@ -532,7 +423,15 @@
     "placesBelow_many": "{{formattedCount}} місць загалом знизу",
     "placesBelow_other": "{{formattedCount}} місць загалом знизу",
     "rank": "Ранг",
-    "ranks": { "bronze": "Бронза", "silver": "Срібло", "gold": "Золото", "platinum": "Платина", "sapphire": "Сапфір", "emerald": "Смарагд", "diamond": "Діамант" },
+    "ranks": {
+      "bronze": "Бронза",
+      "silver": "Срібло",
+      "gold": "Золото",
+      "platinum": "Платина",
+      "sapphire": "Сапфір",
+      "emerald": "Смарагд",
+      "diamond": "Діамант"
+    },
     "unlock": "Розблокувати",
     "lock": "Заблокувати",
     "unlockSuccess": "Запит на розблокування надіслано. Розблокування з’явиться незабаром; онови сторінку трохи пізніше, щоб побачити його.",

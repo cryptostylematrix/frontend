@@ -1,0 +1,45 @@
+{
+  "name": "Gold Matrix",
+  "image": "https://cryptostylematrix.github.io/frontend/ls.png",
+  "creator": {
+    "tg": "cryptostylematrix"
+  },
+  "features": [
+    "clones",
+    "structure management"
+  ],
+  "platforms": 4,
+  "entry": {
+    "price": 1000,
+    "currency": "USD"
+  },
+  "incomes": [],
+  "presentations": {
+    "pdf": {
+      "de": "",
+      "en": "",
+      "es": "",
+      "fr": "",
+      "hu": "",
+      "it": "",
+      "kk": "",
+      "pl": "",
+      "pt": "",
+      "ru": "",
+      "uk": ""
+    },
+    "video": {
+      "de": "",
+      "en": "",
+      "es": "",
+      "fr": "",
+      "hu": "",
+      "it": "",
+      "kk": "",
+      "pl": "",
+      "pt": "",
+      "ru": "",
+      "uk": ""
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "Super Matrix",
+  "image": "https://cryptostylematrix.github.io/frontend/ls.png",
+  "creator": {
+    "tg": "cryptostylematrix"
+  },
+  "features": [
+    "clones",
+    "structure management"
+  ],
+  "platforms": 4,
+  "entry": {
+    "price": 100,
+    "currency": "USD"
+  },
+  "incomes": [
+    {
+      "period": "program",
+      "value": 2100,
+      "currency": "USD"
+    }
+  ],
+  "presentations": {
+    "pdf": {
+      "de": "",
+      "en": "",
+      "es": "",
+      "fr": "",
+      "hu": "",
+      "it": "",
+      "kk": "",
+      "pl": "",
+      "pt": "",
+      "ru": "",
+      "uk": ""
+    },
+    "video": {
+      "de": "",
+      "en": "",
+      "es": "",
+      "fr": "",
+      "hu": "",
+      "it": "",
+      "kk": "",
+      "pl": "",
+      "pt": "",
+      "ru": "",
+      "uk": ""
+    }
+  }
+}

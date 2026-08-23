@@ -74,7 +74,6 @@
     "home_page": "Strona główna",
     "profile_page": "Profil",
     "finance_page": "Finanse",
-    "multi_page": "Multi",
     "programs_page": "Programy",
     "neo_page": "Neo"
   },
@@ -172,117 +171,6 @@
     "systemPlaceDescription": "Rejestracja pod systemowym miejscem do samodzielnego budowania zespołu",
     "confirmChooseTitle": "Potwierdź wybór opiekuna",
     "confirmChoosePopular": "Czy na pewno chcesz wybrać tego opiekuna?"
-  },
-  "multi": {
-    "title": "Multi",
-    "inviter_link": "Zaprośnik",
-    "structure_link": "Struktura",
-    "matrixes_link": "Macierze",
-    "marketing_link": "Marketing",
-    "stat_link": "Statystyka",
-    "marketing": {
-      "title": "Marketing",
-      "pdfTitle": "Prezentacja PDF",
-      "pdfDescription": "Zobacz materiały w swoim języku.",
-      "download": "Pobierz PDF",
-      "view": "Otwórz PDF",
-      "videoTitle": "Wideo przegląd",
-      "videoDescription": "Obejrzyj przegląd marketingowy na YouTube.",
-      "watch": "Obejrzyj wideo"
-    },
-    "structure": {
-      "breadcrumbsTitle": "Nawigacja okruszkowa",
-      "breadcrumbsPlaceholder": "Breadcrumby pojawią się tutaj.",
-      "searchTitle": "Szukaj po loginie",
-      "searchPlaceholder": "Wpisz login",
-      "searchButton": "Szukaj",
-      "treeTitle": "Struktura",
-      "treePlaceholder": "Widok drzewa pojawi się tutaj.",
-      "created": "Utworzono",
-      "curator": "Kurator",
-      "referrals": "Polecenia",
-      "loadMore": "Załaduj więcej",
-      "notFound": "Zaproszenie dla podanego loginu nie zostało znalezione.",
-      "loading": "Ładowanie...",
-      "expand": "Rozwiń",
-      "collapse": "Zwiń"
-    },
-    "inviter": {
-      "title": "Wybierz opiekuna",
-      "loginLabel": "Login opiekuna",
-      "loginPlaceholder": "Wpisz login opiekuna",
-      "submit": "Wybierz opiekuna",
-      "success": "Opiekun wybrany. Aktualizacje pojawią się wkrótce, odśwież stronę później.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Rejestracja pod systemowym miejscem do samodzielnego budowania zespołu",
-      "confirmChooseTitle": "Potwierdź wybór opiekuna",
-      "confirmChoosePopular": "Czy na pewno chcesz wybrać tego opiekuna?"
-    }
-  },
-  "multiMatrix": {
-    "filters": {
-      "title": "Filtry",
-      "show": "Pokaż",
-      "hide": "Ukryj",
-      "matrixes": "Macierze",
-      "places": "Miejsca",
-      "placesWithTotal": "Miejsca (łącznie {{total}})",
-      "noPlaces": "Brak miejsc",
-      "placeOption": "{{place}}",
-      "searchByLogin": "Szukaj",
-      "searchPlaceholder": "login",
-      "locks": "Blokowania",
-      "noLocks": "Brak blokowań",
-      "left": "lewy",
-      "right": "prawy",
-      "lockOption": "{{lock}}",
-      "buyPlace": "Kup nowe miejsce ({{price}} TON)",
-      "confirmTitle": "Potwierdź zakup",
-      "confirmLockTitle": "Potwierdź blokadę",
-      "confirmUnlockTitle": "Potwierdź odblokowanie",
-      "confirmBuy": "Jesteś pewien?",
-      "profileLabel": "Profil",
-      "buySuccess": "Nowe miejsce wkrótce pojawi się na liście.",
-      "buyFail": "Niepowodzenie",
-      "loadMore": "Załaduj więcej",
-      "nextPos": "Następna pozycja",
-      "updatePage": "Aktualizuj stronę",
-      "clone": "klon",
-      "prevMatrixRequired": "Najpierw potrzebujesz miejsca w poprzedniej macierzy, aby kupić tutaj.",
-      "noPlacesInMatrix": "Musisz mieć miejsce w tej macierzy, aby wykonać tę akcję.",
-      "programNotConfirmed": "Najpierw wybierz opiekuna.",
-      "inviterNotInProgram": "Ten opiekun nie uczestniczy jeszcze w programie."
-    },
-    "queue": {
-      "title": "Kolejka zadań",
-      "refreshIn": "Dane odświeżą się za",
-      "seconds": "sekund",
-      "refreshNow": "Odśwież teraz",
-      "summaryPrefix": "Jest",
-      "summarySuffix": "zadań powiązanych z profilem",
-      "task": "Zadanie",
-      "count": "Liczba",
-      "orderIndex": "Numer w kolejce",
-      "buyPlace": "Kup miejsce",
-      "createClone": "Utwórz klona",
-      "lockPos": "Zablokuj pozycję",
-      "unlockPos": "Odblokuj pozycję",
-      "tasksCount": "{{count}} zadań"
-    },
-    "tree": {
-      "up": "W górę ▲",
-      "placesBelow_one": "{{formattedCount}} miejsce niżej",
-      "placesBelow_other": "{{formattedCount}} miejsc niżej",
-      "unlock": "Odblokuj",
-      "lock": "Zablokuj",
-      "unlockSuccess": "Wysłano prośbę o odblokowanie. Odblokowanie pojawi się wkrótce; odśwież stronę za chwilę, aby je zobaczyć.",
-      "lockSuccess": "Wysłano prośbę o zablokowanie. Blokada pojawi się wkrótce; odśwież stronę za chwilę, aby ją zobaczyć.",
-      "select": "Wybierz ▼",
-      "buy": "Kup ({{price}} TON)",
-      "loadingPath": "Ładowanie ścieżki...",
-      "breadcrumbEmpty": "Okruszki pojawią się po wybraniu miejsca.",
-      "breadcrumbs": "Okruszki"
-    }
   },
   "common": {
     "cancel": "Anuluj",
@@ -472,7 +360,10 @@
       "entryAmount": "od {{amount}}{{currency}}",
       "exit": "Wyjście",
       "exitAmount": "do {{amount}}{{currency}} na {{period}}",
-      "periods": { "cycle": "cykl", "program": "program" }
+      "periods": {
+        "cycle": "cykl",
+        "program": "program"
+      }
     }
   },
   "programQueue": {
@@ -532,7 +423,15 @@
     "placesBelow_many": "{{formattedCount}} miejsc łącznie poniżej",
     "placesBelow_other": "{{formattedCount}} miejsc łącznie poniżej",
     "rank": "Ranga",
-    "ranks": { "bronze": "Brąz", "silver": "Srebro", "gold": "Złoto", "platinum": "Platyna", "sapphire": "Szafir", "emerald": "Szmaragd", "diamond": "Diament" },
+    "ranks": {
+      "bronze": "Brąz",
+      "silver": "Srebro",
+      "gold": "Złoto",
+      "platinum": "Platyna",
+      "sapphire": "Szafir",
+      "emerald": "Szmaragd",
+      "diamond": "Diament"
+    },
     "unlock": "Odblokuj",
     "lock": "Zablokuj",
     "unlockSuccess": "Wysłano prośbę o odblokowanie. Odblokowanie pojawi się wkrótce; odśwież stronę za chwilę, aby je zobaczyć.",

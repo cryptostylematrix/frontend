@@ -74,7 +74,6 @@
     "home_page": "Accueil",
     "profile_page": "Profil",
     "finance_page": "Finance",
-    "multi_page": "Multi",
     "programs_page": "Programmes",
     "neo_page": "Neo"
   },
@@ -172,117 +171,6 @@
     "systemPlaceDescription": "Inscription sous une place système pour construire une équipe de manière indépendante",
     "confirmChooseTitle": "Confirmer la sélection de l'inviteur",
     "confirmChoosePopular": "Voulez-vous vraiment choisir cet inviteur ?"
-  },
-  "multi": {
-    "title": "Multi",
-    "inviter_link": "Inviteur",
-    "structure_link": "Structure",
-    "matrixes_link": "Matrices",
-    "marketing_link": "Marketing",
-    "stat_link": "Statistiques",
-    "marketing": {
-      "title": "Marketing",
-      "pdfTitle": "Présentation PDF",
-      "pdfDescription": "Consultez la présentation dans votre langue.",
-      "download": "Télécharger le PDF",
-      "view": "Voir le PDF",
-      "videoTitle": "Présentation vidéo",
-      "videoDescription": "Regardez la présentation marketing sur YouTube.",
-      "watch": "Voir la vidéo"
-    },
-    "structure": {
-      "breadcrumbsTitle": "Fil d'Ariane",
-      "breadcrumbsPlaceholder": "Le fil d'Ariane apparaîtra ici.",
-      "searchTitle": "Rechercher par identifiant",
-      "searchPlaceholder": "Saisissez l'identifiant",
-      "searchButton": "Rechercher",
-      "treeTitle": "Structure",
-      "treePlaceholder": "La vue arborescente apparaîtra ici.",
-      "created": "Créé",
-      "curator": "Curateur",
-      "referrals": "Filleuls",
-      "loadMore": "Charger plus",
-      "notFound": "Identifiant d'invitation introuvable.",
-      "loading": "Chargement...",
-      "expand": "Développer",
-      "collapse": "Réduire"
-    },
-    "inviter": {
-      "title": "Choisir un inviteur",
-      "loginLabel": "Identifiant de l'inviteur",
-      "loginPlaceholder": "Saisissez l'identifiant de l'inviteur",
-      "submit": "Choisir l'inviteur",
-      "success": "Inviteur choisi. Les mises à jour apparaîtront bientôt, veuillez actualiser la page plus tard.",
-      "alreadySelected": "L'inviteur a déjà été sélectionné.",
-      "systemPlaceDescription": "Inscription sous une place système pour construire une équipe de manière indépendante",
-      "confirmChooseTitle": "Confirmer la sélection de l'inviteur",
-      "confirmChoosePopular": "Voulez-vous vraiment choisir cet inviteur ?"
-    }
-  },
-  "multiMatrix": {
-    "filters": {
-      "title": "Filtres",
-      "show": "Afficher",
-      "hide": "Masquer",
-      "matrixes": "Matrices",
-      "places": "Places",
-      "placesWithTotal": "Places (total {{total}})",
-      "noPlaces": "Aucune place",
-      "placeOption": "{{place}}",
-      "searchByLogin": "Rechercher",
-      "searchPlaceholder": "login",
-      "locks": "Blocages",
-      "noLocks": "Aucun blocage",
-      "left": "gauche",
-      "right": "droite",
-      "lockOption": "{{lock}}",
-      "buyPlace": "Acheter une nouvelle place ({{price}} TON)",
-      "confirmTitle": "Confirmer l'achat",
-      "confirmLockTitle": "Confirmer le blocage",
-      "confirmUnlockTitle": "Confirmer le déblocage",
-      "confirmBuy": "Êtes-vous sûr ?",
-      "profileLabel": "Profil",
-      "buySuccess": "La nouvelle place apparaîtra bientôt dans la liste des places.",
-      "buyFail": "Échec",
-      "loadMore": "Charger plus",
-      "nextPos": "Pos suivante",
-      "updatePage": "Actualiser la page",
-      "clone": "clone",
-      "prevMatrixRequired": "Vous avez besoin d'une place dans la matrice précédente avant d'acheter ici.",
-      "noPlacesInMatrix": "Vous avez besoin d'une place dans cette matrice pour effectuer cette action.",
-      "programNotConfirmed": "Vous devez d'abord choisir un inviteur.",
-      "inviterNotInProgram": "Cet inviteur ne participe pas encore au programme."
-    },
-    "queue": {
-      "title": "File des tâches",
-      "refreshIn": "Les données seront actualisées dans",
-      "seconds": "secondes",
-      "refreshNow": "Actualiser maintenant",
-      "summaryPrefix": "Il y a",
-      "summarySuffix": "tâches associées au profil",
-      "task": "Tâche",
-      "count": "Quantité",
-      "orderIndex": "Numéro de file",
-      "buyPlace": "Acheter une place",
-      "createClone": "Créer un clone",
-      "lockPos": "Bloquer pos",
-      "unlockPos": "Débloquer pos",
-      "tasksCount": "{{count}} tâches"
-    },
-    "tree": {
-      "up": "Haut ▲",
-      "placesBelow_one": "{{formattedCount}} place en dessous",
-      "placesBelow_other": "{{formattedCount}} places en dessous",
-      "unlock": "Débloquer",
-      "lock": "Bloquer",
-      "unlockSuccess": "Demande de déblocage envoyée. Le déblocage apparaîtra bientôt ; actualisez la page plus tard pour le voir.",
-      "lockSuccess": "Demande de blocage envoyée. Le blocage apparaîtra bientôt ; actualisez la page plus tard pour le voir.",
-      "select": "Sélectionner ▼",
-      "buy": "Acheter ({{price}} TON)",
-      "loadingPath": "Chargement du chemin...",
-      "breadcrumbEmpty": "Le fil d'Ariane apparaîtra ici lorsqu'une place sera sélectionnée.",
-      "breadcrumbs": "Fil d'Ariane"
-    }
   },
   "common": {
     "cancel": "Annuler",
@@ -470,7 +358,10 @@
       "entryAmount": "à partir de {{amount}} {{currency}}",
       "exit": "Sortie",
       "exitAmount": "jusqu’à {{amount}} {{currency}} par {{period}}",
-      "periods": { "cycle": "cycle", "program": "programme" }
+      "periods": {
+        "cycle": "cycle",
+        "program": "programme"
+      }
     }
   },
   "programQueue": {
@@ -526,7 +417,15 @@
     "placesBelow_one": "{{formattedCount}} place au total en dessous",
     "placesBelow_other": "{{formattedCount}} places au total en dessous",
     "rank": "Rang",
-    "ranks": { "bronze": "Bronze", "silver": "Argent", "gold": "Or", "platinum": "Platine", "sapphire": "Saphir", "emerald": "Émeraude", "diamond": "Diamant" },
+    "ranks": {
+      "bronze": "Bronze",
+      "silver": "Argent",
+      "gold": "Or",
+      "platinum": "Platine",
+      "sapphire": "Saphir",
+      "emerald": "Émeraude",
+      "diamond": "Diamant"
+    },
     "unlock": "Débloquer",
     "lock": "Bloquer",
     "unlockSuccess": "Demande de déblocage envoyée. Le déblocage apparaîtra bientôt ; actualisez la page plus tard pour le voir.",

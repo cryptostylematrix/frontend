@@ -8,7 +8,6 @@ import { capitalize, normalizeImage, toLower } from "./nftContentHelper";
 import { isValidProfileLogin } from "../utils/profileLogin";
 
 export const ProfilePrograms = {
-  multi: 0x1ce8c484,
   neo: 0x435acabf,
 } as const;
 
@@ -36,7 +35,7 @@ export async function chooseInviter(
   inviter_addr: string,
   seqNo: number,
   invite_addr: string,
-  program: ProfileProgram = ProfilePrograms.multi,
+  program: ProfileProgram = ProfilePrograms.neo,
 ): Promise<{ success: boolean; errors?: ErrorCode[] }> {
   if (!profile_addr?.trim() || !inviter_addr?.trim() || !invite_addr?.trim()) {
     return { success: false, errors: [ErrorCode.INVALID_WALLET_ADDRESS] };

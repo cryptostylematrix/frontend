@@ -8,7 +8,6 @@ import AddProfile from "./pages/profile/AddProfile";
 import CreateProfile from "./pages/profile/CreateProfile";
 import UpdateProfile from "./pages/profile/UpdateProfile";
 import Finance from "./pages/Finance";
-import Multi from "./pages/multi/Multi";
 import Neo from "./pages/neo/Neo";
 
 import Header from "./components/header/Header";
@@ -17,11 +16,6 @@ import Navigation from "./components/Navigation";
 
 import { ProfileProvider } from "./context/ProfileContext";
 import { useTonConnectUI } from "@tonconnect/ui-react";
-import MultiInviter from "./pages/multi/MultiInviter";
-import MultiStructure from "./pages/multi/MultiStructure";
-import MultiMatrixes from "./pages/multi/MultiMatrixes";
-import MultiMarketing from "./pages/multi/MultiMarketing";
-import MultiStat from "./pages/multi/MultiStat";
 import NeoInviter from "./pages/neo/NeoInviter";
 import NeoStructure from "./pages/neo/NeoStructure";
 import NeoMatrixes from "./pages/neo/NeoMatrixes";
@@ -79,15 +73,6 @@ function App() {
                   <Route path="marketing" element={<ProgramMarketing />} />
                 </Route>
                 
-                <Route path="/multi" element={<Multi />}>
-                  <Route index element={<Navigate to="inviter" replace />} />
-                  <Route path="inviter" element={<MultiInviter />} />
-                  <Route path="structure" element={< MultiStructure />} />
-                  <Route path="matrixes" element={<MultiMatrixes />} />
-                  <Route path="marketing" element={<MultiMarketing />} />
-                  <Route path="stat" element={<MultiStat />} />
-                </Route>
-
                 <Route path="/neo" element={<Neo />}>
                   <Route index element={<Navigate to="inviter" replace />} />
                   <Route path="inviter" element={<NeoInviter />} />

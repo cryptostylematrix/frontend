@@ -74,7 +74,6 @@
     "home_page": "Inicio",
     "profile_page": "Perfil",
     "finance_page": "Finanzas",
-    "multi_page": "Multi",
     "programs_page": "Programas",
     "neo_page": "Neo"
   },
@@ -172,117 +171,6 @@
     "systemPlaceDescription": "Registro bajo un lugar del sistema para construir un equipo de forma independiente",
     "confirmChooseTitle": "Confirmar selección del invitador",
     "confirmChoosePopular": "¿Seguro que quieres elegir a este invitador?"
-  },
-  "multi": {
-    "title": "Multi",
-    "inviter_link": "Invitador",
-    "structure_link": "Estructura",
-    "matrixes_link": "Matrices",
-    "marketing_link": "Marketing",
-    "stat_link": "Estadísticas",
-    "marketing": {
-      "title": "Marketing",
-      "pdfTitle": "Presentación PDF",
-      "pdfDescription": "Consulta la presentación en tu idioma.",
-      "download": "Descargar PDF",
-      "view": "Ver PDF",
-      "videoTitle": "Resumen en video",
-      "videoDescription": "Mira el resumen de marketing en YouTube.",
-      "watch": "Ver video"
-    },
-    "structure": {
-      "breadcrumbsTitle": "Ruta de navegación",
-      "breadcrumbsPlaceholder": "La ruta de navegación aparecerá aquí.",
-      "searchTitle": "Buscar por login",
-      "searchPlaceholder": "Introduce el login",
-      "searchButton": "Buscar",
-      "treeTitle": "Estructura",
-      "treePlaceholder": "La vista de árbol aparecerá aquí.",
-      "created": "Creado",
-      "curator": "Curador",
-      "referrals": "Referidos",
-      "loadMore": "Cargar más",
-      "notFound": "No se encontró el login de invitación.",
-      "loading": "Cargando...",
-      "expand": "Expandir",
-      "collapse": "Contraer"
-    },
-    "inviter": {
-      "title": "Elegir invitador",
-      "loginLabel": "Login del invitador",
-      "loginPlaceholder": "Introduce el login del invitador",
-      "submit": "Elegir invitador",
-      "success": "Invitador elegido. Las actualizaciones aparecerán pronto; por favor, recarga la página más tarde.",
-      "alreadySelected": "El invitador ya fue seleccionado.",
-      "systemPlaceDescription": "Registro bajo un lugar del sistema para construir un equipo de forma independiente",
-      "confirmChooseTitle": "Confirmar selección del invitador",
-      "confirmChoosePopular": "¿Seguro que quieres elegir a este invitador?"
-    }
-  },
-  "multiMatrix": {
-    "filters": {
-      "title": "Filtros",
-      "show": "Mostrar",
-      "hide": "Ocultar",
-      "matrixes": "Matrices",
-      "places": "Lugares",
-      "placesWithTotal": "Lugares (total {{total}})",
-      "noPlaces": "Sin lugares",
-      "placeOption": "{{place}}",
-      "searchByLogin": "Buscar",
-      "searchPlaceholder": "login",
-      "locks": "Bloqueos",
-      "noLocks": "Sin bloqueos",
-      "left": "izquierda",
-      "right": "derecha",
-      "lockOption": "{{lock}}",
-      "buyPlace": "Comprar nuevo lugar ({{price}} TON)",
-      "confirmTitle": "Confirmar compra",
-      "confirmLockTitle": "Confirmar bloqueo",
-      "confirmUnlockTitle": "Confirmar desbloqueo",
-      "confirmBuy": "¿Estás seguro?",
-      "profileLabel": "Perfil",
-      "buySuccess": "El nuevo lugar aparecerá pronto en la lista de lugares.",
-      "buyFail": "Error",
-      "loadMore": "Cargar más",
-      "nextPos": "Siguiente pos",
-      "updatePage": "Actualizar página",
-      "clone": "clon",
-      "prevMatrixRequired": "Necesitas un lugar en la matriz anterior antes de comprar aquí.",
-      "noPlacesInMatrix": "Necesitas un lugar en esta matriz para realizar esta acción.",
-      "programNotConfirmed": "Primero debes elegir un invitador.",
-      "inviterNotInProgram": "Este invitador aún no participa en el programa."
-    },
-    "queue": {
-      "title": "Cola de tareas",
-      "refreshIn": "Los datos se actualizarán en",
-      "seconds": "segundos",
-      "refreshNow": "Actualizar ahora",
-      "summaryPrefix": "Hay",
-      "summarySuffix": "tareas asociadas al perfil",
-      "task": "Tarea",
-      "count": "Cantidad",
-      "orderIndex": "Número de cola",
-      "buyPlace": "Comprar un lugar",
-      "createClone": "Crear un clon",
-      "lockPos": "Bloquear pos",
-      "unlockPos": "Desbloquear pos",
-      "tasksCount": "{{count}} tareas"
-    },
-    "tree": {
-      "up": "Arriba ▲",
-      "placesBelow_one": "{{formattedCount}} lugar debajo",
-      "placesBelow_other": "{{formattedCount}} lugares debajo",
-      "unlock": "Desbloquear",
-      "lock": "Bloquear",
-      "unlockSuccess": "Solicitud de desbloqueo enviada. El desbloqueo aparecerá pronto; actualiza la página dentro de un rato para verlo.",
-      "lockSuccess": "Solicitud de bloqueo enviada. El bloqueo aparecerá pronto; actualiza la página dentro de un rato para verlo.",
-      "select": "Seleccionar ▼",
-      "buy": "Comprar ({{price}} TON)",
-      "loadingPath": "Cargando ruta...",
-      "breadcrumbEmpty": "La ruta de navegación aparecerá aquí una vez que se seleccione un lugar.",
-      "breadcrumbs": "Ruta de navegación"
-    }
   },
   "common": {
     "cancel": "Cancelar",
@@ -470,7 +358,10 @@
       "entryAmount": "desde {{currency}}{{amount}}",
       "exit": "Salida",
       "exitAmount": "hasta {{currency}}{{amount}} por {{period}}",
-      "periods": { "cycle": "ciclo", "program": "programa" }
+      "periods": {
+        "cycle": "ciclo",
+        "program": "programa"
+      }
     }
   },
   "programQueue": {
@@ -526,7 +417,15 @@
     "placesBelow_one": "{{formattedCount}} lugar total debajo",
     "placesBelow_other": "{{formattedCount}} lugares totales debajo",
     "rank": "Rango",
-    "ranks": { "bronze": "Bronce", "silver": "Plata", "gold": "Oro", "platinum": "Platino", "sapphire": "Zafiro", "emerald": "Esmeralda", "diamond": "Diamante" },
+    "ranks": {
+      "bronze": "Bronce",
+      "silver": "Plata",
+      "gold": "Oro",
+      "platinum": "Platino",
+      "sapphire": "Zafiro",
+      "emerald": "Esmeralda",
+      "diamond": "Diamante"
+    },
     "unlock": "Desbloquear",
     "lock": "Bloquear",
     "unlockSuccess": "Solicitud de desbloqueo enviada. El desbloqueo aparecerá pronto; actualiza la página dentro de un rato para verlo.",

@@ -11,7 +11,7 @@ import { useContext, useEffect, useState } from "react";
 import { getProfileNftData, getProfileProgram } from "../../../../services/contractsApi";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { Address } from "@ton/core";
-import type { PlacePosData } from "../../../../types/multi";
+import type { PlacePosData } from "../../../../types/marketing";
 import ConfirmDialog from "../../../common/ConfirmDialog";
 import { WalletContext } from "../../../../App";
 

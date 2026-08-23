@@ -1,0 +1,46 @@
+{
+  "name": "LifeStyler",
+  "image": "https://cryptostylematrix.github.io/frontend/ls.png",
+  "creator": {
+    "tg": "cryptostylematrix"
+  },
+  "features": [
+    "clones",
+    "reinvest",
+    "structure management"
+  ],
+  "platforms": 11,
+  "entry": {
+    "price": 10,
+    "currency": "USD"
+  },
+  "incomes": [],
+  "presentations": {
+    "pdf": {
+      "de": "",
+      "en": "",
+      "es": "",
+      "fr": "",
+      "hu": "",
+      "it": "",
+      "kk": "",
+      "pl": "",
+      "pt": "",
+      "ru": "",
+      "uk": ""
+    },
+    "video": {
+      "de": "",
+      "en": "",
+      "es": "",
+      "fr": "",
+      "hu": "",
+      "it": "",
+      "kk": "",
+      "pl": "",
+      "pt": "",
+      "ru": "",
+      "uk": ""
+    }
+  }
+}

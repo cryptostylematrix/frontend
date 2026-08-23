@@ -1,30 +1,59 @@
-import { useEffect, useState } from "react";
+import { Address } from "@ton/core";
+import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { WalletContext } from "../App";
 import { appConfig } from "../config";
-import { loadPrograms } from "../services/programsService";
+import { AVAILABLE_TEST_PROGRAM_ADDRESSES } from "../programs";
+import { loadProgramMetadata } from "../services/programsService";
 import ProgramBlock from "./ProgramBlock";
 import "./available-test-programs.css";
 
+const normalizeAddress = (address: string) => {
+  try {
+    return Address.parse(address).toRawString();
+  } catch {
+    return "";
+  }
+};
+
+const allowedWalletAddresses = new Set(
+  appConfig.availableTestPrograms.walletAddresses
+    .map(normalizeAddress)
+    .filter(Boolean),
+);
+
 export default function AvailableTestPrograms() {
   const { t } = useTranslation();
+  const { wallet } = useContext(WalletContext)!;
   const [programAddresses, setProgramAddresses] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const canViewTestPrograms = allowedWalletAddresses.has(
+    normalizeAddress(wallet),
+  );
 
   useEffect(() => {
     let active = true;
 
+    if (!canViewTestPrograms) {
+      setProgramAddresses([]);
+      setIsLoading(false);
+      return () => {
+        active = false;
+      };
+    }
+
     setIsLoading(true);
-    void loadPrograms(appConfig.ton.admin.dev)
-      .then((programs) => {
+    void Promise.all(
+      AVAILABLE_TEST_PROGRAM_ADDRESSES.map(async (marketingAddress) =>
+        (await loadProgramMetadata(marketingAddress))
+          ? marketingAddress
+          : null,
+      ),
+    )
+      .then((addresses) => {
         if (active) {
           setProgramAddresses(
-            programs
-              .filter(
-                (program) =>
-                  program.name.replace(/\s+/g, "").toLowerCase() !==
-                  "cryptocash",
-              )
-              .map((program) => program.address),
+            addresses.filter((address) => address !== null),
           );
         }
       })
@@ -35,7 +64,9 @@ export default function AvailableTestPrograms() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [canViewTestPrograms]);
+
+  if (!canViewTestPrograms) return null;
 
   return (
     <section
