@@ -74,7 +74,6 @@
     "home_page": "Главная",
     "profile_page": "Профиль",
     "finance_page": "Финансы",
-    "multi_page": "Мульти",
     "programs_page": "Программы",
     "neo_page": "Neo"
   },
@@ -172,119 +171,6 @@
     "systemPlaceDescription": "Регистрация под системное место для самостоятельного построения команды",
     "confirmChooseTitle": "Подтверждение выбора куратора",
     "confirmChoosePopular": "Вы уверены, что хотите выбрать этого куратора?"
-  },
-  "multi": {
-    "title": "Мульти",
-    "inviter_link": "Куратор",
-    "structure_link": "Структура",
-    "matrixes_link": "Матрицы",
-    "marketing_link": "Маркетинг",
-    "stat_link": "Статистика",
-    "marketing": {
-      "title": "Маркетинг",
-      "pdfTitle": "Презентация PDF",
-      "pdfDescription": "Посмотрите материалы на вашем языке.",
-      "download": "Скачать PDF",
-      "view": "Открыть PDF",
-      "videoTitle": "Видео-обзор",
-      "videoDescription": "Посмотрите маркетинговый обзор на YouTube.",
-      "watch": "Смотреть видео"
-    },
-    "structure": {
-      "breadcrumbsTitle": "Хлебные крошки",
-      "breadcrumbsPlaceholder": "Здесь появятся хлебные крошки.",
-      "searchTitle": "Поиск по логину",
-      "searchPlaceholder": "Введите логин",
-      "searchButton": "Поиск",
-      "treeTitle": "Структура",
-      "treePlaceholder": "Здесь будет отображаться дерево.",
-      "created": "Создано",
-      "curator": "Куратор",
-      "referrals": "Рефералы",
-      "loadMore": "Загрузить еще",
-      "notFound": "Приглашение с таким логином не найдено.",
-      "loading": "Загрузка...",
-      "expand": "Развернуть",
-      "collapse": "Свернуть"
-    },
-    "inviter": {
-      "title": "Выбор куратора",
-      "loginLabel": "Логин куратора",
-      "loginPlaceholder": "Введите логин куратора",
-      "submit": "Выбрать куратора",
-      "success": "Куратор выбран. Обновление появится скоро, пожалуйста, обновите страницу позже.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Регистрация под системное место для самостоятельного построения команды",
-      "confirmChooseTitle": "Подтверждение выбора куратора",
-      "confirmChoosePopular": "Вы уверены, что хотите выбрать этого куратора?"
-    }
-  },
-  "multiMatrix": {
-    "filters": {
-      "title": "Фильтры",
-      "show": "Показать",
-      "hide": "Скрыть",
-      "matrixes": "Матрицы",
-      "places": "Места",
-      "placesWithTotal": "Места (всего {{total}})",
-      "noPlaces": "Нет мест",
-      "placeOption": "{{place}}",
-      "searchByLogin": "Поиск",
-      "searchPlaceholder": "логин",
-      "locks": "Блокировки",
-      "noLocks": "Нет блокировок",
-      "left": "левый",
-      "right": "правый",
-      "lockOption": "{{lock}}",
-      "buyPlace": "Купить новое место ({{price}} TON)",
-      "confirmTitle": "Подтвердить покупку",
-      "confirmLockTitle": "Подтвердить блокировку",
-      "confirmUnlockTitle": "Подтвердить разблокировку",
-      "confirmBuy": "Вы уверены?",
-      "profileLabel": "Профиль",
-      "buySuccess": "Новое место скоро появится в списке.",
-      "buyFail": "Ошибка",
-      "loadMore": "Загрузить ещё",
-      "nextPos": "Следующая позиция",
-      "updatePage": "Обновить страницу",
-      "clone": "клон",
-      "prevMatrixRequired": "Сначала нужно место в предыдущей матрице, чтобы купить здесь.",
-      "noPlacesInMatrix": "Нужно место в этой матрице, чтобы выполнить действие.",
-      "programNotConfirmed": "Сначала выберите куратора.",
-      "inviterNotInProgram": "Этот куратор еще не участвует в программе."
-    },
-    "queue": {
-      "title": "Очередь задач",
-      "refreshIn": "Данные обновятся через",
-      "seconds": "секунд",
-      "refreshNow": "Обновить сейчас",
-      "summaryPrefix": "Всего",
-      "summarySuffix": "задач, связанных с профилем",
-      "task": "Задача",
-      "count": "Количество",
-      "orderIndex": "Номер в очереди",
-      "buyPlace": "Купить место",
-      "createClone": "Создать клон",
-      "lockPos": "Заблокировать позицию",
-      "unlockPos": "Разблокировать позицию",
-      "tasksCount": "{{count}} задач"
-    },
-    "tree": {
-      "up": "Вверх ▲",
-      "placesBelow_one": "{{formattedCount}} место ниже",
-      "placesBelow_few": "{{formattedCount}} места ниже",
-      "placesBelow_many": "{{formattedCount}} мест ниже",
-      "placesBelow_other": "{{formattedCount}} мест ниже",
-      "unlock": "Разблокировать",
-      "lock": "Заблокировать",
-      "unlockSuccess": "Запрос на разблокировку отправлен. Разблокировка появится скоро; обновите страницу через некоторое время, чтобы увидеть её.",
-      "lockSuccess": "Запрос на блокировку отправлен. Блокировка появится скоро; обновите страницу через некоторое время, чтобы увидеть её.",
-      "select": "Выбрать ▼",
-      "buy": "Купить ({{price}} TON)",
-      "loadingPath": "Загрузка пути...",
-      "breadcrumbEmpty": "Путь появится после выбора места.",
-      "breadcrumbs": "Хлебные крошки"
-    }
   },
   "common": {
     "cancel": "Отмена",
@@ -476,7 +362,10 @@
       "entryAmount": "от {{amount}}{{currency}}",
       "exit": "Выход",
       "exitAmount": "до {{amount}}{{currency}} за {{period}}",
-      "periods": { "cycle": "цикл", "program": "программу" }
+      "periods": {
+        "cycle": "цикл",
+        "program": "программу"
+      }
     }
   },
   "programQueue": {
@@ -536,7 +425,15 @@
     "placesBelow_many": "{{formattedCount}} мест всего снизу",
     "placesBelow_other": "{{formattedCount}} мест всего снизу",
     "rank": "Ранг",
-    "ranks": { "bronze": "Бронза", "silver": "Серебро", "gold": "Золото", "platinum": "Платина", "sapphire": "Сапфир", "emerald": "Изумруд", "diamond": "Бриллиант" },
+    "ranks": {
+      "bronze": "Бронза",
+      "silver": "Серебро",
+      "gold": "Золото",
+      "platinum": "Платина",
+      "sapphire": "Сапфир",
+      "emerald": "Изумруд",
+      "diamond": "Бриллиант"
+    },
     "unlock": "Разблокировать",
     "lock": "Заблокировать",
     "unlockSuccess": "Запрос на разблокировку отправлен. Разблокировка появится скоро; обновите страницу через некоторое время, чтобы увидеть её.",

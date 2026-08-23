@@ -74,7 +74,6 @@
     "home_page": "Kezdőlap",
     "profile_page": "Profil",
     "finance_page": "Pénzügy",
-    "multi_page": "Multi",
     "programs_page": "Programok",
     "neo_page": "Neo"
   },
@@ -172,117 +171,6 @@
     "systemPlaceDescription": "Regisztráció rendszerhely alá a csapat önálló felépítéséhez",
     "confirmChooseTitle": "Meghívó kiválasztásának megerősítése",
     "confirmChoosePopular": "Biztosan ezt a meghívót szeretnéd választani?"
-  },
-  "multi": {
-    "title": "Multi",
-    "inviter_link": "Meghívó",
-    "structure_link": "Struktúra",
-    "matrixes_link": "Mátrixok",
-    "marketing_link": "Marketing",
-    "stat_link": "Statisztika",
-    "marketing": {
-      "title": "Marketing",
-      "pdfTitle": "Prezentáció PDF",
-      "pdfDescription": "Nézd meg a bemutatót a saját nyelveden.",
-      "download": "PDF letöltése",
-      "view": "PDF megnyitása",
-      "videoTitle": "Videós összefoglaló",
-      "videoDescription": "Nézd meg a marketing áttekintést a YouTube-on.",
-      "watch": "Videó megtekintése"
-    },
-    "structure": {
-      "breadcrumbsTitle": "Kenyérmorzsák",
-      "breadcrumbsPlaceholder": "Itt jelennek meg a kenyérmorzsák.",
-      "searchTitle": "Keresés bejelentkezés alapján",
-      "searchPlaceholder": "Írd be a bejelentkezést",
-      "searchButton": "Keresés",
-      "treeTitle": "Struktúra",
-      "treePlaceholder": "Itt jelenik meg a fa nézet.",
-      "created": "Létrehozva",
-      "curator": "Kurátor",
-      "referrals": "Ajánlások",
-      "loadMore": "Továbbiak betöltése",
-      "notFound": "A megadott meghívó nem található.",
-      "loading": "Betöltés...",
-      "expand": "Kinyitás",
-      "collapse": "Bezárás"
-    },
-    "inviter": {
-      "title": "Meghívó választása",
-      "loginLabel": "Meghívó bejelentkezése",
-      "loginPlaceholder": "Add meg a meghívó bejelentkezését",
-      "submit": "Meghívó választása",
-      "success": "A meghívó kiválasztva. A frissítések hamarosan megjelennek, kérjük, frissítsd az oldalt később.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Regisztráció rendszerhely alá a csapat önálló felépítéséhez",
-      "confirmChooseTitle": "Meghívó kiválasztásának megerősítése",
-      "confirmChoosePopular": "Biztosan ezt a meghívót szeretnéd választani?"
-    }
-  },
-  "multiMatrix": {
-    "filters": {
-      "title": "Szűrők",
-      "show": "Mutat",
-      "hide": "Elrejt",
-      "matrixes": "Mátrixok",
-      "places": "Helyek",
-      "placesWithTotal": "Helyek (összesen {{total}})",
-      "noPlaces": "Nincsenek helyek",
-      "placeOption": "{{place}}",
-      "searchByLogin": "Keresés",
-      "searchPlaceholder": "login",
-      "locks": "Blokkolások",
-      "noLocks": "Nincsenek blokkolások",
-      "left": "bal",
-      "right": "jobb",
-      "lockOption": "{{lock}}",
-      "buyPlace": "Új hely vásárlása ({{price}} TON)",
-      "confirmTitle": "Vásárlás megerősítése",
-      "confirmLockTitle": "Zárolás megerősítése",
-      "confirmUnlockTitle": "Feloldás megerősítése",
-      "confirmBuy": "Biztos benne?",
-      "profileLabel": "Profil",
-      "buySuccess": "Az új hely hamarosan megjelenik a listában.",
-      "buyFail": "Sikertelen",
-      "loadMore": "Továbbiak betöltése",
-      "nextPos": "Következő pozíció",
-      "updatePage": "Oldal frissítése",
-      "clone": "klón",
-      "prevMatrixRequired": "Először szükség van helyre az előző mátrixban, hogy itt vásárolhass.",
-      "noPlacesInMatrix": "Szükség van helyre ebben a mátrixban a művelethez.",
-      "programNotConfirmed": "Először válassz meghívót.",
-      "inviterNotInProgram": "Ez a meghívó még nem vesz részt a programban."
-    },
-    "queue": {
-      "title": "Feladatok sora",
-      "refreshIn": "Az adatok frissülnek ennyi idő múlva:",
-      "seconds": "másodperc",
-      "refreshNow": "Frissítés most",
-      "summaryPrefix": "Összesen",
-      "summarySuffix": "feladat kapcsolódik a profilhoz",
-      "task": "Feladat",
-      "count": "Darab",
-      "orderIndex": "Sorszám a sorban",
-      "buyPlace": "Hely vásárlása",
-      "createClone": "Klón létrehozása",
-      "lockPos": "Pozíció zárolása",
-      "unlockPos": "Pozíció feloldása",
-      "tasksCount": "{{count}} feladat"
-    },
-    "tree": {
-      "up": "Fel ▲",
-      "placesBelow_one": "{{formattedCount}} hely lejjebb",
-      "placesBelow_other": "{{formattedCount}} hely lejjebb",
-      "unlock": "Feloldás",
-      "lock": "Zárolás",
-      "unlockSuccess": "Feloldási kérés elküldve. A feloldás hamarosan megjelenik; frissítsd az oldalt egy kis idő múlva, hogy láthasd.",
-      "lockSuccess": "Zárolási kérés elküldve. A zárolás hamarosan megjelenik; frissítsd az oldalt egy kis idő múlva, hogy láthasd.",
-      "select": "Kiválasztás ▼",
-      "buy": "Vásárlás ({{price}} TON)",
-      "loadingPath": "Útvonal betöltése...",
-      "breadcrumbEmpty": "A morzsák a hely kiválasztása után jelennek meg.",
-      "breadcrumbs": "Morzsák"
-    }
   },
   "common": {
     "cancel": "Mégse",
@@ -470,7 +358,10 @@
       "entryAmount": "{{amount}}{{currency}}-tól",
       "exit": "Kilépés",
       "exitAmount": "akár {{amount}}{{currency}} {{period}}onként",
-      "periods": { "cycle": "ciklus", "program": "program" }
+      "periods": {
+        "cycle": "ciklus",
+        "program": "program"
+      }
     }
   },
   "programQueue": {
@@ -526,7 +417,15 @@
     "placesBelow_one": "{{formattedCount}} hely összesen alatta",
     "placesBelow_other": "{{formattedCount}} hely összesen alatta",
     "rank": "Rang",
-    "ranks": { "bronze": "Bronz", "silver": "Ezüst", "gold": "Arany", "platinum": "Platina", "sapphire": "Zafír", "emerald": "Smaragd", "diamond": "Gyémánt" },
+    "ranks": {
+      "bronze": "Bronz",
+      "silver": "Ezüst",
+      "gold": "Arany",
+      "platinum": "Platina",
+      "sapphire": "Zafír",
+      "emerald": "Smaragd",
+      "diamond": "Gyémánt"
+    },
     "unlock": "Feloldás",
     "lock": "Zárolás",
     "unlockSuccess": "Feloldási kérés elküldve. A feloldás hamarosan megjelenik; frissítsd az oldalt egy kis idő múlva, hogy láthasd.",

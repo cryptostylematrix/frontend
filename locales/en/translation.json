@@ -74,7 +74,6 @@
     "home_page": "Home",
     "profile_page": "Profile",
     "finance_page": "Finance",
-    "multi_page": "Multi",
     "programs_page": "Programs",
     "neo_page": "Neo"
   },
@@ -172,117 +171,6 @@
     "systemPlaceDescription": "Registration under a system place for independent team building",
     "confirmChooseTitle": "Confirm inviter selection",
     "confirmChoosePopular": "Are you sure you want to choose this inviter?"
-  },
-  "multi": {
-    "title": "Multi",
-    "inviter_link": "Inviter",
-    "structure_link": "Structure",
-    "matrixes_link": "Matrixes",
-    "marketing_link": "Marketing",
-    "stat_link": "Stat",
-    "marketing": {
-      "title": "Marketing",
-      "pdfTitle": "Presentation PDF",
-      "pdfDescription": "Preview the deck in your language.",
-      "download": "Download PDF",
-      "view": "View PDF",
-      "videoTitle": "Video overview",
-      "videoDescription": "Watch the marketing overview on YouTube.",
-      "watch": "Watch video"
-    },
-    "structure": {
-      "breadcrumbsTitle": "Breadcrumbs",
-      "breadcrumbsPlaceholder": "Breadcrumbs will appear here.",
-      "searchTitle": "Search by login",
-      "searchPlaceholder": "Enter login",
-      "searchButton": "Search",
-      "treeTitle": "Structure",
-      "treePlaceholder": "Tree view will appear here.",
-      "created": "Created",
-      "curator": "Curator",
-      "referrals": "Referrals",
-      "loadMore": "Load more",
-      "notFound": "Login invite not found.",
-      "loading": "Loading...",
-      "expand": "Expand",
-      "collapse": "Collapse"
-    },
-    "inviter": {
-      "title": "Choose inviter",
-      "loginLabel": "Inviter login",
-      "loginPlaceholder": "Enter inviter login",
-      "submit": "Choose inviter",
-      "success": "Inviter chosen. Updates will appear soon, please refresh the page later.",
-      "alreadySelected": "Inviter already selected.",
-      "systemPlaceDescription": "Registration under a system place for independent team building",
-      "confirmChooseTitle": "Confirm inviter selection",
-      "confirmChoosePopular": "Are you sure you want to choose this inviter?"
-    }
-  },
-  "multiMatrix": {
-    "filters": {
-      "title": "Filters",
-      "show": "Show",
-      "hide": "Hide",
-      "matrixes": "Matrixes",
-      "places": "Places",
-      "placesWithTotal": "Places (total {{total}})",
-      "noPlaces": "No places",
-      "placeOption": "{{place}}",
-      "searchByLogin": "Search",
-      "searchPlaceholder": "login",
-      "locks": "Blocks",
-      "noLocks": "No blocks",
-      "left": "left",
-      "right": "right",
-      "lockOption": "{{lock}}",
-      "buyPlace": "Buy new place ({{price}} TON)",
-      "confirmTitle": "Confirm purchase",
-      "confirmLockTitle": "Confirm locking",
-      "confirmUnlockTitle": "Confirm unlocking",
-      "confirmBuy": "Are you sure?",
-      "profileLabel": "Profile",
-      "buySuccess": "New place will appear on places list soon.",
-      "buyFail": "Fail",
-      "loadMore": "Load more",
-      "nextPos": "Next pos",
-      "updatePage": "Update page",
-      "clone": "clone",
-      "prevMatrixRequired": "You need a place in the previous matrix before buying here.",
-      "noPlacesInMatrix": "You need a place in this matrix to perform this action.",
-      "programNotConfirmed": "You need to choose an inviter first.",
-      "inviterNotInProgram": "This inviter is not participating in the program yet."
-    },
-    "queue": {
-      "title": "Task queue",
-      "refreshIn": "The data will refresh in",
-      "seconds": "seconds",
-      "refreshNow": "Refresh now",
-      "summaryPrefix": "There are",
-      "summarySuffix": "tasks associated with the profile",
-      "task": "Task",
-      "count": "Count",
-      "orderIndex": "Queue number",
-      "buyPlace": "Buy a place",
-      "createClone": "Create a clone",
-      "lockPos": "Lock pos",
-      "unlockPos": "Unlock pos",
-      "tasksCount": "{{count}} tasks"
-    },
-    "tree": {
-      "up": "Up ▲",
-      "placesBelow_one": "{{formattedCount}} place below",
-      "placesBelow_other": "{{formattedCount}} places below",
-      "unlock": "Unlock",
-      "lock": "Lock",
-      "unlockSuccess": "Unlock request sent. The unlock will appear soon; update the page in a while to see it.",
-      "lockSuccess": "Lock request sent. The lock will appear soon; update the page in a while to see it.",
-      "select": "Select ▼",
-      "buy": "Buy ({{price}} TON)",
-      "loadingPath": "Loading path...",
-      "breadcrumbEmpty": "Breadcrumbs will appear here once a place is selected.",
-      "breadcrumbs": "Breadcrumb"
-    }
   },
   "common": {
     "cancel": "Cancel",
@@ -470,7 +358,10 @@
       "entryAmount": "from {{currency}}{{amount}}",
       "exit": "Exit",
       "exitAmount": "up to {{currency}}{{amount}} per {{period}}",
-      "periods": { "cycle": "cycle", "program": "program" }
+      "periods": {
+        "cycle": "cycle",
+        "program": "program"
+      }
     }
   },
   "programQueue": {
@@ -526,7 +417,15 @@
     "placesBelow_one": "{{formattedCount}} total place below",
     "placesBelow_other": "{{formattedCount}} total places below",
     "rank": "Rank",
-    "ranks": { "bronze": "Bronze", "silver": "Silver", "gold": "Gold", "platinum": "Platinum", "sapphire": "Sapphire", "emerald": "Emerald", "diamond": "Diamond" },
+    "ranks": {
+      "bronze": "Bronze",
+      "silver": "Silver",
+      "gold": "Gold",
+      "platinum": "Platinum",
+      "sapphire": "Sapphire",
+      "emerald": "Emerald",
+      "diamond": "Diamond"
+    },
     "unlock": "Unlock",
     "lock": "Lock",
     "unlockSuccess": "Unlock request sent. The unlock will appear soon; update the page in a while to see it.",

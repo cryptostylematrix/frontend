@@ -1,0 +1,51 @@
+{
+  "name": "Flash Matrix",
+  "image": "https://cryptostylematrix.github.io/frontend/ls.png",
+  "creator": {
+    "tg": "cryptostylematrix"
+  },
+  "features": [
+    "clones",
+    "structure management"
+  ],
+  "platforms": 8,
+  "entry": {
+    "price": 150,
+    "currency": "USD"
+  },
+  "incomes": [
+    {
+      "period": "program",
+      "value": 11350,
+      "currency": "USD"
+    }
+  ],
+  "presentations": {
+    "pdf": {
+      "de": "",
+      "en": "",
+      "es": "",
+      "fr": "",
+      "hu": "",
+      "it": "",
+      "kk": "",
+      "pl": "",
+      "pt": "",
+      "ru": "",
+      "uk": ""
+    },
+    "video": {
+      "de": "",
+      "en": "",
+      "es": "",
+      "fr": "",
+      "hu": "",
+      "it": "",
+      "kk": "",
+      "pl": "",
+      "pt": "",
+      "ru": "",
+      "uk": ""
+    }
+  }
+}
