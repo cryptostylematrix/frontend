@@ -8,7 +8,8 @@ const defaultNeoMarketingAddr = "EQAc4cKpE4yQpsadUsem6r30HHjjrmmtT13pPsRpvtLSEUH
 const defaultTonEndpoint = "https://toncenter.com/api/v2/jsonRPC";
 const defaultAvailableTestProgramWalletAddresses = [
   "UQCOD8EI4RWZZtOr3IGvBsVHorV19JEhtQntSWaQhvba0VKA",
-  "UQDWII85XpIkfMwcfPJLIREdERsmRjO0SN42rApw8jaNKCwx"
+  "UQDWII85XpIkfMwcfPJLIREdERsmRjO0SN42rApw8jaNKCwx",
+  "UQCKN1sf6RGcvGIzohLwPz49T6X4s8H7RWtYKYbs7ent0gvY"
 ];
 const configuredAvailableTestProgramWalletAddresses = import.meta.env
   .VITE_AVAILABLE_TEST_PROGRAM_WALLETS as string | undefined;
