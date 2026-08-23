@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import ProgramBlock from "./ProgramBlock";
 import {
-  CRYPTOCASH_MARKETING_PROGRAM_ADDRESS,
-  MULTI_MARKETING_PROGRAM_ADDRESS,
-  NEO_MARKETING_PROGRAM_ADDRESS,
+  ACTUAL_CRYPTOCASH_MARKETING_PROGRAM_ADDRESS,
+  ACTUAL_MULTI_MARKETING_PROGRAM_ADDRESS,
+  ACTUAL_NEO_MARKETING_PROGRAM_ADDRESS,
 } from "../programs";
 const SHOW_LEGACY_PROGRAMS = false;
 const SHOW_MULTI_AND_NEO = true;
@@ -36,12 +36,12 @@ export default function AvailablePrograms() {
         <div className="programs-grid">
           {SHOW_MULTI_AND_NEO && (
             <>
-              <ProgramBlock marketingAddress={MULTI_MARKETING_PROGRAM_ADDRESS} />
-              <ProgramBlock marketingAddress={NEO_MARKETING_PROGRAM_ADDRESS} />
+              <ProgramBlock marketingAddress={ACTUAL_MULTI_MARKETING_PROGRAM_ADDRESS} />
+              <ProgramBlock marketingAddress={ACTUAL_NEO_MARKETING_PROGRAM_ADDRESS} />
             </>
           )}
           <ProgramBlock
-            marketingAddress={CRYPTOCASH_MARKETING_PROGRAM_ADDRESS}
+            marketingAddress={ACTUAL_CRYPTOCASH_MARKETING_PROGRAM_ADDRESS}
           />
         </div>
       </section>

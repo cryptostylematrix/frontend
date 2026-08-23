@@ -12,7 +12,7 @@ import {
   type ReferralCountStatistics,
 } from "../../services/programApi";
 import { loadProgramMetadata } from "../../services/programsService";
-import { CRYPTOCASH_MARKETING_PROGRAM_ADDRESS } from "../../programs";
+import { ACTUAL_CRYPTOCASH_MARKETING_PROGRAM_ADDRESS } from "../../programs";
 import "./program-stat.css";
 
 type LoadState = "loading" | "ready" | "not-found" | "error";
@@ -46,7 +46,7 @@ const isCryptoCashAddress = (address: string) => {
   try {
     return (
       Address.parse(address).toRawString() ===
-      Address.parse(CRYPTOCASH_MARKETING_PROGRAM_ADDRESS).toRawString()
+      Address.parse(ACTUAL_CRYPTOCASH_MARKETING_PROGRAM_ADDRESS).toRawString()
     );
   } catch {
     return false;

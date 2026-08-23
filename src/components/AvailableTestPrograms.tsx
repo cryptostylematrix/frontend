@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { WalletContext } from "../App";
 import { appConfig } from "../config";
-import { AVAILABLE_TEST_PROGRAM_ADDRESSES } from "../programs";
+import { TEST_PROGRAM_ADDRESSES } from "../programs";
 import { loadProgramMetadata } from "../services/programsService";
 import ProgramBlock from "./ProgramBlock";
 import "./available-test-programs.css";
@@ -44,7 +44,7 @@ export default function AvailableTestPrograms() {
 
     setIsLoading(true);
     void Promise.all(
-      AVAILABLE_TEST_PROGRAM_ADDRESSES.map(async (marketingAddress) =>
+      TEST_PROGRAM_ADDRESSES.map(async (marketingAddress) =>
         (await loadProgramMetadata(marketingAddress))
           ? marketingAddress
           : null,
