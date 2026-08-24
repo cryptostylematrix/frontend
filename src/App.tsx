@@ -8,7 +8,6 @@ import AddProfile from "./pages/profile/AddProfile";
 import CreateProfile from "./pages/profile/CreateProfile";
 import UpdateProfile from "./pages/profile/UpdateProfile";
 import Finance from "./pages/Finance";
-import Neo from "./pages/neo/Neo";
 
 import Header from "./components/header/Header";
 import Footer from "./components/Footer";
@@ -16,11 +15,6 @@ import Navigation from "./components/Navigation";
 
 import { ProfileProvider } from "./context/ProfileContext";
 import { useTonConnectUI } from "@tonconnect/ui-react";
-import NeoInviter from "./pages/neo/NeoInviter";
-import NeoStructure from "./pages/neo/NeoStructure";
-import NeoMatrixes from "./pages/neo/NeoMatrixes";
-import NeoMarketing from "./pages/neo/NeoMarketing";
-import NeoStat from "./pages/neo/NeoStat";
 import Programs from "./pages/programs/Programs";
 import ProgramReferrals from "./pages/programs/ProgramReferrals";
 import ProgramInviter from "./pages/programs/ProgramInviter";
@@ -71,15 +65,6 @@ function App() {
                   <Route path="stat" element={<ProgramStat />} />
                   <Route path="structures" element={<ProgramStructures />} />
                   <Route path="marketing" element={<ProgramMarketing />} />
-                </Route>
-                
-                <Route path="/neo" element={<Neo />}>
-                  <Route index element={<Navigate to="inviter" replace />} />
-                  <Route path="inviter" element={<NeoInviter />} />
-                  <Route path="structure" element={<NeoStructure />} />
-                  <Route path="matrixes" element={<NeoMatrixes />} />
-                  <Route path="marketing" element={<NeoMarketing />} />
-                  <Route path="stat" element={<NeoStat />} />
                 </Route>
               </Routes>
             </div>

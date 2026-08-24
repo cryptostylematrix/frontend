@@ -37,6 +37,11 @@ export type ProgramPlace = {
   group_volume: number;
 };
 
+export type ProgramPlaceWithMatrix = ProgramPlace & {
+  matrix_size: number;
+  matrix_filling: number;
+};
+
 export type ProgramPlaceRef = Pick<
   ProgramPlace,
   "profile_addr" | "place_number"
@@ -233,7 +238,8 @@ export interface ProgramApi {
     profileAddress: string,
     page?: number,
     pageSize?: number,
-  ) => Promise<ProgramPaginated<ProgramPlace> | null>;
+    onlyNotClosed?: boolean,
+  ) => Promise<ProgramPaginated<ProgramPlaceWithMatrix> | null>;
   getPlacesCount: (
     marketingAddress: string,
     structureNumber: number,
@@ -305,7 +311,7 @@ const defaultOrigin = typeof window !== "undefined" ? window.location.origin : "
 const buildUrl = (
   marketingAddress: string,
   path: string,
-  query: Record<string, string | number | null | undefined>,
+  query: Record<string, string | number | boolean | null | undefined>,
 ) => {
   const url = new URL(`/api/program/${encodeURIComponent(marketingAddress)}/${path}`, normalizedBase || defaultOrigin);
   Object.entries(query).forEach(([key, value]) => {
@@ -475,7 +481,8 @@ export async function getPlaces(
   profileAddress: string,
   page = 1,
   pageSize = 20,
-): Promise<ProgramPaginated<ProgramPlace> | null> {
+  onlyNotClosed = false,
+): Promise<ProgramPaginated<ProgramPlaceWithMatrix> | null> {
   const normalizedMarketingAddress = marketingAddress.trim();
   const normalizedProfileAddress = profileAddress.trim();
   if (
@@ -492,7 +499,7 @@ export async function getPlaces(
     return null;
   }
 
-  return safeGet<ProgramPaginated<ProgramPlace>>(
+  return safeGet<ProgramPaginated<ProgramPlaceWithMatrix>>(
     buildUrl(
       normalizedMarketingAddress,
       `structures/${structureNumber}/places`,
@@ -500,6 +507,7 @@ export async function getPlaces(
         profile_addr: normalizedProfileAddress,
         page,
         page_size: pageSize,
+        only_not_closed: onlyNotClosed,
       },
     ),
   );

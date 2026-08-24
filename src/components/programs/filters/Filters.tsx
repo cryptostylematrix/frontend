@@ -66,7 +66,11 @@ export default function Filters() {
     setUsesMatrixTerminology(false);
 
     void getStructure(marketingAddress, selectedStructure).then((structure) => {
-      if (!cancelled) setUsesMatrixTerminology((structure?.height ?? 0) > 0);
+      if (!cancelled) {
+        setUsesMatrixTerminology(
+          (structure?.width ?? 0) > 0 && (structure?.height ?? 0) > 0,
+        );
+      }
     });
 
     return () => {
@@ -246,7 +250,7 @@ export default function Filters() {
             </select>
           </label>
 
-          <Places />
+          <Places isMatrixStructure={usesMatrixTerminology} />
           <PlaceSearch />
           {supportsLocks && <Locks />}
         </div>

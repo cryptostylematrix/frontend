@@ -6,7 +6,7 @@ import { useStructuresContext } from "../../../context/StructuresContext";
 import {
   getPlaces,
   getPlacesCount,
-  type ProgramPlace,
+  type ProgramPlaceWithMatrix,
 } from "../../../services/programApi";
 import "./filters.css";
 import "./places.css";
@@ -14,7 +14,11 @@ import "./places.css";
 const PAGE_SIZE = 8;
 const pad2 = (value: number) => value.toString().padStart(2, "0");
 
-export default function Places() {
+type PlacesProps = {
+  isMatrixStructure: boolean;
+};
+
+export default function Places({ isMatrixStructure }: PlacesProps) {
   const { t, i18n } = useTranslation();
   const { currentProfile } = useProfileContext();
   const { marketingAddress } = useProgramContext();
@@ -28,13 +32,20 @@ export default function Places() {
   const selectRef = useRef<HTMLDivElement>(null);
   const previousStructureRef = useRef<number | undefined>(undefined);
   const previousProfileAddressRef = useRef<string | undefined>(undefined);
-  const [places, setPlaces] = useState<ProgramPlace[]>([]);
+  const previousOnlyNotClosedRef = useRef(false);
+  const [places, setPlaces] = useState<ProgramPlaceWithMatrix[]>([]);
   const [isPlacesOpen, setIsPlacesOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [placesCount, setPlacesCount] = useState(0);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [onlyNotClosed, setOnlyNotClosed] = useState(false);
+  const requestOnlyNotClosed = isMatrixStructure && onlyNotClosed;
+
+  useEffect(() => {
+    if (!isMatrixStructure) setOnlyNotClosed(false);
+  }, [isMatrixStructure]);
 
   useEffect(() => {
     let cancelled = false;
@@ -43,9 +54,12 @@ export default function Places() {
       previousStructureRef.current !== selectedStructure;
     const profileChanged =
       previousProfileAddressRef.current !== profileAddress;
+    const onlyNotClosedChanged =
+      previousOnlyNotClosedRef.current !== requestOnlyNotClosed;
 
     previousStructureRef.current = selectedStructure;
     previousProfileAddressRef.current = profileAddress;
+    previousOnlyNotClosedRef.current = requestOnlyNotClosed;
 
     setIsPlacesOpen(false);
     setPage(1);
@@ -66,12 +80,18 @@ export default function Places() {
       profileAddress,
       1,
       PAGE_SIZE,
+      requestOnlyNotClosed,
     )
       .then((data) => {
         if (cancelled || !data) return;
 
         setPlaces(data.items);
-        if (structureChanged || profileChanged || !selectedPlace) {
+        if (
+          structureChanged ||
+          profileChanged ||
+          onlyNotClosedChanged ||
+          !selectedPlace
+        ) {
           setSelectedPlace(data.items[0] ?? null);
         } else if (data.items.length === 0) {
           setSelectedPlace(null);
@@ -90,6 +110,7 @@ export default function Places() {
     currentProfile,
     marketingAddress,
     refreshKey,
+    requestOnlyNotClosed,
     selectedStructure,
     setSelectedPlace,
   ]);
@@ -128,7 +149,7 @@ export default function Places() {
   }, []);
 
   const groupedPlaces = useMemo(() => {
-    const groups: Record<string, ProgramPlace[]> = {};
+    const groups: Record<string, ProgramPlaceWithMatrix[]> = {};
     places.forEach((place) => {
       const date = new Date(Number(place.created_at) * 1_000);
       const dateKey = `${pad2(date.getDate())}.${pad2(
@@ -146,10 +167,21 @@ export default function Places() {
       .filter((group) => group.items.length > 0);
   }, [places]);
 
-  const formatPlaceLabel = (place: ProgramPlace) => ({
-    label: `[${place.place_number}] ${place.profile_login ?? ""}`,
-    isFull: false,
-  });
+  const formatPlaceLabel = (place: ProgramPlaceWithMatrix) => {
+    const profileTitle = place.profile_login ?? "SC";
+    const matrixProgress =
+      isMatrixStructure && place.matrix_size > 0
+        ? ` (${place.matrix_filling}/${place.matrix_size})`
+        : "";
+
+    return {
+      label: `[${place.place_number}] ${profileTitle}${matrixProgress}`,
+      isFull:
+        isMatrixStructure &&
+        place.matrix_size > 0 &&
+        place.matrix_filling >= place.matrix_size,
+    };
+  };
 
   const selectedPlaceLabel = useMemo(() => {
     if (loading) return t("home.loading");
@@ -162,7 +194,7 @@ export default function Places() {
       return places.length > 0 ? "..." : t("structure.noPlaces", "No places");
     }
     return formatPlaceLabel(found).label;
-  }, [loading, places, selectedPlace, t]);
+  }, [isMatrixStructure, loading, places, selectedPlace, t]);
 
   const placesLabel = useMemo(() => {
     const formattedTotal = new Intl.NumberFormat(i18n.language).format(
@@ -175,7 +207,7 @@ export default function Places() {
   }, [i18n.language, placesCount, t]);
 
   return (
-    <label className="filter-field">
+    <div className="filter-field">
       <span className="filter-label">{placesLabel}</span>
       <div ref={selectRef} className="custom-select" tabIndex={0}>
         <button
@@ -253,6 +285,7 @@ export default function Places() {
                     profileAddress,
                     page + 1,
                     PAGE_SIZE,
+                    requestOnlyNotClosed,
                   )
                     .then((data) => {
                       if (!data) return;
@@ -272,6 +305,17 @@ export default function Places() {
           </div>
         )}
       </div>
-    </label>
+      {isMatrixStructure && (
+        <label className="places-filter__checkbox">
+          <input
+            type="checkbox"
+            checked={onlyNotClosed}
+            disabled={loading || loadingMore}
+            onChange={(event) => setOnlyNotClosed(event.target.checked)}
+          />
+          <span>{t("structure.onlyNotClosed", "Only unclosed")}</span>
+        </label>
+      )}
+    </div>
   );
 }
