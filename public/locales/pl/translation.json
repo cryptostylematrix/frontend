@@ -358,8 +358,10 @@
       },
       "entry": "Wejście",
       "entryAmount": "od {{amount}}{{currency}}",
+      "entryAmountFixed": "{{amount}}{{currency}}",
       "exit": "Wyjście",
       "exitAmount": "do {{amount}}{{currency}} na {{period}}",
+      "exitAmountFrom": "od {{amount}}{{currency}}",
       "periods": {
         "cycle": "cykl",
         "program": "program"

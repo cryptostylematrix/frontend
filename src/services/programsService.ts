@@ -13,6 +13,7 @@ type ProgramMetadata = {
   entry?: {
     price?: unknown;
     currency?: unknown;
+    kind?: unknown;
   } | null;
   incomes?: unknown;
   presentations?: {
@@ -26,8 +27,13 @@ export type ProgramPrice = {
   currency: string;
 };
 
+export type ProgramEntry = ProgramPrice & {
+  kind: "fixed" | "minimum";
+};
+
 export type ProgramIncome = ProgramPrice & {
   period: string;
+  kind: "minimum" | "maximum";
 };
 
 export type ProgramPresentationLinks = Record<string, string>;
@@ -40,7 +46,7 @@ export type Program = {
   creatorTg: string | null;
   features: string[];
   platforms: number | null;
-  entry: ProgramPrice | null;
+  entry: ProgramEntry | null;
   incomes: ProgramIncome[];
   presentations: {
     pdf: ProgramPresentationLinks;
@@ -83,10 +89,11 @@ const optionalNumber = (value: unknown) => {
 
 const parsePrice = (
   value: ProgramMetadata["entry"],
-): ProgramPrice | null => {
+): ProgramEntry | null => {
   const price = optionalNumber(value?.price);
   const currency = optionalString(value?.currency);
-  return price === null || !currency ? null : { value: price, currency };
+  const kind = value?.kind === "fixed" ? "fixed" : "minimum";
+  return price === null || !currency ? null : { value: price, currency, kind };
 };
 
 const parseIncomes = (value: unknown): ProgramIncome[] => {
@@ -98,9 +105,10 @@ const parseIncomes = (value: unknown): ProgramIncome[] => {
     const amount = optionalNumber(income.value);
     const currency = optionalString(income.currency);
     const period = optionalString(income.period ?? income.preiod);
+    const kind = income.kind === "minimum" ? "minimum" : "maximum";
     return amount === null || !currency || !period
       ? []
-      : [{ value: amount, currency, period }];
+      : [{ value: amount, currency, period, kind }];
   });
 };
 

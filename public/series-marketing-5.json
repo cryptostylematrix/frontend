@@ -1,6 +1,6 @@
 {
   "name": "Silver Matrix",
-  "image": "https://cryptostylematrix.github.io/frontend/ls.png",
+  "image": "https://cryptostylematrix.github.io/frontend/sliver_matrix.jpeg",
   "creator": {
     "tg": "cryptostylematrix"
   },
@@ -11,9 +11,17 @@
   "platforms": 2,
   "entry": {
     "price": 103,
-    "currency": "USD"
+    "currency": "USD",
+    "kind": "fixed"
   },
-  "incomes": [],
+  "incomes": [
+    {
+      "period": "program",
+      "value": 1000,
+      "currency": "USD",
+      "kind": "minimum"
+    }
+  ],
   "presentations": {
     "pdf": {
       "de": "",

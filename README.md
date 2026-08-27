@@ -1,4 +1,10 @@
-# React + TypeScript + Vite
+# Crypto Style Matrix frontend
+
+## Program metadata standard
+
+Marketing V3 program metadata is documented in [docs/PROGRAM_METADATA.md](docs/PROGRAM_METADATA.md). A machine-readable JSON Schema is available at [public/program-metadata.schema.json](public/program-metadata.schema.json) and is published with the frontend at `https://cryptostylematrix.github.io/frontend/program-metadata.schema.json`.
+
+## Vite development notes
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

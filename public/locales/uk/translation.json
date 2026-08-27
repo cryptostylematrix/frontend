@@ -358,8 +358,10 @@
       },
       "entry": "Вхід",
       "entryAmount": "від {{amount}}{{currency}}",
+      "entryAmountFixed": "{{amount}}{{currency}}",
       "exit": "Вихід",
       "exitAmount": "до {{amount}}{{currency}} за {{period}}",
+      "exitAmountFrom": "від {{amount}}{{currency}}",
       "periods": {
         "cycle": "цикл",
         "program": "програму"

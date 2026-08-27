@@ -84,6 +84,8 @@ Do not calculate card addresses from series/admin configuration unless a new req
 
 `ProgramBlock` receives only a marketing contract address. It obtains Marketing V3 basic data, follows `metadata_uri`, and renders the card. The same component is used by actual and test lists.
 
+The normative project specification is `docs/PROGRAM_METADATA.md`; its machine-readable schema is `public/program-metadata.schema.json`. Keep the parser, schema, documentation, examples, and bundled metadata aligned whenever the model changes.
+
 Metadata rules:
 
 - Prefer the URI returned by Marketing V3 basic data.

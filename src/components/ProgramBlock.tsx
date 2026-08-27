@@ -156,11 +156,19 @@ export default function ProgramBlock({ marketingAddress }: Props) {
                 <>
                   <span>{t("programs.metadata.entry", "Entry")}</span>{" "}
                   <span className="program-card__price-amount">
-                    {t("programs.metadata.entryAmount", {
-                      amount: formatNumber(program.entry.value),
-                      currency: currencySymbol(program.entry.currency),
-                      defaultValue: "from {{currency}}{{amount}}",
-                    })}
+                    {t(
+                      program.entry.kind === "fixed"
+                        ? "programs.metadata.entryAmountFixed"
+                        : "programs.metadata.entryAmount",
+                      {
+                        amount: formatNumber(program.entry.value),
+                        currency: currencySymbol(program.entry.currency),
+                        defaultValue:
+                          program.entry.kind === "fixed"
+                            ? "{{currency}}{{amount}}"
+                            : "from {{currency}}{{amount}}",
+                      },
+                    )}
                   </span>
                 </>
               )}
@@ -171,16 +179,22 @@ export default function ProgramBlock({ marketingAddress }: Props) {
                 <>
                   <span>{t("programs.metadata.exit", "Exit")}</span>{" "}
                   <span className="program-card__price-amount">
-                    {t("programs.metadata.exitAmount", {
-                      amount: formatNumber(highestIncome.value),
-                      currency: currencySymbol(highestIncome.currency),
-                      period: t(
-                        `programs.metadata.periods.${featureKey(highestIncome.period)}`,
-                        highestIncome.period,
-                      ),
-                      defaultValue:
-                        "up to {{currency}}{{amount}} per {{period}}",
-                    })}
+                    {highestIncome.kind === "minimum"
+                      ? t("programs.metadata.exitAmountFrom", {
+                          amount: formatNumber(highestIncome.value),
+                          currency: currencySymbol(highestIncome.currency),
+                          defaultValue: "from {{currency}}{{amount}}",
+                        })
+                      : t("programs.metadata.exitAmount", {
+                          amount: formatNumber(highestIncome.value),
+                          currency: currencySymbol(highestIncome.currency),
+                          period: t(
+                            `programs.metadata.periods.${featureKey(highestIncome.period)}`,
+                            highestIncome.period,
+                          ),
+                          defaultValue:
+                            "up to {{currency}}{{amount}} per {{period}}",
+                        })}
                   </span>
                 </>
               )}
