@@ -16,7 +16,7 @@
     "currency": "USDT"
   },
   "incomes": [{
-    "preiod": "cycle",
+    "period": "cycle",
     "value": 80000,
     "currency": "USDT"
   }],

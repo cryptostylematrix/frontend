@@ -356,8 +356,10 @@
       },
       "entry": "Entrada",
       "entryAmount": "a partir de {{amount}} {{currency}}",
+      "entryAmountFixed": "{{amount}} {{currency}}",
       "exit": "Saída",
       "exitAmount": "até {{amount}} {{currency}} por {{period}}",
+      "exitAmountFrom": "a partir de {{amount}} {{currency}}",
       "periods": {
         "cycle": "ciclo",
         "program": "programa"

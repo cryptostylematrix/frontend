@@ -356,8 +356,10 @@
       },
       "entry": "Einstieg",
       "entryAmount": "ab {{amount}} {{currency}}",
+      "entryAmountFixed": "{{amount}} {{currency}}",
       "exit": "Auszahlung",
       "exitAmount": "bis zu {{amount}} {{currency}} pro {{period}}",
+      "exitAmountFrom": "ab {{amount}} {{currency}}",
       "periods": {
         "cycle": "Zyklus",
         "program": "Programm"

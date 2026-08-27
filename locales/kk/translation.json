@@ -356,8 +356,10 @@
       },
       "entry": "Кіру",
       "entryAmount": "{{amount}}{{currency}}-дан бастап",
+      "entryAmountFixed": "{{amount}}{{currency}}",
       "exit": "Шығу",
       "exitAmount": "{{period}} үшін {{amount}}{{currency}}-ға дейін",
+      "exitAmountFrom": "{{amount}}{{currency}}-дан бастап",
       "periods": {
         "cycle": "цикл",
         "program": "бағдарлама"

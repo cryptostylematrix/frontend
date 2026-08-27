@@ -360,8 +360,10 @@
       },
       "entry": "Вход",
       "entryAmount": "от {{amount}}{{currency}}",
+      "entryAmountFixed": "{{amount}}{{currency}}",
       "exit": "Выход",
       "exitAmount": "до {{amount}}{{currency}} за {{period}}",
+      "exitAmountFrom": "от {{amount}}{{currency}}",
       "periods": {
         "cycle": "цикл",
         "program": "программу"

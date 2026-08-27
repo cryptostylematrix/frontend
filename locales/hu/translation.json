@@ -356,8 +356,10 @@
       },
       "entry": "Belépés",
       "entryAmount": "{{amount}}{{currency}}-tól",
+      "entryAmountFixed": "{{amount}}{{currency}}",
       "exit": "Kilépés",
       "exitAmount": "akár {{amount}}{{currency}} {{period}}onként",
+      "exitAmountFrom": "{{amount}}{{currency}}-tól",
       "periods": {
         "cycle": "ciklus",
         "program": "program"
