@@ -66,6 +66,9 @@ const positionPayload = (position: PlacePosData | null): Cell | null => {
     .endCell();
 };
 
+const activationPayload = (placeNumber: number): Cell =>
+  beginCell().storeUint(placeNumber, 32).endCell();
+
 async function getBuyCommand(
   marketingAddress: string,
   structure: number,
@@ -235,6 +238,121 @@ export async function executePositionCommand(
         };
   } catch (error) {
     console.error("Program position command error", error);
+    return { success: false, error_code: ErrorCode.UNEXPECTED };
+  }
+}
+
+export async function executeActivatePlace(
+  tonConnectUI: TonConnectUI,
+  marketingAddr: string,
+  structure: number,
+  profileAddr: string,
+  senderAddr: string,
+  placeNumber: number,
+  commandTag: typeof UserCommandTag.activatePlace,
+): Promise<ProgramContractResult> {
+  const marketingAddress = marketingAddr.trim();
+  const profileAddress = profileAddr.trim();
+  const senderAddress = senderAddr.trim();
+  if (
+    !marketingAddress ||
+    !profileAddress ||
+    !senderAddress ||
+    !Number.isInteger(structure) ||
+    !Number.isInteger(placeNumber) ||
+    placeNumber <= 0 ||
+    placeNumber > 0xffff_ffff
+  ) {
+    return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
+  }
+
+  try {
+    const marketingData = await getMarketingV3Data(marketingAddress);
+    const command =
+      marketingData?.structures[String(structure)]?.commands[
+        String(commandTag)
+      ];
+    if (!command) {
+      return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
+    }
+
+    const payload = activationPayload(placeNumber);
+    const execBody = await buildMarketingV3ExecMessageBody({
+      queryId: createQueryId(),
+      structure,
+      profileAddr: profileAddress,
+      commandTag,
+      payloadBocHex: payload.toBoc().toString("hex"),
+    });
+    if (!execBody?.boc_hex) {
+      return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
+    }
+
+    const marketingJettonWallet = command.sender_jetton_wallet?.trim();
+    if (!marketingJettonWallet) {
+      const result = await sendTransaction(
+        tonConnectUI,
+        marketingAddress,
+        toBigInt(command.price) + toBigInt(command.gram_fee),
+        Cell.fromHex(execBody.boc_hex),
+      );
+      return result.success
+        ? { success: true }
+        : {
+            success: false,
+            error_code: result.errors?.[0] ?? ErrorCode.TRANSACTION_FAILED,
+          };
+    }
+
+    const jettonData = await getJettonWalletData(marketingJettonWallet);
+    const minterAddress = jettonData?.minter_addr?.trim();
+    if (!minterAddress) {
+      return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
+    }
+
+    const senderJettonWallet = await getJettonWalletAddress(
+      minterAddress,
+      senderAddress,
+    );
+    if (!senderJettonWallet?.wallet_addr) {
+      return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
+    }
+
+    if (
+      !(await hasSufficientJettonBalance(
+        senderJettonWallet.wallet_addr,
+        command.price,
+      ))
+    ) {
+      return { success: false, error_code: ErrorCode.INSUFFICIENT_FUNDS };
+    }
+
+    const transferBody = await buildJettonTransferMsgBody({
+      queryId: createQueryId(),
+      amount: command.price,
+      destinationAddr: marketingAddress,
+      responseDestinationAddr: senderAddress,
+      forwardTonAmount: command.gram_fee,
+      forwardPayloadBocHex: execBody.boc_hex,
+    });
+    if (!transferBody?.boc_hex) {
+      return { success: false, error_code: ErrorCode.INVALID_PAYLOAD };
+    }
+
+    const result = await sendTransaction(
+      tonConnectUI,
+      senderJettonWallet.wallet_addr,
+      toBigInt(command.gram_fee) + toNano("0.05"),
+      Cell.fromHex(transferBody.boc_hex),
+    );
+    return result.success
+      ? { success: true }
+      : {
+          success: false,
+          error_code: result.errors?.[0] ?? ErrorCode.TRANSACTION_FAILED,
+        };
+  } catch (error) {
+    console.error("Program place activation error", error);
     return { success: false, error_code: ErrorCode.UNEXPECTED };
   }
 }

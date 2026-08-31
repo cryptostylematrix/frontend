@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useTonConnectUI } from "@tonconnect/ui-react";
-import { fromNano } from "@ton/core";
+import { Address, fromNano } from "@ton/core";
 import { useTranslation } from "react-i18next";
 import { WalletContext } from "../../../App";
 import noAvatar from "../../../assets/no-avatar.jpg";
@@ -19,6 +19,7 @@ import {
 import {
   buyPlaceByJetton,
   buyPlaceByTon,
+  executeActivatePlace,
   executePositionCommand,
   type PlacePosData,
 } from "../../../services/programStructuresService";
@@ -58,6 +59,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     setSelectedPlace,
   } = useStructuresContext();
   const [buyLoading, setBuyLoading] = useState(false);
+  const [activateLoading, setActivateLoading] = useState(false);
   const [lockLoading, setLockLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [imageFailed, setImageFailed] = useState(false);
@@ -66,7 +68,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     text: string;
   } | null>(null);
   const [confirmAction, setConfirmAction] = useState<
-    "buy" | "lock" | "unlock" | null
+    "buy" | "activate" | "lock" | "unlock" | null
   >(null);
 
   const isFilled = selectedNode?.node_type === "filled";
@@ -104,11 +106,19 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     selectedNode?.node_type === "empty" && selectedNode.buy_command_tag !== null
       ? commands[String(selectedNode.buy_command_tag)]
       : undefined;
+  const activateCommand =
+    isFilled && selectedNode.activate_command_tag !== null
+      ? commands[String(selectedNode.activate_command_tag)]
+      : undefined;
   const lockCommand = commands[String(UserCommandTag.lockPos)];
   const unlockCommand = commands[String(UserCommandTag.unlockPos)];
   const usesJetton = Boolean(buyCommand?.sender_jetton_wallet?.trim());
   const { metadata: jettonMetadata, isLoading: jettonMetadataLoading } =
     useJettonMetadata(buyCommand?.sender_jetton_wallet);
+  const {
+    metadata: activationJettonMetadata,
+    isLoading: activationJettonMetadataLoading,
+  } = useJettonMetadata(activateCommand?.sender_jetton_wallet);
   const rawPrice = buyCommand?.price ?? 0;
   const displayedPrice = usesJetton
     ? jettonMetadata
@@ -116,6 +126,21 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
       : "—"
     : fromNano(rawPrice);
   const currency = usesJetton ? jettonMetadata?.symbol ?? "JETTON" : "TON";
+  const activationUsesJetton = Boolean(
+    activateCommand?.sender_jetton_wallet?.trim(),
+  );
+  const activationPrice = activateCommand?.price ?? 0;
+  const displayedActivationPrice = activationUsesJetton
+    ? activationJettonMetadata
+      ? formatJettonAmount(
+          activationPrice,
+          activationJettonMetadata.decimals,
+        )
+      : "—"
+    : fromNano(activationPrice);
+  const activationCurrency = activationUsesJetton
+    ? activationJettonMetadata?.symbol ?? "JETTON"
+    : "TON";
 
   useEffect(() => {
     let cancelled = false;
@@ -180,6 +205,26 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     selectedNode.can_buy &&
     buyCommand &&
     (!selectedNode.include_position || fixedPos);
+  const canActivate = (() => {
+    if (
+      !isFilled ||
+      !selectedNode.can_activate ||
+      selectedNode.activate_command_tag !== UserCommandTag.activatePlace ||
+      !activateCommand ||
+      !selectedNode.profile_addr ||
+      !currentProfile?.address
+    ) {
+      return false;
+    }
+
+    try {
+      return Address.parse(selectedNode.profile_addr).equals(
+        Address.parse(currentProfile.address),
+      );
+    } catch {
+      return false;
+    }
+  })();
   const lockAction =
     selectedNode.can_unlock
       ? "unlock"
@@ -190,6 +235,11 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     price: displayedPrice,
     currency,
     defaultValue: `Buy (${displayedPrice} ${currency})`,
+  });
+  const activateLabel = t("structure.activate", {
+    price: displayedActivationPrice,
+    currency: activationCurrency,
+    defaultValue: `Activate (${displayedActivationPrice} ${activationCurrency})`,
   });
 
   const handleBuy = async () => {
@@ -284,6 +334,47 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
       );
     } finally {
       setLockLoading(false);
+    }
+  };
+
+  const handleActivate = async () => {
+    if (
+      !canActivate ||
+      !currentProfile ||
+      selectedNode.node_type !== "filled"
+    ) {
+      return;
+    }
+
+    setDetailsStatus(null);
+    setActivateLoading(true);
+    try {
+      const result = await executeActivatePlace(
+        tonConnectUI,
+        marketingAddress,
+        selectedStructure,
+        selectedNode.profile_addr!,
+        wallet,
+        selectedNode.place_number,
+        UserCommandTag.activatePlace,
+      );
+      setDetailsStatus(
+        result.success
+          ? {
+              type: "success",
+              text: t(
+                "structure.activateSuccess",
+                "Activation request sent. Update the page shortly to see it.",
+              ),
+            }
+          : {
+              type: "error",
+              text: translateError(t, result.error_code),
+            },
+      );
+      if (result.success) notifyPlacePurchaseSubmitted();
+    } finally {
+      setActivateLoading(false);
     }
   };
 
@@ -441,6 +532,19 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
         </button>
       )}
 
+      {canActivate && (
+        <button
+          type="button"
+          className="details-action details-action--primary"
+          onClick={() => setConfirmAction("activate")}
+          disabled={activateLoading || activationJettonMetadataLoading}
+        >
+          {activateLoading || activationJettonMetadataLoading
+            ? t("home.loading", "Loading...")
+            : activateLabel}
+        </button>
+      )}
+
       {lockAction && (
         <button
           type="button"
@@ -473,6 +577,8 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
             ? t("structure.confirmLockTitle", "Confirm locking")
             : confirmAction === "unlock"
               ? t("structure.confirmUnlockTitle", "Confirm unlocking")
+              : confirmAction === "activate"
+                ? t("structure.confirmActivateTitle", "Confirm activation")
               : t("structure.confirmTitle", "Confirm purchase")
         }
         message={
@@ -498,6 +604,8 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
             ? t("structure.lock", "Lock")
             : confirmAction === "unlock"
               ? t("structure.unlock", "Unlock")
+              : confirmAction === "activate"
+                ? activateLabel
               : buyLabel
         }
         cancelLabel={t("common.cancel", "Cancel")}
@@ -507,6 +615,8 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
           setConfirmAction(null);
           if (action === "buy") {
             void handleBuy();
+          } else if (action === "activate") {
+            void handleActivate();
           } else if (action === "lock" || action === "unlock") {
             void handleLockToggle(action);
           }

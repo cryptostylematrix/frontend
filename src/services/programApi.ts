@@ -107,6 +107,10 @@ export type ProgramStructure = {
   display_height: number;
   prev_required: boolean;
   pos_algo: ProgramPosAlgo;
+  activity: {
+    set_active_on_activation?: boolean;
+    [key: string]: unknown;
+  } | null;
 };
 
 type ProgramTreeNodeBase = {
@@ -144,6 +148,8 @@ export type ProgramTreeFilledNode = ProgramTreeNodeBase & {
   is_active: boolean;
   created_at: number;
   activated_at: number | null;
+  can_activate: boolean;
+  activate_command_tag: number | null;
   is_root: boolean;
 };
 
