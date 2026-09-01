@@ -33,7 +33,14 @@ export type ProgramPlace = {
   pos: number;
   filling: number;
   deep: number;
+};
+
+export type ProfileVolume = {
+  marketing_addr: string;
+  structure_number: number;
+  profile_addr: string;
   personal_volume: number;
+  referral_volume: number;
   group_volume: number;
 };
 
@@ -238,6 +245,11 @@ export interface ProgramApi {
     marketingAddress: string,
     structureNumber: number,
   ) => Promise<ProgramPlace | null>;
+  getProfileVolume: (
+    marketingAddress: string,
+    structureNumber: number,
+    profileAddress: string,
+  ) => Promise<ProfileVolume | null>;
   getPlaces: (
     marketingAddress: string,
     structureNumber: number,
@@ -477,6 +489,32 @@ export async function getTopPlace(
       normalizedMarketingAddress,
       `structures/${structureNumber}/top-place`,
       {},
+    ),
+  );
+}
+
+export async function getProfileVolume(
+  marketingAddress: string,
+  structureNumber: number,
+  profileAddress: string,
+): Promise<ProfileVolume | null> {
+  const normalizedMarketingAddress = marketingAddress.trim();
+  const normalizedProfileAddress = profileAddress.trim();
+  if (
+    !normalizedMarketingAddress ||
+    !normalizedProfileAddress ||
+    !Number.isInteger(structureNumber) ||
+    structureNumber < 0 ||
+    structureNumber > 255
+  ) {
+    return null;
+  }
+
+  return safeGet<ProfileVolume>(
+    buildUrl(
+      normalizedMarketingAddress,
+      `structures/${structureNumber}/volume`,
+      { profile_addr: normalizedProfileAddress },
     ),
   );
 }
@@ -810,6 +848,7 @@ export const programApi: ProgramApi = {
   getFirstPlace,
   getLastPlace,
   getTopPlace,
+  getProfileVolume,
   getPlaces,
   getPlacesCount,
   searchPlaces,
