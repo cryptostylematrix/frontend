@@ -276,8 +276,8 @@ Statistics come from:
 - `referrals` contains overall direct-referral totals.
 - `structures` includes every configured structure, including zero-place structures.
 - Structure `0` represents the referral/program-wide structure.
-- Use `total_profiles` and `active_profiles` for partner/person counts.
-- `total_places` and `active_places` count database place rows and may exceed unique profiles due to reinvests or multiple places. Never label them as partner counts.
+- Use `total_profiles`, `active_profiles`, and `activated_profiles` for partner/person counts. Active means `is_active`; activated means `activated_at` is non-null.
+- `total_places`, `active_places`, and `activated_places` count database place rows and may exceed unique profiles due to reinvests or multiple places. Never label them as partner counts.
 - Keep direct-referral participation separate from whole-structure totals.
 - Follow the established statistics layout rather than duplicating structure `0` under misleading headings.
 

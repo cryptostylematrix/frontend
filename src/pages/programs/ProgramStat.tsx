@@ -32,11 +32,11 @@ function ReferralMetrics({
     <div className="program-stat__metrics">
       <div className="program-stat__metric program-stat__metric--active">
         <span>{t("programs.statisticsPage.activeReferrals")}</span>
-        <strong>{formatter.format(referrals.active)}</strong>
+        <strong>{formatter.format(referrals.activated)}</strong>
       </div>
       <div className="program-stat__metric program-stat__metric--inactive">
         <span>{t("programs.statisticsPage.inactiveReferrals")}</span>
-        <strong>{formatter.format(referrals.inactive)}</strong>
+        <strong>{formatter.format(referrals.not_activated)}</strong>
       </div>
     </div>
   );
@@ -178,7 +178,7 @@ export default function ProgramStat() {
         </div>
         <div className="program-stat__metric program-stat__metric--active">
           <span>{t("programs.statisticsPage.activePartners")}</span>
-          <strong>{formatter.format(structure.active_profiles)}</strong>
+          <strong>{formatter.format(structure.activated_profiles)}</strong>
         </div>
       </div>
 
@@ -208,7 +208,7 @@ export default function ProgramStat() {
             <div className="program-stat__metric program-stat__metric--active">
               <span>{t("programs.statisticsPage.activatedPartners")}</span>
               <strong>
-                {formatter.format(referralStructure.active_profiles)}
+                {formatter.format(referralStructure.activated_profiles)}
               </strong>
             </div>
           </div>

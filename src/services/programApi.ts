@@ -192,19 +192,24 @@ export type ReferralCountStatistics = {
   total: number;
   active: number;
   inactive: number;
+  activated: number;
+  not_activated: number;
 };
 
 export type StructureReferralStatistics = ReferralCountStatistics & {
   total_places: number;
   active_places: number;
+  activated_places: number;
 };
 
 export type StructureStatistics = {
   structure_number: number;
   total_places: number;
   active_places: number;
+  activated_places: number;
   total_profiles: number;
   active_profiles: number;
+  activated_profiles: number;
   referrals: StructureReferralStatistics;
 };
 
