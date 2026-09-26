@@ -6,6 +6,8 @@
     "disconnect": "Déconnecter"
   },
   "profile": {
+    "create_retry_confirmation": "Vérifier à nouveau",
+    "create_waiting_confirmation": "En attente de confirmation de la création du profil…",
     "checking": "Vérification des profils...",
     "add": "+ Ajouter un profil",
     "select": "Sélectionner un profil",
@@ -180,6 +182,7 @@
     }
   },
   "errors": {
+    "err_profile_creation_unconfirmed": "La création du profil n’a pas été confirmée. Elle est peut-être encore en cours. Vérifiez à nouveau sans envoyer une autre transaction.",
     "err_wallet_not_connected": "Le wallet n'est pas connecté.",
     "err_profile_exists": "Le profil existe déjà.",
     "err_profile_not_found": "Profil introuvable.",

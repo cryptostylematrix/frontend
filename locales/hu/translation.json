@@ -6,6 +6,8 @@
     "disconnect": "Leválasztás"
   },
   "profile": {
+    "create_retry_confirmation": "Megerősítés újraellenőrzése",
+    "create_waiting_confirmation": "Várakozás a profil létrehozásának megerősítésére…",
     "checking": "Profilok ellenőrzése...",
     "add": "+ Profil hozzáadása",
     "select": "Profil kiválasztása",
@@ -180,6 +182,7 @@
     }
   },
   "errors": {
+    "err_profile_creation_unconfirmed": "A profil létrehozása még nincs megerősítve. A feldolgozás még folyamatban lehet. Ellenőrizd újra újabb tranzakció küldése nélkül.",
     "err_wallet_not_connected": "A pénztárca nincs csatlakoztatva.",
     "err_profile_exists": "A profil már létezik.",
     "err_profile_not_found": "A profil nem található.",
