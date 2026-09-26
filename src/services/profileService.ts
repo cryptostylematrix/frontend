@@ -3,6 +3,7 @@ import { ErrorCode } from "../errors/ErrorCodes";
 import type { TonConnectUI } from "@tonconnect/ui-react";
 import { Address, Cell, toNano } from "@ton/core";
 import { contractsApi, getCollectionData, getNftAddrByLogin } from "./contractsApi";
+import { getTonClient } from "./tonClient";
 import { sendTransaction } from "./tonConnectService";
 import { capitalize, normalizeImage, toLower } from "./nftContentHelper";
 import { isValidProfileLogin } from "../utils/profileLogin";
@@ -67,9 +68,59 @@ export async function chooseInviter(
   }
 }
 
-/**
- * Create a new profile (sends a TON message).
- */
+export type PendingProfileCreation = {
+  wallet: string;
+  login: string;
+  address: string;
+  collectionAddress: string;
+};
+
+export type ProfileCreationOptions = {
+  pending?: PendingProfileCreation;
+  onSubmitted?: (pending: PendingProfileCreation) => void;
+};
+
+export type ProfileCreationResult = ProfileResult | {
+  success: false;
+  errors: ErrorCode[];
+  pending: PendingProfileCreation;
+};
+
+async function confirmProfileCreation(
+  pending: PendingProfileCreation,
+): Promise<ProfileCreationResult> {
+  // A submitted wallet message is not proof that the collection deployed an NFT.
+  for (let attempt = 0; attempt < 24; attempt += 1) {
+    if (attempt > 0) await new Promise((resolve) => setTimeout(resolve, 5_000));
+    try {
+      const profile = await contractsApi.getProfileNftData(pending.address);
+      if (profile?.is_init !== -1) continue;
+      if (!profile.owner_addr ||
+          !Address.parse(profile.owner_addr).equals(Address.parse(pending.wallet))) {
+        return { success: false, errors: [ErrorCode.CONTRACT_DOES_NOT_BELONG] };
+      }
+      if (!Address.parse(profile.collection_addr).equals(Address.parse(pending.collectionAddress)) ||
+          profile.content?.login !== pending.login) continue;
+      return {
+        success: true,
+        data: {
+          address: pending.address,
+          wallet: pending.wallet,
+          login: pending.login,
+          imageUrl: profile.content.image_url ?? undefined,
+          firstName: profile.content.first_name ?? undefined,
+          lastName: profile.content.last_name ?? undefined,
+          tgUsername: profile.content.tg_username ?? undefined,
+        },
+      };
+    } catch {
+      // Read failures leave confirmation pending; they do not prove rejection.
+    }
+  }
+  return { success: false, errors: [ErrorCode.PROFILE_CREATION_UNCONFIRMED], pending };
+}
+
+/** Submit once, then confirm deployment; retries only read the expected NFT. */
 export async function createProfile(
   tonConnectUI: TonConnectUI,
   wallet: string,
@@ -78,68 +129,59 @@ export async function createProfile(
   firstName?: string,
   lastName?: string,
   tgUsername?: string,
-): Promise<ProfileResult> {
-  // Validate base inputs
+  options: ProfileCreationOptions = {},
+): Promise<ProfileCreationResult> {
   if (!wallet) return { success: false, errors: [ErrorCode.WALLET_NOT_CONNECTED] };
-
-  const trimmedLogin = login.trim();
-  if (!isValidProfileLogin(trimmedLogin)) {
-    return {
-      success: false,
-      errors: [ErrorCode.INVALID_PROFILE_LOGIN_FORMAT],
-    };
+  const normalizedLogin = login.trim().toLowerCase();
+  if (!isValidProfileLogin(normalizedLogin)) {
+    return { success: false, errors: [ErrorCode.INVALID_PROFILE_LOGIN_FORMAT] };
   }
 
-  // ---- Normalize all fields ----
-  const normalizedLogin = toLower(trimmedLogin)!;
-  const normalizedImageUrl = normalizeImage(imageUrl);
-  const normalizedFirstName = capitalize(firstName);
-  const normalizedLastName = capitalize(lastName);
-  const normalizedTgUsername = toLower(tgUsername);
+  try {
+    const owner = Address.parse(wallet);
+    if (options.pending) {
+      if (!owner.equals(Address.parse(options.pending.wallet)) || normalizedLogin !== options.pending.login) {
+        return { success: false, errors: [ErrorCode.INVALID_PAYLOAD] };
+      }
+      return await confirmProfileCreation(options.pending);
+    }
 
-  // ---- Build deploy body via API ----
-  const bodyResponse = await contractsApi.buildDeployItemBody({
-    login: normalizedLogin,
-    imageUrl: normalizedImageUrl,
-    firstName: normalizedFirstName,
-    lastName: normalizedLastName,
-    tgUsername: normalizedTgUsername,
-  });
+    const nftAddr = await getNftAddrByLogin(normalizedLogin);
+    if (!nftAddr?.addr) return { success: false, errors: [ErrorCode.CONTRACT_REQUEST_FAILED] };
 
-  const bocHex = bodyResponse?.boc_hex;
-  if (!bocHex) {
-    return { success: false, errors: [ErrorCode.TRANSACTION_FAILED] };
-  }
+    // RPC failures must not be interpreted as an available login. The contracts
+    // API does not distinguish an undeployed account from a failed get method.
+    const state = await getTonClient().getContractState(Address.parse(nftAddr.addr));
+    if (state.state !== "uninitialized") {
+      return { success: false, errors: [ErrorCode.PROFILE_EXISTS] };
+    }
 
-  const body = Cell.fromHex(bocHex);
-
-  const collectionAddressStr = (await getCollectionData())?.addr;
-  if (!collectionAddressStr) return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
-
-  // ---- Send transaction ----
-  const tx = await sendTransaction(tonConnectUI, collectionAddressStr, toNano("0.05"), body);
-
-  if (!tx.success) return { success: false, errors: tx.errors ?? [] };
-
-  // ---- Derive NFT address from login ----
-  const nftAddr = await getNftAddrByLogin(normalizedLogin);
-  if (!nftAddr?.addr) {
-    return { success: false, errors: [ErrorCode.PROFILE_NOT_FOUND] };
-  }
-
-  // ---- Return normalized data ----
-  return {
-    success: true,
-    data: {
-      address: nftAddr.addr,
-      wallet: wallet.trim(),
+    const collection = await getCollectionData();
+    if (!collection?.addr) return { success: false, errors: [ErrorCode.CONTRACT_REQUEST_FAILED] };
+    const bodyResponse = await contractsApi.buildDeployItemBody({
       login: normalizedLogin,
-      imageUrl: normalizedImageUrl,
-      firstName: normalizedFirstName,
-      lastName: normalizedLastName,
-      tgUsername: normalizedTgUsername,
-    },
-  };
+      imageUrl: normalizeImage(imageUrl),
+      firstName: capitalize(firstName),
+      lastName: capitalize(lastName),
+      tgUsername: toLower(tgUsername),
+    });
+    if (!bodyResponse?.boc_hex) {
+      return { success: false, errors: [ErrorCode.TRANSACTION_FAILED] };
+    }
+    const connectedWallet = tonConnectUI.account?.address;
+    if (!connectedWallet || !owner.equals(Address.parse(connectedWallet))) {
+      return { success: false, errors: [ErrorCode.INVALID_WALLET_ADDRESS] };
+    }
+    const tx = await sendTransaction(tonConnectUI, collection.addr, toNano("0.05"), Cell.fromHex(bodyResponse.boc_hex));
+    if (!tx.success) return { success: false, errors: tx.errors ?? [ErrorCode.TRANSACTION_FAILED] };
+
+    const pending = { wallet, login: normalizedLogin, address: nftAddr.addr, collectionAddress: collection.addr };
+    options.onSubmitted?.(pending);
+    return await confirmProfileCreation(pending);
+  } catch (error) {
+    console.error("Profile creation check failed", error);
+    return { success: false, errors: [ErrorCode.CONTRACT_REQUEST_FAILED] };
+  }
 }
 
 // function toBoc(cell: Cell, opts?: {

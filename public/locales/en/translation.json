@@ -6,6 +6,8 @@
     "disconnect": "Disconnect"
   },
   "profile": {
+    "create_retry_confirmation": "Check confirmation again",
+    "create_waiting_confirmation": "Waiting for profile creation confirmation…",
     "checking": "Checking profiles...",
     "add": "+ Add a Profile",
     "select": "Select Profile",
@@ -180,6 +182,7 @@
     }
   },
   "errors": {
+    "err_profile_creation_unconfirmed": "Profile creation has not been confirmed. It may still be processing. Check again without sending another transaction.",
     "err_wallet_not_connected": "Wallet not connected.",
     "err_profile_exists": "Profile already exists.",
     "err_profile_not_found": "Profile not found.",

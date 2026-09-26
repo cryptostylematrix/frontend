@@ -6,6 +6,8 @@
     "disconnect": "Відключити"
   },
   "profile": {
+    "create_retry_confirmation": "Перевірити підтвердження знову",
+    "create_waiting_confirmation": "Очікування підтвердження створення профілю…",
     "checking": "Перевірка профілів...",
     "add": "+ Додати профіль",
     "select": "Вибрати профіль",
@@ -180,6 +182,7 @@
     }
   },
   "errors": {
+    "err_profile_creation_unconfirmed": "Створення профілю поки не підтверджено. Обробка може ще тривати. Перевірте знову без надсилання нової транзакції.",
     "err_wallet_not_connected": "Гаманець не підключено.",
     "err_profile_exists": "Профіль уже існує.",
     "err_profile_not_found": "Профіль не знайдено.",

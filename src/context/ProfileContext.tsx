@@ -18,6 +18,8 @@ import {
   updateProfile,
   createProfile as createProfileService,
   type ProfileResult,
+  type ProfileCreationOptions,
+  type ProfileCreationResult,
 } from "../services/profileService";
 import {
   addProfileIntent,
@@ -43,7 +45,8 @@ interface ProfileContextType {
     firstName?: string,
     lastName?: string,
     tgUsername?: string,
-  ) => Promise<ProfileResult>;
+    options?: ProfileCreationOptions,
+  ) => Promise<ProfileCreationResult>;
   addProfile: (
     wallet: string,
     login: string,
@@ -318,7 +321,8 @@ export const ProfileProvider: React.FC<{
       firstName?: string,
       lastName?: string,
       tgUsername?: string,
-    ): Promise<ProfileResult> => {
+      options?: ProfileCreationOptions,
+    ): Promise<ProfileCreationResult> => {
       const result = await createProfileService(
         tonConnectUI,
         walletAddress,
@@ -327,8 +331,13 @@ export const ProfileProvider: React.FC<{
         firstName,
         lastName,
         tgUsername,
+        options,
       );
       if (!result.success) return result;
+      if (activeWalletRef.current !== walletAddress) {
+        void persistCreatedProfile(walletAddress, result.data.login);
+        return result;
+      }
 
       const profile: Profile = {
         ...result.data,

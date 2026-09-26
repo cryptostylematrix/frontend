@@ -6,6 +6,8 @@
     "disconnect": "Odłącz"
   },
   "profile": {
+    "create_retry_confirmation": "Sprawdź ponownie",
+    "create_waiting_confirmation": "Oczekiwanie na potwierdzenie utworzenia profilu…",
     "checking": "Sprawdzanie profili...",
     "add": "+ Dodaj profil",
     "select": "Wybierz profil",
@@ -180,6 +182,7 @@
     }
   },
   "errors": {
+    "err_profile_creation_unconfirmed": "Utworzenie profilu nie zostało potwierdzone. Przetwarzanie może nadal trwać. Sprawdź ponownie bez wysyłania kolejnej transakcji.",
     "err_wallet_not_connected": "Portfel nie jest połączony.",
     "err_profile_exists": "Profil już istnieje.",
     "err_profile_not_found": "Profil nie został znaleziony.",

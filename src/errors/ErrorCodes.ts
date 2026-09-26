@@ -1,6 +1,7 @@
 // src/errors/ErrorCodes.ts
 export const ErrorCode = {
     WALLET_NOT_CONNECTED: "err_wallet_not_connected",
+    PROFILE_CREATION_UNCONFIRMED: "err_profile_creation_unconfirmed",
     PROFILE_EXISTS: "err_profile_exists",
     PROFILE_NOT_FOUND: "err_profile_not_found",
     INVALID_LOGIN: "err_invalid_login",

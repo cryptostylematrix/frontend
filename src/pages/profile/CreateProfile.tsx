@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import "./create-profile.css";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ import { useProfileContext } from "../../context/ProfileContext";
 import { Save, X } from "lucide-react";
 import ProfileStatusBlock from "../../components/ProfileStatusBlock";
 import { translateError } from "../../errors/errorUtils";
+import type { PendingProfileCreation } from "../../services/profileService";
 import { ErrorCode } from "../../errors/ErrorCodes";
 import {
   isValidProfileLogin,
@@ -31,6 +32,18 @@ export default function CreateProfile() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorCodes, setErrorCodes] = useState<ErrorCode[] | null>(null);
 
+  const [pending, setPending] = useState<PendingProfileCreation | null>(null);
+  const operationRef = useRef(0);
+  const busyRef = useRef(false);
+  useEffect(() => {
+    operationRef.current += 1;
+    busyRef.current = false;
+    setPending(null);
+    setIsSubmitting(false);
+    setErrorCodes(null);
+    return () => { operationRef.current += 1; };
+  }, [wallet]);
+
   // Require wallet connection
   if (!wallet) {
     return <ProfileStatusBlock type="wallet" />;
@@ -51,24 +64,40 @@ export default function CreateProfile() {
       return;
     }
 
+    if (busyRef.current) return;
+    busyRef.current = true;
+    const operation = operationRef.current;
     setIsSubmitting(true);
-
-    const result = await createProfile(
-      wallet,
-      trimmedLogin,
-      imageUrl.trim(),
-      firstName.trim(),
-      lastName.trim(),
-      tgUsername.trim()
-    );
-
-    if (result?.success === false) {
-      setErrorCodes(result.errors);
-    } else if (result?.success === true) {
-      navigate("/");
+    try {
+      const result = await createProfile(
+        wallet,
+        trimmedLogin,
+        imageUrl.trim(),
+        firstName.trim(),
+        lastName.trim(),
+        tgUsername.trim(),
+        {
+          pending: pending ?? undefined,
+          onSubmitted: (submitted) => {
+            if (operationRef.current === operation) setPending(submitted);
+          },
+        },
+      );
+      if (operationRef.current !== operation) return;
+      if (!result.success) {
+        setErrorCodes(result.errors);
+        setPending("pending" in result ? result.pending : null);
+      } else {
+        navigate("/");
+      }
+    } catch {
+      if (operationRef.current === operation) setErrorCodes([ErrorCode.NETWORK_ERROR]);
+    } finally {
+      if (operationRef.current === operation) {
+        busyRef.current = false;
+        setIsSubmitting(false);
+      }
     }
-
-    setIsSubmitting(false);
   };
 
   return (
@@ -91,7 +120,7 @@ export default function CreateProfile() {
             autoCorrect="off"
             spellCheck={false}
             required
-            disabled={isSubmitting}
+            disabled={isSubmitting || pending !== null}
           />
           <span className="field-hint">
             {t("profile.create_login_hint")}
@@ -109,7 +138,7 @@ export default function CreateProfile() {
             placeholder={t("profile.create_firstname_placeholder")}
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            disabled={isSubmitting}
+            disabled={isSubmitting || pending !== null}
           />
         </label>
 
@@ -124,7 +153,7 @@ export default function CreateProfile() {
             placeholder={t("profile.create_lastname_placeholder")}
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            disabled={isSubmitting}
+            disabled={isSubmitting || pending !== null}
           />
         </label>
 
@@ -139,7 +168,7 @@ export default function CreateProfile() {
             placeholder={t("profile.create_avatar_placeholder")}
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
-            disabled={isSubmitting}
+            disabled={isSubmitting || pending !== null}
           />
         </label>
 
@@ -154,9 +183,13 @@ export default function CreateProfile() {
             placeholder={t("profile.create_telegram_placeholder")}
             value={tgUsername}
             onChange={(e) => setTgUsername(e.target.value)}
-            disabled={isSubmitting}
+            disabled={isSubmitting || pending !== null}
           />
         </label>
+
+        {isSubmitting && pending && (
+          <p role="status" aria-live="polite">{t("profile.create_waiting_confirmation")}</p>
+        )}
 
         {/* Errors */}
         {errorCodes && errorCodes.length > 0 && (
@@ -183,7 +216,7 @@ export default function CreateProfile() {
               <span className="spinner" />
             ) : (
               <>
-                <Save className="btn-icon" /> {t("profile.create_btn")}
+                <Save className="btn-icon" /> {t(pending ? "profile.create_retry_confirmation" : "profile.create_btn")}
               </>
             )}
           </button>

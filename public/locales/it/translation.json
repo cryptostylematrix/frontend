@@ -6,6 +6,8 @@
     "disconnect": "Disconnetti"
   },
   "profile": {
+    "create_retry_confirmation": "Verifica di nuovo",
+    "create_waiting_confirmation": "In attesa della conferma di creazione del profilo…",
     "checking": "Verifica dei profili...",
     "add": "+ Aggiungi profilo",
     "select": "Seleziona profilo",
@@ -180,6 +182,7 @@
     }
   },
   "errors": {
+    "err_profile_creation_unconfirmed": "La creazione del profilo non è stata confermata. Potrebbe essere ancora in elaborazione. Verifica di nuovo senza inviare un’altra transazione.",
     "err_wallet_not_connected": "Portafoglio non connesso.",
     "err_profile_exists": "Profilo già esistente.",
     "err_profile_not_found": "Profilo non trovato.",

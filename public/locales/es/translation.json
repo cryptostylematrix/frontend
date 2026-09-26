@@ -6,6 +6,8 @@
     "disconnect": "Desconectar"
   },
   "profile": {
+    "create_retry_confirmation": "Comprobar de nuevo",
+    "create_waiting_confirmation": "Esperando la confirmación de creación del perfil…",
     "checking": "Comprobando perfiles...",
     "add": "+ Añadir perfil",
     "select": "Seleccionar perfil",
@@ -180,6 +182,7 @@
     }
   },
   "errors": {
+    "err_profile_creation_unconfirmed": "La creación del perfil no se ha confirmado. Puede seguir procesándose. Comprueba de nuevo sin enviar otra transacción.",
     "err_wallet_not_connected": "La billetera no está conectada.",
     "err_profile_exists": "El perfil ya existe.",
     "err_profile_not_found": "Perfil no encontrado.",

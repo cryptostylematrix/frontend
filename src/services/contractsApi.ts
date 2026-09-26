@@ -500,9 +500,9 @@ const defaultOrigin = typeof window !== "undefined" ? window.location.origin : "
 
 const buildUrl = (path: string) => new URL(path, normalizedBase || defaultOrigin).toString();
 
-const safeGet = async <T>(url: string): Promise<T | null> => {
+const safeGet = async <T>(url: string, signal?: AbortSignal): Promise<T | null> => {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, { signal });
     if (res.status === 404) return null;
     if (!res.ok) {
       console.error(`Request failed with status ${res.status}`);
@@ -571,7 +571,7 @@ export async function getProfileNftData(addr: string): Promise<ProfileDataRespon
   if (!normalizedAddr) return null;
 
   const url = buildUrl(`/contracts/profile-item/${normalizedAddr}/nft-data`);
-  return safeGet<ProfileDataResponse>(url);
+  return safeGet<ProfileDataResponse>(url, AbortSignal.timeout(10_000));
 }
 
 export async function refreshProfileNftData(addr: string): Promise<ProfileDataResponse | null> {
