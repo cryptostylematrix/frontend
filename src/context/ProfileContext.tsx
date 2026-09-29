@@ -1,3 +1,4 @@
+import { normalizeImage } from "../services/nftContentHelper";
 import React, {
   createContext,
   useCallback,
@@ -89,7 +90,7 @@ const toProfile = (response: WalletProfileResponse): Profile => ({
   valid: true,
   mode: response.mode,
   owned: response.owned,
-  imageUrl: response.content?.image_url ?? "",
+  imageUrl: normalizeImage(response.content?.image_url, response.login),
   firstName: response.content?.first_name ?? undefined,
   lastName: response.content?.last_name ?? undefined,
   tgUsername: response.content?.tg_username ?? undefined,

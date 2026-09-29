@@ -1,3 +1,4 @@
+import { normalizeImage } from "../../../services/nftContentHelper";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useTonConnectUI } from "@tonconnect/ui-react";
@@ -66,7 +67,7 @@ export default function ChooseInviter({ onInviterChosen }: Props) {
         setPopularInviter({
           profileAddress: rootInvite.profile_addr,
           login: content?.login || rootInvite.profile_login,
-          imageUrl: content?.image_url || "",
+          imageUrl: normalizeImage(content?.image_url, content?.login || rootInvite.profile_login),
           firstName: content?.first_name || undefined,
           lastName: content?.last_name || undefined,
           tgUsername: content?.tg_username || undefined,

@@ -1,6 +1,11 @@
-export const normalizeImage = (value?: string | null): string => {
-  const lower = value?.trim().toLowerCase();
-  return lower && lower !== "" ? lower : "https://cryptostylematrix.github.io/frontend/cs-big.png";
+import { appConfig } from "../config";
+
+export const normalizeImage = (value: string | null | undefined, login: string): string => {
+  const image = value?.trim();
+  if (image && image !== "https://cryptostylematrix.github.io/frontend/cs-big.png") return image;
+  const url = new URL("/api/ui/avatar", appConfig.uiApi.host);
+  url.searchParams.set("login", login.trim().toLowerCase());
+  return url.toString();
 };
 
 export const capitalize = (str?: string | null): string | undefined => {

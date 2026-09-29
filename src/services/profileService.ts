@@ -160,7 +160,7 @@ export async function createProfile(
     if (!collection?.addr) return { success: false, errors: [ErrorCode.CONTRACT_REQUEST_FAILED] };
     const bodyResponse = await contractsApi.buildDeployItemBody({
       login: normalizedLogin,
-      imageUrl: normalizeImage(imageUrl),
+      imageUrl: normalizeImage(imageUrl, normalizedLogin),
       firstName: capitalize(firstName),
       lastName: capitalize(lastName),
       tgUsername: toLower(tgUsername),
@@ -218,7 +218,7 @@ export async function updateProfile(
 
   // ---- Normalize all fields ----
   const normalizedLogin = toLower(login)!;
-  const normalizedImageUrl = normalizeImage(imageUrl);
+  const normalizedImageUrl = normalizeImage(imageUrl, normalizedLogin);
   const normalizedFirstName = capitalize(firstName);
   const normalizedLastName = capitalize(lastName);
   const normalizedTgUsername = toLower(tgUsername);

@@ -1,3 +1,4 @@
+import { normalizeImage } from "../../../services/nftContentHelper";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import { Address, fromNano } from "@ton/core";
@@ -152,7 +153,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     if (!profileAddress) return;
 
     void getProfileNftData(profileAddress).then((profile) => {
-      if (!cancelled) setImageUrl(profile?.content?.image_url ?? "");
+      if (!cancelled) setImageUrl(normalizeImage(profile?.content?.image_url, profile?.content?.login || selectedNode.profile_login || ""));
     });
 
     return () => {

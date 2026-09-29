@@ -1,3 +1,4 @@
+import { normalizeImage } from "../../../services/nftContentHelper";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ErrorCode } from "../../../errors/ErrorCodes";
@@ -43,7 +44,7 @@ export default function InviterData({ inviterProfileAddress }: Props) {
           setInviterProfile({
             address,
             login: content.login,
-            imageUrl: content.image_url || "",
+            imageUrl: normalizeImage(content.image_url, content.login),
             firstName: content.first_name || undefined,
             lastName: content.last_name || undefined,
             tgUsername: content.tg_username || undefined,
