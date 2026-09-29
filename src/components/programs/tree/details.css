@@ -79,23 +79,25 @@
 }
 
 .details-avatar img {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid rgba(212, 175, 55, 0.5);
+  width: auto;
+  height: auto;
+  max-width: min(72px, 100%);
+  max-height: 72px;
+  border-radius: 0;
+  object-fit: contain;
+  border: 0;
 }
 
 .details-avatar__placeholder {
   width: 72px;
   height: 72px;
-  border-radius: 50%;
+  border-radius: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   color: transparent;
-  border: 1px solid rgba(212, 175, 55, 0.5);
+  border: 0;
 }
 
 .details-type {
@@ -201,7 +203,9 @@
 .details-avatar--inline {
   margin: 0;
   width: 64px;
-  height: 64px;
+  max-width: 100%;
+  flex-shrink: 0;
+  align-items: center;
 }
 
 .details-meta {

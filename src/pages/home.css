@@ -18,13 +18,13 @@
 
 /* ---------- Avatar ---------- */
 
-/* Container ensures consistent size even if the image fails to load */
+/* Cap the avatar size while preserving the image proportions. */
 .profile-image {
   width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 3px solid #d4af37;
-  background-color: #fffaf0; /* soft gold-tinted background */
+  max-width: 100%;
+  --avatar-max-height: 100px;
+  flex-shrink: 0;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,10 +44,13 @@
 
 /* The actual image sits above the placeholder */
 .profile-image img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: var(--avatar-max-height);
+  border-radius: 0;
+  border: 0;
+  object-fit: contain;
   display: block;
   position: relative;
   z-index: 1;
@@ -178,7 +181,7 @@
 
   .profile-image {
     width: 120px;
-    height: 120px;
+    --avatar-max-height: 120px;
   }
 
   .profile-row span,
@@ -217,7 +220,7 @@
 
   .profile-image {
     width: 110px;
-    height: 110px;
+    --avatar-max-height: 110px;
   }
 
   .profile-row,
