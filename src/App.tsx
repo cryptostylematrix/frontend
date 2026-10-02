@@ -20,6 +20,7 @@ import ProgramReferrals from "./pages/programs/ProgramReferrals";
 import ProgramInviter from "./pages/programs/ProgramInviter";
 import ProgramStat from "./pages/programs/ProgramStat";
 import ProgramStructures from "./pages/programs/ProgramStructures";
+import ProgramSpecification from "./pages/programs/ProgramSpecification";
 import ProgramMarketing from "./pages/programs/ProgramMarketing";
 
 /**
@@ -65,6 +66,7 @@ function App() {
                   <Route path="stat" element={<ProgramStat />} />
                   <Route path="structures" element={<ProgramStructures />} />
                   <Route path="marketing" element={<ProgramMarketing />} />
+                  <Route path="marketing/specification" element={<ProgramSpecification />} />
                 </Route>
               </Routes>
             </div>

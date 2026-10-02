@@ -394,10 +394,19 @@ export type JettonWalletDataResponse = {
   minter_addr: string;
 };
 
+export type JettonMetadataResponse = {
+  minter_addr: string;
+  name: string | null;
+  symbol: string | null;
+  decimals: number;
+};
+
 export type JettonMinterDataResponse = {
   total_supply: string;
   mintable: boolean;
-  admin_address: string;
+  admin_address: string | null;
+  name?: string | null;
+  symbol?: string | null;
   metadata_uri?: string | null;
   decimals?: number | null;
   content_boc_hex: string;
@@ -481,6 +490,7 @@ export interface ContractsApi {
   getMatrixPlaceData: (addr: string) => Promise<MatrixPlaceDataResponse | null>;
   getJettonWalletAddress: (addr: string, ownerAddr: string) => Promise<JettonWalletAddressResponse | null>;
   getJettonWalletData: (addr: string) => Promise<JettonWalletDataResponse | null>;
+  getJettonWalletMetadata: (addr: string) => Promise<JettonMetadataResponse | null>;
   getJettonMinterData: (addr: string) => Promise<JettonMinterDataResponse | null>;
   buildJettonTransferMsgBody: (
     request: BuildJettonTransferMsgBodyRequest,
@@ -847,6 +857,14 @@ export async function getJettonWalletData(addr: string): Promise<JettonWalletDat
   return safeGet<JettonWalletDataResponse>(url);
 }
 
+export async function getJettonWalletMetadata(addr: string): Promise<JettonMetadataResponse | null> {
+  const address = addr.trim();
+  if (!address) return null;
+  return safeGet<JettonMetadataResponse>(
+    buildUrl(`/contracts/jetton-wallet/${encodeURIComponent(address)}/metadata`),
+  );
+}
+
 export async function getJettonMinterData(
   addr: string,
 ): Promise<JettonMinterDataResponse | null> {
@@ -918,6 +936,7 @@ export const contractsApi: ContractsApi = {
   getMatrixPlaceData,
   getJettonWalletAddress,
   getJettonWalletData,
+  getJettonWalletMetadata,
   getJettonMinterData,
   buildJettonTransferMsgBody,
 };

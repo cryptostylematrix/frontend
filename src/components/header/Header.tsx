@@ -7,7 +7,7 @@ import Profiles from "./Profiles";
 
 const Header: React.FC = () => {
   return (
-    <header>
+    <header className="site-header">
       <div className="header-container">
         <div className="header-left">
           {/* Use "/" instead of "index.html" for SPA routing */}

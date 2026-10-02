@@ -101,11 +101,13 @@ Program headers display the metadata name plus compact copy and Tonviewer icon a
 
 ## API boundaries
 
-There are three important boundaries:
+There are four important boundaries:
 
 - `uiProfileApi`: backend persistence and ownership checking for saved wallet profiles.
 - `programApi`: referral-program invites, structures, places, trees, locks, and statistics.
 - `contractsApi`: contract reads and server-built message bodies.
+- `scheduledTasksApi`: read-only schedules with generic target references owned by ScheduledTasks.
+  Program pages resolve structure references and compose the report.
 
 Transport DTOs must match backend JSON exactly, including intentional spellings such as `ative`. Keep snake_case transport properties (`profile_addr`, `place_number`, `created_at`, etc.). Build separate UI/view models when aggregation or renamed presentation fields are needed.
 

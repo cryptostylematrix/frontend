@@ -1,5 +1,5 @@
 /* ===== header.css ===== */
-header {
+.site-header {
   background-color: #14100b;
   color: #d4af37;
   flex-shrink: 0;
@@ -116,7 +116,7 @@ header {
 /* ===== MOBILE (≤480px) ===== */
 @media (max-width: 480px) {
   /* ✅ Allow header to scroll with content */
-  header {
+  .site-header {
     position: relative !important;
     top: auto !important;
     box-shadow: none !important;

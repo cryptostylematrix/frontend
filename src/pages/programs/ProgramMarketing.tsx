@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useProgramContext } from "../../context/ProgramContext";
@@ -48,19 +49,10 @@ export default function ProgramMarketing() {
     ? localizedLink(program.presentations.video, language)
     : null;
 
-  if (isLoading) {
-    return (
-      <section className="program-marketing">
-        <div className="program-marketing__loading">
-          {t("home.loading", "Loading...")}
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="program-marketing">
       <div className="program-marketing__grid">
+        {isLoading && <div className="program-marketing__loading" role="status">{t("home.loading")}</div>}
         {pdfHref && (
           <div className="program-marketing__card">
             <div className="program-marketing__header">
@@ -104,6 +96,12 @@ export default function ProgramMarketing() {
             </a>
           </div>
         )}
+        <Link className="program-marketing__card program-marketing__specification" to="specification">
+          <div className="program-marketing__header">{t("specification.title")}</div>
+          <p className="program-marketing__text">{t("specification.description")}</p>
+          <p className="program-marketing__text"><strong>{t("specification.advancedNotice")}</strong></p>
+          <span className="program-marketing__link">{t("specification.open")}</span>
+        </Link>
       </div>
     </section>
   );

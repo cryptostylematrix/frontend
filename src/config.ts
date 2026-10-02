@@ -28,6 +28,9 @@ export const appConfig = {
     host: (import.meta.env.VITE_PROGRAM_API_HOST as string | undefined) ?? defaultProgramApiHost,
     defaultApiHost: defaultProgramApiHost,
   },
+  scheduledTasksApi: {
+    host: (import.meta.env.VITE_SCHEDULED_TASKS_API_HOST as string | undefined) ?? defaultApiHost,
+  },
   uiApi: {
     host: (import.meta.env.VITE_UI_API_HOST as string | undefined) ?? defaultUiApiHost,
     defaultApiHost: defaultUiApiHost,

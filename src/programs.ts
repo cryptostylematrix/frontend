@@ -53,3 +53,12 @@ export function getLegacyPricingProgramKey(
     return null;
   }
 }
+
+// Pool recipients verified against the production CryptoCash contract.
+export const CRYPTOCASH_POOL_ADDRESSES = {
+  1: "EQBVJrtpDq2W388Y3vSWYX0dCLY6HCyhuJ4W5GPp8cPoudtm",
+  2: "EQAZUTI16jw8kms-jRy-vk4Ska4jUEduIu9C03jlD-zm3ta3",
+  3: "EQCmXpqocEX0CWC1E2FNsjjdNDg4TFdnYlYI-XU-5e4qsG1M",
+  4: "EQDzfrnv6QpkRXgrvxEh3tMSGF3KyG6OPjvpZTqa-okqAEm3",
+  coin: "EQD0vxTVACh5cPbNQ3bkt29IovcIZa6HGgDgiCjhaNugwHgB",
+} as const;

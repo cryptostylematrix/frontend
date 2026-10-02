@@ -865,3 +865,27 @@ export const programApi: ProgramApi = {
   getReferrals,
   getProgramStatistics,
 };
+
+export async function getProgramStructures(marketingAddress: string, signal?: AbortSignal): Promise<ProgramStructure[] | null> {
+  const address = marketingAddress.trim();
+  if (!address) throw new Error("Marketing address is required");
+  const response = await fetch(buildUrl(address, "structures", {}), { signal });
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error(`Structures request failed: ${response.status}`);
+  return await response.json() as ProgramStructure[];
+}
+
+export type ProgramStructureRank = {
+  marketing_addr: string;
+  structure_number: number;
+  name: string;
+  required_active_referral_places: number;
+};
+
+export async function getProgramStructureRanks(marketingAddress: string, structureNumber: number, signal?: AbortSignal): Promise<ProgramStructureRank[]> {
+  const address = marketingAddress.trim();
+  if (!address) throw new Error("Marketing address is required");
+  const response = await fetch(buildUrl(address, `structures/${structureNumber}/ranks`, {}), { signal });
+  if (!response.ok) throw new Error(`Structure ranks request failed: ${response.status}`);
+  return await response.json() as ProgramStructureRank[];
+}

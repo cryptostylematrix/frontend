@@ -77,3 +77,16 @@ export default defineConfig([
   },
 ])
 ```
+
+## Program specification data
+
+The specification page composes module-owned APIs:
+
+- `programApi`: `GET /api/program/{marketing_addr}/structures` (404 means no registered structure data).
+- `scheduledTasksApi`: `GET /api/scheduled-tasks/schedules?module=program&scope={stored_address}&resource_type=structure` (an empty array means no schedules; failures are shown separately).
+- `contractsApi`: Marketing V3 contract data and Jetton metadata.
+
+Schedules use the stored address returned by the structures API when available.
+`VITE_SCHEDULED_TASKS_API_HOST` optionally sets the schedules API host; otherwise
+it uses the default API host. Deploy this frontend with the split backend APIs;
+the old combined `/specification` endpoint is no longer used.

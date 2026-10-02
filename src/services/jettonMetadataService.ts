@@ -1,96 +1,28 @@
-import {
-  getJettonMinterData,
-  getJettonWalletData,
-} from "./contractsApi";
-
-const DEFAULT_DECIMALS = 9;
+import { Address } from "@ton/core";
+import { getJettonWalletMetadata } from "./contractsApi";
 
 export type JettonMetadata = {
   decimals: number;
   symbol: string;
+  name: string | null;
 };
 
-type JettonMetadataJson = {
-  decimals?: unknown;
-  digits?: unknown;
-  symbol?: unknown;
-};
+// Deduplicate concurrent UI consumers. Persistent caching belongs to the backend.
+const pendingRequests = new Map<string, Promise<JettonMetadata | null>>();
 
-const metadataCache = new Map<string, Promise<JettonMetadata | null>>();
+export function getJettonMetadata(jettonWalletAddress: string): Promise<JettonMetadata | null> {
+  let address: string;
+  try { address = Address.parse(jettonWalletAddress.trim()).toRawString(); }
+  catch { return Promise.resolve(null); }
 
-const metadataUrl = (uri: string) =>
-  uri.startsWith("ipfs://")
-    ? `https://ipfs.io/ipfs/${uri.slice("ipfs://".length)}`
-    : uri;
-
-const loadJsonMetadata = async (uri: string): Promise<JettonMetadataJson> => {
-  const response = await fetch(metadataUrl(uri));
-  if (!response.ok) {
-    throw new Error(`Jetton metadata request failed with ${response.status}`);
-  }
-  return (await response.json()) as JettonMetadataJson;
-};
-
-const parseDecimals = (value: unknown) => {
-  const parsed = typeof value === "number" ? value : Number(value);
-  return Number.isInteger(parsed) && parsed >= 0 && parsed <= 255
-    ? parsed
-    : DEFAULT_DECIMALS;
-};
-
-const normalizeMetadata = (metadata: JettonMetadataJson): JettonMetadata => ({
-  decimals: parseDecimals(metadata.decimals ?? metadata.digits),
-  symbol:
-    typeof metadata.symbol === "string" && metadata.symbol.trim()
-      ? metadata.symbol.trim()
-      : "JETTON",
-});
-
-const loadJettonMetadata = async (
-  jettonWalletAddress: string,
-): Promise<JettonMetadata | null> => {
-  try {
-    const walletData = await getJettonWalletData(jettonWalletAddress);
-    const minterAddress = walletData?.minter_addr?.trim();
-    if (!minterAddress) return null;
-
-    const minterData = await getJettonMinterData(minterAddress);
-    if (!minterData) return null;
-
-    const metadataUri = minterData.metadata_uri?.trim();
-    let externalMetadata: JettonMetadataJson = {};
-    if (metadataUri) {
-      try {
-        externalMetadata = await loadJsonMetadata(metadataUri);
-      } catch (error) {
-        console.error("Failed to load Jetton metadata JSON", error);
-      }
-    }
-
-    return normalizeMetadata({
-      ...externalMetadata,
-      decimals: minterData.decimals ?? externalMetadata.decimals,
-    });
-  } catch (error) {
-    console.error("Failed to load Jetton metadata", error);
-    return null;
-  }
-};
-
-export function getJettonMetadata(
-  jettonWalletAddress: string,
-): Promise<JettonMetadata | null> {
-  const normalizedAddress = jettonWalletAddress.trim();
-  if (!normalizedAddress) return Promise.resolve(null);
-
-  const cached = metadataCache.get(normalizedAddress);
-  if (cached) return cached;
-
-  const request = loadJettonMetadata(normalizedAddress).then((metadata) => {
-    if (!metadata) metadataCache.delete(normalizedAddress);
-    return metadata;
-  });
-  metadataCache.set(normalizedAddress, request);
+  const pending = pendingRequests.get(address);
+  if (pending) return pending;
+  const request = getJettonWalletMetadata(address).then((metadata): JettonMetadata | null => {
+    if (!metadata || !Number.isInteger(metadata.decimals) || metadata.decimals < 0 || metadata.decimals > 255) return null;
+    const name = metadata.name?.trim() || null;
+    return { decimals: metadata.decimals, name, symbol: metadata.symbol?.trim() || name || "JETTON" };
+  }).finally(() => pendingRequests.delete(address));
+  pendingRequests.set(address, request);
   return request;
 }
 
