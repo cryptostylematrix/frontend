@@ -117,3 +117,52 @@
 .program-specification__configuration strong { color: #76500f; font-weight: 600; }
 
 .program-specification__structure-name { white-space: nowrap; overflow-wrap: normal; }
+
+.program-specification__activity { min-width: 680px !important; }
+.program-specification__activity td { min-width: 160px; }
+.program-specification .program-specification__activity-note { margin-top: .65rem; }
+.program-specification__permission--allowed { color: #36551a; font-weight: 600; }
+.program-specification__permission--denied { color: #884138; font-weight: 600; }
+.program-specification__configuration strong { overflow-wrap: anywhere; }
+
+/* Keep words intact in desktop tables; unbroken addresses may wrap as needed. */
+.program-specification table { overflow-wrap: break-word; word-break: normal; }
+.program-specification__mobile-only { display: none; }
+
+@media screen and (max-width: 760px) {
+  .program-specification__table--cards { border: 0; background: transparent; overflow: visible; }
+  .program-specification__table--cards table,
+  .program-specification__table--cards tbody { display: block; width: 100%; min-width: 0 !important; }
+  /* Retain the column headers for assistive technology. */
+  .program-specification__table--cards thead {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+  }
+  .program-specification__table--cards tbody tr {
+    display: block; margin-bottom: .85rem; border: 1px solid var(--spec-line);
+    border-radius: 4px; background: #fff; overflow: hidden;
+  }
+  .program-specification .program-specification__table--cards tbody tr > :is(th, td) {
+    display: block; box-sizing: border-box; width: 100%; min-width: 0;
+    border: 0; padding: .65rem .75rem; white-space: normal; overflow-wrap: break-word;
+  }
+  .program-specification .program-specification__table--cards tbody tr > :first-child {
+    background: #f2eee4; font-weight: 600;
+  }
+  .program-specification .program-specification__table--cards tbody tr > * + * {
+    border-top: 1px solid var(--spec-line);
+  }
+  .program-specification__table--cards [data-label]::before {
+    content: attr(data-label); display: block; margin-bottom: .35rem;
+    color: var(--spec-muted); font-size: .73rem; font-weight: 600; white-space: normal;
+  }
+  .program-specification__table--cards .program-specification__structure-name,
+  .program-specification__table--cards .program-specification__amount { white-space: normal; }
+  .program-specification .program-specification__metadata,
+  .program-specification__metadata tbody,
+  .program-specification__metadata tr { display: block; min-width: 0; width: 100%; }
+  .program-specification .program-specification__metadata :is(th, td) {
+    display: block; box-sizing: border-box; width: 100%; border-right: 0;
+  }
+  .program-specification .program-specification__metadata th { background: #f2eee4; }
+}

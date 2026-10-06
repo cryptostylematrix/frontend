@@ -232,6 +232,14 @@ For lock/unlock:
 
 Filled-node details may display rank, matrix place count, descendants, line, active status, creation time, and activation time. Supported ranks are Bronze, Silver, Gold, Platinum, Sapphire, Emerald, and Diamond. Localize rank names and use solid rank-specific badge colors—no gradients and no excessively rounded pill styling.
 
+Activation in tree details uses the backend `activation-option` response for the
+selected profile place. The response selects the current place, the profile's
+first group-root place, or its invite according to `activity_source`. Never infer
+this target from the tree node's direct `can_activate` flag. Use the target
+structure's contract command for the price/token/fee and its place reference for
+the payload. Show that target in confirmation and retain the preview-profile
+warning. A failed option request must not fall back to local authorization.
+
 ## Buying places and other commands
 
 The program backend's `purchase-option` response is the authority for the general buy action:

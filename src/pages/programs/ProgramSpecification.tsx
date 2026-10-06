@@ -12,6 +12,7 @@ import { CRYPTOCASH_POOL_ADDRESSES, getLegacyPricingProgramKey } from "../../pro
 import { UserCommandTag } from "../../contracts/schemes/UserCommand";
 import { loadProgramMetadata, type Program } from "../../services/programsService";
 import { groupSpecificationRewards, type RewardRow } from "./specificationRewards";
+import ProgramSpecificationActivity from "./ProgramSpecificationActivity";
 import ProgramSpecificationRanks from "./ProgramSpecificationRanks";
 import ProgramSpecificationMetadata from "./ProgramSpecificationMetadata";
 import "./program-specification.css";
@@ -22,6 +23,7 @@ const rewardKeys: Record<number, string> = { [0x210bbdce]: "commands", [0xc4a6ef
 const bonusKeys: Record<number, string> = { [0xb5ce6bf5]: "referralBonus", [0xe1319040]: "structureBonus", [0x1b5547d5]: "developmentBonus" };
 const actionKeys: Record<string, string> = {
   "program.structure.update-activity": "updateActivity",
+  "program.structure.deactivate-expired-first-places": "activitySettings.expireFirstPlaces",
   "program.structure.compress": "compress",
   "program.structure.calculate-referral-volume": "calculateVolume",
   "program.structure.reset-referral-volume": "resetVolume",
@@ -50,6 +52,7 @@ export default function ProgramSpecification() {
   const { marketingAddress } = useProgramContext();
   const { t, i18n } = useTranslation();
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
+  const [rankVisibility, setRankVisibility] = useState<{ key: string; visible: boolean } | null>(null);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
@@ -166,10 +169,12 @@ export default function ProgramSpecification() {
       <nav className="program-specification__contents" aria-label={t("programs.navigation")}>
         <a href="#spec-metadata">{s("metadataTitle")}</a>
         {current.program && <a href="#spec-conditions">{s("structureSettings")}</a>}
-        <a href="#spec-ranks">{s("ranksTitle")}</a>
+        {current.program?.structures.some(structure => structure.activity != null) && <a href="#spec-activation">{s("activitySettings.title")}</a>}
+        {current.program?.structures.some(structure => structure.activity != null) && <a href="#spec-inactive">{s("activitySettings.inactiveTitle")}</a>}
+        {(rankVisibility?.key !== `${marketingAddress}:${JSON.stringify(numbers)}` || rankVisibility.visible) && <a href="#spec-ranks">{s("ranksTitle")}</a>}
         <a href="#spec-prices">{s("prices")}</a>
         {rewardRows.length > 0 && <a href="#spec-rewards">{s("rewards")}</a>}
-        <a href="#spec-schedule">{s("schedule")}</a>
+        {(!current.schedules || current.schedules.length > 0) && <a href="#spec-schedule">{s("schedule")}</a>}
       </nav>
       <details className="program-specification__guide">
         <summary>{s("guide")}</summary>
@@ -189,11 +194,10 @@ export default function ProgramSpecification() {
       {current.program && <section className="program-specification__section" id="spec-conditions" aria-labelledby="spec-conditions-title">
         <h3 id="spec-conditions-title">{s("structureSettings")}</h3>
         <p className="program-specification__section-description">{s("structuresDescription")}</p>
-        <div className="program-specification__table" role="region" aria-labelledby="spec-conditions-title" tabIndex={0}>
+        <div className="program-specification__table program-specification__table--cards" role="region" aria-labelledby="spec-conditions-title" tabIndex={0}>
           <table className="program-specification__conditions"><thead><tr>
             <th scope="col">{s("structureColumn")}</th>
             <th scope="col">{s("settings")}</th><th scope="col">{s("positioning")}</th>
-            <th scope="col">{t("programs.metadata.features.activation")}</th>
           </tr></thead><tbody>{current.program.structures.map(structure => {
             const defaultConfig = structure.pos_algo.v === 2 ? structure.pos_algo.default : structure.pos_algo;
             const positioningGroups = new Map<string, { config: ProgramPositionConfig; operations: ProgramPositionOperation[] }>();
@@ -207,30 +211,32 @@ export default function ProgramSpecification() {
             }
             return <tr key={structure.structure_number}>
               <th scope="row" className="program-specification__structure-name">{structureName(structure.structure_number)}</th>
-              <td className="program-specification__configuration">
+              <td data-label={s("settings")} className="program-specification__configuration">
+                {structure.group?.trim() && <div><span>{s("activitySettings.groupColumn")}: </span><strong>{structure.group.trim()}</strong></div>}
                 <div><span>{s("size")}: </span><strong>{structure.width === 0 || structure.height === 0 ? "—" : `${structure.height} × ${structure.width}`}</strong></div>
                 <div><span>{s("places")}: </span><strong>{structure.max_places_per_profile === 0 ? s("unlimited") : structure.max_places_per_profile}</strong></div>
                 {structure.prev_required && <div title="prev_required"><strong>{s("previous")}</strong></div>}
                 <div title="display_height"><span>{s("displayDepth")}: </span><strong>{structure.display_height}</strong></div>
               </td>
-              <td>
+              <td data-label={s("positioning")}>
                 {[...positioningGroups.entries()].map(([key, group]) => <div className="program-specification__positioning-group" key={key}>
                   <div className="program-specification__positioning-value">{positioning(group.config)}</div>
                   <ul className="program-specification__actions">{group.operations.map(operation => <li key={operation}>{s(`operations.${operation}`)}</li>)}</ul>
                 </div>)}
               </td>
-              <td>{structure.activity && <div title="activity.set_active_on_activation">{s(structure.activity.set_active_on_activation === false ? "activationUnchanged" : "activationActive")}</div>}</td>
             </tr>;
           })}</tbody></table>
         </div>
       </section>}
 
-      <ProgramSpecificationRanks address={marketingAddress} numbers={numbers} structureName={structureName} />
+      {current.program && <ProgramSpecificationActivity structures={current.program.structures} contractStructures={current.contract.structures} structureName={structureName} />}
+
+      <ProgramSpecificationRanks onVisibilityChange={setRankVisibility} address={marketingAddress} numbers={numbers} structureName={structureName} />
 
       <section className="program-specification__section" id="spec-prices" aria-labelledby="spec-prices-title">
         <h3 id="spec-prices-title">{s("prices")}</h3>
         <p className="program-specification__section-description">{s("operationsDescription")}</p>
-        <div className="program-specification__table" role="region" aria-labelledby="spec-prices-title" tabIndex={0}>
+        <div className="program-specification__table program-specification__table--cards" role="region" aria-labelledby="spec-prices-title" tabIndex={0}>
           <table><thead><tr>
             <th scope="col">{s("structureColumn")}</th><th scope="col">{s("action")}</th>
             <th scope="col">{s("price")}</th><th scope="col">{s("fee")}</th>
@@ -238,9 +244,10 @@ export default function ProgramSpecification() {
             const span = consecutiveSpan(priceRows, index, value => value.number);
             return <tr key={`${row.number}:${row.tag}`} className={span ? "program-specification__group-start" : undefined}>
               {span > 0 && <th scope="row" rowSpan={span} className="program-specification__structure-name">{structureName(row.number)}</th>}
-              <th scope="row">{commandName(row.tag)}</th>
-              <td className="program-specification__amount">{row.command.price === 0 ? "—" : amount(row.command.price, row.command.sender_jetton_wallet)}</td>
-              <td className="program-specification__numeric">{amount(row.command.gram_fee, null)}</td>
+              {span === 0 && <th scope="row" className="program-specification__mobile-only">{structureName(row.number)}</th>}
+              <th scope="row" data-label={s("action")}>{commandName(row.tag)}</th>
+              <td data-label={s("price")} className="program-specification__amount">{row.command.price === 0 ? "—" : amount(row.command.price, row.command.sender_jetton_wallet)}</td>
+              <td data-label={s("fee")} className="program-specification__numeric">{amount(row.command.gram_fee, null)}</td>
             </tr>;
           })}</tbody></table>
         </div>
@@ -249,7 +256,7 @@ export default function ProgramSpecification() {
       {rewardRows.length > 0 && <section className="program-specification__section" id="spec-rewards" aria-labelledby="spec-rewards-title">
         <h3 id="spec-rewards-title">{s("rewards")}</h3>
         <p className="program-specification__section-description">{s("bonusesDescription")}</p>
-        <div className="program-specification__table" role="region" aria-labelledby="spec-rewards-title" tabIndex={0}>
+        <div className="program-specification__table program-specification__table--cards" role="region" aria-labelledby="spec-rewards-title" tabIndex={0}>
           <table className="program-specification__payouts"><thead><tr>
             <th scope="col">{s("structureColumn")}</th><th scope="col">{s("condition")}</th>
             <th scope="col">{s("rewardColumn")}</th><th scope="col">{s("prices")}</th><th scope="col">{s("destinationColumn")}</th><th scope="col">{s("amountDetailsColumn")}</th>
@@ -276,14 +283,16 @@ export default function ProgramSpecification() {
             const namedBonus = item?.tag === 0xc4a6ef3e && item.bonus_type_tag !== null ? bonusKeys[item.bonus_type_tag] : undefined;
             return <tr key={`${row.ruleKey}:${index}`} className={structureSpan ? "program-specification__group-start" : undefined}>
               {structureSpan > 0 && <th scope="row" rowSpan={structureSpan} className="program-specification__structure-name">{structureName(row.number)}</th>}
-              {ruleSpan > 0 && <td rowSpan={ruleSpan} className={Number(row.code) === 0 ? "program-specification__default-condition" : undefined}>{condition(row)}</td>}
-              <td>
+              {structureSpan === 0 && <th scope="row" className="program-specification__mobile-only">{structureName(row.number)}</th>}
+              {ruleSpan > 0 && <td data-label={s("condition")} rowSpan={ruleSpan} className={Number(row.code) === 0 ? "program-specification__default-condition" : undefined}>{condition(row)}</td>}
+              {ruleSpan === 0 && <td data-label={s("condition")} className="program-specification__mobile-only">{condition(row)}</td>}
+              <td data-label={s("rewardColumn")}>
                 <div className={reinvestReward ? "program-specification__reinvest" : cloneOrStructureBonus ? "program-specification__clone-or-bonus" : cloneReward ? "program-specification__clone" : item.tag === 0x67d146f6 ? "program-specification__direct-payment" : item.tag === 0x33a40e44 ? "program-specification__profile-bonus" : namedBonus === "referralBonus" ? "program-specification__bonus program-specification__bonus--referral" : namedBonus ? "program-specification__bonus" : undefined}>{reinvestReward ? "reinvest" : cloneReward ? "clone" : cloneOrStructureBonus && paymentTitle ? `clone | ${paymentTitle}` : paymentTitle || s(cloneOrStructureBonus ? "cloneOrStructureBonus" : namedBonus ?? rewardKeys[item.tag] ?? "unknown")}</div>
                 {!paymentTitle && !cloneOrStructureBonus && !namedBonus && item.bonus_type_tag !== null && <small>{s(bonusKeys[item.bonus_type_tag] ?? "unknown")}</small>}
                 {!reinvestReward && !cloneReward && !cloneOrStructureBonus && item.command_tag !== null && <div>{commandName(item.command_tag)}</div>}
               </td>
-              <td><ul className="program-specification__actions">{row.tags.map(tag => <li key={tag}>{commandName(tag)}</li>)}</ul></td>
-              <td className="program-specification__numeric">{recipientAddress
+              <td data-label={s("prices")}><ul className="program-specification__actions">{row.tags.map(tag => <li key={tag}>{commandName(tag)}</li>)}</ul></td>
+              <td data-label={s("destinationColumn")} className="program-specification__numeric">{recipientAddress
                 ? <span className="program-specification__recipient">
                     <span title={recipientAddress} aria-label={recipientAddress}>{recipientLabel}</span>
                     <a className="program-specification__explorer" href={`https://tonviewer.com/${encodeURIComponent(recipientAddress)}`} target="_blank" rel="noreferrer" aria-label={t("programs.contractExplorer")} title={t("programs.contractExplorer")}>
@@ -293,8 +302,8 @@ export default function ProgramSpecification() {
                 : item?.from_level != null && item.to_level != null
                   ? item.bonus_type_tag === 0xb5ce6bf5
                     ? item.from_level === 0 && item.to_level === 0 ? s("referralRecipient") : s("referralRecipientsAtLevels", { levels: item.from_level === item.to_level ? item.from_level : `${item.from_level}–${item.to_level}` })
-                    : item.from_level === item.to_level ? (item.from_level === 0 ? s("matrixTop") : item.from_level) : `${item.from_level}–${item.to_level}` : "—"}</td>
-              <td className="program-specification__reward-details">
+                    : item.from_level === item.to_level ? (item.from_level === 0 ? s("activitySettings.rewardOrigin") : item.from_level) : `${item.from_level}–${item.to_level}` : "—"}</td>
+              <td data-label={s("amountDetailsColumn")} className="program-specification__reward-details">
                 {item?.amount != null && <div className="program-specification__amount">{amount(item.amount, item.sender_jetton_wallet)}</div>}
                 {item?.amount != null && targetStructure != null && <hr className="program-specification__detail-divider" />}
                 {targetStructure != null && <div className="program-specification__structure-name">{structureName(targetStructure)}</div>}
@@ -306,27 +315,28 @@ export default function ProgramSpecification() {
         </div>
       </section>}
 
-      <section className="program-specification__section" id="spec-schedule" aria-labelledby="spec-schedule-title">
+      {(!current.schedules || current.schedules.length > 0) && <section className="program-specification__section" id="spec-schedule" aria-labelledby="spec-schedule-title">
         <h3 id="spec-schedule-title">{s("schedule")}</h3>
         <p className="program-specification__section-description">{s("scheduleDescription")}</p>
-        {!current.schedules ? <div className="program-specification__notice" role="status"><p>{s("scheduleUnavailable")}</p><button type="button" onClick={() => setAttempt(value => value + 1)}>{s("retry")}</button></div> : current.schedules.length === 0 ? <p className="program-specification__muted">{s("noSchedule")}</p> :
-          <div className="program-specification__table" role="region" aria-labelledby="spec-schedule-title" tabIndex={0}>
+        {!current.schedules ? <div className="program-specification__notice" role="status"><p>{s("scheduleUnavailable")}</p><button type="button" onClick={() => setAttempt(value => value + 1)}>{s("retry")}</button></div> :
+          <div className="program-specification__table program-specification__table--cards" role="region" aria-labelledby="spec-schedule-title" tabIndex={0}>
             <table><thead><tr><th scope="col">{s("structureColumn")}</th><th scope="col">{s("period")}</th><th scope="col">{s("actionsColumn")}</th><th scope="col">{s("statusColumn")}</th></tr></thead>
               <tbody>{scheduleRows.map(({ number, schedule, actions }, index) => {
                 const structureSpan = consecutiveSpan(scheduleRows, index, row => row.number);
                 return <tr key={`${number}:${schedule.id}`} className={structureSpan ? "program-specification__group-start" : undefined}>
                 {structureSpan > 0 && <th scope="row" rowSpan={structureSpan} className="program-specification__structure-name">{structureName(number)}</th>}
-                <td>{scheduleText(schedule)}{schedule.execute_at_utc && <small>{s("scheduled", { time: date(schedule.execute_at_utc) })}</small>}</td>
-                <td><ol className="program-specification__scheduled-actions">{actions.map((action, actionIndex) =>
+                {structureSpan === 0 && <th scope="row" className="program-specification__mobile-only">{structureName(number)}</th>}
+                <td data-label={s("period")}>{scheduleText(schedule)}{schedule.execute_at_utc && <small>{s("scheduled", { time: date(schedule.execute_at_utc) })}</small>}</td>
+                <td data-label={s("actionsColumn")}><ol className="program-specification__scheduled-actions">{actions.map((action, actionIndex) =>
                   <li key={actionIndex}>{s(actionKeys[action.type] ?? "unknown")}</li>)}</ol></td>
-                <td><span className={`program-specification__status program-specification__status--${schedule.status === "active" && schedule.execute_at_utc ? "active" : schedule.status === "error" ? "error" : "inactive"}`}>
+                <td data-label={s("statusColumn")}><span className={`program-specification__status program-specification__status--${schedule.status === "active" && schedule.execute_at_utc ? "active" : schedule.status === "error" ? "error" : "inactive"}`}>
                   {s(schedule.status === "active" && schedule.execute_at_utc ? "active" : schedule.status === "error" ? "scheduleError" : schedule.status === "completed" ? "completed" : "paused")}
                 </span></td>
               </tr>;
               })}</tbody>
             </table>
           </div>}
-      </section>
+      </section>}
     </>}
   </section>;
 }

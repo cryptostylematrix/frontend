@@ -4,7 +4,8 @@ import { getProgramStructureRanks } from "../../services/programApi";
 
 import { groupSpecificationRanks, rankKeys, type RankGroup } from "./specificationRanks";
 
-export default function ProgramSpecificationRanks({ address, numbers, structureName }: {
+export default function ProgramSpecificationRanks({ address, numbers, structureName, onVisibilityChange }: {
+  onVisibilityChange: (state: { key: string; visible: boolean }) => void;
   address: string;
   numbers: number[];
   structureName: (number: number) => string;
@@ -38,25 +39,31 @@ export default function ProgramSpecificationRanks({ address, numbers, structureN
   const rankGroups = groupSpecificationRanks(groups ?? []);
   const hasRanks = rankGroups.length > 0;
   const failed = groups?.filter(group => group.ranks === null) ?? [];
+  const visible = groups === null || hasRanks || failed.length > 0;
+  useEffect(() => {
+    onVisibilityChange({ key: requestKey, visible });
+  }, [onVisibilityChange, requestKey, visible]);
+  if (!visible) return null;
   return <section className="program-specification__section" id="spec-ranks" aria-labelledby="spec-ranks-title">
     <h3 id="spec-ranks-title">{s("ranksTitle")}</h3>
     <p className="program-specification__section-description">{s("rankRule")}</p>
     {!groups ? <p role="status">{t("home.loading")}</p> : <>
       {hasRanks && <>
-        <div className="program-specification__table" role="region" aria-labelledby="spec-ranks-title" tabIndex={0}>
+        <div className="program-specification__table program-specification__table--cards" role="region" aria-labelledby="spec-ranks-title" tabIndex={0}>
           <table><thead><tr><th scope="col">{s("rankName")}</th><th scope="col">{s("structureColumn")}</th><th scope="col">{s("rankThreshold")}</th></tr></thead>
             <tbody>{rankGroups.flatMap(rank => rank.volumes.flatMap((group, groupIndex) => group.structures.map((number, index) => {
               const known = rankKeys.includes(rank.key);
               return <tr key={`${rank.key}:${group.volume}:${number}`}>
                 {groupIndex === 0 && index === 0 && <th scope="row" rowSpan={rank.rowCount}><span className={`program-specification__rank${known ? ` program-specification__rank--${rank.key}` : ""}`}>{known ? t(`structure.ranks.${rank.key}`) : rank.name}</span></th>}
-                <td className="program-specification__structure-name">{structureName(number)}</td>
-                {index === 0 && <td rowSpan={group.structures.length} className="program-specification__numeric">{group.volume}</td>}
+                {(groupIndex !== 0 || index !== 0) && <th scope="row" className="program-specification__mobile-only"><span className={`program-specification__rank${known ? ` program-specification__rank--${rank.key}` : ""}`}>{known ? t(`structure.ranks.${rank.key}`) : rank.name}</span></th>}
+                <td data-label={s("structureColumn")} className="program-specification__structure-name">{structureName(number)}</td>
+                {index === 0 && <td data-label={s("rankThreshold")} rowSpan={group.structures.length} className="program-specification__numeric">{group.volume}</td>}
+                {index !== 0 && <td data-label={s("rankThreshold")} className="program-specification__mobile-only">{group.volume}</td>}
               </tr>;
             })))}</tbody>
           </table>
         </div>
       </>}
-      {!hasRanks && failed.length === 0 && <p className="program-specification__muted">{s("noRanks")}</p>}
       {failed.length > 0 && <div className="program-specification__notice" role="status">
         <p>{s("ranksUnavailable")}: {failed.map(group => structureName(group.number)).join(", ")}</p>
         <button type="button" onClick={() => setAttempt(value => value + 1)}>{s("retry")}</button>

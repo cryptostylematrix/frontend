@@ -11,6 +11,7 @@ import { useProfileContext } from "../../../context/ProfileContext";
 import { useProgramContext } from "../../../context/ProgramContext";
 import { useStructuresContext } from "../../../context/StructuresContext";
 import { translateError } from "../../../errors/errorUtils";
+import { useActivationOption } from "../../../hooks/useActivationOption";
 import { useJettonMetadata } from "../../../hooks/useJettonMetadata";
 import { getProfileNftData } from "../../../services/contractsApi";
 import {
@@ -53,6 +54,8 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
   const { marketingAddress } = useProgramContext();
   const {
     commands,
+    contractStructures,
+    refreshStructuresPage,
     refreshKey,
     notifyPlacePurchaseSubmitted,
     selectedPlace,
@@ -107,10 +110,19 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     selectedNode?.node_type === "empty" && selectedNode.buy_command_tag !== null
       ? commands[String(selectedNode.buy_command_tag)]
       : undefined;
-  const activateCommand =
-    isFilled && selectedNode.activate_command_tag !== null
-      ? commands[String(selectedNode.activate_command_tag)]
-      : undefined;
+  const activationProfile = (() => {
+    if (!isFilled || !selectedNode.profile_addr || !currentProfile?.address) return null;
+    try {
+      return Address.parse(selectedNode.profile_addr).equals(Address.parse(currentProfile.address))
+        ? selectedNode.profile_addr : null;
+    } catch { return null; }
+  })();
+  const activation = useActivationOption(marketingAddress, selectedStructure, activationProfile,
+    isFilled ? selectedNode.place_number : null, refreshKey, refreshStructuresPage);
+  const activationTarget = activation.option;
+  const activateCommand = activationTarget?.structure_number != null && activationTarget.command_tag != null
+    ? contractStructures[String(activationTarget.structure_number)]?.commands[String(activationTarget.command_tag)]
+    : undefined;
   const lockCommand = commands[String(UserCommandTag.lockPos)];
   const unlockCommand = commands[String(UserCommandTag.unlockPos)];
   const usesJetton = Boolean(buyCommand?.sender_jetton_wallet?.trim());
@@ -164,7 +176,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
   useEffect(() => {
     setDetailsStatus(null);
     setConfirmAction(null);
-  }, [selectedNode]);
+  }, [selectedNode, selectedStructure, marketingAddress, currentProfile?.address]);
 
   useEffect(() => {
     setDetailsStatus(null);
@@ -206,26 +218,17 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
     selectedNode.can_buy &&
     buyCommand &&
     (!selectedNode.include_position || fixedPos);
-  const canActivate = (() => {
-    if (
-      !isFilled ||
-      !selectedNode.can_activate ||
-      selectedNode.activate_command_tag !== UserCommandTag.activatePlace ||
-      !activateCommand ||
-      !selectedNode.profile_addr ||
-      !currentProfile?.address
-    ) {
-      return false;
-    }
-
-    try {
-      return Address.parse(selectedNode.profile_addr).equals(
-        Address.parse(currentProfile.address),
-      );
-    } catch {
-      return false;
-    }
-  })();
+  const canActivate = Boolean(activationProfile && activationTarget?.can_activate
+    && activationTarget.command_tag === UserCommandTag.activatePlace
+    && activationTarget.structure_number != null && activationTarget.place_number != null
+    && activationTarget.profile_addr === activationProfile && activateCommand);
+  const activationTargetLabel = activationTarget?.structure_number != null && activationTarget.place_number != null
+    ? t("structure.activationTarget", {
+        structure: activationTarget.structure_number === 0 ? t("specification.referrals")
+          : contractStructures[String(activationTarget.structure_number)]?.name
+            || t("specification.structure", { number: activationTarget.structure_number }),
+        number: activationTarget.place_number,
+      }) : "";
   const lockAction =
     selectedNode.can_unlock
       ? "unlock"
@@ -341,6 +344,10 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
   const handleActivate = async () => {
     if (
       !canActivate ||
+      activation.pending ||
+      activationTarget?.structure_number == null ||
+      activationTarget.place_number == null ||
+      !activationTarget.profile_addr ||
       !currentProfile ||
       selectedNode.node_type !== "filled"
     ) {
@@ -353,10 +360,10 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
       const result = await executeActivatePlace(
         tonConnectUI,
         marketingAddress,
-        selectedStructure,
-        selectedNode.profile_addr!,
+        activationTarget.structure_number,
+        activationTarget.profile_addr,
         wallet,
-        selectedNode.place_number,
+        activationTarget.place_number,
         UserCommandTag.activatePlace,
       );
       setDetailsStatus(
@@ -373,7 +380,10 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
               text: translateError(t, result.error_code),
             },
       );
-      if (result.success) notifyPlacePurchaseSubmitted();
+      if (result.success) {
+        activation.submitted();
+        notifyPlacePurchaseSubmitted();
+      }
     } finally {
       setActivateLoading(false);
     }
@@ -534,17 +544,24 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
       )}
 
       {canActivate && (
+        <>
+        <p className="details-meta__desc">{activationTargetLabel}</p>
         <button
           type="button"
           className="details-action details-action--primary"
           onClick={() => setConfirmAction("activate")}
-          disabled={activateLoading || activationJettonMetadataLoading}
+          disabled={activateLoading || activation.pending || activationJettonMetadataLoading}
         >
-          {activateLoading || activationJettonMetadataLoading
+          {activateLoading || activation.pending || activationJettonMetadataLoading
             ? t("home.loading", "Loading...")
             : activateLabel}
         </button>
+        </>
       )}
+      {activation.error && <div role="status">
+        <p>{t("structure.activationUnavailable")}</p>
+        <button type="button" onClick={activation.retry}>{t("specification.retry")}</button>
+      </div>}
 
       {lockAction && (
         <button
@@ -585,6 +602,7 @@ export default function Details({ selectedNode, structure }: DetailsProps) {
         message={
           <>
             <p>{t("structure.confirmBuy", "Are you sure?")}</p>
+            {confirmAction === "activate" && <p>{activationTargetLabel}</p>}
             <p>
               {t("structure.profileLabel", "Profile")}: {" "}
               <strong>{currentProfile?.login ?? ""}</strong>

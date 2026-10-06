@@ -105,6 +105,27 @@ export type ProgramPosAlgoV2 = {
 
 export type ProgramPosAlgo = ProgramPosAlgoV1 | ProgramPosAlgoV2;
 
+export type ProgramActivity = {
+  type?: "invite" | "marketing";
+  set_active_on_activation?: boolean;
+  preserve_status_on_activation?: boolean;
+  activity_source?: "place" | "invite" | "group_root";
+  require_marketing_place_to_invite?: boolean;
+  when_inactive?: {
+    allow_inviting_without_places?: boolean;
+    allow_inviting_with_places?: boolean;
+    allow_as_fallback_root?: boolean;
+    allow_own_children?: boolean;
+    allow_spillover_children?: boolean;
+    check_manual_placement?: boolean;
+    allow_as_bonus_recipient?: boolean;
+    allow_as_clone_recipient?: boolean;
+    keep_on_compression?: boolean;
+  };
+  spillover?: { allow_inactive_place?: boolean };
+  [key: string]: unknown;
+};
+
 export type ProgramStructure = {
   marketing_addr: string;
   structure_number: number;
@@ -114,10 +135,8 @@ export type ProgramStructure = {
   display_height: number;
   prev_required: boolean;
   pos_algo: ProgramPosAlgo;
-  activity: {
-    set_active_on_activation?: boolean;
-    [key: string]: unknown;
-  } | null;
+  group: string | null;
+  activity: ProgramActivity | null;
 };
 
 type ProgramTreeNodeBase = {
@@ -179,6 +198,24 @@ export type NextPosResponse = {
   place_number: number;
   pos: number;
 };
+
+export type ActivationOption = {
+  can_activate: boolean;
+  command_tag: number | null;
+  structure_number: number | null;
+  profile_addr: string | null;
+  place_number: number | null;
+  reason: string | null;
+};
+
+export async function getActivationOption(marketingAddress: string, structureNumber: number,
+  profileAddress: string, placeNumber: number, signal?: AbortSignal): Promise<ActivationOption> {
+  const response = await fetch(buildUrl(marketingAddress.trim(), `structures/${structureNumber}/activation-option`, {
+    profile_addr: profileAddress.trim(), place_number: placeNumber,
+  }), { signal });
+  if (!response.ok) throw new Error(`Activation option request failed: ${response.status}`);
+  return response.json();
+}
 
 export type PurchaseOption = {
   can_buy: boolean;

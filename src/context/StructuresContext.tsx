@@ -37,6 +37,7 @@ type StructuresContextValue = {
   setSelectedStructure: (structure: number) => void;
   structureOptions: Array<{ value: number; label: string }>;
   commands: Record<string, MarketingV3CommandConfigResponse>;
+  contractStructures: Record<string, MarketingV3StructureConfigResponse>;
   firstPlace: ProgramPlace | null;
   selectedPlace: ProgramPlaceRef | null;
   refreshKey: number;
@@ -241,6 +242,7 @@ export function StructuresProvider({ children }: { children: ReactNode }) {
       setSelectedStructure,
       structureOptions,
       commands,
+      contractStructures: structures,
       firstPlace,
       selectedPlace,
       refreshKey,
@@ -256,6 +258,7 @@ export function StructuresProvider({ children }: { children: ReactNode }) {
       selectedStructure,
       structureOptions,
       commands,
+      structures,
       firstPlace,
       selectedPlace,
       refreshKey,
