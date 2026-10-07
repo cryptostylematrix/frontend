@@ -34,3 +34,23 @@ export async function getUiReport(filters: ReportFilters, signal: AbortSignal): 
     cache: "no-store", signal: AbortSignal.any([signal, AbortSignal.timeout(30000)]),
   }));
 }
+
+export type ReportSectionResponse<T> = { generated_at: string; data: T };
+async function getSection<T>(path: string, params: Record<string, string>, signal: AbortSignal): Promise<ReportSectionResponse<T>> {
+  const endpoint = url(path);
+  endpoint.search = new URLSearchParams(params).toString();
+  return read<ReportSectionResponse<T>>(await fetch(endpoint, {
+    cache: "no-store", signal: AbortSignal.any([signal, AbortSignal.timeout(30000)]),
+  }));
+}
+export const getProfileReport = (page: number, signal: AbortSignal) =>
+  getSection<UiReportData["profiles"]>("/profiles", { page: String(page) }, signal);
+export const getTonConnectReport = (groups: Pick<ReportFilters, "groupContract" | "groupWalletName" | "groupAppVersion" | "groupPlatform">, signal: AbortSignal) =>
+  getSection<UiReportData["ton_connect"]>("/ton-connect", {
+    group_contract: String(groups.groupContract), group_wallet_name: String(groups.groupWalletName),
+    group_app_version: String(groups.groupAppVersion), group_platform: String(groups.groupPlatform),
+  }, signal);
+export const getActivityReport = (page: number, period: ReportPeriod, signal: AbortSignal) =>
+  getSection<UiReportData["activity"]>("/activity", { page: String(page), period }, signal);
+export const getPreferencesReport = (signal: AbortSignal) =>
+  getSection<UiReportData["preferences"]>("/preferences", {}, signal);

@@ -115,3 +115,11 @@ Unknown future language tags are shown as stored.
 Deploy with the matching backend report endpoints. See the backend UI module
 README for populations, last-link rules, periods and index migration 007.
 Run `node --test tests/*.test.mjs` for service, chart and localization regressions.
+
+Report sections are selected through a submenu: wallets and profiles, TonConnect,
+active wallets, and preferences. Only the selected section is displayed and loaded
+through its `/api/ui/reports/` endpoint. Switching sections preserves filters and
+pagination and cancels the previous request. Refresh reloads only the selected
+section; the update time belongs to that section. Previous results remain visible
+while reloading, errors stay local, and stale responses are ignored. Deploy the
+backend section endpoints before this frontend; no new migration is needed.

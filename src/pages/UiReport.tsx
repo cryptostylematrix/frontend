@@ -1,11 +1,20 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Copy, Check, ExternalLink, RefreshCw } from "lucide-react";
-import { getUiReport, type ReportFilters,
-  type ReportPeriod, type UiReportData } from "../services/uiReportApi";
+import { getProfileReport, getTonConnectReport, getActivityReport, getPreferencesReport,
+  type ReportFilters, type ReportPeriod } from "../services/uiReportApi";
+import { useReportSection } from "../hooks/useReportSection";
 import ReportPie from "../components/reports/ReportPie";
 import { LANGUAGES } from "../languages";
 import "./ui-report.css";
+
+const REPORT_SECTIONS = [
+  { key: "profiles", title: "uiReport.profilesTitle" },
+  { key: "ton", title: "uiReport.tonTitle" },
+  { key: "activity", title: "uiReport.activityTitle" },
+  { key: "preferences", title: "uiReport.preferencesTitle" },
+] as const;
+type ReportSection = typeof REPORT_SECTIONS[number]["key"];
 
 const PERIODS: ReportPeriod[] = ["hour", "today", "week", "month", "three_months", "six_months", "year"];
 
@@ -41,25 +50,24 @@ function Pagination({ page, total, pageSize, loading, onChange }: { page: number
 
 export default function UiReport() {
   const { t, i18n } = useTranslation();
-  const [data, setData] = useState<UiReportData | null>(null);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [selected, setSelected] = useState<ReportSection>("profiles");
   const [refresh, setRefresh] = useState(0);
   const [filters, setFilters] = useState<ReportFilters>({ profilePage: 1, activityPage: 1,
     period: "week", groupContract: true, groupWalletName: false, groupAppVersion: false, groupPlatform: false });
-  useEffect(() => {
-    const controller = new AbortController();
-    setLoading(true);
-    setData(null);
-    setError("");
-    void getUiReport(filters, controller.signal).then(result => {
-      if (!controller.signal.aborted) setData(result);
-    }).catch(() => {
-      if (controller.signal.aborted) return;
-      setError("uiReport.loadError");
-    }).finally(() => { if (!controller.signal.aborted) setLoading(false); });
-    return () => controller.abort();
-  }, [filters, refresh]);
+  const { profilePage, activityPage, period, groupContract, groupWalletName, groupAppVersion, groupPlatform } = filters;
+  const profiles = useReportSection(useCallback((signal: AbortSignal) => getProfileReport(profilePage, signal), [profilePage]), refresh, selected === "profiles");
+  const ton = useReportSection(useCallback((signal: AbortSignal) => getTonConnectReport({
+    groupContract, groupWalletName, groupAppVersion, groupPlatform,
+  }, signal), [groupContract, groupWalletName, groupAppVersion, groupPlatform]), refresh, selected === "ton");
+  const activity = useReportSection(useCallback((signal: AbortSignal) => getActivityReport(activityPage, period, signal), [activityPage, period]), refresh, selected === "activity");
+  const preferences = useReportSection(getPreferencesReport, refresh, selected === "preferences");
+  const currentSection = { profiles, ton, activity, preferences }[selected];
+  const loading = currentSection.loading;
+  const generatedAt = currentSection.updatedAt;
+  const status = (section: { loading: boolean; error: boolean }) => <>
+    {section.loading && <span className="report-section-loading" role="status">{t("home.loading")}</span>}
+    {section.error && <p className="report-error" role="alert">{t("uiReport.loadError")}</p>}
+  </>;
 
   const numbers = new Intl.NumberFormat(i18n.language);
   const percentages = new Intl.NumberFormat(i18n.language, { maximumFractionDigits: 2 });
@@ -70,44 +78,51 @@ export default function UiReport() {
     <div className="report-heading"><h2 className="administration-section-title">{t("uiReport.title")}</h2>
     </div>
     <p className="report-warning" role="note">{t("uiReport.incompleteDataWarning")}</p>
-    {error && <p className="report-error" role="alert">{t(error)}</p>}
+    <nav className="report-submenu" aria-label={t("uiReport.title")}>
+      {REPORT_SECTIONS.map(section => <button key={section.key} type="button"
+        className={selected === section.key ? "active" : ""}
+        aria-current={selected === section.key ? "page" : undefined}
+        onClick={() => setSelected(section.key)}>{t(section.title)}</button>)}
+    </nav>
     <div className="report-toolbar">
-      {loading ? <span className="report-asof" role="status">{t("home.loading")}</span>
-        : data && <span className="report-asof">{t("uiReport.asOf", { date: formatDate(data.generated_at) })}</span>}
+      {generatedAt && <span className="report-asof">{t("uiReport.asOf", { date: formatDate(generatedAt) })}</span>}
       <button className="report-refresh" type="button" disabled={loading} onClick={() => setRefresh(value => value + 1)}>
         <RefreshCw size={14} aria-hidden="true" />{t("uiReport.refresh")}
       </button>
     </div>
-      <section className="report-panel" aria-labelledby="report-profiles-title">
+      {selected === "profiles" && <section className="report-panel" aria-labelledby="report-profiles-title" aria-busy={profiles.loading}>
+        {status(profiles)}
         <h2 id="report-profiles-title">{t("uiReport.profilesTitle")}</h2>
         <p className="report-note">{t("uiReport.latestLink")}</p>
-        {data && <><div className="report-table-scroll"><table>
+        {profiles.data && <><div className="report-table-scroll"><table>
           <thead><tr><th>{t("uiReport.wallet")}</th><th>{t("uiReport.profileCount")}</th><th>{t("uiReport.share")}</th></tr></thead>
           <tbody>
-            <tr className="report-totals"><th>{t("uiReport.totalWallets", { count: data.profiles.total_wallets })}</th>
-              <td>{numbers.format(data.profiles.total_profiles)}</td><td>{data.profiles.total_profiles ? "100%" : "0%"}</td></tr>
-            {data.profiles.items.map(row => <tr key={row.wallet_addr}><td><WalletAddress address={row.wallet_addr} /></td>
+            <tr className="report-totals"><th>{t("uiReport.totalWallets", { count: profiles.data.total_wallets })}</th>
+              <td>{numbers.format(profiles.data.total_profiles)}</td><td>{profiles.data.total_profiles ? "100%" : "0%"}</td></tr>
+            {profiles.data.items.map(row => <tr key={row.wallet_addr}><td><WalletAddress address={row.wallet_addr} /></td>
               <td>{numbers.format(row.profile_count)}</td><td>{percentages.format(row.percentage)}%</td></tr>)}
           </tbody>
         </table></div>
-          {!data.profiles.items.length && <p className="report-empty">{t("uiReport.empty")}</p>}
-          <Pagination page={data.profiles.page} total={data.profiles.total_wallets} pageSize={data.profiles.page_size} loading={loading}
+          {!profiles.data.items.length && <p className="report-empty">{t("uiReport.empty")}</p>}
+          <Pagination page={profiles.data.page} total={profiles.data.total_wallets} pageSize={profiles.data.page_size} loading={profiles.loading}
             onChange={profilePage => setFilters(current => ({ ...current, profilePage }))} /></>}
-      </section>
-      <section className="report-panel" aria-labelledby="report-ton-title">
+      </section>}
+      {selected === "ton" && <section className="report-panel" aria-labelledby="report-ton-title" aria-busy={ton.loading}>
+        {status(ton)}
         <h2 id="report-ton-title">{t("uiReport.tonTitle")}</h2>
         <fieldset className="report-grouping"><legend>{t("uiReport.groupBy")}</legend>
           {(["groupContract", "groupWalletName", "groupAppVersion", "groupPlatform"] as const).map(key => <label key={key}>
             <input type="checkbox" checked={filters[key]} onChange={event => setFilters(current => ({ ...current, [key]: event.target.checked }))} />
             {t(`uiReport.${key}`)}</label>)}
         </fieldset>
-        {data && <ReportPie title={t("uiReport.tonTitle")} total={data.ton_connect.total} slices={data.ton_connect.groups.map(row => ({
+        {ton.data && <ReportPie title={t("uiReport.tonTitle")} total={ton.data.total} slices={ton.data.groups.map(row => ({
           key: JSON.stringify([row.contract_version, row.wallet_name, row.app_version, row.platform]),
           label: [row.contract_version === "unknown version" ? t("uiReport.unknownVersion") : row.contract_version, row.wallet_name, row.app_version, row.platform]
             .filter(Boolean).join(" · ") || t("uiReport.allWallets"), count: row.count, percentage: row.percentage,
         }))} />}
-      </section>
-      <section className="report-panel" aria-labelledby="report-activity-title">
+      </section>}
+      {selected === "activity" && <section className="report-panel" aria-labelledby="report-activity-title" aria-busy={activity.loading}>
+        {status(activity)}
         <div className="report-section-heading"><h2 id="report-activity-title">{t("uiReport.activityTitle")}</h2>
           <label className="report-period">{t("uiReport.period")}
             <select value={filters.period} onChange={event => setFilters(current => ({ ...current,
@@ -115,25 +130,26 @@ export default function UiReport() {
               {PERIODS.map(period => <option key={period} value={period}>{t(`uiReport.periods.${period}`)}</option>)}
             </select></label></div>
         <p className="report-note">{t("uiReport.activityHint")}</p>
-        {data && <><p className="report-asof">{formatDate(data.activity.from)} — {formatDate(data.activity.to)}</p>
+        {activity.data && <><p className="report-asof">{formatDate(activity.data.from)} — {formatDate(activity.data.to)}</p>
           <div className="report-table-scroll"><table><thead><tr><th>{t("uiReport.wallet")}</th><th>{t("uiReport.lastConnected")}</th></tr></thead>
-            <tbody><tr className="report-totals"><th>{t("uiReport.total")}</th><td>{numbers.format(data.activity.total)}</td></tr>
-              {data.activity.items.map(row => <tr key={row.wallet_addr}><td><WalletAddress address={row.wallet_addr} /></td>
+            <tbody><tr className="report-totals"><th>{t("uiReport.total")}</th><td>{numbers.format(activity.data.total)}</td></tr>
+              {activity.data.items.map(row => <tr key={row.wallet_addr}><td><WalletAddress address={row.wallet_addr} /></td>
                 <td><time dateTime={row.last_connected_at}>{formatDate(row.last_connected_at)}</time></td></tr>)}
             </tbody></table></div>
-          {!data.activity.items.length && <p className="report-empty">{t("uiReport.empty")}</p>}
-          <Pagination page={data.activity.page} total={data.activity.total} pageSize={data.activity.page_size} loading={loading}
+          {!activity.data.items.length && <p className="report-empty">{t("uiReport.empty")}</p>}
+          <Pagination page={activity.data.page} total={activity.data.total} pageSize={activity.data.page_size} loading={activity.loading}
             onChange={activityPage => setFilters(current => ({ ...current, activityPage }))} /></>}
-      </section>
-      <section className="report-panel" aria-labelledby="report-preferences-title">
+      </section>}
+      {selected === "preferences" && <section className="report-panel" aria-labelledby="report-preferences-title" aria-busy={preferences.loading}>
+        {status(preferences)}
         <h2 id="report-preferences-title">{t("uiReport.preferencesTitle")}</h2>
         <fieldset className="report-grouping"><legend>{t("uiReport.groupBy")}</legend>
           <label><input type="checkbox" checked disabled />{t("uiReport.language")}</label>
         </fieldset>
-        {data && <ReportPie title={t("uiReport.preferencesTitle")} total={data.preferences.total}
-          slices={data.preferences.groups.map(row => ({ key: row.language,
+        {preferences.data && <ReportPie title={t("uiReport.preferencesTitle")} total={preferences.data.total}
+          slices={preferences.data.groups.map(row => ({ key: row.language,
             label: LANGUAGES.find(language => language.code === row.language)?.label ?? row.language,
             count: row.count, percentage: row.percentage }))} />}
-      </section>
+      </section>}
   </section>;
 }

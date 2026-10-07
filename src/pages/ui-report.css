@@ -1,7 +1,7 @@
 .ui-report { width: min(1120px, 100%); margin: 0 auto 3rem; color: #342d21; }
 .report-heading, .report-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .ui-report h2 { font-size: 1.25rem; margin: 0 0 .8rem; }
-.report-panel { background: #fff; border: 1px solid #e7decc; border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 3px 12px #493b1510; }
+.report-panel { position: relative; background: #fff; border: 1px solid #e7decc; border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; box-shadow: 0 3px 12px #493b1510; }
 .ui-report button, .ui-report select { font: inherit; }
 .ui-report button { cursor: pointer; }
 .report-refresh, .report-pagination button { display: inline-flex; align-items: center; gap: .5rem; border: 1px solid #cdb677; border-radius: 6px; padding: .55rem .9rem; color: #433713; background: #fffaf0; }
@@ -49,3 +49,10 @@
 .report-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: .6rem 1rem; margin: 1.25rem 0; }
 .report-toolbar .report-asof { margin: 0; }
 .ui-report .report-refresh { padding: .3rem .55rem; gap: .35rem; font-size: .8rem; line-height: 1.3; white-space: nowrap; }
+
+.report-section-loading { position: absolute; top: .2rem; right: 1rem; color: #716855; font-size: .75rem; }
+
+.report-submenu { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: 1.25rem 0; }
+.ui-report .report-submenu button { padding: .35rem 0; border: 0; border-radius: 0; background: transparent; color: #716855; font-size: .9rem; line-height: 1.4; }
+.ui-report .report-submenu button.active { color: #806019; text-decoration: underline; text-underline-offset: .4rem; text-decoration-thickness: 2px; }
+.ui-report .report-submenu button:hover { color: #806019; }
