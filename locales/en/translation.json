@@ -300,7 +300,7 @@
     }
   },
   "programs": {
-    "availableTestPrograms": "Programs in Testing",
+    "availableTestPrograms": "Programs in testing",
     "open": "Open",
     "contractExplorer": "Open contract in explorer",
     "marketing": "Marketing",
@@ -636,5 +636,53 @@
       "noGroup": "No group",
       "rewardOrigin": "First eligible source place"
     }
+  },
+  "uiReport": {
+    "title": "Account usage statistics",
+    "total": "Total",
+    "empty": "No data",
+    "wallet": "Wallet",
+    "profileCount": "Profiles",
+    "share": "Share of profiles",
+    "profilesTitle": "Wallets and profiles",
+    "tonTitle": "TonConnect",
+    "activityTitle": "Active wallets",
+    "preferencesTitle": "Preferences",
+    "groupBy": "Group by",
+    "groupContract": "Contract version",
+    "groupPlatform": "Platform",
+    "allWallets": "All wallets",
+    "language": "Language",
+    "period": "Period",
+    "lastConnected": "Last connection",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{page}} of {{pages}}",
+    "totalWallets": "Total wallets: {{count}}",
+    "refresh": "Refresh",
+    "asOf": "Updated: {{date}}",
+    "explorer": "Open in Tonviewer",
+    "unknownVersion": "Unknown version",
+    "latestLink": "Each profile is counted once, under its latest saved wallet link.",
+    "activityHint": "Based on the last recorded connection, including restored sessions. Dates and times are shown in your local time zone.",
+    "loadError": "Could not load the report. Try refreshing.",
+    "periods": {
+      "hour": "Last hour",
+      "today": "Today (UTC)",
+      "week": "Last 7 days",
+      "month": "Last month",
+      "three_months": "Last 3 months",
+      "six_months": "Last 6 months",
+      "year": "Last year"
+    },
+    "groupWalletName": "Wallet name",
+    "groupAppVersion": "App version",
+    "incompleteDataWarning": "This report may be incomplete. Information about wallets that have not used the service since data collection began may be missing."
+  },
+  "administration": {
+    "title": "Administration",
+    "testProgramsLink": "Test programs",
+    "statisticsLink": "Account statistics",
+    "menuLabel": "Admin"
   }
 }

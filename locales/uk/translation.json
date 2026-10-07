@@ -300,7 +300,7 @@
     }
   },
   "programs": {
-    "availableTestPrograms": "Програми на етапі тестування",
+    "availableTestPrograms": "Програми на стадії тестування",
     "open": "Відкрити",
     "contractExplorer": "Відкрити контракт в оглядачі",
     "marketing": "Маркетинг",
@@ -642,5 +642,53 @@
       "noGroup": "Без групи",
       "rewardOrigin": "Перше придатне вихідне місце"
     }
+  },
+  "uiReport": {
+    "title": "Статистика використання кабінету",
+    "total": "Усього",
+    "empty": "Немає даних",
+    "wallet": "Гаманець",
+    "profileCount": "Профілі",
+    "share": "Частка профілів",
+    "profilesTitle": "Гаманці та профілі",
+    "tonTitle": "TonConnect",
+    "activityTitle": "Активні гаманці",
+    "preferencesTitle": "Налаштування",
+    "groupBy": "Групувати за",
+    "groupContract": "Версія контракту",
+    "groupPlatform": "Платформа",
+    "allWallets": "Усі гаманці",
+    "language": "Мова",
+    "period": "Період",
+    "lastConnected": "Останнє підключення",
+    "previous": "Назад",
+    "next": "Далі",
+    "page": "Сторінка {{page}} з {{pages}}",
+    "totalWallets": "Усього гаманців: {{count}}",
+    "refresh": "Оновити",
+    "asOf": "Оновлено: {{date}}",
+    "explorer": "Відкрити в Tonviewer",
+    "unknownVersion": "Невідома версія",
+    "latestLink": "Кожен профіль враховується один раз — у гаманця з останнім збереженим зв’язком.",
+    "activityHint": "За останнім записаним підключенням, включно з відновленням сесії. Дата й час показані у вашому часовому поясі.",
+    "loadError": "Не вдалося завантажити звіт. Спробуйте оновити.",
+    "periods": {
+      "hour": "За останню годину",
+      "today": "Сьогодні (UTC)",
+      "week": "За 7 днів",
+      "month": "За місяць",
+      "three_months": "За 3 місяці",
+      "six_months": "За 6 місяців",
+      "year": "За рік"
+    },
+    "groupWalletName": "Назва гаманця",
+    "groupAppVersion": "Версія застосунку",
+    "incompleteDataWarning": "Дані звіту можуть бути неповними. Інформація про гаманці, які не користувалися сервісом після початку збору даних, може бути відсутня."
+  },
+  "administration": {
+    "title": "Адміністрування",
+    "testProgramsLink": "Тестові програми",
+    "statisticsLink": "Статистика кабінету",
+    "menuLabel": "Адмінка"
   }
 }
