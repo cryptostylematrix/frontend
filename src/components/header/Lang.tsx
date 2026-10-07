@@ -1,33 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./lang.css";
 import { useTranslation } from "react-i18next";
+import { useWalletLanguage } from "../../hooks/useWalletLanguage";
 
-interface LangOption {
-  code: string;
-  label: string;
-}
-
-const LANGUAGES: LangOption[] = [
-  { code: "de", label: "Deutsch" },
-  { code: "en", label: "English" },
-  { code: "es", label: "Español" },
-  { code: "fr", label: "Français" },
-  { code: "hu", label: "Magyar" },
-  { code: "it", label: "Italiano" },
-  { code: "kk", label: "Қазақша" },
-  { code: "pl", label: "Polski" },
-  { code: "pt", label: "Português" },
-  { code: "ru", label: "Русский" },
-  { code: "uk", label: "Український" },
-];
+import { LANGUAGES, normalizeLanguage } from "../../languages";
 
 const Lang: React.FC = () => {
   const { i18n } = useTranslation();
+  const selectLanguage = useWalletLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   // Determine current language (default to English)
-  const currentLangCode = i18n.language?.split(/[-_]/)[0] ?? "en";
+  const currentLangCode = normalizeLanguage(i18n.resolvedLanguage ?? i18n.language) ?? "en";
   const currentLang =
     LANGUAGES.find((lang) => lang.code === currentLangCode) || LANGUAGES.find((l) => l.code === "en")!;
   const availableLanguages = LANGUAGES.filter((lang) => lang.code !== currentLang.code);
@@ -35,7 +20,7 @@ const Lang: React.FC = () => {
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
   const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
+    void selectLanguage(lng);
     setIsOpen(false);
   };
 

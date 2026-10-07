@@ -1,11 +1,11 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
+import { initialLanguage } from "./services/walletLanguageStorage";
+import { SUPPORTED_LANGUAGES } from "./languages";
 import HttpBackend from "i18next-http-backend";
 
 i18n
   .use(HttpBackend) // 🔹 loads translations from JSON files
-  .use(LanguageDetector) // 🔹 detects language and remembers it in localStorage
   .use(initReactI18next) // 🔹 connects i18next to React
   .init({
     fallbackLng: "en", // default language
@@ -15,11 +15,10 @@ i18n
       escapeValue: false, // react already escapes
     },
 
-    detection: {
-      // you can customize where language is stored or read from
-      order: ["localStorage", "cookie", "navigator"],
-      caches: ["localStorage"], // 🔹 saves user choice
-    },
+    // Legacy browser preference is provisional until the connected wallet is loaded.
+    lng: initialLanguage(),
+    supportedLngs: [...SUPPORTED_LANGUAGES],
+    load: "currentOnly",
 
      backend: {
       // path to your translation files
