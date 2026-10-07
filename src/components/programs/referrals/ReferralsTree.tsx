@@ -235,9 +235,12 @@ function ReferralsTree({ rootLogin, marketingAddress, onCuratorSelect }: Props) 
             </span>
             {structureNumbers.length > 0 && (
               <span className="structure-tree-structures">
+                {t("structure.participatesIn")}: {" "}
                 {structureNumbers.map((number, index) => (
                   <span key={number}>
-                    {structureNames[number] || `#${number}`}
+                    <strong className="structure-tree-structure-name">
+                      {structureNames[number] || `#${number}`}
+                    </strong>
                     {index < structureNumbers.length - 1 ? ", " : ""}
                   </span>
                 ))}
