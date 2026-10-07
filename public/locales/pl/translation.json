@@ -642,5 +642,53 @@
       "noGroup": "Bez grupy",
       "rewardOrigin": "Pierwsze odpowiednie miejsce źródłowe"
     }
+  },
+  "uiReport": {
+    "title": "Statystyki korzystania z panelu użytkownika",
+    "total": "Razem",
+    "empty": "Brak danych",
+    "wallet": "Portfel",
+    "profileCount": "Profile",
+    "share": "Udział profili",
+    "profilesTitle": "Portfele i profile",
+    "tonTitle": "TonConnect",
+    "activityTitle": "Aktywne portfele",
+    "preferencesTitle": "Preferencje",
+    "groupBy": "Grupuj według",
+    "groupContract": "Wersja kontraktu",
+    "groupPlatform": "Platforma",
+    "allWallets": "Wszystkie portfele",
+    "language": "Język",
+    "period": "Okres",
+    "lastConnected": "Ostatnie połączenie",
+    "previous": "Poprzednia",
+    "next": "Następna",
+    "page": "Strona {{page}} z {{pages}}",
+    "totalWallets": "Łącznie portfeli: {{count}}",
+    "refresh": "Odśwież",
+    "asOf": "Aktualizacja: {{date}}",
+    "explorer": "Otwórz w Tonviewer",
+    "unknownVersion": "Nieznana wersja",
+    "latestLink": "Każdy profil jest liczony raz, według ostatniego zapisanego powiązania z portfelem.",
+    "activityHint": "Na podstawie ostatniego zapisanego połączenia, także przywróconych sesji. Daty i godziny są wyświetlane w Twojej lokalnej strefie czasowej.",
+    "loadError": "Nie udało się wczytać raportu. Spróbuj odświeżyć.",
+    "periods": {
+      "hour": "Ostatnia godzina",
+      "today": "Dzisiaj (UTC)",
+      "week": "Ostatnie 7 dni",
+      "month": "Ostatni miesiąc",
+      "three_months": "Ostatnie 3 miesiące",
+      "six_months": "Ostatnie 6 miesięcy",
+      "year": "Ostatni rok"
+    },
+    "groupWalletName": "Nazwa portfela",
+    "groupAppVersion": "Wersja aplikacji",
+    "incompleteDataWarning": "Dane w raporcie mogą być niepełne. Może brakować informacji o portfelach, które nie korzystały z serwisu od rozpoczęcia zbierania danych."
+  },
+  "administration": {
+    "title": "Administracja",
+    "testProgramsLink": "Programy testowe",
+    "statisticsLink": "Statystyki konta",
+    "menuLabel": "Admin"
   }
 }

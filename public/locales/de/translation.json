@@ -636,5 +636,53 @@
       "noGroup": "Keine Gruppe",
       "rewardOrigin": "Erster geeigneter Quellplatz"
     }
+  },
+  "uiReport": {
+    "title": "Nutzungsstatistik des Kontobereichs",
+    "total": "Gesamt",
+    "empty": "Keine Daten",
+    "wallet": "Wallet",
+    "profileCount": "Profile",
+    "share": "Profilanteil",
+    "profilesTitle": "Wallets und Profile",
+    "tonTitle": "TonConnect",
+    "activityTitle": "Aktive Wallets",
+    "preferencesTitle": "Einstellungen",
+    "groupBy": "Gruppieren nach",
+    "groupContract": "Vertragsversion",
+    "groupPlatform": "Plattform",
+    "allWallets": "Alle Wallets",
+    "language": "Sprache",
+    "period": "Zeitraum",
+    "lastConnected": "Letzte Verbindung",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "page": "Seite {{page}} von {{pages}}",
+    "totalWallets": "Wallets insgesamt: {{count}}",
+    "refresh": "Aktualisieren",
+    "asOf": "Aktualisiert: {{date}}",
+    "explorer": "In Tonviewer öffnen",
+    "unknownVersion": "Unbekannte Version",
+    "latestLink": "Jedes Profil wird einmal der zuletzt gespeicherten Wallet-Verknüpfung zugeordnet.",
+    "activityHint": "Basierend auf der letzten erfassten Verbindung, einschließlich wiederhergestellter Sitzungen. Datum und Uhrzeit werden in Ihrer lokalen Zeitzone angezeigt.",
+    "loadError": "Bericht konnte nicht geladen werden. Bitte aktualisieren.",
+    "periods": {
+      "hour": "Letzte Stunde",
+      "today": "Heute (UTC)",
+      "week": "Letzte 7 Tage",
+      "month": "Letzter Monat",
+      "three_months": "Letzte 3 Monate",
+      "six_months": "Letzte 6 Monate",
+      "year": "Letztes Jahr"
+    },
+    "groupWalletName": "Wallet-Name",
+    "groupAppVersion": "App-Version",
+    "incompleteDataWarning": "Dieser Bericht kann unvollständig sein. Informationen zu Wallets, die den Dienst seit Beginn der Datenerfassung nicht genutzt haben, können fehlen."
+  },
+  "administration": {
+    "title": "Administration",
+    "testProgramsLink": "Testprogramme",
+    "statisticsLink": "Kontostatistik",
+    "menuLabel": "Admin"
   }
 }

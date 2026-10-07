@@ -636,5 +636,53 @@
       "noGroup": "Nessun gruppo",
       "rewardOrigin": "Prima posizione di origine idonea"
     }
+  },
+  "uiReport": {
+    "title": "Statistiche di utilizzo dell’area personale",
+    "total": "Totale",
+    "empty": "Nessun dato",
+    "wallet": "Wallet",
+    "profileCount": "Profili",
+    "share": "Quota dei profili",
+    "profilesTitle": "Wallet e profili",
+    "tonTitle": "TonConnect",
+    "activityTitle": "Wallet attivi",
+    "preferencesTitle": "Preferenze",
+    "groupBy": "Raggruppa per",
+    "groupContract": "Versione del contratto",
+    "groupPlatform": "Piattaforma",
+    "allWallets": "Tutti i wallet",
+    "language": "Lingua",
+    "period": "Periodo",
+    "lastConnected": "Ultima connessione",
+    "previous": "Precedente",
+    "next": "Successiva",
+    "page": "Pagina {{page}} di {{pages}}",
+    "totalWallets": "Totale wallet: {{count}}",
+    "refresh": "Aggiorna",
+    "asOf": "Aggiornato: {{date}}",
+    "explorer": "Apri in Tonviewer",
+    "unknownVersion": "Versione sconosciuta",
+    "latestLink": "Ogni profilo viene contato una volta, in base al collegamento al wallet salvato più di recente.",
+    "activityHint": "In base all’ultima connessione registrata, incluse le sessioni ripristinate. Le date e gli orari sono mostrati nel tuo fuso orario locale.",
+    "loadError": "Impossibile caricare il report. Prova ad aggiornarlo.",
+    "periods": {
+      "hour": "Ultima ora",
+      "today": "Oggi (UTC)",
+      "week": "Ultimi 7 giorni",
+      "month": "Ultimo mese",
+      "three_months": "Ultimi 3 mesi",
+      "six_months": "Ultimi 6 mesi",
+      "year": "Ultimo anno"
+    },
+    "groupWalletName": "Nome del wallet",
+    "groupAppVersion": "Versione dell’app",
+    "incompleteDataWarning": "Questo report potrebbe essere incompleto. Potrebbero mancare informazioni sui wallet che non hanno utilizzato il servizio dall’inizio della raccolta dei dati."
+  },
+  "administration": {
+    "title": "Amministrazione",
+    "testProgramsLink": "Programmi di test",
+    "statisticsLink": "Statistiche dell’account",
+    "menuLabel": "Admin"
   }
 }

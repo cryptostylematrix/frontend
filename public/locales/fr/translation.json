@@ -636,5 +636,53 @@
       "noGroup": "Sans groupe",
       "rewardOrigin": "Première place source admissible"
     }
+  },
+  "uiReport": {
+    "title": "Statistiques d’utilisation de l’espace personnel",
+    "total": "Total",
+    "empty": "Aucune donnée",
+    "wallet": "Portefeuille",
+    "profileCount": "Profils",
+    "share": "Part des profils",
+    "profilesTitle": "Portefeuilles et profils",
+    "tonTitle": "TonConnect",
+    "activityTitle": "Portefeuilles actifs",
+    "preferencesTitle": "Préférences",
+    "groupBy": "Regrouper par",
+    "groupContract": "Version du contrat",
+    "groupPlatform": "Plateforme",
+    "allWallets": "Tous les portefeuilles",
+    "language": "Langue",
+    "period": "Période",
+    "lastConnected": "Dernière connexion",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "page": "Page {{page}} sur {{pages}}",
+    "totalWallets": "Total des portefeuilles : {{count}}",
+    "refresh": "Actualiser",
+    "asOf": "Mis à jour : {{date}}",
+    "explorer": "Ouvrir dans Tonviewer",
+    "unknownVersion": "Version inconnue",
+    "latestLink": "Chaque profil est compté une fois, pour sa dernière association enregistrée avec un portefeuille.",
+    "activityHint": "Selon la dernière connexion enregistrée, y compris les sessions restaurées. Les dates et heures sont affichées dans votre fuseau horaire local.",
+    "loadError": "Impossible de charger le rapport. Essayez de l’actualiser.",
+    "periods": {
+      "hour": "Dernière heure",
+      "today": "Aujourd’hui (UTC)",
+      "week": "7 derniers jours",
+      "month": "Dernier mois",
+      "three_months": "3 derniers mois",
+      "six_months": "6 derniers mois",
+      "year": "Dernière année"
+    },
+    "groupWalletName": "Nom du portefeuille",
+    "groupAppVersion": "Version de l’application",
+    "incompleteDataWarning": "Ce rapport peut être incomplet. Les informations concernant les portefeuilles qui n’ont pas utilisé le service depuis le début de la collecte des données peuvent manquer."
+  },
+  "administration": {
+    "title": "Administration",
+    "testProgramsLink": "Programmes de test",
+    "statisticsLink": "Statistiques du compte",
+    "menuLabel": "Admin"
   }
 }

@@ -1,11 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
-import { Home, User, Wallet, Layers } from "lucide-react";
+import { useState, useEffect, useContext } from "react";
+import { Home, User, Wallet, Layers, Settings } from "lucide-react";
 import "./navigation.css";
+import { WalletContext } from "../App";
+import { canViewTestPrograms } from "../utils/testProgramAccess";
 
 export default function Navigation() {
   const { t } = useTranslation();
+  const { wallet } = useContext(WalletContext)!;
   const location = useLocation();
   const [compact, setCompact] = useState(window.innerWidth <= 700);
 
@@ -22,6 +25,10 @@ export default function Navigation() {
     { to: "/finance", icon: <Wallet size={22} strokeWidth={1.8} />, label: t("nav.finance_page") },
     { to: "/#programs-title", icon: <Layers size={22} strokeWidth={1.8} />, label: t("nav.programs_page") },
   ];
+
+  if (canViewTestPrograms(wallet)) links.push({
+    to: "/administration", icon: <Settings size={22} strokeWidth={1.8} />, label: t("administration.menuLabel"),
+  });
 
   const isPathActive = (to: string) => {
     const [path, hash] = to.split("#");
@@ -42,7 +49,8 @@ export default function Navigation() {
               key={to}
               to={to}
               className={`nav-link ${isActive ? "active" : ""}`}
-              aria-current={isActive ? "page" : undefined}>
+              aria-current={isActive ? "page" : undefined}
+              aria-label={label} title={label}>
                 {icon}
                 {!compact && <span className="link-text">{label}</span>}
             </Link>

@@ -31,10 +31,11 @@
 
 .nav-links {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
   width: 100%;
-  gap: 2rem;
+  gap: .5rem .6rem;
 }
 
 /* Remove ALL default underlines globally */
@@ -205,3 +206,21 @@
 .menu-toggle {
   display: none !important;
 }
+
+/* Keep each desktop menu item intact and wrap whole items onto another row. */
+@media (min-width: 701px) {
+  .navbar .nav-links a {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+    display: flex;
+    padding: .55rem .5rem;
+    letter-spacing: .35px;
+    border-bottom: 0;
+    border-radius: 6px;
+    text-align: left;
+  }
+  .navbar .link-text { font-size: .85rem; white-space: normal; overflow-wrap: anywhere; }
+  .navbar svg { flex-shrink: 0; }
+}
+.navbar .nav-links a:focus-visible { outline: 2px solid #b4881d; outline-offset: 3px; }

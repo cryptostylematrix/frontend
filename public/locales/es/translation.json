@@ -300,7 +300,7 @@
     }
   },
   "programs": {
-    "availableTestPrograms": "Programas en fase de prueba",
+    "availableTestPrograms": "Programas en fase de pruebas",
     "open": "Abrir",
     "contractExplorer": "Abrir contrato en el explorador",
     "marketing": "Marketing",
@@ -636,5 +636,53 @@
       "noGroup": "Sin grupo",
       "rewardOrigin": "Primera posición de origen apta"
     }
+  },
+  "uiReport": {
+    "title": "Estadísticas de uso del área personal",
+    "total": "Total",
+    "empty": "Sin datos",
+    "wallet": "Billetera",
+    "profileCount": "Perfiles",
+    "share": "Porcentaje de perfiles",
+    "profilesTitle": "Billeteras y perfiles",
+    "tonTitle": "TonConnect",
+    "activityTitle": "Billeteras activas",
+    "preferencesTitle": "Preferencias",
+    "groupBy": "Agrupar por",
+    "groupContract": "Versión del contrato",
+    "groupPlatform": "Plataforma",
+    "allWallets": "Todas las billeteras",
+    "language": "Idioma",
+    "period": "Período",
+    "lastConnected": "Última conexión",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page": "Página {{page}} de {{pages}}",
+    "totalWallets": "Total de billeteras: {{count}}",
+    "refresh": "Actualizar",
+    "asOf": "Actualizado: {{date}}",
+    "explorer": "Abrir en Tonviewer",
+    "unknownVersion": "Versión desconocida",
+    "latestLink": "Cada perfil se cuenta una vez, en su vínculo guardado más reciente con una billetera.",
+    "activityHint": "Según la última conexión registrada, incluidas las sesiones restauradas. Las fechas y horas se muestran en tu zona horaria local.",
+    "loadError": "No se pudo cargar el informe. Prueba a actualizarlo.",
+    "periods": {
+      "hour": "Última hora",
+      "today": "Hoy (UTC)",
+      "week": "Últimos 7 días",
+      "month": "Último mes",
+      "three_months": "Últimos 3 meses",
+      "six_months": "Últimos 6 meses",
+      "year": "Último año"
+    },
+    "groupWalletName": "Nombre de la billetera",
+    "groupAppVersion": "Versión de la aplicación",
+    "incompleteDataWarning": "Este informe puede estar incompleto. Puede faltar información sobre las billeteras que no han utilizado el servicio desde que comenzó la recopilación de datos."
+  },
+  "administration": {
+    "title": "Administración",
+    "testProgramsLink": "Programas de prueba",
+    "statisticsLink": "Estadísticas de la cuenta",
+    "menuLabel": "Admin"
   }
 }

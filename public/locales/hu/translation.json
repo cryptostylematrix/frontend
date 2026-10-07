@@ -300,7 +300,7 @@
     }
   },
   "programs": {
-    "availableTestPrograms": "Tesztelési fázisban lévő programok",
+    "availableTestPrograms": "Tesztelés alatt álló programok",
     "open": "Megnyitás",
     "contractExplorer": "Szerződés megnyitása a böngészőben",
     "marketing": "Marketing",
@@ -636,5 +636,53 @@
       "noGroup": "Nincs csoport",
       "rewardOrigin": "Első megfelelő forráshely"
     }
+  },
+  "uiReport": {
+    "title": "A felhasználói felület használati statisztikái",
+    "total": "Összesen",
+    "empty": "Nincs adat",
+    "wallet": "Tárca",
+    "profileCount": "Profilok",
+    "share": "Profilok aránya",
+    "profilesTitle": "Tárcák és profilok",
+    "tonTitle": "TonConnect",
+    "activityTitle": "Aktív tárcák",
+    "preferencesTitle": "Beállítások",
+    "groupBy": "Csoportosítás",
+    "groupContract": "Szerződésverzió",
+    "groupPlatform": "Platform",
+    "allWallets": "Összes tárca",
+    "language": "Nyelv",
+    "period": "Időszak",
+    "lastConnected": "Utolsó csatlakozás",
+    "previous": "Előző",
+    "next": "Következő",
+    "page": "{{page}}. oldal / {{pages}}",
+    "totalWallets": "Tárcák összesen: {{count}}",
+    "refresh": "Frissítés",
+    "asOf": "Frissítve: {{date}}",
+    "explorer": "Megnyitás a Tonviewerben",
+    "unknownVersion": "Ismeretlen verzió",
+    "latestLink": "Minden profil egyszer szerepel, a legutóbb mentett tárcakapcsolatához rendelve.",
+    "activityHint": "Az utolsó rögzített csatlakozás alapján, a visszaállított munkamenetekkel együtt. A dátumok és időpontok a helyi időzóna szerint jelennek meg.",
+    "loadError": "A jelentés nem tölthető be. Próbálja frissíteni.",
+    "periods": {
+      "hour": "Elmúlt óra",
+      "today": "Ma (UTC)",
+      "week": "Elmúlt 7 nap",
+      "month": "Elmúlt hónap",
+      "three_months": "Elmúlt 3 hónap",
+      "six_months": "Elmúlt 6 hónap",
+      "year": "Elmúlt év"
+    },
+    "groupWalletName": "Tárca neve",
+    "groupAppVersion": "Alkalmazásverzió",
+    "incompleteDataWarning": "A jelentés adatai hiányosak lehetnek. Hiányozhatnak azoknak a tárcáknak az adatai, amelyek az adatgyűjtés kezdete óta nem használták a szolgáltatást."
+  },
+  "administration": {
+    "title": "Adminisztráció",
+    "testProgramsLink": "Tesztprogramok",
+    "statisticsLink": "Fiókstatisztikák",
+    "menuLabel": "Admin"
   }
 }

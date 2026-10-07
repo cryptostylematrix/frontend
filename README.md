@@ -90,3 +90,28 @@ Schedules use the stored address returned by the structures API when available.
 `VITE_SCHEDULED_TASKS_API_HOST` optionally sets the schedules API host; otherwise
 it uses the default API host. Deploy this frontend with the split backend APIs;
 the old combined `/specification` endpoint is no longer used.
+
+
+## UI report
+
+The Administration menu item uses the test-program wallet allowlist
+(`VITE_AVAILABLE_TEST_PROGRAM_WALLETS`) through `testProgramAccess`.
+It opens `/administration`, which defaults to `/administration/test-programs`.
+The submenu links to programs in testing and account usage statistics at
+`/administration/usage`. Both sections have moved off the home page and do not
+require a selected profile. The old `/ui-report` URL redirects to the usage section.
+Only menu visibility is gated; the report page and API remain public, with no
+wallet signature, bearer token or backend authorization.
+
+The report includes latest wallet–profile assignments, a TonConnect pie with four
+independent grouping checkboxes (contract version, wallet name, app version,
+platform), last-connected wallets by UTC period, and a language pie.
+Dates and times display in the browser’s local time zone; the Today filter
+still starts at UTC midnight. Select both
+wallet name and app version to group their combination. Tables show totals first
+and at most 10 records per page. Pies show totals, counts and percentages.
+Unknown future language tags are shown as stored.
+
+Deploy with the matching backend report endpoints. See the backend UI module
+README for populations, last-link rules, periods and index migration 007.
+Run `node --test tests/*.test.mjs` for service, chart and localization regressions.

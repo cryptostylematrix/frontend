@@ -636,5 +636,53 @@
       "noGroup": "Sem grupo",
       "rewardOrigin": "Primeira posição de origem elegível"
     }
+  },
+  "uiReport": {
+    "title": "Estatísticas de utilização da área pessoal",
+    "total": "Total",
+    "empty": "Sem dados",
+    "wallet": "Carteira",
+    "profileCount": "Perfis",
+    "share": "Percentagem de perfis",
+    "profilesTitle": "Carteiras e perfis",
+    "tonTitle": "TonConnect",
+    "activityTitle": "Carteiras ativas",
+    "preferencesTitle": "Preferências",
+    "groupBy": "Agrupar por",
+    "groupContract": "Versão do contrato",
+    "groupPlatform": "Plataforma",
+    "allWallets": "Todas as carteiras",
+    "language": "Idioma",
+    "period": "Período",
+    "lastConnected": "Última ligação",
+    "previous": "Anterior",
+    "next": "Seguinte",
+    "page": "Página {{page}} de {{pages}}",
+    "totalWallets": "Total de carteiras: {{count}}",
+    "refresh": "Atualizar",
+    "asOf": "Atualizado: {{date}}",
+    "explorer": "Abrir no Tonviewer",
+    "unknownVersion": "Versão desconhecida",
+    "latestLink": "Cada perfil é contado uma vez, na sua ligação guardada mais recente a uma carteira.",
+    "activityHint": "Com base na última ligação registada, incluindo sessões restauradas. As datas e horas são apresentadas no seu fuso horário local.",
+    "loadError": "Não foi possível carregar o relatório. Tente atualizar.",
+    "periods": {
+      "hour": "Última hora",
+      "today": "Hoje (UTC)",
+      "week": "Últimos 7 dias",
+      "month": "Último mês",
+      "three_months": "Últimos 3 meses",
+      "six_months": "Últimos 6 meses",
+      "year": "Último ano"
+    },
+    "groupWalletName": "Nome da carteira",
+    "groupAppVersion": "Versão da aplicação",
+    "incompleteDataWarning": "Este relatório pode estar incompleto. Podem faltar informações sobre carteiras que não utilizaram o serviço desde o início da recolha de dados."
+  },
+  "administration": {
+    "title": "Administração",
+    "testProgramsLink": "Programas de teste",
+    "statisticsLink": "Estatísticas da conta",
+    "menuLabel": "Admin"
   }
 }

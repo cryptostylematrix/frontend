@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, createContext } from "react";
 
 import Home from "./pages/Home";
+import UiReport from "./pages/UiReport";
+import Administration from "./pages/Administration";
+import AvailableTestPrograms from "./components/AvailableTestPrograms";
 import Profile from "./pages/profile/Profile";
 import AddProfile from "./pages/profile/AddProfile";
 import CreateProfile from "./pages/profile/CreateProfile";
@@ -48,6 +51,12 @@ function App() {
             <div className="content-container">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/ui-report" element={<Navigate to="/administration/usage" replace />} />
+                <Route path="/administration" element={<Administration />}>
+                  <Route index element={<Navigate to="test-programs" replace />} />
+                  <Route path="test-programs" element={<AvailableTestPrograms />} />
+                  <Route path="usage" element={<UiReport />} />
+                </Route>
 
                 <Route path="/profile" element={<Profile />}>
                   {/* Redirect /profile → /profile/update by default */}
