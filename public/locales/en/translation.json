@@ -677,7 +677,9 @@
     },
     "groupWalletName": "Wallet name",
     "groupAppVersion": "App version",
-    "incompleteDataWarning": "This report may be incomplete. Information about wallets that have not used the service since data collection began may be missing."
+    "incompleteDataWarning": "This report may be incomplete. Information about wallets that have not used the service since data collection began may be missing.",
+    "profilesLink": "Profiles",
+    "activityLink": "Activity"
   },
   "administration": {
     "title": "Administration",

@@ -677,7 +677,9 @@
     },
     "groupWalletName": "Nom du portefeuille",
     "groupAppVersion": "Version de l’application",
-    "incompleteDataWarning": "Ce rapport peut être incomplet. Les informations concernant les portefeuilles qui n’ont pas utilisé le service depuis le début de la collecte des données peuvent manquer."
+    "incompleteDataWarning": "Ce rapport peut être incomplet. Les informations concernant les portefeuilles qui n’ont pas utilisé le service depuis le début de la collecte des données peuvent manquer.",
+    "profilesLink": "Profils",
+    "activityLink": "Activité"
   },
   "administration": {
     "title": "Administration",

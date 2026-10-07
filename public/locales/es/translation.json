@@ -677,7 +677,9 @@
     },
     "groupWalletName": "Nombre de la billetera",
     "groupAppVersion": "Versión de la aplicación",
-    "incompleteDataWarning": "Este informe puede estar incompleto. Puede faltar información sobre las billeteras que no han utilizado el servicio desde que comenzó la recopilación de datos."
+    "incompleteDataWarning": "Este informe puede estar incompleto. Puede faltar información sobre las billeteras que no han utilizado el servicio desde que comenzó la recopilación de datos.",
+    "profilesLink": "Perfiles",
+    "activityLink": "Actividad"
   },
   "administration": {
     "title": "Administración",

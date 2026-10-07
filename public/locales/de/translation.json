@@ -677,7 +677,9 @@
     },
     "groupWalletName": "Wallet-Name",
     "groupAppVersion": "App-Version",
-    "incompleteDataWarning": "Dieser Bericht kann unvollständig sein. Informationen zu Wallets, die den Dienst seit Beginn der Datenerfassung nicht genutzt haben, können fehlen."
+    "incompleteDataWarning": "Dieser Bericht kann unvollständig sein. Informationen zu Wallets, die den Dienst seit Beginn der Datenerfassung nicht genutzt haben, können fehlen.",
+    "profilesLink": "Profile",
+    "activityLink": "Aktivität"
   },
   "administration": {
     "title": "Administration",

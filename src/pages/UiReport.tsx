@@ -9,9 +9,9 @@ import { LANGUAGES } from "../languages";
 import "./ui-report.css";
 
 const REPORT_SECTIONS = [
-  { key: "profiles", title: "uiReport.profilesTitle" },
+  { key: "profiles", title: "uiReport.profilesLink" },
   { key: "ton", title: "uiReport.tonTitle" },
-  { key: "activity", title: "uiReport.activityTitle" },
+  { key: "activity", title: "uiReport.activityLink" },
   { key: "preferences", title: "uiReport.preferencesTitle" },
 ] as const;
 type ReportSection = typeof REPORT_SECTIONS[number]["key"];

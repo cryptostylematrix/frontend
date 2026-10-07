@@ -150,7 +150,7 @@ test('submenu renders and loads only the selected section, preserving filters', 
   walk(tree).filter(n => n.type === 'input' && !n.props.disabled)[1].props.onChange({ target: { checked: true } });
   await settle();
   only('getTonConnectReport', 'report-ton-title');
-  await select('uiReport.activityTitle');
+  await select('uiReport.activityLink');
   only('getActivityReport', 'report-activity-title');
   walk(tree).find(n => n.type === 'select').props.onChange({ target: { value: 'month' } });
   await settle();
@@ -161,7 +161,7 @@ test('submenu renders and loads only the selected section, preserving filters', 
   only('getActivityReport', 'report-activity-title');
   await select('uiReport.preferencesTitle');
   only('getPreferencesReport', 'report-preferences-title');
-  await select('uiReport.profilesTitle');
+  await select('uiReport.profilesLink');
   assert.equal(calls[0][1][0], 2);
   only('getProfileReport', 'report-profiles-title');
   await select('uiReport.tonTitle');
