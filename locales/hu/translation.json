@@ -677,7 +677,9 @@
     },
     "groupWalletName": "Tárca neve",
     "groupAppVersion": "Alkalmazásverzió",
-    "incompleteDataWarning": "A jelentés adatai hiányosak lehetnek. Hiányozhatnak azoknak a tárcáknak az adatai, amelyek az adatgyűjtés kezdete óta nem használták a szolgáltatást."
+    "incompleteDataWarning": "A jelentés adatai hiányosak lehetnek. Hiányozhatnak azoknak a tárcáknak az adatai, amelyek az adatgyűjtés kezdete óta nem használták a szolgáltatást.",
+    "profilesLink": "Profilok",
+    "activityLink": "Aktivitás"
   },
   "administration": {
     "title": "Adminisztráció",

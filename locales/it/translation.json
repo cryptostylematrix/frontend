@@ -677,7 +677,9 @@
     },
     "groupWalletName": "Nome del wallet",
     "groupAppVersion": "Versione dell’app",
-    "incompleteDataWarning": "Questo report potrebbe essere incompleto. Potrebbero mancare informazioni sui wallet che non hanno utilizzato il servizio dall’inizio della raccolta dei dati."
+    "incompleteDataWarning": "Questo report potrebbe essere incompleto. Potrebbero mancare informazioni sui wallet che non hanno utilizzato il servizio dall’inizio della raccolta dei dati.",
+    "profilesLink": "Profili",
+    "activityLink": "Attività"
   },
   "administration": {
     "title": "Amministrazione",

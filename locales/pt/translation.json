@@ -677,7 +677,9 @@
     },
     "groupWalletName": "Nome da carteira",
     "groupAppVersion": "Versão da aplicação",
-    "incompleteDataWarning": "Este relatório pode estar incompleto. Podem faltar informações sobre carteiras que não utilizaram o serviço desde o início da recolha de dados."
+    "incompleteDataWarning": "Este relatório pode estar incompleto. Podem faltar informações sobre carteiras que não utilizaram o serviço desde o início da recolha de dados.",
+    "profilesLink": "Perfis",
+    "activityLink": "Atividade"
   },
   "administration": {
     "title": "Administração",

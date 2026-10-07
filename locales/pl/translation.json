@@ -683,7 +683,9 @@
     },
     "groupWalletName": "Nazwa portfela",
     "groupAppVersion": "Wersja aplikacji",
-    "incompleteDataWarning": "Dane w raporcie mogą być niepełne. Może brakować informacji o portfelach, które nie korzystały z serwisu od rozpoczęcia zbierania danych."
+    "incompleteDataWarning": "Dane w raporcie mogą być niepełne. Może brakować informacji o portfelach, które nie korzystały z serwisu od rozpoczęcia zbierania danych.",
+    "profilesLink": "Profile",
+    "activityLink": "Aktywność"
   },
   "administration": {
     "title": "Administracja",
