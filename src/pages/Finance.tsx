@@ -1,5 +1,5 @@
 import "./finance.css";
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { WalletContext } from "../App";
 import { useProfileContext } from "../context/ProfileContext";
@@ -67,7 +67,7 @@ export default function Finance() {
     }
   };
 
-  const loadHistory = async (lastTransaction?: TransactionResponse) => {
+  const loadHistory = useCallback(async (lastTransaction?: TransactionResponse) => {
     if (!wallet) return;
     setIsLoading(true);
     const response = await getWalletHistory(wallet, {
@@ -84,14 +84,14 @@ export default function Finance() {
     });
     setHasMore(items.length === PAGE_SIZE);
     setIsLoading(false);
-  };
+  }, [wallet]);
 
   useEffect(() => {
     if (!wallet) return;
     setTransactions([]);
     setHasMore(false);
     void loadHistory();
-  }, [wallet]);
+  }, [wallet, loadHistory]);
 
   useEffect(() => {
     let isActive = true;

@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useProfileContext } from "../../../context/ProfileContext";
 import { useProgramContext } from "../../../context/ProgramContext";
@@ -29,6 +29,7 @@ export default function Places({ isMatrixStructure }: PlacesProps) {
     setSelectedPlace,
   } = useStructuresContext();
 
+  const selectedPlaceRef = useRef(selectedPlace);
   const selectRef = useRef<HTMLDivElement>(null);
   const previousStructureRef = useRef<number | undefined>(undefined);
   const previousProfileAddressRef = useRef<string | undefined>(undefined);
@@ -42,6 +43,10 @@ export default function Places({ isMatrixStructure }: PlacesProps) {
   const [loadingMore, setLoadingMore] = useState(false);
   const [onlyNotClosed, setOnlyNotClosed] = useState(false);
   const requestOnlyNotClosed = isMatrixStructure && onlyNotClosed;
+
+  useEffect(() => {
+    selectedPlaceRef.current = selectedPlace;
+  }, [selectedPlace]);
 
   useEffect(() => {
     if (!isMatrixStructure) setOnlyNotClosed(false);
@@ -90,7 +95,7 @@ export default function Places({ isMatrixStructure }: PlacesProps) {
           structureChanged ||
           profileChanged ||
           onlyNotClosedChanged ||
-          !selectedPlace
+          !selectedPlaceRef.current
         ) {
           setSelectedPlace(data.items[0] ?? null);
         } else if (data.items.length === 0) {
@@ -167,7 +172,7 @@ export default function Places({ isMatrixStructure }: PlacesProps) {
       .filter((group) => group.items.length > 0);
   }, [places]);
 
-  const formatPlaceLabel = (place: ProgramPlaceWithMatrix) => {
+  const formatPlaceLabel = useCallback((place: ProgramPlaceWithMatrix) => {
     const profileTitle = place.profile_login ?? "SC";
     const matrixProgress =
       isMatrixStructure && place.matrix_size > 0
@@ -181,7 +186,7 @@ export default function Places({ isMatrixStructure }: PlacesProps) {
         place.matrix_size > 0 &&
         place.matrix_filling >= place.matrix_size,
     };
-  };
+  }, [isMatrixStructure]);
 
   const selectedPlaceLabel = useMemo(() => {
     if (loading) return t("home.loading");
@@ -194,7 +199,7 @@ export default function Places({ isMatrixStructure }: PlacesProps) {
       return places.length > 0 ? "..." : t("structure.noPlaces", "No places");
     }
     return formatPlaceLabel(found).label;
-  }, [isMatrixStructure, loading, places, selectedPlace, t]);
+  }, [formatPlaceLabel, loading, places, selectedPlace, t]);
 
   const placesLabel = useMemo(() => {
     const formattedTotal = new Intl.NumberFormat(i18n.language).format(
