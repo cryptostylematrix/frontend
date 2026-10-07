@@ -33,11 +33,12 @@ function setup({ state = 'uninitialized', stateError = false, profiles = [], rej
       compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
     }).outputText;
     vm.runInNewContext(code, {
-      module, exports: module.exports,
+      module, exports: module.exports, URL,
       console: { error() {} },
       setTimeout: (callback) => { queueMicrotask(callback); },
       require: (name) => {
         if (name === '@ton/core') return require(name);
+        if (name === '../config') return { appConfig: { uiApi: { host: 'https://ui.example.test' } } };
         if (name === './contractsApi') return api;
         if (name === './tonClient') return { getTonClient: () => ({ getContractState: async () => {
           if (stateError) throw new Error('RPC unavailable');
