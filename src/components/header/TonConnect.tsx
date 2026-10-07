@@ -6,8 +6,10 @@ import { Copy, LogOut } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { Locales } from "@tonconnect/ui";
 import { Address } from "@ton/core";
+import { useTonConnectionSync } from "../../hooks/useTonConnectionSync";
 
 const TonConnect: React.FC = () => {
+  useTonConnectionSync();
   const { t, i18n } = useTranslation();
   const { setWallet } = useContext(WalletContext)!;
 
