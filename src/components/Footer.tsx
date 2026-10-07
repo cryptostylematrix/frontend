@@ -12,7 +12,7 @@ export default function Footer() {
   const baseUrl = import.meta.env.BASE_URL || "/";
   const privacyHref = `${baseUrl}privacy-policy_crypto-style_${resolvedLang}.pdf`;
   const agreementHref = `${baseUrl}user-agreement_crypto-style_${resolvedLang}.pdf`;
-  const youtubeHref = getYoutubeChannel(i18n.resolvedLanguage ?? i18n.language);
+  const youtubeHref = getYoutubeChannel();
 
   return (
     <footer className="footer">

@@ -1,5 +1,4 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { getYoutubeChannel } from "../../utils/youtube";
 import "./socials.css";
 
@@ -28,11 +27,10 @@ const socials: Social[] = [
 ];
 
 const Socials: React.FC = () => {
-  const { i18n } = useTranslation();
   const localizedSocials: Social[] = [
     ...socials.slice(0, 2),
     {
-      href: getYoutubeChannel(i18n.resolvedLanguage ?? i18n.language),
+      href: getYoutubeChannel(),
       label: "YouTube",
       icon: "youtube",
     },
