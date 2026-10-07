@@ -110,3 +110,21 @@
     text-align: center;
   }
 }
+
+.structure-tree-participation {
+  display: flex;
+  flex: 2 1 260px;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+}
+
+.structure-tree-referral-count {
+  white-space: nowrap;
+}
+
+.structure-tree-structures {
+  flex: 1 1 140px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

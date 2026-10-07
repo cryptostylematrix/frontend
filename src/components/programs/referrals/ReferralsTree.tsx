@@ -1,6 +1,7 @@
 import "./referrals-tree.css";
 import { memo, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { getMarketingV3Data } from "../../../services/contractsApi";
 import { ErrorCode } from "../../../errors/ErrorCodes";
 import {
   loadChildren,
@@ -46,12 +47,29 @@ const updateNode = (
 
 function ReferralsTree({ rootLogin, marketingAddress, onCuratorSelect }: Props) {
   const { t } = useTranslation();
+  const [structureNames, setStructureNames] = useState<Record<number, string>>({});
   const [root, setRoot] = useState<StructureNode | null>(null);
   const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const [pagination, setPagination] = useState<Record<string, Pagination>>({});
   const [loading, setLoading] = useState(false);
   const [loadingNodes, setLoadingNodes] = useState<Record<string, boolean>>({});
   const [errorKey, setErrorKey] = useState<{ code: ErrorCode; login: string } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setStructureNames({});
+    void getMarketingV3Data(marketingAddress)
+      .then((data) => {
+        if (cancelled) return;
+        setStructureNames(Object.fromEntries(
+          Object.entries(data?.structures ?? {}).map(([number, structure]) =>
+            [Number(number), structure.name.trim()],
+          ),
+        ));
+      })
+      .catch((error) => console.error("Failed to load referral structure names", error));
+    return () => { cancelled = true; };
+  }, [marketingAddress]);
 
   useEffect(() => {
     let cancelled = false;
@@ -157,6 +175,7 @@ function ReferralsTree({ rootLogin, marketingAddress, onCuratorSelect }: Props) 
     const hasChildren = Boolean(node.children?.length);
     const page = pagination[key];
     const showLoadMore = isOpen && Boolean(page) && page.page < page.totalPages;
+    const structureNumbers = node.structureNumbers.filter((number) => number !== 0);
     const displayName = [node.lastName, node.firstName].filter(Boolean).join(" ");
     const telegramUsername = node.tgUsername?.replace(/^@+/, "") ?? "";
 
@@ -210,9 +229,21 @@ function ReferralsTree({ rootLogin, marketingAddress, onCuratorSelect }: Props) 
             </span>
           )}
 
-          <span className="structure-tree-meta">
-            {t("structure.referrals", "Referrals")}: {node.filling}
-          </span>
+          <div className="structure-tree-meta structure-tree-participation">
+            <span className="structure-tree-referral-count">
+              {t("structure.referrals", "Referrals")}: {node.filling}
+            </span>
+            {structureNumbers.length > 0 && (
+              <span className="structure-tree-structures">
+                {structureNumbers.map((number, index) => (
+                  <span key={number}>
+                    {structureNames[number] || `#${number}`}
+                    {index < structureNumbers.length - 1 ? ", " : ""}
+                  </span>
+                ))}
+              </span>
+            )}
+          </div>
         </div>
 
         {isOpen && hasChildren && node.children!.map((child) => renderNode(child, level + 1))}

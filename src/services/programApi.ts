@@ -5,6 +5,7 @@ export type InviterDataResponse = {
 };
 
 export type InviteData = {
+  structure_numbers: number[];
   profile_addr: string;
   profile_login: string;
   inviter_profile_addr: string | null;

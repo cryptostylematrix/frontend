@@ -12,6 +12,7 @@ import {
 export const REFERRALS_PAGE_SIZE = 20;
 
 export type StructureNode = {
+  structureNumbers: number[];
   addr: string;
   parent_addr: string | null;
   parent_login: string | null;
@@ -42,6 +43,7 @@ const toNode = (
   invite: InviteData,
   profile: ProfileContentResponse | null | undefined,
 ): StructureNode => ({
+  structureNumbers: invite.structure_numbers ?? [],
   addr: invite.profile_addr,
   parent_addr: invite.inviter_profile_addr,
   parent_login: invite.inviter_profile_login,
