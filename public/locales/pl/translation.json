@@ -312,7 +312,6 @@
     "navigation": "Nawigacja programu",
     "commandProcessing": "Twoje polecenie jest przetwarzane...",
     "statisticsPage": {
-      "scope": "Łączne wartości obejmują wszystkich potomków zaproszenia bieżącego profilu na każdym poziomie, z wyłączeniem samego profilu.",
       "title": "Statystyki",
       "overallReferrals": "Bezpośrednie polecenia",
       "totalReferrals": "Wszystkie polecenia",

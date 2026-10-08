@@ -214,7 +214,6 @@ export default function ProgramStat() {
   return (
     <section className="program-stat">
       <h2>{t("programs.statisticsPage.title")}</h2>
-      <p>{t("programs.statisticsPage.scope")}</p>
 
       {referralStructure ? (
         <article className="program-stat__card program-stat__card--summary">
