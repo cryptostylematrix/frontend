@@ -312,7 +312,6 @@
     "navigation": "Navigation du programme",
     "commandProcessing": "Votre commande est en cours de traitement...",
     "statisticsPage": {
-      "scope": "Les totaux incluent tous les descendants de l’invitation du profil actuel, à tous les niveaux, sans le profil lui-même.",
       "title": "Statistiques",
       "overallReferrals": "Filleuls directs",
       "totalReferrals": "Total des filleuls",

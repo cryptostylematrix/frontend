@@ -312,7 +312,6 @@
     "navigation": "Programmnavigation",
     "commandProcessing": "Ihr Befehl wird verarbeitet...",
     "statisticsPage": {
-      "scope": "Die Gesamtzahlen umfassen alle Nachkommen der Einladung des aktuellen Profils auf jeder Ebene, ohne das Profil selbst.",
       "title": "Statistik",
       "overallReferrals": "Direkte Empfehlungen",
       "totalReferrals": "Empfehlungen insgesamt",

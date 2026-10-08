@@ -312,7 +312,6 @@
     "navigation": "Navigazione del programma",
     "commandProcessing": "Il comando è in elaborazione...",
     "statisticsPage": {
-      "scope": "I totali includono tutti i discendenti dell’invito del profilo attuale a ogni livello, escluso il profilo stesso.",
       "title": "Statistiche",
       "overallReferrals": "Referral diretti",
       "totalReferrals": "Referral totali",
