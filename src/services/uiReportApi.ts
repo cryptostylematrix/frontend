@@ -24,24 +24,34 @@ async function read<T>(response: Response): Promise<T> {
   if (!response.ok) throw new ReportRequestError(response.status);
   return response.json() as Promise<T>;
 }
+// Avoid AbortSignal.any/timeout: older Safari versions do not provide them.
+async function request<T>(endpoint: URL, signal: AbortSignal): Promise<T> {
+  const controller = new AbortController();
+  const abort = () => controller.abort();
+  if (signal.aborted) abort();
+  else signal.addEventListener("abort", abort, { once: true });
+  const timer = setTimeout(abort, 30000);
+  try {
+    return await read<T>(await fetch(endpoint, { cache: "no-store", signal: controller.signal }));
+  } finally {
+    clearTimeout(timer);
+    signal.removeEventListener("abort", abort);
+  }
+}
 export async function getUiReport(filters: ReportFilters, signal: AbortSignal): Promise<UiReportData> {
   const endpoint = url("");
   endpoint.search = new URLSearchParams({
     profile_page: String(filters.profilePage), activity_page: String(filters.activityPage), period: filters.period,
     group_contract: String(filters.groupContract), group_wallet_name: String(filters.groupWalletName), group_app_version: String(filters.groupAppVersion), group_platform: String(filters.groupPlatform),
   }).toString();
-  return read<UiReportData>(await fetch(endpoint, {
-    cache: "no-store", signal: AbortSignal.any([signal, AbortSignal.timeout(30000)]),
-  }));
+  return request<UiReportData>(endpoint, signal);
 }
 
 export type ReportSectionResponse<T> = { generated_at: string; data: T };
 async function getSection<T>(path: string, params: Record<string, string>, signal: AbortSignal): Promise<ReportSectionResponse<T>> {
   const endpoint = url(path);
   endpoint.search = new URLSearchParams(params).toString();
-  return read<ReportSectionResponse<T>>(await fetch(endpoint, {
-    cache: "no-store", signal: AbortSignal.any([signal, AbortSignal.timeout(30000)]),
-  }));
+  return request<ReportSectionResponse<T>>(endpoint, signal);
 }
 export const getProfileReport = (page: number, signal: AbortSignal) =>
   getSection<UiReportData["profiles"]>("/profiles", { page: String(page) }, signal);

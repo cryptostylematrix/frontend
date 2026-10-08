@@ -20,7 +20,7 @@ function load(path, imports, globals = {}) {
 const raw = '0:' + '1'.repeat(64);
 const config = { appConfig: { uiApi: { host: 'https://api.example.test' }, availableTestPrograms: { walletAddresses: [raw] } } };
 const access = load('utils/testProgramAccess.ts', { '@ton/core': { Address }, '../config': config });
-function api(fetch) { return load('services/uiReportApi.ts', { '../config': config, '../utils/testProgramAccess': access }, { fetch }); }
+function api(fetch, globals = {}) { return load('services/uiReportApi.ts', { '../config': config, '../utils/testProgramAccess': access }, { fetch, AbortController, setTimeout, clearTimeout, ...globals }); }
 const response = value => ({ ok: true, json: async () => value });
 test('report and test programs accept equivalent addresses and reject other wallets', () => {
   assert.equal(access.canViewTestPrograms(raw), true);
@@ -189,4 +189,49 @@ test('section retains its result while loading and ignores superseded responses'
   runtime.render(() => useReportSection(failed, 0)); await flushReport();
   state = runtime.render(() => useReportSection(failed, 0));
   assert.equal(state.data, 'latest'); assert.equal(state.error, true);
+});
+
+
+test('report loading works without AbortSignal static methods', async () => {
+  const calls = [];
+  const service = api(async (url, options) => {
+    calls.push(options.signal);
+    return response({ generated_at: '2026-10-08T12:00:00Z', data: { total: 0, groups: [] } });
+  }, { AbortSignal: {} });
+  const result = await service.getPreferencesReport(new AbortController().signal);
+  assert.equal(result.data.total, 0);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].aborted, false);
+});
+
+test('report cancellation and timeout abort fetch and clean up timers', async () => {
+  for (const mode of ['cancel', 'timeout', 'already-aborted']) {
+    let fireTimeout, cleared = false;
+    const caller = new AbortController();
+    if (mode === 'already-aborted') caller.abort();
+    const service = api(async (_, { signal }) => new Promise((resolve, reject) => {
+      const abort = () => reject(new Error('aborted'));
+      if (signal.aborted) abort();
+      else signal.addEventListener('abort', abort, { once: true });
+    }), { AbortSignal: {}, setTimeout(fn, ms) { assert.equal(ms, 30000); fireTimeout = fn; return 1; },
+      clearTimeout(id) { assert.equal(id, 1); cleared = true; } });
+    const pending = service.getPreferencesReport(caller.signal);
+    if (mode === 'cancel') caller.abort();
+    if (mode === 'timeout') fireTimeout();
+    await assert.rejects(pending, /aborted/);
+    assert.equal(cleared, true);
+  }
+});
+
+test('timeout remains active until the response body is read', async () => {
+  let fireTimeout, cleared = false;
+  const service = api(async (_, { signal }) => ({ ok: true, json: () => new Promise((resolve, reject) => {
+    signal.addEventListener('abort', () => reject(new Error('body aborted')), { once: true });
+  }) }), { setTimeout(fn) { fireTimeout = fn; return 1; }, clearTimeout() { cleared = true; } });
+  const pending = service.getPreferencesReport(new AbortController().signal);
+  await flushReport();
+  assert.equal(cleared, false);
+  fireTimeout();
+  await assert.rejects(pending, /body aborted/);
+  assert.equal(cleared, true);
 });
