@@ -17,6 +17,25 @@ import "./program-stat.css";
 
 type LoadState = "loading" | "ready" | "not-found" | "error";
 
+function ActivatedCount({ activated, total }: { activated: number; total: number }) {
+  const { i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage ?? i18n.language;
+  const countFormatter = useMemo(() => new Intl.NumberFormat(locale), [locale]);
+  const percentFormatter = useMemo(
+    () => new Intl.NumberFormat(locale, { style: "percent", maximumFractionDigits: 0 }),
+    [locale],
+  );
+
+  return (
+    <strong>
+      {countFormatter.format(activated)}{" "}
+      <span className="program-stat__percentage">
+        ({percentFormatter.format(total > 0 ? activated / total : 0)})
+      </span>
+    </strong>
+  );
+}
+
 function ReferralMetrics({
   referrals,
 }: {
@@ -32,7 +51,7 @@ function ReferralMetrics({
     <div className="program-stat__metrics">
       <div className="program-stat__metric program-stat__metric--active">
         <span>{t("programs.statisticsPage.activeReferrals")}</span>
-        <strong>{formatter.format(referrals.activated)}</strong>
+        <ActivatedCount activated={referrals.activated} total={referrals.total} />
       </div>
       <div className="program-stat__metric program-stat__metric--inactive">
         <span>{t("programs.statisticsPage.inactiveReferrals")}</span>
@@ -178,7 +197,10 @@ export default function ProgramStat() {
         </div>
         <div className="program-stat__metric program-stat__metric--active">
           <span>{t("programs.statisticsPage.activePartners")}</span>
-          <strong>{formatter.format(structure.activated_profiles)}</strong>
+          <ActivatedCount
+            activated={structure.activated_profiles}
+            total={structure.total_profiles}
+          />
         </div>
       </div>
 
@@ -192,6 +214,7 @@ export default function ProgramStat() {
   return (
     <section className="program-stat">
       <h2>{t("programs.statisticsPage.title")}</h2>
+      <p>{t("programs.statisticsPage.scope")}</p>
 
       {referralStructure ? (
         <article className="program-stat__card program-stat__card--summary">
@@ -207,9 +230,10 @@ export default function ProgramStat() {
             </div>
             <div className="program-stat__metric program-stat__metric--active">
               <span>{t("programs.statisticsPage.activatedPartners")}</span>
-              <strong>
-                {formatter.format(referralStructure.activated_profiles)}
-              </strong>
+              <ActivatedCount
+                activated={referralStructure.activated_profiles}
+                total={referralStructure.total_profiles}
+              />
             </div>
           </div>
           <div className="program-stat__subsection">

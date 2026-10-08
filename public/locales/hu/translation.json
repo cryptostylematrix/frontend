@@ -312,6 +312,7 @@
     "navigation": "Programnavigáció",
     "commandProcessing": "A parancs feldolgozás alatt...",
     "statisticsPage": {
+      "scope": "Az összesített adatok az aktuális profil meghívásának összes leszármazottját tartalmazzák minden szinten, magát a profilt kivéve.",
       "title": "Statisztika",
       "overallReferrals": "Közvetlen ajánlottak",
       "totalReferrals": "Összes ajánlott",

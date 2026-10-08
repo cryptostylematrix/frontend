@@ -68,6 +68,13 @@
   line-height: 1.1;
 }
 
+.program-stat__metric .program-stat__percentage {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgba(58, 46, 14, 0.75);
+  white-space: nowrap;
+}
+
 .program-stat__subsection {
   display: flex;
   flex-direction: column;

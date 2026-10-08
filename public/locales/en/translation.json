@@ -312,6 +312,7 @@
     "navigation": "Program navigation",
     "commandProcessing": "Your command is processing...",
     "statisticsPage": {
+      "scope": "Totals include all descendants of the current profile’s invite at every depth, excluding the profile itself.",
       "title": "Statistics",
       "overallReferrals": "Direct referrals",
       "totalReferrals": "Total referrals",
