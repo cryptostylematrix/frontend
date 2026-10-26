@@ -62,7 +62,7 @@ Unknown top-level and nested properties MAY be supplied for forward compatibilit
       "ru": "https://example.org/presentations/silver-ru.pdf"
     },
     "video": {
-      "en": "https://www.youtube.com/watch?v=example"
+      "en": "https://www.youtube.com/@CryptoStyleOfficial"
     }
   }
 }
@@ -238,7 +238,7 @@ Example:
     "ru": "https://example.org/program-ru.pdf"
   },
   "video": {
-    "en": "https://youtu.be/example"
+    "en": "https://www.youtube.com/@CryptoStyleOfficial"
   }
 }
 ```

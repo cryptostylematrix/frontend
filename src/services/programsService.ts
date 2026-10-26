@@ -1,3 +1,4 @@
+import { getYoutubeChannel } from "../utils/youtube";
 import { Address, Cell } from "@ton/core";
 import { appConfig } from "../config";
 import { SeriesItemBase } from "../contracts/SeriesItemBase";
@@ -122,7 +123,16 @@ const parsePresentationLinks = (
       const normalizedLanguage = language.trim().toLowerCase().split("-")[0];
       const normalizedLink = optionalString(link);
       if (normalizedLanguage && normalizedLink) {
-        links[normalizedLanguage] = normalizedLink;
+        let presentationLink = normalizedLink;
+        try {
+          const { hostname } = new URL(normalizedLink);
+          if (hostname === "youtu.be" || hostname === "youtube.com" || hostname.endsWith(".youtube.com")) {
+            presentationLink = getYoutubeChannel();
+          }
+        } catch {
+          // Preserve relative and IPFS presentation links.
+        }
+        links[normalizedLanguage] = presentationLink;
       }
       return links;
     },
